@@ -1,0 +1,4 @@
+*.out
+main.cpp
+example_file
+*.gch
