@@ -43,7 +43,6 @@ private:
 	regex nextBrace;
 	regex nextBracket;
 
-	regex betweenBraces;
 
 
 	int errors;
@@ -54,6 +53,8 @@ private:
 	bool hasComma (string buffer);
 	static Parser& getInstance ();
 	ObjectNameFlags parse (string& content);
+
+	ObjectNameFlags parseKeyDef (string& content, smatch& matcher);
 
 	ObjectNameFlags parseFinalQuote (string& content, smatch& matcher);
 	ObjectNameFlags parseFinalBoolean (string& content, smatch& matcher);
