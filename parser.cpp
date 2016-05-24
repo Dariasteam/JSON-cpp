@@ -19,7 +19,7 @@ Parser::Parser () :
 
 	startBrace ("^(?:\\s*)(\\{)"),
 	startBracket ("^(?:\\s*)(\\[)"),
-	finalQuote ("^(?:\\s*)(?:(?:\")((\\w|\\s)+)(?:\"))(,)?"),
+	finalQuote ("^(?:\\s*)(?:\")((?:\\w|\\s|\\d)+)(?:\")(?:\\s*)(,)?"),
 	finalBoolean ("^(?:\\s*)(true|false)(?:\\s*)(,)?"),
 	finalNumber ("^(?:\\s*)(\\d+)(?:\\s*)(,)?"),
 	nextBrace("^(?:\\s*)(\\})(?:\\s*)(,)?"),
@@ -43,7 +43,7 @@ bool Parser::hasComma (string buffer) {
 }
 
 ObjectNameFlags Parser::parseFinalQuote (string& content, smatch& matcher) {
-	cout << "Encuentro una string" << endl;
+	cout << "Encuentro una string " << matcher[1] << " - " << matcher[2] <<endl;
 	content = content.substr(matcher[0].length(), content.size());
 	return {new ObjectFinalString (matcher[1]), "", hasComma(matcher[2])};
 }

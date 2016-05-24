@@ -1,27 +1,9 @@
 {
-  "clave_1" : 2323,
-  "clave_2" : true,
-
-  "clave_3" : {
-
-  }    ,
-  "clave_4"       :     2
-
-            ,
-  "clave_5" : "asdas",
-  "clave_6" : {
-    "clave_7" : 188,
-    "clave_8" : 2,
-    "clave_justa" : {
-      "lala" : 11119 ,
-      "lolo" : "Yo voy a comer"
-    }
-  },
-
-  "clave_9" : [48, 2, 3, 4],
-  "clave_10" : [
-    "uno",
-    "dos",
-    "tres"
-  ]
+  "key_1" : ["element1"   , "element2"],
+  "key_2" : 12,
+  "key_4" : "Single string element",
+  "key_5" : {
+    "sub_key_1" : 20,
+    "sub_key_2" : "last element"
+  }
 }
