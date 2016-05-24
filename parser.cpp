@@ -21,8 +21,8 @@ Parser::Parser () :
 	finalBoolean ("^(?:\\s*)(true|false)(,)?"),
 	finalNumber ("^(?:\\s*)(\\d+)(,)?"),
 
-	nextBrace("^(?:\\s*)(\\})(,)?"),
-	nextBracket("^(?:\\s*)(?:\\])(,)?")
+	nextBrace("^(?:\\s*)(\\})(?:\\s*)(,)?"),
+	nextBracket("^(?:\\s*)(\\])(?:\\s*)(,)?")
 	{}
 
 Parser& Parser::getInstance () {
@@ -62,7 +62,7 @@ ObjectNameFlags Parser::parseFinalBoolean (string& content, smatch& matcher) {
 }
 
 ObjectNameFlags Parser::parseFinalNumber (string& content, smatch& matcher) {
-	cout << "Encuentro un número" << endl;
+	cout << "Encuentro un número" << matcher[1] << endl;
 	content = content.substr(matcher[0].length(), content.size());
 	double value = stod(matcher[1]);
 	return {new ObjectFinalNumber (value), "", hasComma(matcher[2])};
@@ -109,10 +109,11 @@ ObjectNameFlags Parser::parseBracket (string& content, smatch& matcher) {
 	} while (aux.flags == REGULAR_ELEMENT);
 	if (array->size() > 1 && aux.flags != LAST_ELEMENT)
 		cout << "Se esperan más elementos pero no" << endl;
+
 	if (regex_search (content, matcher, nextBracket)) {
 		content = content.substr(matcher[0].length(), content.size());
 		flag = hasComma(matcher[2]);
-		cout << "Fin del vector con flag " << flag << endl;
+		cout << "Fin del vector con flag " << flag << matcher[2]<< endl;
 	} else {
 		flag = NO_CLOSED;
 		cout << "ERROR NO CLOSED " << endl;

@@ -54,7 +54,7 @@ public:
   ObjectMap () : ObjectContainer (MAP) {}
   void insert (string key, AbstractObject* obj);
   inline int size () { return hash.size(); }
-  inline vector <string>& getKeys () { return keys; }
+  inline vector <string> getKeys () { return keys; }
   AbstractObject* operator[](string key) { return hash[key]; }
   AbstractObject* operator[](int index) { return nullptr; }
   ObjectMap& get () { return *this; }

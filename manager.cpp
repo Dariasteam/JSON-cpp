@@ -36,7 +36,7 @@ pair <double, bool> JsonTree::getNumberAt (string path) {
     double number = ((ObjectFinalNumber*)obj)->getContent();
     return pair <double, bool> (number, true);
   } else {
-    return pair <double, bool> (0, false);
+    return pair <double, bool> (-1, false);
   }
 }
 
@@ -57,5 +57,23 @@ pair <bool, bool> JsonTree::getBoolAt (string path) {
     return pair <bool, bool> (content, true);
   } else {
     return pair <bool, bool> (false, false);
+  }
+}
+
+vector <string> JsonTree::getKeysAt (string path) {
+  AbstractObject* obj = getObjectAt (path, top);
+  if (obj != nullptr && obj->getType() == MAP) {
+    return ((ObjectMap*)obj)->getKeys();
+  } else {
+    return vector<string> (0);
+  }
+}
+
+int JsonTree::getSizeAt (string path) {
+  AbstractObject* obj = getObjectAt (path, top);
+  if (obj != nullptr && obj->getType() == VECTOR) {
+    return ((ObjectVector*)obj)->size();
+  } else {
+    return 0;
   }
 }

@@ -17,6 +17,7 @@ public:
   AbstractObject* getObjectAt (string path, AbstractObject* obj);
   JsonTree (AbstractObject* root);
   vector <string> getKeysAt (string path);
+  int getSizeAt (string path);
   pair<double, bool> getNumberAt (string path);
   pair<bool, bool> getBoolAt (string path);
   pair<string, bool> getStringAt (string path);
