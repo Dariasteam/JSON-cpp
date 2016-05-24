@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <regex>
+#include <string>
+#include <iostream>
 
 #include "object.hpp"
 
@@ -12,8 +14,9 @@ class JsonTree {
 private:
   ObjectMap* top;
   regex tokenRgx;
+  regex numberRgx;
 
-  bool isType (string path, int type);
+  bool isType (AbstractObject* obj, int type);
   AbstractObject* searchSon (string key, AbstractObject* obj);
 public:
   JsonTree (AbstractObject* root);
@@ -24,6 +27,10 @@ public:
   double getNumber (string path);
   bool getBool (string path);
   string getString (string path);
+
+  bool copyVector (string path, vector<double>& array);
+  bool copyVector (string path, vector<bool>& array);
+  bool copyVector (string path, vector<string>& array);
 
   bool isNumber (string path);
   bool isBool (string path);

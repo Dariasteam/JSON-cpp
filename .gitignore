@@ -1,4 +1,4 @@
 *.out
 main.cpp
-example_file
+example_file.json
 *.gch

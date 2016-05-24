@@ -1,8 +1,3 @@
-
-
-
-
-
 {
   "clave_1" : 2323,
   "clave_2" : true,
@@ -18,11 +13,12 @@
     "clave_7" : 188,
     "clave_8" : 2,
     "clave_justa" : {
-      "lala" : 11119
+      "lala" : 11119 ,
+      "lolo" : "Yo voy a comer"
     }
   },
 
-  "clave_9" : [4, 2, 3, 4],
+  "clave_9" : [48, 2, 3, 4],
   "clave_10" : [
     "uno",
     "dos",

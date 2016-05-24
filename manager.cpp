@@ -1,7 +1,8 @@
 #include "manager.hpp"
 
 JsonTree::JsonTree (AbstractObject* root) :
-  tokenRgx ("(\\w*)(:?\\.)?")
+  tokenRgx ("(\\w*)(:?\\.)?"),
+  numberRgx ("(\\d+)(:?(?:\\w|\\s)*)")
   {
   top = (ObjectMap*)root;
 }
@@ -24,7 +25,11 @@ AbstractObject* JsonTree::searchSon (string key, AbstractObject* obj) {
   if (obj->getType() == MAP) {
     return ((ObjectMap*)obj)->operator[](key);
   } else if (obj->getType() == VECTOR) {
-    return ((ObjectMap*)obj)->operator[](stoi(key));
+    smatch matcher;
+    if (regex_search (key, matcher, numberRgx))
+      return ((ObjectVector*)obj)->operator[](stoi(key));
+    else
+      return nullptr;
   } else {
     return nullptr;
   }
@@ -76,30 +81,83 @@ int JsonTree::getSizeAt (string path) {
 }
 
 bool JsonTree::isNumber (string path) {
-  return isType (path, NUMBER);
+  return isType (getObject (path, top), NUMBER);
 }
 
 bool JsonTree::isBool (string path) {
-return isType (path, BOOL);
+return isType (getObject (path, top), BOOL);
 }
 
 bool JsonTree::isString (string path) {
-  return isType (path, STRING);
+  return isType (getObject (path, top), STRING);
 }
 
 bool JsonTree::isMap (string path) {
-  return isType (path, MAP);
+  return isType (getObject (path, top), MAP);
 }
 
 bool JsonTree::isVector (string path) {
-  return isType (path, VECTOR);
+  return isType (getObject (path, top), VECTOR);
 }
 
-bool JsonTree::isType (string path, int type) {
-  AbstractObject* obj = getObject (path, top);
+bool JsonTree::isType (AbstractObject* obj, int type) {
   return (obj != nullptr && obj->getType() == type);
 }
 
 bool JsonTree::exist (string path) {
   return getObject (path, top) != nullptr;
+}
+
+bool JsonTree::copyVector (string path, vector<double>& array) {
+  AbstractObject* obj = getObject (path, top);
+  if (isType (obj, VECTOR)) {
+    ObjectVector* vect = (ObjectVector*)obj;
+    int size = vect->size();
+    array.resize (size);
+    for (int i = 0; i < size; i++) {
+      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == NUMBER)
+        array[i] = ((ObjectFinalNumber*)vect->operator[](i))->getContent();
+      else
+        return false;
+    }
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool JsonTree::copyVector (string path, vector<string>& array) {
+  AbstractObject* obj = getObject (path, top);
+  if (isType (obj, VECTOR)) {
+    ObjectVector* vect = (ObjectVector*)obj;
+    int size = vect->size();
+    array.resize (size);
+    for (int i = 0; i < size; i++) {
+      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == STRING)
+        array[i] = ((ObjectFinalString*)vect->operator[](i))->getContent();
+      else
+        return false;
+    }
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool JsonTree::copyVector (string path, vector<bool>& array) {
+  AbstractObject* obj = getObject (path, top);
+  if (isType (obj, VECTOR)) {
+    ObjectVector* vect = (ObjectVector*)obj;
+    int size = vect->size();
+    array.resize (size);
+    for (int i = 0; i < size; i++) {
+      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == BOOL)
+        array[i] = ((ObjectFinalNumber*)vect->operator[](i))->getContent();
+      else
+        return false;
+    }
+    return true;
+  } else {
+    return false;
+  }
 }

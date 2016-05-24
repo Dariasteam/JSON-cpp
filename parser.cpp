@@ -19,7 +19,7 @@ Parser::Parser () :
 
 	startBrace ("^(?:\\s*)(\\{)"),
 	startBracket ("^(?:\\s*)(\\[)"),
-	finalQuote ("^(?:\\s*)(?:(?:\")(\\w+)(?:\"))(,)?"),
+	finalQuote ("^(?:\\s*)(?:(?:\")((\\w|\\s)+)(?:\"))(,)?"),
 	finalBoolean ("^(?:\\s*)(true|false)(?:\\s*)(,)?"),
 	finalNumber ("^(?:\\s*)(\\d+)(?:\\s*)(,)?"),
 	nextBrace("^(?:\\s*)(\\})(?:\\s*)(,)?"),
