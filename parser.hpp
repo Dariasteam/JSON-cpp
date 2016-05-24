@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "./object.hpp"
+#include "manager.hpp"
 
 #define OK 0
 #define CANT_OPEN_FILE -1
@@ -29,9 +30,8 @@ struct ObjectNameFlags {
 
 class Parser {
 private:
-
 	ifstream file;
-	//Atributes
+
 	regex startBrace;
 	regex startBracket;
 
@@ -43,31 +43,25 @@ private:
 	regex nextBrace;
 	regex nextBracket;
 
-
-
 	int errors;
 
-	// Methods
 	Parser ();
 	bool openFile (string fileName);
 	bool hasComma (string buffer);
 	static Parser& getInstance ();
+
 	ObjectNameFlags parse (string& content);
 
 	ObjectNameFlags parseKeyDef (string& content, smatch& matcher);
-
 	ObjectNameFlags parseFinalQuote (string& content, smatch& matcher);
 	ObjectNameFlags parseFinalBoolean (string& content, smatch& matcher);
 	ObjectNameFlags parseFinalNumber (string& content, smatch& matcher);
-
 	ObjectNameFlags parseBrace (string& content, smatch& matcher);
 	ObjectNameFlags parseBracket (string& content, smatch& matcher);
 
-	// Getters / Setters
 	inline ifstream& getFile () { return file; }
 public:
 	static pair<AbstractObject*, int> parseFile (string fileName);
-
 };
 
 #endif

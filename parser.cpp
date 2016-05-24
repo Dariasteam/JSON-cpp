@@ -70,7 +70,7 @@ ObjectNameFlags Parser::parseFinalNumber (string& content, smatch& matcher) {
 
 ObjectNameFlags Parser::parseBrace (string& content, smatch& matcher) {
 	content = content.substr(matcher[0].length(), content.size());
-	cout << "Encuentro un hash " << content << endl;
+	cout << "Encuentro un hash " << endl;
 	ObjectMap* hash = new ObjectMap ();
 	ObjectNameFlags aux;
 	int flag;
@@ -97,7 +97,7 @@ ObjectNameFlags Parser::parseBrace (string& content, smatch& matcher) {
 
 ObjectNameFlags Parser::parseBracket (string& content, smatch& matcher) {
 	content = content.substr(matcher[0].length(), content.size());
-	cout << "Encuentro un vector " << content << endl;
+	cout << "Encuentro un vector " << endl;
 	ObjectVector* array = new ObjectVector ();
 	ObjectNameFlags aux;
 	int flag;
