@@ -12,15 +12,25 @@ class JsonTree {
 private:
   ObjectMap* top;
   regex tokenRgx;
-public:
+
+  bool isType (string path, int type);
   AbstractObject* searchSon (string key, AbstractObject* obj);
-  AbstractObject* getObjectAt (string path, AbstractObject* obj);
+public:
   JsonTree (AbstractObject* root);
-  vector <string> getKeysAt (string path);
+  AbstractObject* getObject (string path, AbstractObject* obj);
+  vector <string> getKeys (string path);
   int getSizeAt (string path);
-  pair<double, bool> getNumberAt (string path);
-  pair<bool, bool> getBoolAt (string path);
-  pair<string, bool> getStringAt (string path);
+
+  double getNumber (string path);
+  bool getBool (string path);
+  string getString (string path);
+
+  bool isNumber (string path);
+  bool isBool (string path);
+  bool isString (string path);
+  bool isMap (string path);
+  bool isVector (string path);
+  bool exist (string path);
 };
 
 #endif

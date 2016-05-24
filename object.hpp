@@ -11,7 +11,8 @@ enum ObjetsTypes {
   VECTOR,
   MAP,
   NUMBER,
-  STRING
+  STRING,
+  BOOL
 };
 
 class AbstractObject {

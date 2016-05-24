@@ -32,6 +32,8 @@ class Parser {
 private:
 	ifstream file;
 
+	JsonTree tree;
+
 	regex startBrace;
 	regex startBracket;
 
@@ -44,14 +46,10 @@ private:
 	regex nextBracket;
 
 	int errors;
-
-	Parser ();
 	bool openFile (string fileName);
 	bool hasComma (string buffer);
-	static Parser& getInstance ();
 
 	ObjectNameFlags parse (string& content);
-
 	ObjectNameFlags parseKeyDef (string& content, smatch& matcher);
 	ObjectNameFlags parseFinalQuote (string& content, smatch& matcher);
 	ObjectNameFlags parseFinalBoolean (string& content, smatch& matcher);
@@ -59,9 +57,12 @@ private:
 	ObjectNameFlags parseBrace (string& content, smatch& matcher);
 	ObjectNameFlags parseBracket (string& content, smatch& matcher);
 
+	inline bool hasErrors () { return errors > 0; }
 	inline ifstream& getFile () { return file; }
 public:
-	static pair<AbstractObject*, int> parseFile (string fileName);
+	Parser ();
+	JsonTree getTree () { return tree; }
+	bool parseFile (string fileName);
 };
 
 #endif

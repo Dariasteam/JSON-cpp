@@ -1,0 +1,31 @@
+
+
+
+
+
+{
+  "clave_1" : 2323,
+  "clave_2" : true,
+
+  "clave_3" : {
+
+  }    ,
+  "clave_4"       :     2
+
+            ,
+  "clave_5" : "asdas",
+  "clave_6" : {
+    "clave_7" : 188,
+    "clave_8" : 2,
+    "clave_justa" : {
+      "lala" : 11119
+    }
+  },
+
+  "clave_9" : [4, 2, 3, 4],
+  "clave_10" : [
+    "uno",
+    "dos",
+    "tres"
+  ]
+}

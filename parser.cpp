@@ -1,14 +1,16 @@
 #include "./parser.hpp"
 
-pair <AbstractObject*, int> Parser::parseFile (string fileName) {
-	Parser& aux = getInstance();
-	if (aux.openFile(fileName)) {
+bool Parser::parseFile (string fileName) {
+	if (openFile(fileName)) {
 		stringstream buffer;
-		buffer << aux.getFile ().rdbuf();
+		buffer << getFile ().rdbuf();
 		string a = buffer.str();
-		return pair <AbstractObject*, int> (aux.parse (a).element, aux.errors);
-	}else{
-		return pair<AbstractObject*, int> (nullptr, CANT_OPEN_FILE);
+		ObjectNameFlags result = parse (a);
+		tree = JsonTree (result.element);
+		return !hasErrors();
+	} else {
+		errors++;
+		return false;
 	}
 }
 
@@ -18,17 +20,13 @@ Parser::Parser () :
 	startBrace ("^(?:\\s*)(\\{)"),
 	startBracket ("^(?:\\s*)(\\[)"),
 	finalQuote ("^(?:\\s*)(?:(?:\")(\\w+)(?:\"))(,)?"),
-	finalBoolean ("^(?:\\s*)(true|false)(,)?"),
-	finalNumber ("^(?:\\s*)(\\d+)(,)?"),
-
+	finalBoolean ("^(?:\\s*)(true|false)(?:\\s*)(,)?"),
+	finalNumber ("^(?:\\s*)(\\d+)(?:\\s*)(,)?"),
 	nextBrace("^(?:\\s*)(\\})(?:\\s*)(,)?"),
-	nextBracket("^(?:\\s*)(\\])(?:\\s*)(,)?")
+	nextBracket("^(?:\\s*)(\\])(?:\\s*)(,)?"),
+	errors (0),
+	tree (nullptr)
 	{}
-
-Parser& Parser::getInstance () {
-	static Parser instance;
-	return instance;
-}
 
 bool Parser::openFile (string fileName) {
 	ifstream& file = getFile();
@@ -130,7 +128,6 @@ ObjectNameFlags Parser::parseKeyDef (string& content, smatch& matcher) {
 }
 
 ObjectNameFlags Parser::parse (string& content) {
-	// cout << "Parseando " << content << endl;
 	smatch matcher;
 	ObjectNameFlags Obj;
 	if (regex_search (content, matcher, keyDef))
@@ -145,6 +142,5 @@ ObjectNameFlags Parser::parse (string& content) {
 		return parseBrace (content, matcher);
 	else if (regex_search (content, matcher, startBracket))
 		return parseBracket (content, matcher);
-	cout << "EMPTY" << endl;
 	return {nullptr, "", EMPTY};
 }
