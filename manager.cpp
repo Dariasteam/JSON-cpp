@@ -132,6 +132,7 @@ bool JsonTree::copyVector (string path, vector<string>& array) {
     ObjectVector* vect = (ObjectVector*)obj;
     int size = vect->size();
     array.resize (size);
+    cout << "Ñame " << size << endl;
     for (int i = 0; i < size; i++) {
       if (((ObjectFinalNumber*)vect->operator[](i))->getType() == STRING)
         array[i] = ((ObjectFinalString*)vect->operator[](i))->getContent();
