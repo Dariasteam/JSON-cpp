@@ -50,11 +50,11 @@ Debido a las límitaciones del lenguaje, debemos conocer a priori de qué tipo (
 ## Interfaz Provista
 
 ### Objeto Parser
-- Constructor
+#### Constructor
 ```c++
  Parser ();
 ```
-- Métodos
+#### Métodos
 ```c++
   bool parseFile (string path_to_file);
 ```
@@ -66,7 +66,7 @@ Retorna el éxito o fracaso de la operación.
 Retorna el objeto **JsonTree** resultante del parseo del fichero.
 
 ### Objeto JsonTree
-- Constructor
+#### Constructor
 ```c++
  JsonTree (AbstractObject* root);
 ```
