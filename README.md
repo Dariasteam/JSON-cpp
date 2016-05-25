@@ -1,7 +1,7 @@
 # C++ JSON Manager
 Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 
-<!-- TOC depthFrom:2 depthTo:7 withLinks:1 updateOnSave:0 orderedList:0 -->
+<!-- TOC depthFrom:2 depthTo:7 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Funcionamiento Interno](#funcionamiento-interno)
 - [Interfaz Provista](#interfaz-provista)
@@ -11,10 +11,6 @@ Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 	- [Objeto JsonTree](#objeto-jsontree)
 		- [Constructor](#constructor)
 		- [Métodos](#m-todos)
-  		- [Checkeo](#checkeo)
-  		- [Getters](#getters)
-  		- [Información contenedores](#informaci-n-de-contenedores)
-  		- [Operaciones rápidas](#operaciones-r-pidas)
 - [Usage Example](#usage-example)
 - [ToDo](#todo)
 
@@ -54,11 +50,11 @@ Debido a las límitaciones del lenguaje, debemos conocer a priori de qué tipo (
 ## Interfaz Provista
 
 ### Objeto Parser
-- #### Constructor
+- Constructor
 ```c++
  Parser ();
 ```
-- #### Métodos
+- Métodos
 ```c++
   bool parseFile (string path_to_file);
 ```
@@ -70,13 +66,13 @@ Retorna el éxito o fracaso de la operación.
 Retorna el objeto **JsonTree** resultante del parseo del fichero.
 
 ### Objeto JsonTree
-- #### Constructor
+- Constructor
 ```c++
  JsonTree (AbstractObject* root);
 ```
 Innecesario, un objeto JsonTree es generado automáticamente por el parser.
 #### Métodos
-  - ##### Checkeo
+  - Checkeo
   Retornan si un elemento de la jerarquía es de un tipo determinado dada su ruta
   ```c++
   bool isNumber (string path);
@@ -85,14 +81,14 @@ Innecesario, un objeto JsonTree es generado automáticamente por el parser.
   bool isVector (string path); // array
   bool isMap (string path); // hash
   ```
-  - ##### Getters
+  - Getters
   Retornan el valor de un elemento de la jerarquía dada su ruta
   ```c++
   double getNumber (string path);
   bool getBool (string path);
   string getString (string path);
   ```
-  - ##### Información de contenedores
+  - Información de contenedores
   ```c++
   std::vector <string> getKeys (string path);
   ```
@@ -101,7 +97,7 @@ Innecesario, un objeto JsonTree es generado automáticamente por el parser.
   int getSizeAt (string path);
   ```
   Retorna el tamaño de un **vector** dada su ruta
-  - ##### Operaciones rápidas
+  - Operaciones rápidas
   Permiten inicializar vectores con todos los elementos contenidos en un objeto dada su ruta y el vector a inicializar. Retornan si la operación ha tenido éxito.   Cualquier contenido reexistente en el vector es eliminado y el tamaño es ajustado al de la cantidad de elementos a copiar.
   ```c++
   bool copyVector (string path, vector<double>& array);

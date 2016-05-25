@@ -1,5 +1,5 @@
 {
-  "key_1" : ["element1"   , "element2"],
+  "key_1" : ["element1", "element2"],
   "key_2" : 12,
   "key_4" : "Single string element",
   "key_5" : {
