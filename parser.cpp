@@ -44,37 +44,29 @@ bool Parser::hasComma (string buffer) {
 ObjectNameFlags Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
 	content = content.substr(matcher[0].length(), content.size());
 	obj->setValue(matcher[1]);
-	cout << "El value es " << matcher[1] << endl;
 	return {obj, "", hasComma(matcher[2])};
 }
 
 ObjectNameFlags Parser::parseContainer (string& content, smatch& matcher, regex& rgx, ObjectContainer* obj) {
 	content = content.substr(matcher[0].length(), content.size());
-	cout << "Encuentro un contenedor " << endl;
 	ObjectNameFlags aux;
 	int flag;
 	do {
-		cout << "Exploro contenido del hash" << endl;
 		aux = parse (content);
 		obj->insert (aux.key, aux.element);
-		cout << "Last element flag: " << aux.flags << endl;
 	} while (aux.flags == REGULAR_ELEMENT);
 	if (obj->size() > 1 && aux.flags != LAST_ELEMENT)
-		cout << "Se esperan más elementos pero no" << endl;
-
+		return {obj, "", EXPECTED_MORE};
 	if (regex_search (content, matcher, rgx)) {
 		content = content.substr(matcher[0].length(), content.size());
 		flag = hasComma(matcher[2]);
-		cout << "Fin del container con flag " << flag << endl;
 	} else {
 		flag = NO_CLOSED;
-		cout << "ERROR NO CLOSED " << endl;
 	}
-	return {obj, matcher[1], flag};
+	return {obj, "", flag};
 }
 
 ObjectNameFlags Parser::parseKeyDef (string& content, smatch& matcher) {
-	cout << "Encuentro una clave " << matcher[1] << endl;
 	string key = matcher[1];
 	content = content.substr(matcher[0].length(), content.size());
 	ObjectNameFlags aux = parse (content);

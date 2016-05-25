@@ -1,4 +1,4 @@
- # C++ JSON Manager
+# JSON-cpp
 Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 
 <!-- TOC depthFrom:2 depthTo:7 withLinks:1 updateOnSave:1 orderedList:0 -->

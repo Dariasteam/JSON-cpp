@@ -16,9 +16,10 @@
 using namespace std;
 
 enum Flags {
-	LAST_ELEMENT,
-	REGULAR_ELEMENT,
+	LAST_ELEMENT,			// do not move this element
+	REGULAR_ELEMENT,	// do not move this element
 	NO_CLOSED,
+	EXPECTED_MORE,
 	EMPTY
 };
 
