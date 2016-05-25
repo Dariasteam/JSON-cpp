@@ -1,4 +1,4 @@
-# C++ JSON Manager
+ # C++ JSON Manager
 Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 
 <!-- TOC depthFrom:2 depthTo:7 withLinks:1 updateOnSave:1 orderedList:0 -->
@@ -7,7 +7,7 @@ Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 - [Interfaz Provista](#interfaz-provista)
 	- [Objeto Parser](#objeto-parser)
 		- [Constructor](#constructor)
-		- [Métodos](#mtodos)
+		- [Métodos](#m-todos)
 	- [Objeto JsonTree](#objeto-jsontree)
 		- [Constructor](#constructor)
 		- [Métodos](#m-todos)

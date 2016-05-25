@@ -16,7 +16,6 @@ bool Parser::parseFile (string fileName) {
 
 Parser::Parser () :
 	keyDef ("^(?:\\s*)(?:(?:\")(\\w+)(?:\")(?:\\s*:))"),
-
 	startBrace ("^(?:\\s*)(\\{)"),
 	startBracket ("^(?:\\s*)(\\[)"),
 	finalQuote ("^(?:\\s*)(?:\")((?:\\w|\\s|\\d)+)(?:\")(?:\\s*)(,)?"),
@@ -42,81 +41,36 @@ bool Parser::hasComma (string buffer) {
 	return (buffer.size() > 0);
 }
 
-ObjectNameFlags Parser::parseFinalQuote (string& content, smatch& matcher) {
-	cout << "Encuentro una string " << matcher[1] << " - " << matcher[2] <<endl;
+ObjectNameFlags Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
 	content = content.substr(matcher[0].length(), content.size());
-	return {new ObjectFinalString (matcher[1]), "", hasComma(matcher[2])};
+	obj->setValue(matcher[1]);
+	cout << "El value es " << matcher[1] << endl;
+	return {obj, "", hasComma(matcher[2])};
 }
 
-ObjectNameFlags Parser::parseFinalBoolean (string& content, smatch& matcher) {
-	cout << "Encuentro un booleano" << endl;
+ObjectNameFlags Parser::parseContainer (string& content, smatch& matcher, regex& rgx, ObjectContainer* obj) {
 	content = content.substr(matcher[0].length(), content.size());
-	double value;
-	if (matcher[1] == "true")
-		value = 1;
-	else
-		value = 0;
-	return {new ObjectFinalNumber (value), "", hasComma(matcher[2])};
-}
-
-ObjectNameFlags Parser::parseFinalNumber (string& content, smatch& matcher) {
-	cout << "Encuentro un número" << matcher[1] << endl;
-	content = content.substr(matcher[0].length(), content.size());
-	double value = stod(matcher[1]);
-	return {new ObjectFinalNumber (value), "", hasComma(matcher[2])};
-}
-
-ObjectNameFlags Parser::parseBrace (string& content, smatch& matcher) {
-	content = content.substr(matcher[0].length(), content.size());
-	cout << "Encuentro un hash " << endl;
-	ObjectMap* hash = new ObjectMap ();
+	cout << "Encuentro un contenedor " << endl;
 	ObjectNameFlags aux;
 	int flag;
 	do {
 		cout << "Exploro contenido del hash" << endl;
 		aux = parse (content);
-		hash->insert (aux.key, aux.element);
+		obj->insert (aux.key, aux.element);
 		cout << "Last element flag: " << aux.flags << endl;
-
 	} while (aux.flags == REGULAR_ELEMENT);
-	if (hash->size() > 1 && aux.flags != LAST_ELEMENT)
+	if (obj->size() > 1 && aux.flags != LAST_ELEMENT)
 		cout << "Se esperan más elementos pero no" << endl;
 
-	if (regex_search (content, matcher, nextBrace)) {
+	if (regex_search (content, matcher, rgx)) {
 		content = content.substr(matcher[0].length(), content.size());
 		flag = hasComma(matcher[2]);
-		cout << "Fin del hash con flag " << flag << endl;
+		cout << "Fin del container con flag " << flag << endl;
 	} else {
 		flag = NO_CLOSED;
 		cout << "ERROR NO CLOSED " << endl;
 	}
-	return {hash, matcher[1], flag};
-}
-
-ObjectNameFlags Parser::parseBracket (string& content, smatch& matcher) {
-	content = content.substr(matcher[0].length(), content.size());
-	cout << "Encuentro un vector " << endl;
-	ObjectVector* array = new ObjectVector ();
-	ObjectNameFlags aux;
-	int flag;
-	do {
-		cout << "Exploro contenido del vector" << endl;
-		aux = parse (content);
-		array->insert (aux.element);
-		cout << "Last element flag: " << aux.flags << endl;
-	} while (aux.flags == REGULAR_ELEMENT);
-	if (array->size() > 1 && aux.flags != LAST_ELEMENT)
-		cout << "Se esperan más elementos pero no" << endl;
-
-	if (regex_search (content, matcher, nextBracket)) {
-		content = content.substr(matcher[0].length(), content.size());
-		flag = hasComma(matcher[2]);
-		cout << "Fin del vector con flag " << flag << matcher[2]<< endl;
-	} else {
-		flag = NO_CLOSED;
-		cout << "ERROR NO CLOSED " << endl;
-	}
-	return {array, matcher[1], flag};
+	return {obj, matcher[1], flag};
 }
 
 ObjectNameFlags Parser::parseKeyDef (string& content, smatch& matcher) {
@@ -133,14 +87,14 @@ ObjectNameFlags Parser::parse (string& content) {
 	if (regex_search (content, matcher, keyDef))
 		return parseKeyDef (content, matcher);
 	else if (regex_search(content, matcher, finalQuote))
-		return parseFinalQuote (content, matcher);
+		return parseFinal (content, matcher, new ObjectFinalString());
 	else if (regex_search(content, matcher, finalBoolean))
-		return parseFinalBoolean (content, matcher);
+		return parseFinal (content, matcher, new ObjectFinalBool());
 	else if (regex_search(content, matcher, finalNumber))
-		return parseFinalNumber (content, matcher);
+		return parseFinal (content, matcher, new ObjectFinalNumber());
 	else if (regex_search (content, matcher, startBrace))
-		return parseBrace (content, matcher);
+		return parseContainer (content, matcher, nextBrace, new ObjectMap ());
 	else if (regex_search (content, matcher, startBracket))
-		return parseBracket (content, matcher);
+		return parseContainer (content, matcher, nextBracket, new ObjectVector ());
 	return {nullptr, "", EMPTY};
 }

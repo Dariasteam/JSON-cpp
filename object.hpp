@@ -33,6 +33,8 @@ protected:
 public:
   virtual const AbstractObject* operator[](int index) = 0;
   virtual const AbstractObject* operator[](string key) = 0;
+  virtual void insert (string key, AbstractObject* obj) = 0;
+  virtual int size () = 0;
 };
 
 class ObjectVector : public ObjectContainer{
@@ -41,7 +43,7 @@ private:
 public:
   ObjectVector () : ObjectContainer (VECTOR) {}
   AbstractObject* getContentAt (int index);
-  inline void insert (AbstractObject* element) {array.push_back (element); }
+  inline void insert (string key, AbstractObject* obj) {array.push_back (obj); }
   inline int size () { return array.size(); }
   AbstractObject* operator[](int index);
   AbstractObject* operator[](string key) { return nullptr; }
@@ -66,25 +68,41 @@ class ObjectFinal : public AbstractObject {
 protected:
   ObjectFinal (int type) : AbstractObject (type) {}
   virtual ~ObjectFinal () = 0;
+public:
+  virtual void setValue (string value) = 0;
 };
 
 class ObjectFinalNumber : public ObjectFinal {
 private:
   double number;
 public:
+  ObjectFinalNumber () : ObjectFinal (NUMBER) {}
   ObjectFinalNumber (double n) : ObjectFinal (NUMBER), number (n) {}
   inline double getContent () { return number; }
   ObjectFinalNumber& get () { return *this; }
+  void setValue (string value);
 };
 
 class ObjectFinalString : public ObjectFinal {
 private:
   string text;
 public:
+  ObjectFinalString () : ObjectFinal (STRING) {}
   ObjectFinalString (string s) : ObjectFinal (STRING), text (s) {}
   inline string getContent () { return text; }
   ObjectFinalString& get () { return *this; }
+  void setValue (string value);
 };
 
+class ObjectFinalBool : public ObjectFinal {
+private:
+  bool boolean;
+public:
+  ObjectFinalBool() : ObjectFinal (BOOL), boolean (false) {}
+  ObjectFinalBool(string s) : ObjectFinal (BOOL) { setValue(s); }
+  inline bool getContent () { return boolean; }
+  ObjectFinalBool& get () { return *this; }
+  void setValue (string value);
+};
 
 #endif

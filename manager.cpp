@@ -85,7 +85,7 @@ bool JsonTree::isNumber (string path) {
 }
 
 bool JsonTree::isBool (string path) {
-return isType (getObject (path, top), BOOL);
+  return isType (getObject (path, top), BOOL);
 }
 
 bool JsonTree::isString (string path) {

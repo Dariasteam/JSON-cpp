@@ -50,12 +50,11 @@ private:
 	bool hasComma (string buffer);
 
 	ObjectNameFlags parse (string& content);
+
+	ObjectNameFlags parseFinal (string& content, smatch& matcher, ObjectFinal* obj);
 	ObjectNameFlags parseKeyDef (string& content, smatch& matcher);
-	ObjectNameFlags parseFinalQuote (string& content, smatch& matcher);
-	ObjectNameFlags parseFinalBoolean (string& content, smatch& matcher);
-	ObjectNameFlags parseFinalNumber (string& content, smatch& matcher);
-	ObjectNameFlags parseBrace (string& content, smatch& matcher);
-	ObjectNameFlags parseBracket (string& content, smatch& matcher);
+	ObjectNameFlags parseContainer (string& content, smatch& matcher, regex& rgx, ObjectContainer* obj);
+
 
 	inline bool hasErrors () { return errors > 0; }
 	inline ifstream& getFile () { return file; }
