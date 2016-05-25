@@ -72,7 +72,7 @@ Retorna el objeto **JsonTree** resultante del parseo del fichero.
 ```
 Innecesario, un objeto JsonTree es generado automáticamente por el parser.
 #### Métodos
-  - Checkeo  : Retornan si un elemento de la jerarquía es de un tipo determinado dada su ruta
+  - Checkeo  : Retornan si un elemento de la jerarquía es de un tipo determinado dada su ruta.
   ```c++
   bool isNumber (string path);
   bool isString (string path);
@@ -80,21 +80,23 @@ Innecesario, un objeto JsonTree es generado automáticamente por el parser.
   bool isVector (string path); // array
   bool isMap (string path); // hash
   ```
-  - Getters : Retornan el valor de un elemento de la jerarquía dada su ruta
+
+  - Getters : Retornan el valor de un elemento de la jerarquía dada su ruta.
   ```c++
   double getNumber (string path);
   bool getBool (string path);
   string getString (string path);
   ```
+
   - Información de contenedores
   ```c++
   std::vector <string> getKeys (string path);
   ```
-  Retorna un vector con todas las claves contenidas en un **map** (*hash*) dada su ruta
+  Retorna un vector con todas las claves contenidas en un **map** (*hash*) dada su ruta.
   ```c++
   int getSizeAt (string path);
   ```
-  Retorna el tamaño de un **vector** dada su ruta  
+  Retorna el tamaño de un **vector** dada su ruta.  
 
   - Operaciones rápidas  
   Permiten inicializar vectores con todos los elementos contenidos en un objeto dada su ruta y el vector a inicializar. Retornan si la operación ha tenido éxito.   Cualquier contenido reexistente en el vector es eliminado y el tamaño es ajustado al de la cantidad de elementos a copiar.
