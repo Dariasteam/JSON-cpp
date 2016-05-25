@@ -105,9 +105,9 @@ Innecesario, un objeto JsonTree es generado automáticamente por el parser.
   bool copyVector (string path, vector<bool>& array);
   bool copyVector (string path, vector<string>& array);
   ```
-	Consideraciones:  
-	  - Solo se permiten los vectores de tipo double, bool y string; en caso de querer inicializar un objeto de int, por ejemplo, se deberá inicializar un vector <double> y copiar posteriormente todos sus valores a otro vector <int>   
-	  - En caso de que el vector definido en el .json contenga elementos de varios tipos los métodos devolverán false, por lo que es responsabilidad del programador asegurarse de que aquellos vectores que pretenda inicializar mediante estas funciones sean homogéneos en el .json.  
+	Consideraciones:
+  - Solo se permiten los vectores de tipo double, bool y string; en caso de querer inicializar un objeto de int, por ejemplo, se deberá inicializar un vector <double> y copiar posteriormente todos sus valores a otro vector <int>   
+  - En caso de que el vector definido en el .json contenga elementos de varios tipos los métodos devolverán false, por lo que es responsabilidad del programador asegurarse de que aquellos vectores que pretenda inicializar mediante estas funciones sean homogéneos en el .json.  
 
 ## Usage Example
 JSON File
