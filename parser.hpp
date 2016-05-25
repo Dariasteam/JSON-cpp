@@ -32,17 +32,14 @@ struct ObjectNameFlags {
 class Parser {
 private:
 	ifstream file;
-
 	JsonTree tree;
 
 	regex startBrace;
 	regex startBracket;
-
 	regex keyDef;
 	regex finalQuote;
 	regex finalNumber;
 	regex finalBoolean;
-
 	regex nextBrace;
 	regex nextBracket;
 
@@ -51,12 +48,10 @@ private:
 	bool hasComma (string buffer);
 
 	ObjectNameFlags parse (string& content);
-
 	ObjectNameFlags parseFinal (string& content, smatch& matcher, ObjectFinal* obj);
 	ObjectNameFlags parseKeyDef (string& content, smatch& matcher);
 	ObjectNameFlags parseContainer (string& content, smatch& matcher, regex& rgx, ObjectContainer* obj);
-
-
+	
 	inline bool hasErrors () { return errors > 0; }
 	inline ifstream& getFile () { return file; }
 public:

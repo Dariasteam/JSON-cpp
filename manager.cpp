@@ -7,6 +7,20 @@ JsonTree::JsonTree (AbstractObject* root) :
   top = (ObjectMap*)root;
 }
 
+void JsonTree::getterError (string path, AbstractObject* obj, int type) {
+  cerr << "ERROR : ";
+  if (obj == nullptr) {
+    cerr << "Attempting to load the element " << path
+         << " which does not exist."
+         << "The default value will be returned " << endl;
+  } else {
+    cerr << "Attempting to load the element " << path
+         << " as a "<< objectsTypesReverse[type] << " when is of type "
+         << objectsTypesReverse[obj->getType()]
+         << ". The default value will be returned " << endl;
+  }
+}
+
 AbstractObject* JsonTree::getObject (string path, AbstractObject* obj) {
   if (path.size() != 0 && obj != nullptr) {
     smatch matcher;
@@ -40,6 +54,7 @@ double JsonTree::getNumber (string path) {
   if (obj != nullptr && obj->getType() == NUMBER) {
     return ((ObjectFinalNumber*)obj)->getContent();
   } else {
+    getterError(path, obj, NUMBER);
     return -1;
   }
 }
@@ -49,15 +64,17 @@ string JsonTree::getString (string path) {
   if (obj != nullptr && obj->getType() == STRING) {
     return ((ObjectFinalString*)obj)->getContent();
   } else {
+    getterError(path, obj, STRING);
     return "";
   }
 }
 
 bool JsonTree::getBool (string path) {
   AbstractObject* obj = getObject (path, top);
-  if (obj != nullptr && obj->getType() == NUMBER) {
+  if (obj != nullptr && obj->getType() == BOOL) {
     return ((ObjectFinalNumber*)obj)->getContent();
   } else {
+    getterError(path, obj, BOOL);
     return false;
   }
 }

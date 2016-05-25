@@ -12,12 +12,18 @@ using namespace std;
 
 class JsonTree {
 private:
+  string objectsTypesReverse [5] = {"Vector",
+                                    "Map",
+                                    "Number",
+                                    "String",
+                                    "Bool"};
   ObjectMap* top;
   regex tokenRgx;
   regex numberRgx;
 
   bool isType (AbstractObject* obj, int type);
   AbstractObject* searchSon (string key, AbstractObject* obj);
+  void getterError (string path, AbstractObject* obj, int type);
 public:
   JsonTree (AbstractObject* root);
   AbstractObject* getObject (string path, AbstractObject* obj);
