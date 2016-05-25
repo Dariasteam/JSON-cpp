@@ -72,8 +72,7 @@ Retorna el objeto **JsonTree** resultante del parseo del fichero.
 ```
 Innecesario, un objeto JsonTree es generado automáticamente por el parser.
 #### Métodos
-  - Checkeo
-  Retornan si un elemento de la jerarquía es de un tipo determinado dada su ruta
+  - Checkeo  : Retornan si un elemento de la jerarquía es de un tipo determinado dada su ruta
   ```c++
   bool isNumber (string path);
   bool isString (string path);
@@ -81,8 +80,7 @@ Innecesario, un objeto JsonTree es generado automáticamente por el parser.
   bool isVector (string path); // array
   bool isMap (string path); // hash
   ```
-  - Getters
-  Retornan el valor de un elemento de la jerarquía dada su ruta
+  - Getters : Retornan el valor de un elemento de la jerarquía dada su ruta
   ```c++
   double getNumber (string path);
   bool getBool (string path);
@@ -96,16 +94,17 @@ Innecesario, un objeto JsonTree es generado automáticamente por el parser.
   ```c++
   int getSizeAt (string path);
   ```
-  Retorna el tamaño de un **vector** dada su ruta
-  - Operaciones rápidas
+  Retorna el tamaño de un **vector** dada su ruta  
+
+  - Operaciones rápidas  
   Permiten inicializar vectores con todos los elementos contenidos en un objeto dada su ruta y el vector a inicializar. Retornan si la operación ha tenido éxito.   Cualquier contenido reexistente en el vector es eliminado y el tamaño es ajustado al de la cantidad de elementos a copiar.
   ```c++
   bool copyVector (string path, vector<double>& array);
   bool copyVector (string path, vector<bool>& array);
   bool copyVector (string path, vector<string>& array);
   ```
-    - Solo se permiten los vectores de tipo double, bool y string; en caso de querer inicializar un objeto de int, por ejemplo, se deberá inicializar un vector <double> y copiar posteriormente todos sus valores a otro vector <int>   
-    - En caso de que el vector definido en el .json contenga elementos de varios tipos los métodos devolverán false, por lo que es responsabilidad del programador asegurarse de que aquellos vectores que pretenda inicializar mediante estas funciones sean homogéneos en el .json.  
+  - Solo se permiten los vectores de tipo double, bool y string; en caso de querer inicializar un objeto de int, por ejemplo, se deberá inicializar un vector <double> y copiar posteriormente todos sus valores a otro vector <int>   
+  - En caso de que el vector definido en el .json contenga elementos de varios tipos los métodos devolverán false, por lo que es responsabilidad del programador asegurarse de que aquellos vectores que pretenda inicializar mediante estas funciones sean homogéneos en el .json.  
 
 ## Usage Example
 JSON File
