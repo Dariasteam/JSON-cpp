@@ -90,11 +90,18 @@ ObjectNameFlags Parser::parse (string& content) {
 		return parseFinal (content, matcher, new ObjectFinalString());
 	else if (regex_search(content, matcher, finalBoolean))
 		return parseFinal (content, matcher, new ObjectFinalBool());
-	else if (regex_search(content, matcher, finalNumber))
+	/*else if (regex_search(content, matcher, finalNumber))
+		return parseFinal (content, matcher, new ObjectFinalNumber());*/
+	else if (isDigits(content))
 		return parseFinal (content, matcher, new ObjectFinalNumber());
 	else if (regex_search (content, matcher, startBrace))
 		return parseContainer (content, matcher, nextBrace, new ObjectMap ());
 	else if (regex_search (content, matcher, startBracket))
 		return parseContainer (content, matcher, nextBracket, new ObjectVector ());
 	return {nullptr, "", EMPTY};
+}
+
+bool Parser::isDigits(const string &str)
+{
+    return all_of(str.begin(), str.end(), ::isdigit); // C++11
 }
