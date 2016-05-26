@@ -1,5 +1,7 @@
 #include "./object.hpp"
 
+#include <iostream>
+
 AbstractObject::~AbstractObject() {}
 
 ObjectContainer::~ObjectContainer() {}
@@ -27,6 +29,6 @@ AbstractObject* ObjectVector::operator[] (int index) {
   }
 
 void ObjectMap::insert (string key, AbstractObject* obj) {
-  keys.push_back (key);
+  keys.push_back (key);  
   hash.insert(pair <string, AbstractObject*> (key, obj));
 }

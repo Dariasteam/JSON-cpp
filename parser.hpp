@@ -29,8 +29,19 @@ struct ObjectNameFlags {
 	int flags;
 };
 
+struct JsonError {
+	string path;
+	int type;
+};
+
 class Parser {
+	string reverseFlags [5] = {"LAST_ELEMENT",
+	 													"REGULAR_ELEMENT",
+														"NO_CLOSED",
+														"EXPECTED_MORE",
+														"EMPTY"};
 private:
+	vector <JsonError> errors;
 	ifstream file;
 	JsonTree tree;
 
@@ -43,22 +54,22 @@ private:
 	regex nextBrace;
 	regex nextBracket;
 
-	int errors;
 	bool openFile (string fileName);
 	bool hasComma (string buffer);
-	void evaluateFlag (int flag);
+	void evaluateFlag (int flag, string path);
 
-	ObjectNameFlags parse (string& content);
+	ObjectNameFlags parse (string& content, string path);
+	ObjectNameFlags parseKeyDef (string& content, smatch& matcher, string path);
 	ObjectNameFlags parseFinal (string& content, smatch& matcher, ObjectFinal* obj);
-	ObjectNameFlags parseKeyDef (string& content, smatch& matcher);
-	ObjectNameFlags parseContainer (string& content, smatch& matcher, regex& rgx, ObjectContainer* obj);
+	ObjectNameFlags parseContainer (string& content, smatch& matcher, regex& rgx, ObjectContainer* obj, string path);
 
-	inline bool hasErrors () { return errors > 0; }
+	inline bool hasErrors () { return errors.size() > 0; }
 	inline ifstream& getFile () { return file; }
 public:
 	Parser ();
 	JsonTree getTree () { return tree; }
 	bool parseFile (string fileName);
+	const vector<JsonError>& getErrors () { return errors; }
 };
 
 #endif

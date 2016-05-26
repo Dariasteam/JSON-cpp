@@ -165,6 +165,6 @@ error 1
 - [ ] Interfaz para crear árbol desde un objeto
 - [ ] Permitir escribir archivos
 - [ ] Flag que oblige a todos los elementos de un contenedor a ser del mismo tipo
-- [ ] Manejo de errores desde el objeto parser
-  - [ ] Devolver ruta completa
-  - [ ] Devolver tipo de error
+- [x] Manejo de errores desde el objeto parser (incompleto)
+  - [x] Devolver ruta completa
+  - [x] Devolver tipo de error
