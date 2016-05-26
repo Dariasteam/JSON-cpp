@@ -12,7 +12,7 @@ void JsonTree::getterError (string path, AbstractObject* obj, int type) {
   if (obj == nullptr) {
     cerr << "Attempting to load the element " << path
          << " which does not exist."
-         << "The default value will be returned " << endl;
+         << " The default value will be returned " << endl;
   } else {
     cerr << "Attempting to load the element " << path
          << " as a "<< objectsTypesReverse[type] << " when is of type "
@@ -149,7 +149,6 @@ bool JsonTree::copyVector (string path, vector<string>& array) {
     ObjectVector* vect = (ObjectVector*)obj;
     int size = vect->size();
     array.resize (size);
-    cout << "Ñame " << size << endl;
     for (int i = 0; i < size; i++) {
       if (((ObjectFinalNumber*)vect->operator[](i))->getType() == STRING)
         array[i] = ((ObjectFinalString*)vect->operator[](i))->getContent();

@@ -3,7 +3,7 @@
   "key_2" : 12,
   "key_4" : true,
   "key_5" : {
-    "sub_key_1" : 20,
+    "sub_key_1" : -20.44,
     "sub_key_2" : "last element"
   }
 }
