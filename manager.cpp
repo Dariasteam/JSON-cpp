@@ -1,8 +1,10 @@
-#include "manager.hpp"
+#include "./manager.hpp"
 
 JsonTree::JsonTree (AbstractObject* root) :
-  tokenRgx ("(\\w*)(:?\\.)?"),
-  numberRgx ("(\\d+)(:?(?:\\w|\\s)*)")
+  tokenRgx ("^(\\w+)(:?\\.)?"),
+  numberRgx ("^(\\d+)(:?(?:\\w|\\s)*)"),
+  vectorAccessRgx ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?"),
+  mapAccessRgx ("^(?:\\['(\\w)+(:?'\\]))(:?\\.)?")
   {
   top = (ObjectMap*)root;
 }
@@ -72,7 +74,7 @@ string JsonTree::getString (string path) {
 bool JsonTree::getBool (string path) {
   AbstractObject* obj = getObject (path, top);
   if (obj != nullptr && obj->getType() == BOOL) {
-    return ((ObjectFinalNumber*)obj)->getContent();
+    return ((ObjectFinalBool*)obj)->getContent();
   } else {
     getterError(path, obj, BOOL);
     return false;
@@ -178,3 +180,28 @@ bool JsonTree::copyVector (string path, vector<bool>& array) {
     return false;
   }
 }
+
+AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
+  if (path.size() != 0 && obj != nullptr) {
+    smatch matcher;
+    if (regex_search (path, matcher, tokenRgx)) {
+      path = path.substr(matcher[0].length(), path.size());
+      AbstractObject* son = searchSon (matcher[1], obj);
+      if (son != nullptr) {
+        insertObject(path, son);
+      } else {
+        cout << "queda " << path << " por añadir" << endl;
+      }
+    } else {
+      return nullptr;
+    }
+  } else {
+    return obj;
+  }
+  return nullptr;
+}
+
+bool JsonTree::addElement(string path, double value) {
+  insertObject (path, top);
+  return false;
+};

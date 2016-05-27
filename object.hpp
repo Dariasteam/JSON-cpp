@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <regex>
 
 using namespace std;
 
@@ -30,8 +31,8 @@ protected:
   ObjectContainer (int type) : AbstractObject (type) {}
   ~ObjectContainer () = 0;
 public:
-  virtual const AbstractObject* operator[](int index) = 0;
-  virtual const AbstractObject* operator[](string key) = 0;
+  virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
+  virtual const AbstractObject* operator[](string key) { return nullptr; };
   virtual void insert (string key, AbstractObject* obj) = 0;
   virtual int size () = 0;
 };
@@ -44,9 +45,7 @@ public:
   AbstractObject* getContentAt (int index);
   inline void insert (string key, AbstractObject* obj) {array.push_back (obj); }
   inline int size () { return array.size(); }
-  AbstractObject* operator[](int index);
-  AbstractObject* operator[](string key) { return nullptr; }
-  ObjectVector& get () { return *this; }
+  AbstractObject* operator[](unsigned index);
 };
 
 class ObjectMap : public ObjectContainer {
@@ -57,10 +56,8 @@ public:
   ObjectMap () : ObjectContainer (MAP) {}
   void insert (string key, AbstractObject* obj);
   inline int size () { return hash.size(); }
-  inline vector <string> getKeys () { return keys; }
+  inline const vector <string>& getKeys () { return keys; }
   AbstractObject* operator[](string key) { return hash[key]; }
-  AbstractObject* operator[](int index) { return nullptr; }
-  ObjectMap& get () { return *this; }
 };
 
 class ObjectFinal : public AbstractObject {

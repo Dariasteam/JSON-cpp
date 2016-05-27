@@ -20,6 +20,8 @@ private:
   ObjectMap* top;
   regex tokenRgx;
   regex numberRgx;
+  regex vectorAccessRgx;
+  regex mapAccessRgx;
 
   bool isType (AbstractObject* obj, int type);
   AbstractObject* searchSon (string key, AbstractObject* obj);
@@ -44,6 +46,9 @@ public:
   bool isMap (string path);
   bool isVector (string path);
   bool exist (string path);
+
+  AbstractObject* insertObject (string path, AbstractObject* obj);
+  bool addElement (string path, double value);
 };
 
 #endif

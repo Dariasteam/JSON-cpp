@@ -7,8 +7,6 @@ bool Parser::parseFile (string fileName) {
 		string fileContent = buffer.str();
 		ObjectNameFlags result = parse (fileContent, "");
 		tree = JsonTree (result.element);
-		if (result.flags != LAST_ELEMENT )
-			evaluateFlag(EMPTY, ".");
 		if (fileContent.size() > 0)
 			evaluateFlag(NO_CLOSED, ".");
 		return !hasErrors();
@@ -19,14 +17,6 @@ bool Parser::parseFile (string fileName) {
 }
 
 Parser::Parser () :
-	keyDef ("^(?:\\s*)(?:(?:\")(\\w+)(?:\")(?:\\s*:))"),
-	startBrace ("^(?:\\s*)(\\{)"),
-	startBracket ("^(?:\\s*)(\\[)"),
-	finalQuote ("^(?:\\s*)(?:\")((?:\\w|\\s|\\d)+)(?:\")(?:\\s*)(,)?"),
-	finalBoolean ("^(?:\\s*)(true|false)(?:\\s*)(,)?"),
-	finalNumber ("^(?:\\s*)((?:\\+|\\-)?\\d+(?:\\.\\d+)?(?:e(?:\\+|\\-)?\\d+)?)(?:\\s*)(,)?"),
-	nextBrace("^(?:\\s*)(\\})(?:\\s*)(,)?"),
-	nextBracket("^(?:\\s*)(\\])(?:\\s*)(,)?"),
 	errors (0),
 	tree (nullptr)
 	{}
@@ -101,6 +91,5 @@ ObjectNameFlags Parser::parse (string& content, string path) {
 		return parseContainer (content, matcher, nextBrace, new ObjectMap (), path);
 	else if (regex_search (content, matcher, startBracket))
 		return parseContainer (content, matcher, nextBracket, new ObjectVector (), path);
-	evaluateFlag (EMPTY, path);
 	return {nullptr, "", EMPTY};
 }
