@@ -159,12 +159,7 @@ AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
 
 bool JsonTree::addElement(string path, double value) {
   cout << "la energía comienza a fluir" << endl;
-  if (top->get(path) == nullptr) {
-    cout << "Se me devolvió nulo" << endl;
-  } else {
-    cout << "Se me devolvió algo" << endl;
-    cout << "tipo: " << top->get(path)->getType() << endl;
-  }
+  top->add(path, "a");
   //insertObject (path, top);
   return false;
 };

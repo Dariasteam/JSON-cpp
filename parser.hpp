@@ -45,14 +45,14 @@ private:
 	ifstream file;
 	JsonTree tree;
 
-	regex startBrace = regex ("^(?:\\s*)(\\{)");
-	regex startBracket = regex ("^(?:\\s*)(\\[)");
-	regex keyDef = regex ("^(?:\\s*)(?:(?:\")(\\w+)(?:\")(?:\\s*:))");
-	regex finalQuote = regex ("^(?:\\s*)(?:\")((?:\\w|\\s|\\d)+)(?:\")(?:\\s*)(,)?");
-	regex finalNumber = regex ("^(?:\\s*)((?:\\+|\\-)?\\d+(?:\\.\\d+)?(?:e(?:\\+|\\-)?\\d+)?)(?:\\s*)(,)?");
-	regex finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
-	regex nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
-	regex nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
+	static regex startBrace;
+	static regex startBracket;
+	static regex keyDef;
+	static regex finalQuote;
+	static regex finalNumber;
+	static regex finalBoolean;
+	static regex nextBrace;
+	static regex nextBracket;
 
 	bool openFile (string fileName);
 	bool hasComma (string buffer);

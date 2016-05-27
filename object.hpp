@@ -11,6 +11,7 @@ using namespace std;
 enum ObjetsTypes {
   VECTOR,
   MAP,
+  FINAL,    // used for comparisons, if (getType () > FINAL) -> is a final object
   NUMBER,
   STRING,
   BOOL
@@ -25,15 +26,15 @@ protected:
 public:
   inline unsigned short getType () { return type; }
   virtual AbstractObject* get (string path) = 0;
+  virtual bool add (string path, string value) = 0;
 };
 
 class ObjectContainer : public AbstractObject {
 protected:
-  ObjectContainer (int type, string rgx) : AbstractObject (type),
-                                           tokenRgx (rgx) {}
+  ObjectContainer (int type) : AbstractObject (type) {}
   ~ObjectContainer () = 0;
-  regex tokenRgx;
 public:
+  AbstractObject* addObjectDecisor (string& path, string value);
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
   virtual const AbstractObject* operator[](string key) { return nullptr; };
   virtual void insert (string key, AbstractObject* obj) = 0;
@@ -43,26 +44,30 @@ public:
 class ObjectVector : public ObjectContainer{
 private:
   vector <AbstractObject*> array;
+  static regex tokenRgx;
 public:
-  ObjectVector () : ObjectContainer (VECTOR, "^(?:\\[(\\d)+(:?\\]))(:?\\.)?") {}
-  AbstractObject* getContentAt (int index);
+  ObjectVector () : ObjectContainer (VECTOR) {}
+  AbstractObject* getContentAt (int indeox);
   inline void insert (string key, AbstractObject* obj) {array.push_back (obj); }
   inline int size () { return array.size(); }
   AbstractObject* operator[](unsigned index);
   AbstractObject* get (string path);
+  bool add (string path, string value);
 };
 
 class ObjectMap : public ObjectContainer {
 private:
   vector <string> keys;
   map <string, AbstractObject*> hash;
+  static regex tokenRgx;
 public:
-  ObjectMap () : ObjectContainer (MAP, "^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?") {}
+  ObjectMap () : ObjectContainer (MAP) {}
   void insert (string key, AbstractObject* obj);
   inline int size () { return hash.size(); }
   inline const vector <string>& getKeys () { return keys; }
   AbstractObject* operator[](string key);
   AbstractObject* get (string path);
+  bool add (string path, string value);
 };
 
 class ObjectFinal : public AbstractObject {
@@ -72,6 +77,7 @@ protected:
 public:
   virtual void setValue (string value) = 0;
   AbstractObject* get (string path);
+  bool add (string path, string value);
 };
 
 class ObjectFinalNumber : public ObjectFinal {
