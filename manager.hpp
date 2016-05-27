@@ -24,11 +24,9 @@ private:
   regex mapAccessRgx;
 
   bool isType (AbstractObject* obj, int type);
-  AbstractObject* searchSon (string key, AbstractObject* obj);
   void getterError (string path, AbstractObject* obj, int type);
 public:
   JsonTree (AbstractObject* root);
-  AbstractObject* getObject (string path, AbstractObject* obj);
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
