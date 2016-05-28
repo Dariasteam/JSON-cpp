@@ -1,13 +1,13 @@
 #include "./manager.hpp"
 
-JsonTree::JsonTree (AbstractObject* root) :
-  tokenRgx ("^(\\w+)(:?\\.)?"),
-  numberRgx ("^(\\d+)(:?(?:\\w|\\s)*)"),
-  vectorAccessRgx ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?"),
-  mapAccessRgx ("^(?:\\['(\\w)+(:?'\\]))(:?\\.)?")
-  {
-  top = (ObjectMap*)root;
-}
+
+regex JsonTree::tokenRgx = regex ("^(\\w+)(:?\\.)?");
+regex JsonTree::numberRgx = regex ("^(\\d+)(:?(?:\\w|\\s)*)");
+regex JsonTree::vectorAccessRgx = regex ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?");
+regex JsonTree::mapAccessRgx = regex ("^(?:\\['(\\w)+(:?'\\]))(:?\\.)?");
+
+JsonTree::JsonTree (AbstractObject* root)
+  { top = (ObjectMap*)root; }
 
 void JsonTree::getterError (string path, AbstractObject* obj, int type) {
   cerr << "ERROR : ";
@@ -158,7 +158,6 @@ AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
 }
 
 bool JsonTree::addElement(string path, double value) {
-  cout << "la energía comienza a fluir" << endl;
   top->add(path, "a");
   //insertObject (path, top);
   return false;

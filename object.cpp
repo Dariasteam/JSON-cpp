@@ -9,7 +9,6 @@ ObjectFinal::~ObjectFinal() {}
 regex ObjectVector::tokenRgx = regex ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?");
 regex ObjectMap::tokenRgx = regex ("^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
 
-
 void ObjectFinalBool::setValue (string value) {
   if (value == "true")
     boolean = true;

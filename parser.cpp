@@ -1,6 +1,5 @@
 #include "./parser.hpp"
 
-
 regex Parser::startBrace = regex ("^(?:\\s*)(\\{)");
 regex Parser::startBracket = regex ("^(?:\\s*)(\\[)");
 regex Parser::keyDef = regex ("^(?:\\s*)(?:(?:\")(\\w+)(?:\")(?:\\s*:))");
@@ -9,8 +8,6 @@ regex Parser::finalNumber = regex ("^(?:\\s*)((?:\\+|\\-)?\\d+(?:\\.\\d+)?(?:e(?
 regex Parser::finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
 regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
 regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
-
-
 
 bool Parser::parseFile (string fileName) {
 	if (openFile(fileName)) {

@@ -18,10 +18,10 @@ private:
                                     "String",
                                     "Bool"};
   ObjectMap* top;
-  regex tokenRgx;
-  regex numberRgx;
-  regex vectorAccessRgx;
-  regex mapAccessRgx;
+  static regex tokenRgx;
+  static regex numberRgx;
+  static regex vectorAccessRgx;
+  static regex mapAccessRgx;
 
   bool isType (AbstractObject* obj, int type);
   void getterError (string path, AbstractObject* obj, int type);
