@@ -36,9 +36,23 @@ AbstractObject* ObjectMap::operator[](string key) {
     return nullptr;
 }
 
-void ObjectMap::insert (string key, AbstractObject* obj) {
-  keys.push_back (key);
-  hash.insert(pair <string, AbstractObject*> (key, obj));
+bool ObjectVector::insert (string key, AbstractObject* obj) {
+  if (key == "") {
+    array.push_back (obj);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool ObjectMap::insert (string key, AbstractObject* obj) {
+  if (key != "") {
+    keys.push_back (key);
+    hash.insert(pair <string, AbstractObject*> (key, obj));
+    return true;
+  } else {
+    return false;
+  }
 }
 
 AbstractObject* ObjectVector::get (string path) {

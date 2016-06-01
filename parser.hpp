@@ -20,7 +20,8 @@ enum Flags {
 	REGULAR_ELEMENT,	// do not move this element
 	NO_CLOSED,
 	EXPECTED_MORE,
-	EMPTY
+	EMPTY,
+	INVALID_KEY
 };
 
 struct ObjectNameFlags {
@@ -35,11 +36,12 @@ struct JsonError {
 };
 
 class Parser {
-	string reverseFlags [5] = {"LAST_ELEMENT",
+	string reverseFlags [6] = {"LAST_ELEMENT",
 	 													"REGULAR_ELEMENT",
 														"NO_CLOSED",
 														"EXPECTED_MORE",
-														"EMPTY"};
+														"EMPTY",
+														"INVALID_KEY"};
 private:
 	vector <JsonError> errors;
 	ifstream file;

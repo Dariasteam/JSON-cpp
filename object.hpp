@@ -37,7 +37,7 @@ public:
   AbstractObject* addObjectDecisor (string& path, string value);
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
   virtual const AbstractObject* operator[](string key) { return nullptr; };
-  virtual void insert (string key, AbstractObject* obj) = 0;
+  virtual bool insert (string key, AbstractObject* obj) = 0;
   virtual int size () = 0;
 };
 
@@ -48,7 +48,7 @@ private:
 public:
   ObjectVector () : ObjectContainer (VECTOR) {}
   AbstractObject* getContentAt (int indeox);
-  inline void insert (string key, AbstractObject* obj) {array.push_back (obj); }
+  bool insert (string key, AbstractObject* obj);
   inline int size () { return array.size(); }
   AbstractObject* operator[](unsigned index);
   AbstractObject* get (string path);
@@ -62,7 +62,7 @@ private:
   static regex tokenRgx;
 public:
   ObjectMap () : ObjectContainer (MAP) {}
-  void insert (string key, AbstractObject* obj);
+  bool insert (string key, AbstractObject* obj);
   inline int size () { return hash.size(); }
   inline const vector <string>& getKeys () { return keys; }
   AbstractObject* operator[](string key);

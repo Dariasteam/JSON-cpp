@@ -1,14 +1,27 @@
-{
-  "key_1" : ["33",
-             "element23",
-             "element",
-             "element",
-             "lavidaesasi",
-             "hola me llamo omo"],
-  "key_2" : 12,
-  "key_4" : true,
-  "key_5" : {
-    "sub_key_1" : -20.44e-3,
-    "sub_key_2" : "last element"
-  }
-}
+{"menu": {
+    "header": "SVG Viewer",
+    "items": [
+        {"id": "Open"},
+        {"id": "OpenNew", "label": "Open New"},
+        false,
+        {"id": "ZoomIn", "label": "Zoom In"},
+        {"id": "ZoomOut", "label": "Zoom Out"},
+        {"id": "OriginalView", "label": "Original View"},
+        false,
+        {"id": "Quality"},
+        {"id": "Pause"},
+        {"id": "Mute"},
+        false,
+        {"id": "Find", "label": "Find..."},
+        {"id": "FindAgain", "label": "Find Again"},
+        {"id": "Copy"},
+        {"id": "CopyAgain", "label": "Copy Again"},
+        {"id": "CopySVG", "label": "Copy SVG"},
+        {"id": "ViewSVG", "label": "View SVG"},
+        {"id": "ViewSource", "label": "View Source"},
+        {"id": "SaveAs", "label": "Save As"},
+        false,
+        {"id": "Help"},
+        {"id": "About", "label": "About Adobe CVG Viewer..."}
+    ]
+}}

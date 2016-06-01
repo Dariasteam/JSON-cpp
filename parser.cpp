@@ -3,7 +3,7 @@
 regex Parser::startBrace = regex ("^(?:\\s*)(\\{)");
 regex Parser::startBracket = regex ("^(?:\\s*)(\\[)");
 regex Parser::keyDef = regex ("^(?:\\s*)(?:(?:\")(\\w+)(?:\")(?:\\s*:))");
-regex Parser::finalQuote = regex ("^(?:\\s*)(?:\")((?:\\w|\\s|\\d)+)(?:\")(?:\\s*)(,)?");
+regex Parser::finalQuote = regex ("^(?:\\s*)(?:\")(.+)(?:\")(?:\\s*)(,)?");
 regex Parser::finalNumber = regex ("^(?:\\s*)((?:\\+|\\-)?\\d+(?:\\.\\d+)?(?:e(?:\\+|\\-)?\\d+)?)(?:\\s*)(,)?");
 regex Parser::finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
 regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
@@ -57,7 +57,10 @@ ObjectNameFlags Parser::parseContainer
 	int flag;
 	do {
 		aux = parse (content, path);
-		obj->insert (aux.key, aux.element);
+		if (!obj->insert (aux.key, aux.element)) {
+			evaluateFlag(INVALID_KEY, path.append(".").append(aux.key));
+			break;
+		}
 	} while (aux.flags == REGULAR_ELEMENT && !regex_search (content, matcher, rgx));
 	if (obj->size() > 1 && aux.flags != LAST_ELEMENT) {
 		flag = EXPECTED_MORE;
