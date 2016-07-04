@@ -14,6 +14,8 @@ void ObjectFinalBool::setValue (string value) {
     boolean = true;
 }
 
+#include <iostream>
+
 void ObjectFinalNumber::setValue (string value) {
   number = stod (value);
 }
@@ -60,8 +62,8 @@ AbstractObject* ObjectVector::get (string path) {
   if (path.size() == 0)
     return this;
   if (regex_search (path, matcher, tokenRgx)) {
-    path = path.substr(matcher[0].length(), path.size());
     AbstractObject* son = operator[](stoi (matcher[1]));
+    path = path.substr(matcher[0].length(), path.size());
     if (son != nullptr)
       return son->get (path);
   }
@@ -73,8 +75,8 @@ AbstractObject* ObjectMap::get (string path) {
   if (path.size() == 0)
     return this;
   if (regex_search (path, matcher, tokenRgx)) {
-    path = path.substr(matcher[0].length(), path.size());
     AbstractObject* son = operator[](matcher[1]);
+    path = path.substr(matcher[0].length(), path.size());
     if (son != nullptr)
       return son->get (path);
   }
@@ -88,8 +90,6 @@ AbstractObject* ObjectFinal::get (string path) {
     return nullptr;
 }
 
-#include <iostream>
-
 bool ObjectVector::add (string path, string value) {
   smatch matcher;
   if (regex_search (path, matcher, tokenRgx)) {
@@ -99,7 +99,7 @@ bool ObjectVector::add (string path, string value) {
     } else {
       AbstractObject* nuevo = addObjectDecisor (path, value);
       insert (matcher[1], nuevo);
-      if (nuevo->getType() > FINAL)
+      if (nuevo->getType() > FINAL) // its final object
         return true;
       else
         return nuevo->add (path.substr(matcher[0].length(), path.size()), value);

@@ -1,27 +1,74 @@
-{"menu": {
-    "header": "SVG Viewer",
-    "items": [
-        {"id": "Open"},
-        {"id": "OpenNew", "label": "Open New"},
-        false,
-        {"id": "ZoomIn", "label": "Zoom In"},
-        {"id": "ZoomOut", "label": "Zoom Out"},
-        {"id": "OriginalView", "label": "Original View"},
-        false,
-        {"id": "Quality"},
-        {"id": "Pause"},
-        {"id": "Mute"},
-        false,
-        {"id": "Find", "label": "Find..."},
-        {"id": "FindAgain", "label": "Find Again"},
-        {"id": "Copy"},
-        {"id": "CopyAgain", "label": "Copy Again"},
-        {"id": "CopySVG", "label": "Copy SVG"},
-        {"id": "ViewSVG", "label": "View SVG"},
-        {"id": "ViewSource", "label": "View Source"},
-        {"id": "SaveAs", "label": "Save As"},
-        false,
-        {"id": "Help"},
-        {"id": "About", "label": "About Adobe CVG Viewer..."}
-    ]
-}}
+{"webapp": {
+  "servlet": [
+    {
+      "servletname": "cofaxCDS",
+      "servletclass": "orgcofaxcdsCDSServlet",
+      "initparam" : {
+        "11111111111z": "aaasdaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "cachePackageTagsStore": 200,
+        "cachePackageTagsRefresh": 60,
+        "cacheTemplatesTrack": 100,
+        "cacheTemplatesStore": 50,
+        "cacheTemplatesRefresh": 15,
+        "cachePagesTrack": 200,
+        "cachePagesStore": 100,
+        "cachePagesRefresh": 18,
+        "cachePagesDirtyRead": 7777,
+        "searchEngineListTemplate": "forSearchEnginesList.htm",
+        "searchEngineFileTemplate": "forSearchEngines.htm",
+        "searchEngineRobotsDb": "WEB-INFrobots.db",
+        "useDataStore": true,
+        "dataStoreClass": "org.cofax.SqlDataStore",
+        "redirectionClass": "org.cofax.SqlRedirection",
+        "dataStoreName": "cofax",
+        "dataStoreDriver": "com.microsoft.jdbc.sqlserver.SQLServerDriver",
+        "dataStoreUrl": "jdbc:microsoft:sqlserver://LOCALHOST:1433;DatabaseName=goon",
+        "dataStoreUser": "sa",
+        "dataStorePassword": "dataStoreTestQuery",
+        "dataStoreTestQuery": "SET NOCOUNT ON;select test='test';",
+        "dataStoreLogFile": "/usr/local/tomcat/logs/datastore.log",
+        "dataStoreInitConns": 10,
+        "dataStoreMaxConns": 100,
+        "dataStoreConnUsageLimit": 100,
+        "dataStoreLogLevel": "debug",
+        "maxUrlLength": 500}},
+    {
+      "servletname": "cofaxEmail",
+      "servletclass": "org.cofax.cds.EmailServlet",
+      "initparam": {
+      "mailHost": "mail1",
+      "mailHostOverride": "mail2"}},
+    {
+      "servletname": "cofaxAdmin",
+      "servletclass": "org.cofax.cds.AdminServlet"},
+
+    {
+      "servletname": "fileServlet",
+      "servlet-class": "org.cofax.cds.FileServlet"},
+    {
+      "servletname": "cofaxTools",
+      "servletclass": "org.cofax.cms.CofaxToolsServlet",
+      "initparam": {
+        "templatePath": "toolstemplates/",
+        "log": 1,
+        "logLocation": "/usr/local/tomcat/logs/CofaxTools.log",
+        "logMaxSize": "",
+        "dataLog": 1,
+        "dataLogLocation": "/usr/local/tomcat/logs/dataLog.log",
+        "dataLogMaxSize": "",
+        "removePageCache": "/content/admin/remove?cache=pages&id=",
+        "removeTemplateCache": "/content/admin/remove?cache=templates&id=",
+        "fileTransferFolder": "/usr/local/tomcat/webapps/content/fileTransferFolder",
+        "lookInContext": 1,
+        "adminGroupID": 4,
+        "betaServer": true}}],
+  "servletmapping": {
+    "cofaxCDS": "2",
+    "cofaxEmail": "44",
+    "cofaxAdmin": "3",
+    "fileServlet": "3",
+    "cofaxTools": "a"},
+
+  "taglib": {
+    "tagliuri": "cofax.tld",
+    "tagliblocation": "/WEB-INF/tlds/cofax.tld"}}}

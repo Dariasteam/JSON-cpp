@@ -2,8 +2,8 @@
 
 regex Parser::startBrace = regex ("^(?:\\s*)(\\{)");
 regex Parser::startBracket = regex ("^(?:\\s*)(\\[)");
-regex Parser::keyDef = regex ("^(?:\\s*)(?:(?:\")(\\w+)(?:\")(?:\\s*:))");
-regex Parser::finalQuote = regex ("^(?:\\s*)(?:\")(.+)(?:\")(?:\\s*)(,)?");
+regex Parser::keyDef = regex ("^(?:\\s*)(?:\")(.+?)(?:\")(?:\\s*)\\:");
+regex Parser::finalQuote = regex ("^(?:\\s*)(?:\")(.*?)(?:\")(?:\\s*)(,)?");
 regex Parser::finalNumber = regex ("^(?:\\s*)((?:\\+|\\-)?\\d+(?:\\.\\d+)?(?:e(?:\\+|\\-)?\\d+)?)(?:\\s*)(,)?");
 regex Parser::finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
 regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
@@ -44,13 +44,13 @@ bool Parser::hasComma (string buffer) {
 }
 
 ObjectNameFlags Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
-	content = content.substr(matcher[0].length(), content.size());
 	obj->setValue(matcher[1]);
+	content = content.substr(matcher[0].length(), content.size());
 	return {obj, "", hasComma(matcher[2])};
 }
 
-ObjectNameFlags Parser::parseContainer
-(string& content, smatch& matcher, regex& rgx, ObjectContainer* obj, string path)
+ObjectNameFlags Parser::parseContainer (string& content, smatch& matcher,
+														regex& rgx, ObjectContainer* obj, string path)
 {
 	content = content.substr(matcher[0].length(), content.size());
 	ObjectNameFlags aux;
