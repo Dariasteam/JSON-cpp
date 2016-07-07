@@ -99,6 +99,76 @@ bool JsonTree::exist (string path) {
   return top->get(path) != nullptr;
 }
 
+bool JsonTree::isBool (AbstractObject* obj) {
+  return (obj != nullptr && obj->getType() == BOOL);
+}
+
+bool JsonTree::isNumber (AbstractObject* obj) {
+  return (obj != nullptr && obj->getType() == NUMBER);
+}
+
+bool JsonTree::isString (AbstractObject* obj) {
+  return (obj != nullptr && obj->getType() == STRING);
+}
+
+bool JsonTree::isMap (AbstractObject* obj) {
+  return (obj != nullptr && obj->getType() == MAP);
+}
+
+bool JsonTree::isVector (AbstractObject* obj) {
+  return (obj != nullptr && obj->getType() == VECTOR);
+}
+
+bool JsonTree::copy (bool &to, string path) {
+  AbstractObject* obj = top->get(path);
+  if (isBool(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
+    return true;
+  }
+  getterError(path, obj, BOOL);
+  return false;
+}
+
+bool JsonTree::copy (string &to, string path) {
+  AbstractObject* obj = top->get(path);
+  if (isString(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
+    return true;
+  }
+  getterError(path, obj, STRING);
+  return false;
+}
+
+bool JsonTree::copy (double &to, string path) {
+  AbstractObject* obj = top->get(path);
+  if (isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
+    return true;
+  }
+  getterError(path, obj, NUMBER);
+  return false;
+}
+
+bool JsonTree::copy (float &to, string path) {
+  AbstractObject* obj = top->get(path);
+  if (isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
+    return true;
+  }
+  getterError(path, obj, NUMBER);
+  return false;
+}
+
+bool JsonTree::copy (int &to, string path) {
+  AbstractObject* obj = top->get(path);
+  if (isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
+    return true;
+  }
+  getterError(path, obj, NUMBER);
+  return false;
+}
+
 bool JsonTree::copyVector (string path, vector<double>& array) {
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {

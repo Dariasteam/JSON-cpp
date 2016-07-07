@@ -12,8 +12,9 @@ using namespace std;
 
 class JsonTree {
 private:
-  string objectsTypesReverse [5] = {"Vector",
+  string objectsTypesReverse [6] = {"Vector",
                                     "Map",
+                                    "Final",
                                     "Number",
                                     "String",
                                     "Bool"};
@@ -38,12 +39,24 @@ public:
   bool copyVector (string path, vector<bool>& array);
   bool copyVector (string path, vector<string>& array);
 
+  bool copy (bool& to, string path);
+  bool copy (string& to, string path);
+  bool copy (double& to, string path);
+  bool copy (float& to, string path);
+  bool copy (int& to, string path);
+
   bool isNumber (string path);
   bool isBool (string path);
   bool isString (string path);
   bool isMap (string path);
   bool isVector (string path);
   bool exist (string path);
+
+  bool isNumber (AbstractObject* obj);
+  bool isBool (AbstractObject* obj);
+  bool isString (AbstractObject* obj);
+  bool isMap (AbstractObject* obj);
+  bool isVector (AbstractObject* obj);
 
   AbstractObject* insertObject (string path, AbstractObject* obj);
   bool addElement (string path, double value);
