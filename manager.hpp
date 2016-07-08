@@ -31,9 +31,13 @@ public:
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
+
+  // deprecated
   double getNumber (string path);
   bool getBool (string path);
   string getString (string path);
+  //
+
 
   bool copyVector (string path, vector<double>& array);
   bool copyVector (string path, vector<bool>& array);
@@ -51,12 +55,6 @@ public:
   bool isMap (string path);
   bool isVector (string path);
   bool exist (string path);
-
-  bool isNumber (AbstractObject* obj);
-  bool isBool (AbstractObject* obj);
-  bool isString (AbstractObject* obj);
-  bool isMap (AbstractObject* obj);
-  bool isVector (AbstractObject* obj);
 
   AbstractObject* insertObject (string path, AbstractObject* obj);
   bool addElement (string path, double value);
