@@ -15,13 +15,17 @@
 
 using namespace std;
 
+// do not move these elements, their numeric value is used for comparisons
 enum Flags {
-	LAST_ELEMENT,			// do not move this element
-	REGULAR_ELEMENT,	// do not move this element
-	NO_CLOSED,
-	EXPECTED_MORE,
-	EMPTY,
-	INVALID_KEY
+	LAST_ELEMENT,
+	REGULAR_ELEMENT,
+	// errors
+	NO_CLOSED,				// there is no end brace / bracket after the last element
+	EXPECTED_MORE,		// there is an end brace / bracket after non last element
+	INVALID_KEY,
+	// warnings
+	CONTROL_WARNING,
+	EMPTY
 };
 
 struct ObjectNameFlags {
@@ -36,12 +40,14 @@ struct JsonError {
 };
 
 class Parser {
-	string reverseFlags [6] = {"LAST_ELEMENT",
+	string reverseFlags [7] = {"LAST_ELEMENT",
 	 													"REGULAR_ELEMENT",
-														"NO_CLOSED",
+														"NO_CLOSED_AFTER",
 														"EXPECTED_MORE",
-														"EMPTY",
-														"INVALID_KEY"};
+														"INVALID_KEY",
+														"-",
+														"EMPTY"
+														};
 private:
 	vector <JsonError> errors;
 	ifstream file;

@@ -57,12 +57,17 @@ ObjectNameFlags Parser::parseContainer (string& content, smatch& matcher,
 	int flag;
 	do {
 		aux = parse (content, path);
+		if (aux.flags == EMPTY) {
+			evaluateFlag(EMPTY, path.append(".").append(aux.key));
+			break;
+		}
 		if (!obj->insert (aux.key, aux.element)) {
 			evaluateFlag(INVALID_KEY, path.append(".").append(aux.key));
 			break;
 		}
 	} while (aux.flags == REGULAR_ELEMENT && !regex_search (content, matcher, rgx));
-	if (obj->size() > 1 && aux.flags != LAST_ELEMENT) {
+	if  (obj->size() > 1 && aux.flags != LAST_ELEMENT && aux.flags != NO_CLOSED) {
+		// the last element reached has no comma
 		flag = EXPECTED_MORE;
 		evaluateFlag(flag, path.append(".").append(aux.key));
 	} else if (regex_search (content, matcher, rgx)) {
@@ -76,7 +81,11 @@ ObjectNameFlags Parser::parseContainer (string& content, smatch& matcher,
 }
 
 void Parser::evaluateFlag (int flag, string path) {
-	cerr << "Error parsing JSON: " << reverseFlags[flag] << " in path: " << path << endl;
+	if (flag < CONTROL_WARNING)
+		cerr << "Error parsing JSON: ";
+	else
+		cerr << "Warning parsing JSON: ";
+	cerr << reverseFlags[flag] << " in path: " << path << endl;
 	errors.push_back ({path, flag});
 }
 

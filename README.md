@@ -160,6 +160,23 @@ error 1
 
 ---
 
+## Flags
+- **LAST_ELEMENT**: El elemento parseado es el último de la colección (vector / hash)
+a la que pertenece, le sigue inmediatamente el símbolo de cierre de la misma (*}* ó *]*)
+
+- **REGULAR_ELEMENT**: El elemento parseado no es el último de su colección, le sigue inmediatamente
+una coma.
+
+- **NO_CLOSED**: El elemento parseado no es seguido ni por una coma ni por un símbolo de cierre,
+aparentemente es el último de su colección pero esta no está convenientemente cerrada
+
+- **EXPECTED_MORE**: El elemento parseado es seguido por la pareja coma y símbolo de cierre,
+deberían existir más elementos en la colección pero esta termina abruptamente
+
+- **EMPTY**: La colección no contiene ningún elemento
+
+- **INVALID_KEY**: La sintaxis de la clave no se corresponde con la que exige su
+colección o se ha repetido una clave
 ## ToDo
 
 - [ ] Interfaz para crear árbol desde un objeto

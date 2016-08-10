@@ -1,6 +1,5 @@
 #include "./manager.hpp"
 
-
 regex JsonTree::tokenRgx = regex ("^(\\w+)(:?\\.)?");
 regex JsonTree::numberRgx = regex ("^(\\d+)(:?(?:\\w|\\s)*)");
 regex JsonTree::vectorAccessRgx = regex ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?");
@@ -20,36 +19,6 @@ void JsonTree::getterError (string path, AbstractObject* obj, int type) {
          << " as a "<< objectsTypesReverse[type] << " when is of type "
          << objectsTypesReverse[obj->getType()]
          << ". The default value will be returned " << endl;
-  }
-}
-
-double JsonTree::getNumber (string path) {
-  AbstractObject* obj = top->get(path);
-  if (obj != nullptr && obj->getType() == NUMBER) {
-    return ((ObjectFinalNumber*)obj)->getContent();
-  } else {
-    getterError(path, obj, NUMBER);
-    return -1;
-  }
-}
-
-string JsonTree::getString (string path) {
-  AbstractObject* obj = top->get(path);
-  if (obj != nullptr && obj->getType() == STRING) {
-    return ((ObjectFinalString*)obj)->getContent();
-  } else {
-    getterError(path, obj, STRING);
-    return "";
-  }
-}
-
-bool JsonTree::getBool (string path) {
-  AbstractObject* obj = top->get(path);
-  if (obj != nullptr && obj->getType() == BOOL) {
-    return ((ObjectFinalBool*)obj)->getContent();
-  } else {
-    getterError(path, obj, BOOL);
-    return false;
   }
 }
 
@@ -162,9 +131,8 @@ bool JsonTree::copyVector (string path, vector<double>& array) {
         return false;
     }
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 bool JsonTree::copyVector (string path, vector<string>& array) {
@@ -180,9 +148,8 @@ bool JsonTree::copyVector (string path, vector<string>& array) {
         return false;
     }
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 bool JsonTree::copyVector (string path, vector<bool>& array) {
@@ -198,9 +165,8 @@ bool JsonTree::copyVector (string path, vector<bool>& array) {
         return false;
     }
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {

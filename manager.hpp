@@ -26,18 +26,11 @@ private:
 
   bool isType (AbstractObject* obj, int type);
   void getterError (string path, AbstractObject* obj, int type);
+
 public:
   JsonTree (AbstractObject* root);
   vector <string> getKeys (string path);
   int getSizeAt (string path);
-
-
-  // deprecated
-  double getNumber (string path);
-  bool getBool (string path);
-  string getString (string path);
-  //
-
 
   bool copyVector (string path, vector<double>& array);
   bool copyVector (string path, vector<bool>& array);
@@ -56,6 +49,7 @@ public:
   bool isVector (string path);
   bool exist (string path);
 
+  bool hasFailed () {}
   AbstractObject* insertObject (string path, AbstractObject* obj);
   bool addElement (string path, double value);
 };
