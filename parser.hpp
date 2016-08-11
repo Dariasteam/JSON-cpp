@@ -16,7 +16,7 @@
 using namespace std;
 
 // do not move these elements, their numeric value is used for comparisons
-enum Flags {
+enum flag {
 	LAST_ELEMENT,
 	REGULAR_ELEMENT,
 	// errors
@@ -28,10 +28,10 @@ enum Flags {
 	EMPTY
 };
 
-struct ObjectNameFlags {
+struct ObjectNameFlag {
 	AbstractObject* element;
 	string key;
-	int flags;
+	int flag;
 };
 
 struct JsonError {
@@ -40,9 +40,9 @@ struct JsonError {
 };
 
 class Parser {
-	string reverseFlags [7] = {"LAST_ELEMENT",
+	const string reverseflag [7] = {"LAST_ELEMENT",
 	 													"REGULAR_ELEMENT",
-														"NO_CLOSED_AFTER",
+														"NO_CLOSED",
 														"EXPECTED_MORE",
 														"INVALID_KEY",
 														"-",
@@ -64,12 +64,12 @@ private:
 
 	bool openFile (string fileName);
 	bool hasComma (string buffer);
-	void evaluateFlag (int flag, string path);
+	void evaluateFlag (int flag, string path, string finalElement);
 
-	ObjectNameFlags parse (string& content, string path);
-	ObjectNameFlags parseKeyDef (string& content, smatch& matcher, string path);
-	ObjectNameFlags parseFinal (string& content, smatch& matcher, ObjectFinal* obj);
-	ObjectNameFlags parseContainer (string& content, smatch& matcher, regex& rgx, ObjectContainer* obj, string path);
+	ObjectNameFlag parse (string& content, string path);
+	ObjectNameFlag parseKeyDef (string& content, smatch& matcher, string path);
+	ObjectNameFlag parseFinal (string& content, smatch& matcher, ObjectFinal* obj);
+	ObjectNameFlag parseContainer (string& content, smatch& matcher, regex& endSymbol, ObjectContainer* obj, string path);
 
 	inline bool hasErrors () { return errors.size() > 0; }
 	inline ifstream& getFile () { return file; }

@@ -50,7 +50,6 @@ bool ObjectVector::insert (string key, AbstractObject* obj) {
 bool ObjectMap::insert (string key, AbstractObject* obj) {
   if (key != "" && !hash.count (key)) {
     keys.push_back (key);
-    // must check if exist
     hash.insert(pair <string, AbstractObject*> (key, obj));
     return true;
   } else {

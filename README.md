@@ -160,7 +160,7 @@ error 1
 
 ---
 
-## Flags
+## flag
 - **LAST_ELEMENT**: El elemento parseado es el último de la colección (vector / hash)
 a la que pertenece, le sigue inmediatamente el símbolo de cierre de la misma (*}* ó *]*)
 
@@ -176,7 +176,7 @@ deberían existir más elementos en la colección pero esta termina abruptamente
 - **EMPTY**: La colección no contiene ningún elemento
 
 - **INVALID_KEY**: La sintaxis de la clave no se corresponde con la que exige su
-colección o se ha repetido una clave
+colección o se ha repetido una clave (solo para hashes)
 ## ToDo
 
 - [ ] Interfaz para crear árbol desde un objeto

@@ -14,13 +14,13 @@ bool Parser::parseFile (string fileName) {
 		stringstream buffer;
 		buffer << getFile ().rdbuf();
 		string fileContent = buffer.str();
-		ObjectNameFlags result = parse (fileContent, "");
+		ObjectNameFlag result = parse (fileContent, "");
 		tree = JsonTree (result.element);
 		if (fileContent.size() > 0)
-			evaluateFlag(NO_CLOSED, ".");
+			evaluateFlag(NO_CLOSED, ".", "");
 		return !hasErrors();
 	} else {
-		evaluateFlag(CANT_OPEN_FILE, "");
+		evaluateFlag(CANT_OPEN_FILE, "", "");
 		return false;
 	}
 }
@@ -43,63 +43,63 @@ bool Parser::hasComma (string buffer) {
 	return (buffer.size() > 0);
 }
 
-ObjectNameFlags Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
+ObjectNameFlag Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
 	obj->setValue(matcher[1]);
 	content = content.substr(matcher[0].length(), content.size());
 	return {obj, "", hasComma(matcher[2])};
 }
 
-ObjectNameFlags Parser::parseContainer (string& content, smatch& matcher,
-														regex& rgx, ObjectContainer* obj, string path)
+ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
+														regex& endSymbol, ObjectContainer* obj, string path)
 {
 	content = content.substr(matcher[0].length(), content.size());
-	ObjectNameFlags aux;
-	int flag;
+	ObjectNameFlag aux;
+	int flag = REGULAR_ELEMENT;
 	do {
 		aux = parse (content, path);
-		if (aux.flags == EMPTY) {
-			evaluateFlag(EMPTY, path.append(".").append(aux.key));
+		if (aux.flag == EMPTY) {
+			evaluateFlag(EMPTY, path, aux.key);
 			break;
 		}
 		if (!obj->insert (aux.key, aux.element)) {
-			evaluateFlag(INVALID_KEY, path.append(".").append(aux.key));
+			evaluateFlag(INVALID_KEY, path, aux.key);
 			break;
 		}
-	} while (aux.flags == REGULAR_ELEMENT && !regex_search (content, matcher, rgx));
-	if  (obj->size() > 1 && aux.flags != LAST_ELEMENT && aux.flags != NO_CLOSED) {
-		// the last element reached has no comma
+	} while (!regex_search (content, matcher, endSymbol) && aux.flag == REGULAR_ELEMENT);
+	if (aux.flag == REGULAR_ELEMENT) {
 		flag = EXPECTED_MORE;
-		evaluateFlag(flag, path.append(".").append(aux.key));
-	} else if (regex_search (content, matcher, rgx)) {
+		evaluateFlag(flag, path, aux.key);
+	} else if (matcher[0].length() > 0) { 													// has matched
 		content = content.substr(matcher[0].length(), content.size());
 		flag = hasComma(matcher[2]);
 	} else {
 		flag = NO_CLOSED;
-		evaluateFlag(flag, path.append(".").append(aux.key));
+		evaluateFlag(flag, path, aux.key);
 	}
 	return {obj, "", flag};
 }
 
-void Parser::evaluateFlag (int flag, string path) {
+void Parser::evaluateFlag (int flag, string path, string finalElement) {
+	path.append(".").append(finalElement);
 	if (flag < CONTROL_WARNING)
-		cerr << "Error parsing JSON: ";
+		cerr << "Error";
 	else
-		cerr << "Warning parsing JSON: ";
-	cerr << reverseFlags[flag] << " in path: " << path << endl;
+		cerr << "Warning";
+	cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << endl;
 	errors.push_back ({path, flag});
 }
 
-ObjectNameFlags Parser::parseKeyDef (string& content, smatch& matcher, string path) {
+ObjectNameFlag Parser::parseKeyDef (string& content, smatch& matcher, string path) {
 	string key = matcher[1];
 	content = content.substr(matcher[0].length(), content.size());
 	path.append(".").append(key);
-	ObjectNameFlags aux = parse (content, path);
-	return {aux.element, key, aux.flags};
+	ObjectNameFlag aux = parse (content, path);
+	return {aux.element, key, aux.flag};
 }
 
-ObjectNameFlags Parser::parse (string& content, string path) {
+ObjectNameFlag Parser::parse (string& content, string path) {
 	smatch matcher;
-	ObjectNameFlags Obj;
+	ObjectNameFlag Obj;
 	if (regex_search (content, matcher, keyDef))
 		return parseKeyDef (content, matcher, path);
 	else if (regex_search(content, matcher, finalQuote))
