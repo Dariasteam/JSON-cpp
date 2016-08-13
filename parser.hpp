@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <cctype> // isDigit for String c++11
 
 #include "./object.hpp"
 #include "manager.hpp"
@@ -67,6 +69,7 @@ private:
 
 	inline bool hasErrors () { return errors.size() > 0; }
 	inline ifstream& getFile () { return file; }
+	bool isDigits(const string); // isDigit for String c++11
 public:
 	Parser ();
 	JsonTree getTree () { return tree; }
