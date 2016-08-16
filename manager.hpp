@@ -32,9 +32,9 @@ public:
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
-  bool copyVector (string path, vector<double>& array);
-  bool copyVector (string path, vector<bool>& array);
-  bool copyVector (string path, vector<string>& array);
+  bool copy (vector<string>& array, string path);
+  bool copy (vector<bool>& array, string path);
+  bool copy (vector<double>& array, string path);
 
   bool copy (bool& to, string path);
   bool copy (string& to, string path);

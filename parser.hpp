@@ -36,7 +36,7 @@ struct ObjectNameFlag {
 
 struct JsonError {
 	string path;
-	int type;
+	int flag;
 };
 
 class Parser {
