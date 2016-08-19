@@ -9,14 +9,14 @@
 #include "./object.hpp"
 #include "manager.hpp"
 
-#define OK 0
-#define CANT_OPEN_FILE -1
-#define FILE_BAD_FORMAT -2
+//#define OK 0
+//#define CANT_OPEN_FILE -1
+//#define FILE_BAD_FORMAT -2
 
 using namespace std;
 
 // do not move these elements, their numeric value is used for comparisons
-enum flag {
+enum JSON_PARSER_FLAG {
 	LAST_ELEMENT,
 	REGULAR_ELEMENT,
 	// errors
@@ -28,13 +28,22 @@ enum flag {
 	EMPTY
 };
 
+enum JSON_PARSE_OUTPUT {
+	CANT_OPEN_FILE,
+	OK,							  // value = 1, allows "if (parser.parseFile ("a.json"))"
+	// FILE_BAD_FORMAT,
+	WARNINGS,
+	ERRORS,
+	BOTH_ERR_WARN
+};
+
 struct ObjectNameFlag {
 	AbstractObject* element;
 	string key;
 	int flag;
 };
 
-struct JsonError {
+struct JsonLog {
 	string path;
 	int flag;
 };
@@ -49,7 +58,8 @@ class Parser {
 														"EMPTY"
 														};
 private:
-	vector <JsonError> errors;
+	vector <JsonLog> errors;
+	vector <JsonLog> warnings;
 	ifstream file;
 	JsonTree tree;
 
@@ -72,12 +82,14 @@ private:
 	ObjectNameFlag parseContainer (string& content, smatch& matcher, regex& endSymbol, ObjectContainer* obj, string path);
 
 	inline bool hasErrors () { return errors.size() > 0; }
+	inline bool hasWarnings () { return warnings.size() > 0; }
 	inline ifstream& getFile () { return file; }
 public:
 	Parser ();
 	JsonTree getTree () { return tree; }
-	bool parseFile (string fileName);
-	const vector<JsonError>& getErrors () { return errors; }
+	int parseFile (string fileName);
+	inline const vector<JsonLog>& getErrors () { return errors; }
+	inline const vector<JsonLog>& getWarnings () { return warnings; }
 };
 
 #endif

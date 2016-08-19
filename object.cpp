@@ -6,15 +6,17 @@ ObjectContainer::~ObjectContainer() {}
 
 ObjectFinal::~ObjectFinal() {}
 
+#include <iostream>
+
 regex ObjectVector::tokenRgx = regex ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?");
 regex ObjectMap::tokenRgx = regex ("^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
 
 void ObjectFinalBool::setValue (string value) {
   if (value == "true")
     boolean = true;
+  else
+    boolean = false;
 }
-
-#include <iostream>
 
 void ObjectFinalNumber::setValue (string value) {
   number = stod (value);
@@ -90,47 +92,49 @@ AbstractObject* ObjectFinal::get (string path) {
     return nullptr;
 }
 
-bool ObjectVector::add (string path, string value) {
+bool ObjectVector::add (string path,  AbstractObject* obj) {
   smatch matcher;
+  cout << "adding " << obj->getType() << endl;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](stoi (matcher[1]));
     if (son != nullptr) {
-      return son->add (path.substr(matcher[0].length(), path.size()), value);
+      return son->add (path.substr(matcher[0].length(), path.size()), obj);
     } else {
-      AbstractObject* nuevo = addObjectDecisor (path, value);
-      insert (matcher[1], nuevo);
-      if (nuevo->getType() > FINAL) // its final object
+      cout << "Hay que crear el final" << endl;
+      insert (matcher[1], obj);
+      if (obj->getType() > FINAL) // its final object
         return true;
       else
-        return nuevo->add (path.substr(matcher[0].length(), path.size()), value);
+        return son->add (path.substr(matcher[0].length(), path.size()), obj);
     }
   }
   return false;
 }
 
-bool ObjectMap::add (string path, string value) {
+bool ObjectMap::add (string path,  AbstractObject* obj) {
   smatch matcher;
+  cout << "adding " << obj->getType() << endl;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
     if (son != nullptr) {
-      return son->add (path.substr(matcher[0].length(), path.size()), value);
+      return son->add (path.substr(matcher[0].length(), path.size()), obj);
     } else {
-      AbstractObject* nuevo = addObjectDecisor (path, value);
-      insert (matcher[1], nuevo);
-      if (nuevo->getType() > FINAL) // its final object
+      cout << "Hay que crear el final" << endl;
+      insert (matcher[1], obj);
+      if (obj->getType() > FINAL) // its final object
         return true;
       else
-        return nuevo->add (path.substr(matcher[0].length(), path.size()), value);
+        return son->add (path.substr(matcher[0].length(), path.size()), obj);
     }
   }
   return false;
 }
 
-bool ObjectFinal::add (string path, string value) {
+bool ObjectFinal::add (string path,  AbstractObject* obj) {
+  cout << "Soy final" << endl;
   return false;
 }
 
 AbstractObject* ObjectContainer::addObjectDecisor (string& path, string value) {
-  cout << "Genero" << endl;
   return new ObjectFinalNumber (23);
 }

@@ -64,12 +64,12 @@ Retorna el éxito o fracaso de la operación.
 Retorna el objeto **JsonTree** resultante del parseo del fichero si este ha sido exitoso.
 
 ```c++
-	const vector<JsonError>& getErrors ()
+	const vector<JsonLog>& getErrors ()
 ```
 Retorna un vector con los errores encontrados durante el parseo, los cuales son de la siguiente forma
 
 ```c++
-struct JsonError {
+struct JsonLog {
 	string path;
 	int flag;
 };
@@ -167,6 +167,7 @@ if (parser.parseFile ("example_file.json")) {
 - [ ] Interfaz para crear árbol desde un objeto
 - [ ] Permitir escribir archivos
 - [ ] Flag que oblige a todos los elementos de un contenedor a ser del mismo tipo
+- [ ] Crear namespaces
 - [x] Manejo de errores desde el objeto parser (incompleto)
   - [x] Devolver ruta completa
   - [x] Devolver tipo de error

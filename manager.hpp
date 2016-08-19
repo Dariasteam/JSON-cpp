@@ -36,8 +36,8 @@ public:
   bool copy (vector<bool>& array, string path);
   bool copy (vector<double>& array, string path);
 
-  bool copy (bool& to, string path);
   bool copy (string& to, string path);
+  bool copy (bool& to, string path);
   bool copy (double& to, string path);
   bool copy (float& to, string path);
   bool copy (int& to, string path);
@@ -51,7 +51,11 @@ public:
 
   bool hasFailed () {}
   AbstractObject* insertObject (string path, AbstractObject* obj);
+
   bool addElement (string path, double value);
+  bool addElement (string path, bool value);
+  bool addElement (string path, string value);
 };
+
 
 #endif

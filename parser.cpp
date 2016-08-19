@@ -9,7 +9,7 @@ regex Parser::finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
 regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
 regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
-bool Parser::parseFile (string fileName) {
+int Parser::parseFile (string fileName) {
 	if (openFile(fileName)) {
 		stringstream buffer;
 		buffer << getFile ().rdbuf();
@@ -18,15 +18,24 @@ bool Parser::parseFile (string fileName) {
 		tree = JsonTree (result.element);
 		if (fileContent.size() > 0)
 			evaluateFlag(NO_CLOSED, ".", "");
-		return !hasErrors();
+		// return evaluator
+		if (hasErrors() && hasWarnings())
+			return BOTH_ERR_WARN;
+		else if (hasErrors())
+			return ERRORS;
+		else if (hasWarnings())
+			return WARNINGS;
+		else
+			return OK;
 	} else {
 		evaluateFlag(CANT_OPEN_FILE, "", "");
-		return false;
+		return CANT_OPEN_FILE;
 	}
 }
 
 Parser::Parser () :
 	errors (0),
+	warnings (0),
 	tree (nullptr)
 	{}
 
@@ -81,12 +90,14 @@ ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
 
 void Parser::evaluateFlag (int flag, string path, string finalElement) {
 	path.append(".").append(finalElement);
-	if (flag < CONTROL_WARNING)
+	if (flag < CONTROL_WARNING) {
 		cerr << "Error";
-	else
+		errors.push_back ({path, flag});
+	} else {
 		cerr << "Warning";
+		warnings.push_back ({path, flag});
+	}
 	cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << endl;
-	errors.push_back ({path, flag});
 }
 
 ObjectNameFlag Parser::parseKeyDef (string& content, smatch& matcher, string path) {

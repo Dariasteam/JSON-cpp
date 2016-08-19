@@ -26,7 +26,7 @@ protected:
 public:
   inline unsigned short getType () { return type; }
   virtual AbstractObject* get (string path) = 0;
-  virtual bool add (string path, string value) = 0;
+  virtual bool add (string path, AbstractObject* obj) = 0;
 };
 
 class ObjectContainer : public AbstractObject {
@@ -52,7 +52,7 @@ public:
   inline int size () { return array.size(); }
   AbstractObject* operator[](unsigned index);
   AbstractObject* get (string path);
-  bool add (string path, string value);
+  bool add (string path, AbstractObject* obj);
 };
 
 class ObjectMap : public ObjectContainer {
@@ -67,7 +67,7 @@ public:
   inline const vector <string>& getKeys () { return keys; }
   AbstractObject* operator[](string key);
   AbstractObject* get (string path);
-  bool add (string path, string value);
+  bool add (string path, AbstractObject* obj);
 };
 
 class ObjectFinal : public AbstractObject {
@@ -77,7 +77,7 @@ protected:
 public:
   virtual void setValue (string value) = 0;
   AbstractObject* get (string path);
-  bool add (string path, string value);
+  bool add (string path,  AbstractObject* obj);
 };
 
 class ObjectFinalNumber : public ObjectFinal {
@@ -106,6 +106,7 @@ private:
 public:
   ObjectFinalBool() : ObjectFinal (BOOL), boolean (false) {}
   ObjectFinalBool(string s) : ObjectFinal (BOOL) { setValue(s); }
+  ObjectFinalBool(bool s) : ObjectFinal (BOOL), boolean (s) {}
   inline bool getContent () { return boolean; }
   void setValue (string value);
 };

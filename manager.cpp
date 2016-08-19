@@ -177,8 +177,17 @@ AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
   return nullptr;
 }
 
-bool JsonTree::addElement(string path, double value) {
-  top->add(path, "a");
-  //insertObject (path, top);
-  return false;
+bool JsonTree::addElement (string path, double value) {
+  AbstractObject* object = new ObjectFinalNumber (value);
+  return top->add (path, object);
+};
+
+bool JsonTree::addElement (string path, bool value) {
+  AbstractObject* object = new ObjectFinalBool (value);
+  return top->add (path, object);
+};
+
+bool JsonTree::addElement (string path, string value) {
+  AbstractObject* object = new ObjectFinalString (value);
+  return top->add (path, object);
 };
