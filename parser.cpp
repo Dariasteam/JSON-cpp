@@ -127,5 +127,9 @@ ObjectNameFlag Parser::parse (string& content, string path) {
 }
 
 int Parser::saveFile (string fileName, JsonTree& info) {
-	cout << "Guardandop :D" << endl;
+	ofstream file;
+	file.open (fileName);
+	file << tree.toText();
+	file.close ();
+	return 0;
 }

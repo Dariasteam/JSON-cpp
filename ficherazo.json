@@ -1,0 +1,39 @@
+{
+  "widget" : {
+    "debug" : "on",
+    "window" : {
+      "title" : "Sample Konfabulator Widget",
+      "name" : "main_window",
+      "width" : 500.000000,
+      "height" : 500.000000,
+      "a" : true,
+      "uu" : 44.440000,
+      "uuaa" : true,
+      "uu222" : false
+    },
+    "image" : {
+      "src" : "Images/Sun.png",
+      "name" : "sun1",
+      "hOffset" : 250.000000,
+      "vOffset" : 250.000000,
+      "alignment" : "center"
+    },
+    "text" : {
+      "data" : "Click Here",
+      "size" : 36.000000,
+      "style" : "bold",
+      "name" : "text1",
+      "hOffset" : 250.000000,
+      "vOffset" : 100.000000,
+      "alignment" : "center",
+      "onMouseUp" : "sun1.opacity = (sun1.opacity / 100) * 90;"
+    },
+    "asd" : {
+      "asdasd" : 343.000000
+    },
+    "ñame" : [
+      2323.000000,
+      3.000000
+    ]
+  }
+}
