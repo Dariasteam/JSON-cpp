@@ -9,10 +9,6 @@
 #include "./object.hpp"
 #include "manager.hpp"
 
-//#define OK 0
-//#define CANT_OPEN_FILE -1
-//#define FILE_BAD_FORMAT -2
-
 using namespace std;
 
 // do not move these elements, their numeric value is used for comparisons
@@ -88,6 +84,7 @@ public:
 	Parser ();
 	JsonTree getTree () { return tree; }
 	int parseFile (string fileName);
+	int saveFile (string fileName, JsonTree& info);
 	inline const vector<JsonLog>& getErrors () { return errors; }
 	inline const vector<JsonLog>& getWarnings () { return warnings; }
 };

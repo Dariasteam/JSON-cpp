@@ -8,6 +8,12 @@
 
 using namespace std;
 
+#define END_LINE "\n"
+#define INDENT "  "
+#define QUOTE "\""
+#define POINTS " : "
+#define COMMA ","
+
 enum ObjetsTypes {
   VECTOR,
   MAP,
@@ -27,6 +33,8 @@ public:
   inline unsigned short getType () { return type; }
   virtual AbstractObject* get (string path) = 0;
   virtual bool add (string path, AbstractObject* obj) = 0;
+  virtual void toTxt (string &txt, int indentLvl) = 0;
+  void txtIndent (string& txt, int indentLvl);
 };
 
 class ObjectContainer : public AbstractObject {
@@ -34,7 +42,6 @@ protected:
   ObjectContainer (int type) : AbstractObject (type) {}
   ~ObjectContainer () = 0;
 public:
-  AbstractObject* addObjectDecisor (string& path, string value);
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
   virtual const AbstractObject* operator[](string key) { return nullptr; };
   virtual bool insert (string key, AbstractObject* obj) = 0;
@@ -53,6 +60,7 @@ public:
   AbstractObject* operator[](unsigned index);
   AbstractObject* get (string path);
   bool add (string path, AbstractObject* obj);
+  void toTxt (string &txt, int indentLvl);
 };
 
 class ObjectMap : public ObjectContainer {
@@ -68,6 +76,7 @@ public:
   AbstractObject* operator[](string key);
   AbstractObject* get (string path);
   bool add (string path, AbstractObject* obj);
+  void toTxt (string &txt, int indentLvl);  
 };
 
 class ObjectFinal : public AbstractObject {
@@ -88,6 +97,7 @@ public:
   ObjectFinalNumber (double n) : ObjectFinal (NUMBER), number (n) {}
   inline double getContent () { return number; }
   void setValue (string value);
+  void toTxt (string &txt, int indentLvl);
 };
 
 class ObjectFinalString : public ObjectFinal {
@@ -98,6 +108,7 @@ public:
   ObjectFinalString (string s) : ObjectFinal (STRING), text (s) {}
   inline string getContent () { return text; }
   void setValue (string value);
+  void toTxt (string &txt, int indentLvl);
 };
 
 class ObjectFinalBool : public ObjectFinal {
@@ -109,6 +120,7 @@ public:
   ObjectFinalBool(bool s) : ObjectFinal (BOOL), boolean (s) {}
   inline bool getContent () { return boolean; }
   void setValue (string value);
+  void toTxt (string &txt, int indentLvl);
 };
 
 #endif

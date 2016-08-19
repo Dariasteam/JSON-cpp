@@ -191,3 +191,9 @@ bool JsonTree::addElement (string path, string value) {
   AbstractObject* object = new ObjectFinalString (value);
   return top->add (path, object);
 };
+
+string JsonTree::toText () {
+  string txt;
+  top->toTxt(txt, 0);
+  return txt;
+}

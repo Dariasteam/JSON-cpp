@@ -125,3 +125,7 @@ ObjectNameFlag Parser::parse (string& content, string path) {
 		return parseContainer (content, matcher, nextBracket, new ObjectVector (), path);
 	return {nullptr, "", EMPTY};
 }
+
+int Parser::saveFile (string fileName, JsonTree& info) {
+	cout << "Guardandop :D" << endl;
+}

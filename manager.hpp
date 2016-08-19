@@ -55,6 +55,8 @@ public:
   bool addElement (string path, double value);
   bool addElement (string path, bool value);
   bool addElement (string path, string value);
+
+  string toText ();
 };
 
 

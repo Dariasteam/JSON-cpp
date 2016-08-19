@@ -11,6 +11,11 @@ ObjectFinal::~ObjectFinal() {}
 regex ObjectVector::tokenRgx = regex ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?");
 regex ObjectMap::tokenRgx = regex ("^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
 
+void AbstractObject::txtIndent(string &txt, int indentLvl) {
+  for (int i = 0; i < indentLvl; i++)
+    txt.append(INDENT);
+}
+
 void ObjectFinalBool::setValue (string value) {
   if (value == "true")
     boolean = true;
@@ -94,13 +99,11 @@ AbstractObject* ObjectFinal::get (string path) {
 
 bool ObjectVector::add (string path,  AbstractObject* obj) {
   smatch matcher;
-  cout << "adding " << obj->getType() << endl;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](stoi (matcher[1]));
     if (son != nullptr) {
       return son->add (path.substr(matcher[0].length(), path.size()), obj);
     } else {
-      cout << "Hay que crear el final" << endl;
       insert (matcher[1], obj);
       if (obj->getType() > FINAL) // its final object
         return true;
@@ -113,13 +116,11 @@ bool ObjectVector::add (string path,  AbstractObject* obj) {
 
 bool ObjectMap::add (string path,  AbstractObject* obj) {
   smatch matcher;
-  cout << "adding " << obj->getType() << endl;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
     if (son != nullptr) {
       return son->add (path.substr(matcher[0].length(), path.size()), obj);
     } else {
-      cout << "Hay que crear el final" << endl;
       insert (matcher[1], obj);
       if (obj->getType() > FINAL) // its final object
         return true;
@@ -131,10 +132,58 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
 }
 
 bool ObjectFinal::add (string path,  AbstractObject* obj) {
-  cout << "Soy final" << endl;
   return false;
 }
 
-AbstractObject* ObjectContainer::addObjectDecisor (string& path, string value) {
-  return new ObjectFinalNumber (23);
+void ObjectVector::toTxt (string& txt, int indentLvl) {
+  txt.append("[\n");
+  indentLvl++;
+  int index = 0;
+  while (index < size() - 1) {
+    txtIndent (txt, indentLvl);
+    operator[](index)->toTxt(txt, indentLvl);
+    txt.append(COMMA).append(END_LINE);
+    index++;
+  }
+  txtIndent (txt, indentLvl);
+  operator[](index)->toTxt(txt, indentLvl);
+  indentLvl--;
+  txt.append(END_LINE);
+  txtIndent (txt, indentLvl);
+  txt.append("]");
+}
+
+void ObjectMap::toTxt (string& txt, int indentLvl) {
+  txt.append("{\n");
+  indentLvl++;
+  int index = 0;
+  while (index < getKeys().size() - 1) {
+    txtIndent (txt, indentLvl);
+    txt.append(QUOTE).append(getKeys()[index]).append(QUOTE).append(POINTS);
+    operator[](getKeys()[index])->toTxt(txt, indentLvl);
+    txt.append(COMMA).append(END_LINE);
+    index++;
+  }
+  txtIndent (txt, indentLvl);
+  txt.append(QUOTE).append(getKeys()[index]).append(QUOTE).append(POINTS);
+  operator[](getKeys()[index])->toTxt(txt, indentLvl);
+  indentLvl--;
+  txt.append(END_LINE);
+  txtIndent (txt, indentLvl);
+  txt.append("}");
+}
+
+void ObjectFinalBool::toTxt (string& txt, int indentLvl) {
+  if (getContent())
+    txt.append("true");
+  else
+    txt.append("false");
+}
+
+void ObjectFinalNumber::toTxt (string& txt, int indentLvl) {
+  txt.append(to_string(getContent()));
+}
+
+void ObjectFinalString::toTxt (string& txt, int indentLvl) {
+  txt.append(QUOTE).append(getContent()).append(QUOTE);
 }
