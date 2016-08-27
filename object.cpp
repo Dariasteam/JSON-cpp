@@ -104,7 +104,7 @@ bool ObjectVector::add (string path,  AbstractObject* obj) {
     if (son != nullptr) {
       return son->add (path.substr(matcher[0].length(), path.size()), obj);
     } else {
-      cout << "it worked " << insert ("", obj) << endl;
+      insert ("", obj);
       if (obj->getType() > FINAL) // its final object
         return true;
       else
@@ -118,14 +118,17 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
   smatch matcher;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
+    string newPath = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
-      return son->add (path.substr(matcher[0].length(), path.size()), obj);
+      return son->add (newPath, obj);
     } else {
-      insert (matcher[1], obj);
-      if (obj->getType() > FINAL) // its final object
-        return true;
-      else
-        return obj->add (path.substr(matcher[0].length(), path.size()), obj);
+      if (!newPath.empty()) {
+        son = new ObjectMap();
+        insert (matcher[1], son);
+        return son->add (newPath, obj);
+      } else {
+        return insert (path, obj);
+      }
     }
   }
   return false;
