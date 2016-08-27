@@ -8,8 +8,8 @@ ObjectFinal::~ObjectFinal() {}
 
 #include <iostream>
 
-regex ObjectVector::tokenRgx = regex ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?");
-regex ObjectMap::tokenRgx = regex ("^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
+regex ObjectVector::tokenRgx = regex ("^(?:\\[)?(\\d+)(:?\\])?(:?\\.)?");
+regex ObjectMap::tokenRgx = regex    ("^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
 
 void AbstractObject::txtIndent(string &txt, int indentLvl) {
   for (int i = 0; i < indentLvl; i++)
@@ -104,11 +104,11 @@ bool ObjectVector::add (string path,  AbstractObject* obj) {
     if (son != nullptr) {
       return son->add (path.substr(matcher[0].length(), path.size()), obj);
     } else {
-      insert (matcher[1], obj);
+      cout << "it worked " << insert ("", obj) << endl;
       if (obj->getType() > FINAL) // its final object
         return true;
       else
-        return son->add (path.substr(matcher[0].length(), path.size()), obj);
+        return obj->add (path.substr(matcher[0].length(), path.size()), obj);
     }
   }
   return false;
@@ -123,7 +123,7 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
     } else {
       insert (matcher[1], obj);
       if (obj->getType() > FINAL) // its final object
-        return false;
+        return true;
       else
         return obj->add (path.substr(matcher[0].length(), path.size()), obj);
     }
@@ -138,13 +138,11 @@ bool ObjectFinal::add (string path,  AbstractObject* obj) {
 void ObjectVector::toTxt (string& txt, int indentLvl) {
   txt.append("[\n");
   indentLvl++;
-  int index = 0;
-  while (index < size()) {
+  for (int i = 0; i < size(); i++) {
     txtIndent (txt, indentLvl);
-    operator[](index)->toTxt(txt, indentLvl);
-    if (index < size() -1)
+    operator[](i)->toTxt(txt, indentLvl);
+    if (i < size() -1)
       txt.append(COMMA).append(END_LINE);
-    index++;
   }
   indentLvl--;
   txt.append(END_LINE);
@@ -155,14 +153,12 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
 void ObjectMap::toTxt (string& txt, int indentLvl) {
   txt.append("{\n");
   indentLvl++;
-  int index = 0;
-  while (index < getKeys().size()) {
+  for (int i = 0; i < getKeys().size(); i++) {
     txtIndent (txt, indentLvl);
-    txt.append(QUOTE).append(getKeys()[index]).append(QUOTE).append(POINTS);
-    operator[](getKeys()[index])->toTxt(txt, indentLvl);
-    if (index < getKeys().size() -1)
+    txt.append(QUOTE).append(getKeys()[i]).append(QUOTE).append(POINTS);
+    operator[](getKeys()[i])->toTxt(txt, indentLvl);
+    if (i < getKeys().size() -1)
       txt.append(COMMA).append(END_LINE);
-    index++;
   }
   indentLvl--;
   txt.append(END_LINE);
