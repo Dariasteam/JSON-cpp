@@ -123,9 +123,9 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
     } else {
       insert (matcher[1], obj);
       if (obj->getType() > FINAL) // its final object
-        return true;
+        return false;
       else
-        return son->add (path.substr(matcher[0].length(), path.size()), obj);
+        return obj->add (path.substr(matcher[0].length(), path.size()), obj);
     }
   }
   return false;
@@ -139,14 +139,13 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
   txt.append("[\n");
   indentLvl++;
   int index = 0;
-  while (index < size() - 1) {
+  while (index < size()) {
     txtIndent (txt, indentLvl);
     operator[](index)->toTxt(txt, indentLvl);
-    txt.append(COMMA).append(END_LINE);
+    if (index < size() -1)
+      txt.append(COMMA).append(END_LINE);
     index++;
   }
-  txtIndent (txt, indentLvl);
-  operator[](index)->toTxt(txt, indentLvl);
   indentLvl--;
   txt.append(END_LINE);
   txtIndent (txt, indentLvl);
@@ -157,16 +156,14 @@ void ObjectMap::toTxt (string& txt, int indentLvl) {
   txt.append("{\n");
   indentLvl++;
   int index = 0;
-  while (index < getKeys().size() - 1) {
+  while (index < getKeys().size()) {
     txtIndent (txt, indentLvl);
     txt.append(QUOTE).append(getKeys()[index]).append(QUOTE).append(POINTS);
     operator[](getKeys()[index])->toTxt(txt, indentLvl);
-    txt.append(COMMA).append(END_LINE);
+    if (index < getKeys().size() -1)
+      txt.append(COMMA).append(END_LINE);
     index++;
   }
-  txtIndent (txt, indentLvl);
-  txt.append(QUOTE).append(getKeys()[index]).append(QUOTE).append(POINTS);
-  operator[](getKeys()[index])->toTxt(txt, indentLvl);
   indentLvl--;
   txt.append(END_LINE);
   txtIndent (txt, indentLvl);

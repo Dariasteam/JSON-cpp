@@ -8,8 +8,14 @@
       "height" : 500.000000,
       "a" : true,
       "uu" : 44.440000,
-      "uuaa" : true,
-      "uu222" : false
+      "uuaa" : "asdasd",
+      "uu222" : false,
+      "AME" : {
+
+      },
+      "meeeee" : [
+
+      ]
     },
     "image" : {
       "src" : "Images/Sun.png",

@@ -192,6 +192,16 @@ bool JsonTree::addElement (string path, string value) {
   return top->add (path, object);
 };
 
+bool JsonTree::addMap (string path) {
+  AbstractObject* object = new ObjectMap;
+  return top->add (path, object);
+}
+
+bool JsonTree::addVector (string path) {
+  AbstractObject* object = new ObjectVector;
+  return top->add (path, object);
+}
+
 string JsonTree::toText () {
   string txt;
   top->toTxt(txt, 0);

@@ -53,8 +53,11 @@ public:
   AbstractObject* insertObject (string path, AbstractObject* obj);
 
   bool addElement (string path, double value);
-  bool addElement (string path, bool value);
   bool addElement (string path, string value);
+  bool addElement (string path, bool value);
+
+  bool addVector (string path);
+  bool addMap (string map);
 
   string toText ();
 };
