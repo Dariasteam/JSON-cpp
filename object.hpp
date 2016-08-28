@@ -76,7 +76,7 @@ public:
   AbstractObject* operator[](string key);
   AbstractObject* get (string path);
   bool add (string path, AbstractObject* obj);
-  void toTxt (string &txt, int indentLvl);  
+  void toTxt (string &txt, int indentLvl);
 };
 
 class ObjectFinal : public AbstractObject {
