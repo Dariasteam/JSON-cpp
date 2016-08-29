@@ -17,7 +17,8 @@
           }
         }
       },
-      "meeeee" : 23.000000
+      "meeeee" : 23.000000,
+      "lala" : "yuhu"
     },
     "image" : {
       "src" : "Images/Sun.png",

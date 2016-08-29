@@ -78,6 +78,7 @@ public:
   bool add (string path, AbstractObject* obj);
   void toTxt (string &txt, int indentLvl);
   bool replace (string key, AbstractObject* obj);
+  bool set (string key, AbstractObject* obj);
 };
 
 class ObjectFinal : public AbstractObject {
@@ -85,7 +86,7 @@ protected:
   ObjectFinal (int type) : AbstractObject (type) {}
   virtual ~ObjectFinal () = 0;
 public:
-  virtual void setValue (string value) = 0;
+  virtual void replaceValue (string value) = 0;
   AbstractObject* get (string path);
   bool add (string path,  AbstractObject* obj);
 };
@@ -97,7 +98,7 @@ public:
   ObjectFinalNumber () : ObjectFinal (NUMBER) {}
   ObjectFinalNumber (double n) : ObjectFinal (NUMBER), number (n) {}
   inline double getContent () { return number; }
-  void setValue (string value);
+  void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };
 
@@ -108,7 +109,7 @@ public:
   ObjectFinalString () : ObjectFinal (STRING) {}
   ObjectFinalString (string s) : ObjectFinal (STRING), text (s) {}
   inline string getContent () { return text; }
-  void setValue (string value);
+  void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };
 
@@ -117,10 +118,10 @@ private:
   bool boolean;
 public:
   ObjectFinalBool() : ObjectFinal (BOOL), boolean (false) {}
-  ObjectFinalBool(string s) : ObjectFinal (BOOL) { setValue(s); }
+  ObjectFinalBool(string s) : ObjectFinal (BOOL) { replaceValue(s); }
   ObjectFinalBool(bool s) : ObjectFinal (BOOL), boolean (s) {}
   inline bool getContent () { return boolean; }
-  void setValue (string value);
+  void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };
 

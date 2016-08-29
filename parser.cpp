@@ -53,7 +53,7 @@ bool Parser::hasComma (string buffer) {
 }
 
 ObjectNameFlag Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
-	obj->setValue(matcher[1]);
+	obj->replaceValue(matcher[1]);
 	content = content.substr(matcher[0].length(), content.size());
 	return {obj, "", hasComma(matcher[2])};
 }

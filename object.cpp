@@ -16,18 +16,18 @@ void AbstractObject::txtIndent(string &txt, int indentLvl) {
     txt.append(INDENT);
 }
 
-void ObjectFinalBool::setValue (string value) {
+void ObjectFinalBool::replaceValue (string value) {
   if (value == "true")
     boolean = true;
   else
     boolean = false;
 }
 
-void ObjectFinalNumber::setValue (string value) {
+void ObjectFinalNumber::replaceValue (string value) {
   number = stod (value);
 }
 
-void ObjectFinalString::setValue (string value) {
+void ObjectFinalString::replaceValue (string value) {
   text = value;
 }
 
@@ -64,12 +64,19 @@ bool ObjectMap::insert (string key, AbstractObject* obj) {
   }
 }
 
-bool ObjectMap::replace (string key, AbstractObject *obj) {
+bool ObjectMap::replace (string key, AbstractObject* obj) {
   if (!hash.count (key))
     return false;
   keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
   hash.erase (key);
   return insert (key, obj);
+}
+
+bool ObjectMap::set (string key, AbstractObject* obj) {
+  if (!hash.count (key))
+    return insert (key, obj);
+  else
+    return replace (key, obj);
 }
 
 AbstractObject* ObjectVector::get (string path) {
