@@ -17,7 +17,7 @@ using namespace std;
 enum ObjetsTypes {
   VECTOR,
   MAP,
-  FINAL,    // used for comparisons, if (getType () > FINAL) -> is a final object
+  FINAL,   // used for comparisons, if (getType() > FINAL) -> is a final object
   NUMBER,
   STRING,
   BOOL
@@ -77,6 +77,7 @@ public:
   AbstractObject* get (string path);
   bool add (string path, AbstractObject* obj);
   void toTxt (string &txt, int indentLvl);
+  bool replace (string key, AbstractObject* obj);
 };
 
 class ObjectFinal : public AbstractObject {

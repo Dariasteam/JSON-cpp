@@ -4,6 +4,7 @@ regex JsonTree::tokenRgx = regex ("^(\\w+)(:?\\.)?");
 regex JsonTree::numberRgx = regex ("^(\\d+)(:?(?:\\w|\\s)*)");
 regex JsonTree::vectorAccessRgx = regex ("^(?:\\[(\\d)+(:?\\]))(:?\\.)?");
 regex JsonTree::mapAccessRgx = regex ("^(?:\\['(\\w)+(:?'\\]))(:?\\.)?");
+regex JsonTree::lastElementRgx = regex ("^(.+)(?:\\.)(.+)$");
 
 JsonTree::JsonTree (AbstractObject* root)
   { top = (ObjectMap*)root; }
@@ -206,4 +207,40 @@ string JsonTree::toText () {
   string txt;
   top->toTxt(txt, 0);
   return txt;
+}
+
+bool JsonTree::replace(AbstractObject *newObj, string path, string key) {
+  AbstractObject* father = top->get (path);
+  if (father->getType() == MAP) {
+    return ((ObjectMap*)father)->replace (key, newObj);
+  } else {
+    return false;
+  }
+}
+
+bool JsonTree::set (string from, string path) {
+  AbstractObject* object = new ObjectFinalString (from);
+  smatch matcher;
+  if (regex_search (path, matcher, lastElementRgx)) {
+    return replace (object, matcher[1], matcher[2]);
+  }
+  return false;
+}
+
+bool JsonTree::set (bool from, string path) {
+  AbstractObject* object = new ObjectFinalBool (from);
+  smatch matcher;
+  if (regex_search (path, matcher, lastElementRgx)) {
+    return replace (object, matcher[1], matcher[2]);
+  }
+  return false;
+}
+
+bool JsonTree::set (double from, string path) {
+  AbstractObject* object = new ObjectFinalNumber (from);
+  smatch matcher;
+  if (regex_search (path, matcher, lastElementRgx)) {
+    return replace (object, matcher[1], matcher[2]);
+  }
+  return false;
 }

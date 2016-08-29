@@ -12,26 +12,12 @@
       "uu222" : false,
       "AME" : {
         "aa" : {
-          "aaaaa" : 5222.100000
+          "aaaaa" : {
+            "2" : 5222.100000
+          }
         }
       },
-      "meeeee" : [
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi",
-        "tupi"
-      ]
+      "meeeee" : 23.000000
     },
     "image" : {
       "src" : "Images/Sun.png",

@@ -64,6 +64,14 @@ bool ObjectMap::insert (string key, AbstractObject* obj) {
   }
 }
 
+bool ObjectMap::replace (string key, AbstractObject *obj) {
+  if (!hash.count (key))
+    return false;
+  keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
+  hash.erase (key);
+  return insert (key, obj);
+}
+
 AbstractObject* ObjectVector::get (string path) {
   smatch matcher;
   if (path.size() == 0)
