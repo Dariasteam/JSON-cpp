@@ -1,6 +1,6 @@
 #include "./manager.hpp"
 
-regex JsonTree::lastTokenRgx = regex ("^(.+)(?:\\.)(.+)$");
+regex JsonTree::lastTokenRgx = regex ("^(.*)(?:\\.)(.+)$");
 
 JsonTree::JsonTree (AbstractObject* root)
   { top = (ObjectMap*)root; }
@@ -35,6 +35,12 @@ int JsonTree::getSizeAt (string path) {
   } else {
     return 0;
   }
+}
+
+string JsonTree::toText () {
+  string txt;
+  top->toTxt(txt, 0);
+  return txt;
 }
 
 bool JsonTree::isNumber (string path) {
@@ -174,6 +180,8 @@ AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
   return nullptr;
 }
 
+// ADD
+
 bool JsonTree::add (string path, double value) {
   AbstractObject* object = new ObjectFinalNumber (value);
   return top->add (path, object);
@@ -199,11 +207,7 @@ bool JsonTree::addVector (string path) {
   return top->add (path, object);
 }
 
-string JsonTree::toText () {
-  string txt;
-  top->toTxt(txt, 0);
-  return txt;
-}
+// REPLACE
 
 bool JsonTree::replace(AbstractObject *newObj, string path) {
   smatch matcher;
@@ -231,6 +235,8 @@ bool JsonTree::replace (double from, string path) {
   return replace (object, path);
 }
 
+// SET
+
 bool JsonTree::set(AbstractObject *newObj, string path) {
   if (exist (path))
     return replace (newObj, path);
@@ -251,4 +257,32 @@ bool JsonTree::set (string from, string path) {
 bool JsonTree::set (bool from, string path) {
   AbstractObject* object = new ObjectFinalBool (from);
   return set (object, path);
+}
+
+// ERASE
+
+bool JsonTree::erase (string path) {
+  smatch matcher;
+  if (regex_search (path, matcher, lastTokenRgx)) {
+      AbstractObject* father = top->get (matcher[1]);
+      if (father->getType() == MAP)
+        return ((ObjectMap*)father)->erase (matcher[2]);
+      return false;
+  } else if (!path.empty())
+    return ((ObjectMap*)top)->erase (path);
+  return false;
+}
+
+// REMOVE
+
+bool JsonTree::remove (string path) {
+  smatch matcher;
+  if (regex_search (path, matcher, lastTokenRgx)) {
+      AbstractObject* father = top->get (matcher[1]);
+      if (father->getType() == MAP)
+        return ((ObjectMap*)father)->remove (matcher[2]);
+      return false;
+  } else if (!path.empty())
+    return ((ObjectMap*)top)->erase (path);
+  return false;
 }

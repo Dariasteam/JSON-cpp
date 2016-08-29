@@ -129,6 +129,23 @@ bool ObjectVector::add (string path,  AbstractObject* obj) {
   return false;
 }
 
+bool ObjectMap::remove (string key) {
+  AbstractObject* aux = operator[](key);
+  if (aux == nullptr)
+    return true;
+  keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
+  hash.erase (key);
+  delete aux;
+  return true;
+}
+
+bool ObjectMap::erase (string key) {
+  if (!hash.count (key))
+    return false;
+  else
+    return remove (key);
+}
+
 bool ObjectMap::add (string path,  AbstractObject* obj) {
   smatch matcher;
   if (regex_search (path, matcher, tokenRgx)) {

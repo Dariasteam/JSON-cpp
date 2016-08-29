@@ -28,8 +28,8 @@ private:
   unsigned short type;
 protected:
   AbstractObject (unsigned short t) : type (t) {}
-  virtual ~AbstractObject () = 0;
 public:
+  virtual ~AbstractObject () = 0;
   inline unsigned short getType () { return type; }
   virtual AbstractObject* get (string path) = 0;
   virtual bool add (string path, AbstractObject* obj) = 0;
@@ -79,6 +79,8 @@ public:
   void toTxt (string &txt, int indentLvl);
   bool replace (string key, AbstractObject* obj);
   bool set (string key, AbstractObject* obj);
+  bool remove (string key);
+  bool erase (string key);
 };
 
 class ObjectFinal : public AbstractObject {

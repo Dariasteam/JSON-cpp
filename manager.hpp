@@ -50,9 +50,6 @@ public:
   bool isVector (string path);
   bool exist (string path);
 
-  bool hasFailed () {}
-  AbstractObject* insertObject (string path, AbstractObject* obj);
-
   // returns true if doesn't exist and its sucessfully created
   bool add (string path, double value);
   bool add (string path, string value);
@@ -71,11 +68,15 @@ public:
   bool set (bool value, string path);
   bool set (double value, string path);
 
+  // return true if exist and its successfully removed, false if doesn't exist
+  bool erase (string path);
+
   // return true if successfully removed or doesn't exist
-  bool remove (string value, string path);
+  bool remove (string path);
 
 
-
+  bool hasFailed () {}
+  AbstractObject* insertObject (string path, AbstractObject* obj);
   string toText ();
 };
 
