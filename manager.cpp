@@ -1,6 +1,6 @@
 #include "./manager.hpp"
 
-regex JsonTree::lastElementRgx = regex ("^(.+)(?:\\.)(.+)$");
+regex JsonTree::lastTokenRgx = regex ("^(.+)(?:\\.)(.+)$");
 
 JsonTree::JsonTree (AbstractObject* root)
   { top = (ObjectMap*)root; }
@@ -205,74 +205,50 @@ string JsonTree::toText () {
   return txt;
 }
 
-bool JsonTree::replace(AbstractObject *newObj, string path, string key) {
-  AbstractObject* father = top->get (path);
-  if (father->getType() == MAP) {
-    return ((ObjectMap*)father)->replace (key, newObj);
-  } else {
-    return false;
+bool JsonTree::replace(AbstractObject *newObj, string path) {
+  smatch matcher;
+  if (regex_search (path, matcher, lastTokenRgx)) {
+      AbstractObject* father = top->get (matcher[1]);
+      if (father->getType() == MAP)
+        return ((ObjectMap*)father)->replace (matcher[2], newObj);
+      return false;
   }
+  return false;
 }
 
 bool JsonTree::replace (string from, string path) {
   AbstractObject* object = new ObjectFinalString (from);
-  smatch matcher;
-  if (regex_search (path, matcher, lastElementRgx)) {
-    return replace (object, matcher[1], matcher[2]);
-  }
-  return false;
+  return replace (object, path);
 }
 
 bool JsonTree::replace (bool from, string path) {
   AbstractObject* object = new ObjectFinalBool (from);
-  smatch matcher;
-  if (regex_search (path, matcher, lastElementRgx)) {
-    return replace (object, matcher[1], matcher[2]);
-  }
-  return false;
+  return replace (object, path);
 }
 
 bool JsonTree::replace (double from, string path) {
   AbstractObject* object = new ObjectFinalNumber (from);
-  smatch matcher;
-  if (regex_search (path, matcher, lastElementRgx)) {
-    return replace (object, matcher[1], matcher[2]);
-  }
-  return false;
+  return replace (object, path);
 }
 
-bool JsonTree::set(AbstractObject *newObj, string path, string key) {
-  AbstractObject* father = top->get (path);
-  if (father->getType() == MAP) {
-    return ((ObjectMap*)father)->set (key, newObj);
-  } else {
-    return false;
-  }
+bool JsonTree::set(AbstractObject *newObj, string path) {
+  if (exist (path))
+    return replace (newObj, path);
+  else
+    return top->add (path, newObj);
 }
 
 bool JsonTree::set (double from, string path) {
   AbstractObject* object = new ObjectFinalNumber (from);
-  smatch matcher;
-  if (regex_search (path, matcher, lastElementRgx)) {
-    return set (object, matcher[1], matcher[2]);
-  }
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (string from, string path) {
   AbstractObject* object = new ObjectFinalString (from);
-  smatch matcher;
-  if (regex_search (path, matcher, lastElementRgx)) {
-    return set (object, matcher[1], matcher[2]);
-  }
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (bool from, string path) {
   AbstractObject* object = new ObjectFinalBool (from);
-  smatch matcher;
-  if (regex_search (path, matcher, lastElementRgx)) {
-    return set (object, matcher[1], matcher[2]);
-  }
-  return false;
+  return set (object, path);
 }

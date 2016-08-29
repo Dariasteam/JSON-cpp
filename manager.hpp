@@ -20,13 +20,13 @@ private:
                                     "Bool"};
   ObjectMap* top;
 
-  static regex lastElementRgx;
+  static regex lastTokenRgx;
 
   bool isType (AbstractObject* obj, int type);
   void getterError (string path, AbstractObject* obj, int type);
 
-  bool replace (AbstractObject* newObj, string path, string key);
-  bool set (AbstractObject* newObj, string path, string key);
+  bool replace (AbstractObject* newObj, string path);
+  bool set (AbstractObject* newObj, string path);
 
 public:
   JsonTree (AbstractObject* root);
@@ -70,6 +70,9 @@ public:
   bool set (string value, string path);
   bool set (bool value, string path);
   bool set (double value, string path);
+
+  // return true if successfully removed or doesn't exist
+  bool remove (string value, string path);
 
 
 
