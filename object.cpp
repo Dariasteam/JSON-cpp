@@ -187,7 +187,7 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
 }
 
 void ObjectMap::toTxt (string& txt, int indentLvl) {
-  txt.append("{");
+  txt.append("{ ");
   indentLvl++;
   for (int i = 0; i < getKeys().size(); i++) {
     txt.append(END_LINE);

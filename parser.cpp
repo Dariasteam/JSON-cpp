@@ -129,7 +129,7 @@ ObjectNameFlag Parser::parse (string& content, string path) {
 int Parser::saveFile (string fileName, JsonTree& info) {
 	ofstream file;
 	file.open (fileName);
-	file << tree.toText();
+	file << info.toText();
 	file.close ();
 	return 0;
 }

@@ -30,6 +30,7 @@ private:
 
 public:
   JsonTree (AbstractObject* root);
+  JsonTree ();
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
@@ -52,28 +53,36 @@ public:
 
   // returns true if doesn't exist and its sucessfully created
   bool add (string path, double value);
-  bool add (string path, string value);
+  bool add (string path, float value);
+  bool add (string path, int value);
   bool add (string path, bool value);
+  bool add (string path, string value);
+  bool add (string path, const char* value);
 
   bool addVector (string path);
   bool addMap (string map);
 
   // returns true if exist and its sucessfully updated
-  bool replace (string from, string path);
-  bool replace (bool from, string path);
   bool replace (double from, string path);
+  bool replace (float from, string path);
+  bool replace (int from, string path);
+  bool replace (bool from, string path);
+  bool replace (string from, string path);
+  bool replace (const char* from, string path);
 
   // returns true if its sucessfully created or replaced if previously exist
-  bool set (string value, string path);
-  bool set (bool value, string path);
   bool set (double value, string path);
+  bool set (float value, string path);
+  bool set (int value, string path);
+  bool set (bool value, string path);
+  bool set (string value, string path);
+  bool set (const char* value, string path);
 
   // return true if exist and its successfully removed, false if doesn't exist
   bool erase (string path);
 
   // return true if successfully removed or doesn't exist
   bool remove (string path);
-
 
   bool hasFailed () {}
   AbstractObject* insertObject (string path, AbstractObject* obj);
