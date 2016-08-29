@@ -52,12 +52,12 @@ public:
   bool exist (string path);
 
   // returns true if doesn't exist and its sucessfully created
-  bool add (string path, double value);
-  bool add (string path, float value);
-  bool add (string path, int value);
-  bool add (string path, bool value);
-  bool add (string path, string value);
-  bool add (string path, const char* value);
+  bool add (double value, string path);
+  bool add (float value, string path);
+  bool add (int value, string path);
+  bool add (bool value, string path);
+  bool add (string value, string path);
+  bool add (const char* value, string path);
 
   bool addVector (string path);
   bool addMap (string map);
@@ -84,7 +84,6 @@ public:
   // return true if successfully removed or doesn't exist
   bool remove (string path);
 
-  bool hasFailed () {}
   AbstractObject* insertObject (string path, AbstractObject* obj);
   string toText ();
 };

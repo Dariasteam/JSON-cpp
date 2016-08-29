@@ -186,30 +186,30 @@ AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
 
 // ADD
 
-bool JsonTree::add (string path, double value) {
+bool JsonTree::add (double value, string path) {
   AbstractObject* object = new ObjectFinalNumber (value);
   return top->add (path, object);
 };
 
-bool JsonTree::add (string path, float value) {
-  return add (path, double(value));
+bool JsonTree::add (float value, string path) {
+  return add (double(value), path);
 };
 
-bool JsonTree::add (string path, int value) {
-  return add (path, double(value));
+bool JsonTree::add (int value, string path) {
+  return add (double(value), path);
 };
 
-bool JsonTree::add (string path, bool value) {
+bool JsonTree::add (bool value, string path) {
   AbstractObject* object = new ObjectFinalBool (value);
   return top->add (path, object);
 };
 
-bool JsonTree::add (string path, string value) {
+bool JsonTree::add (string value, string path) {
   AbstractObject* object = new ObjectFinalString (value);
   return top->add (path, object);
 };
 
-bool JsonTree::add (string path, const char* value) {
+bool JsonTree::add (const char* value, string path) {
   return add (path, string(value));
 };
 

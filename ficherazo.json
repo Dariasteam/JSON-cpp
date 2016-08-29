@@ -1,6 +1,7 @@
 { 
   "hola" : { 
-    "chamo" : 2222222.100000
+    "chamo" : 2222222.100000,
+    "chama" : 2222222.100000
   },
   "lavida" : "hola.chamao.omo"
 }
