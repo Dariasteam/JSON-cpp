@@ -11,20 +11,5 @@
         "1" : 43.000000
       }
     }
-  },
-  "dipi" : [
-    "hola",
-    {
-      "tupi" : "hola"
-    },
-    {
-      "tupi" : {
-        "topopopo" : "hola"
-      }
-    },
-    "hola",
-    "hola",
-    "hola",
-    "hola"
-  ]
+  }
 }

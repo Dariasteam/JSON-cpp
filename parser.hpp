@@ -84,7 +84,7 @@ public:
 	Parser ();
 	JsonTree getTree () { return tree; }
 	int parseFile (string fileName);
-	int saveFile (string fileName, JsonTree& info);
+	static int saveFile (string fileName, JsonTree& info);
 	inline const vector<JsonLog>& getErrors () { return errors; }
 	inline const vector<JsonLog>& getWarnings () { return warnings; }
 };
