@@ -1,7 +1,30 @@
-{ 
-  "hola" : { 
-    "chamo" : 2222222.100000,
-    "chama" : 2222222.100000
+{
+  "hola" : {
+    "chamo" : 22.100000,
+    "chama" : 567.000000,
+    "chamao" : {
+      "omo" : "lavida"
+    },
+    "holita" : {
+      "vecinito" : 21.000000,
+      "vecinita" : {
+        "1" : 43.000000
+      }
+    }
   },
-  "lavida" : "hola.chamao.omo"
+  "dipi" : [
+    "hola",
+    {
+      "tupi" : "hola"
+    },
+    {
+      "tupi" : {
+        "topopopo" : "hola"
+      }
+    },
+    "hola",
+    "hola",
+    "hola",
+    "hola"
+  ]
 }

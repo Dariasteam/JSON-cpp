@@ -210,7 +210,7 @@ bool JsonTree::add (string value, string path) {
 };
 
 bool JsonTree::add (const char* value, string path) {
-  return add (path, string(value));
+  return add (string(value), path);
 };
 
 bool JsonTree::addMap (string path) {

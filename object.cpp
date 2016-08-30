@@ -112,23 +112,6 @@ AbstractObject* ObjectFinal::get (string path) {
     return nullptr;
 }
 
-bool ObjectVector::add (string path,  AbstractObject* obj) {
-  smatch matcher;
-  if (regex_search (path, matcher, tokenRgx)) {
-    AbstractObject* son = operator[](stoi (matcher[1]));
-    if (son != nullptr) {
-      return son->add (path.substr(matcher[0].length(), path.size()), obj);
-    } else {
-      insert ("", obj);
-      if (obj->getType() > FINAL) // its final object
-        return true;
-      else
-        return obj->add (path.substr(matcher[0].length(), path.size()), obj);
-    }
-  }
-  return false;
-}
-
 bool ObjectMap::remove (string key) {
   AbstractObject* aux = operator[](key);
   if (aux == nullptr)
@@ -166,6 +149,26 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
   return false;
 }
 
+bool ObjectVector::add (string path,  AbstractObject* obj) {
+  smatch matcher;
+  AbstractObject* son;
+  if (regex_search (path, matcher, tokenRgx)) {
+    son = operator[](stoi (matcher[1]));
+    string newPath = path.substr(matcher[0].length(), path.size());
+    if (son != nullptr)
+      return son->add (newPath, obj);
+    else
+      return false;
+  } else if (path.empty()){
+    return insert ("", obj);
+  } else {
+    son = new ObjectMap();
+    insert ("", son);
+    return son->add (path, obj);
+  }
+  return false;
+}
+
 bool ObjectFinal::add (string path,  AbstractObject* obj) {
   return false;
 }
@@ -179,7 +182,8 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
     operator[](i)->toTxt(txt, indentLvl);
     txt.append(COMMA);
   }
-  txt.pop_back();
+  if (size() > 0)
+    txt.pop_back();
   indentLvl--;
   txt.append(END_LINE);
   txtIndent (txt, indentLvl);
@@ -187,7 +191,7 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
 }
 
 void ObjectMap::toTxt (string& txt, int indentLvl) {
-  txt.append("{ ");
+  txt.append("{");
   indentLvl++;
   for (int i = 0; i < getKeys().size(); i++) {
     txt.append(END_LINE);
@@ -196,7 +200,8 @@ void ObjectMap::toTxt (string& txt, int indentLvl) {
     operator[](getKeys()[i])->toTxt(txt, indentLvl);
     txt.append(COMMA);
   }
-  txt.pop_back();
+  if (getKeys().size() > 0)
+    txt.pop_back();
   indentLvl--;
   txt.append(END_LINE);
   txtIndent (txt, indentLvl);
