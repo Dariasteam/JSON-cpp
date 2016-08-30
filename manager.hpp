@@ -28,6 +28,11 @@ private:
   bool replace (AbstractObject* newObj, string path);
   bool set (AbstractObject* newObj, string path);
 
+  ObjectVector* createVec (vector<double>& array);
+  ObjectVector* createVec (vector<int>& array);
+  ObjectVector* createVec (vector<bool>& array);
+  ObjectVector* createVec (vector<string>& array);
+
 public:
   JsonTree (AbstractObject* root);
   JsonTree ();
@@ -75,6 +80,11 @@ public:
   bool replace (bool from, string path);
   bool replace (string from, string path);
   bool replace (const char* from, string path);
+
+  bool replace (vector<double>& array, string path);
+  bool replace (vector<int>& array, string path);
+  bool replace (vector<bool>& array, string path);
+  bool replace (vector<string>& array, string path);
 
   // returns true if its sucessfully created or replaced if previously exist
   bool set (double value, string path);
