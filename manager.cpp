@@ -382,6 +382,22 @@ bool JsonTree::set(const char *value, string path) {
   return set (string(value), path);
 }
 
+bool JsonTree::set (vector<double>& array, string path) {
+  return set (createVec (array), path);
+}
+
+bool JsonTree::set (vector<int>& array, string path) {
+  return set (createVec (array), path);
+}
+
+bool JsonTree::set (vector<bool>& array, string path) {
+  return set (createVec (array), path);
+}
+
+bool JsonTree::set (vector<string>& array, string path) {
+  return set (createVec (array), path);
+}
+
 // ERASE
 
 bool JsonTree::erase (string path) {

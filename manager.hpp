@@ -94,6 +94,11 @@ public:
   bool set (string value, string path);
   bool set (const char* value, string path);
 
+  bool set (vector<double>& array, string path);
+  bool set (vector<int>& array, string path);
+  bool set (vector<bool>& array, string path);
+  bool set (vector<string>& array, string path);
+
   // return true if exist and its successfully removed, false if doesn't exist
   bool erase (string path);
 
