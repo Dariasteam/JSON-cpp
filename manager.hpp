@@ -34,15 +34,16 @@ public:
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
-  bool copy (vector<string>& array, string path);
-  bool copy (vector<bool>& array, string path);
-  bool copy (vector<double>& array, string path);
-
   bool copy (string& to, string path);
   bool copy (bool& to, string path);
   bool copy (double& to, string path);
   bool copy (float& to, string path);
   bool copy (int& to, string path);
+
+  bool copy (vector<double>& array, string path);
+  bool copy (vector<int>& array, string path);
+  bool copy (vector<bool>& array, string path);
+  bool copy (vector<string>& array, string path);
 
   bool isNumber (string path);
   bool isBool (string path);
@@ -58,6 +59,11 @@ public:
   bool add (bool value, string path);
   bool add (string value, string path);
   bool add (const char* value, string path);
+
+  bool add (vector<double>& array, string path);
+  bool add (vector<int>& array, string path);
+  bool add (vector<bool>& array, string path);
+  bool add (vector<string>& array, string path);
 
   bool addVector (string path);
   bool addMap (string map);

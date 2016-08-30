@@ -146,6 +146,23 @@ bool JsonTree::copy (vector<double>& array, string path) {
   return false;
 }
 
+bool JsonTree::copy (vector<int>& array, string path) {
+  AbstractObject* obj = top->get(path);
+  if (isType (obj, VECTOR)) {
+    ObjectVector* vect = (ObjectVector*)obj;
+    int size = vect->size();
+    array.resize (size);
+    for (int i = 0; i < size; i++) {
+      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == NUMBER)
+        array[i] = int(((ObjectFinalNumber*)vect->operator[](i))->getContent());
+      else
+        return false;
+    }
+    return true;
+  }
+  return false;
+}
+
 bool JsonTree::copy (vector<string>& array, string path) {
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {
@@ -212,6 +229,39 @@ bool JsonTree::add (string value, string path) {
 bool JsonTree::add (const char* value, string path) {
   return add (string(value), path);
 };
+
+bool JsonTree::add (vector<double> &array, string path) {
+  ObjectVector* object = new ObjectVector ();
+  for (double number : array) {
+    object->insert("", new ObjectFinalNumber (number));
+  }
+  return top->add (path, object);
+}
+
+
+bool JsonTree::add (vector<int> &array, string path) {
+  ObjectVector* object = new ObjectVector ();
+  for (int number : array) {
+    object->insert("", new ObjectFinalNumber (number));
+  }
+  return top->add (path, object);
+}
+
+bool JsonTree::add (vector<bool> &array, string path) {
+  ObjectVector* object = new ObjectVector ();
+  for (bool boolean : array) {
+    object->insert("", new ObjectFinalBool (boolean));
+  }
+  return top->add (path, object);
+}
+
+bool JsonTree::add (vector<string> &array, string path) {
+  ObjectVector* object = new ObjectVector ();
+  for (string word : array) {
+    object->insert("", new ObjectFinalString (word));
+  }
+  return top->add (path, object);
+}
 
 bool JsonTree::addMap (string path) {
   AbstractObject* object = new ObjectMap;
