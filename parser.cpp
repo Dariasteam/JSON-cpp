@@ -9,13 +9,14 @@ regex Parser::finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
 regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
 regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
+
 int Parser::parseFile (string fileName) {
 	if (openFile(fileName)) {
 		stringstream buffer;
-		buffer << getFile ().rdbuf();
+		buffer << getFile().rdbuf();
 		string fileContent = buffer.str();
 		ObjectNameFlag result = parse (fileContent, "");
-		tree = JsonTree (result.element);
+		JsonTree* tree = new JsonTree (result.element);
 		if (fileContent.size() > 0)
 			evaluateFlag(NO_CLOSED, ".", "");
 		// return evaluator
@@ -40,7 +41,6 @@ Parser::Parser () :
 	{}
 
 bool Parser::openFile (string fileName) {
-	ifstream& file = getFile();
 	file.open(fileName);
 	if (file.is_open())
 		return true;
