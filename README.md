@@ -109,15 +109,15 @@ Innecesario, un objeto JsonTree es generado automáticamente por el parser.
 
   ```c++
 	// FINAL
-	bool copy (bool& to, string path);
-  bool copy (string& to, string path);
-  bool copy (double& to, string path);
-  bool copy (float& to, string path);
-  bool copy (int& to, string path);
+	bool get (bool& to, string path);
+  bool get (string& to, string path);
+  bool get (double& to, string path);
+  bool get (float& to, string path);
+  bool get (int& to, string path);
 	// VECTOR
-	bool copy (vector<string>& array, string path);
-	bool copy (vector<bool>& array, string path);
-	bool copy (vector<double>& array, string path);
+	bool get (vector<string>& array, string path);
+	bool get (vector<bool>& array, string path);
+	bool get (vector<double>& array, string path);
   ```
 
 	En caso de que el vector definido en el .json contenga elementos de varios tipos los métodos devolverán false, por lo que es responsabilidad del programador asegurarse de que aquellos vectores que pretenda inicializar mediante estas funciones sean homogéneos en el .json.  
@@ -152,8 +152,8 @@ Parser parser;
 int error = 0;
 if (parser.parseFile ("example_file.json")) {
 	JsonTree tree = parser.getTree();
-	if (tree.copy (int_var, "key_2") || error++);
-	if (tree.copy (string_var, "key_1.[0]") || error++);
+	if (tree.get (int_var, "key_2") || error++);
+	if (tree.get (string_var, "key_1.[0]") || error++);
 	cout << "error " << error << std::endl;
 } else {
 	parser.getErrors(); // return a vector of errors

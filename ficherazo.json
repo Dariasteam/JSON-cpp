@@ -1,36 +1,17 @@
 {
-  "hola" : {
-    "chamo" : 22.100000,
-    "chama" : 567.000000,
-    "chamao" : {
-      "omo" : "lavida"
-    },
-    "holita" : {
-      "vecinito" : 21.000000,
-      "vecinita" : {
-        "1" : 43.000000
+  "soldado" : {
+    "ejercito" : {
+      "A" : {
+        "nombre" : "TurboName",
+        "tipo" : "Arquero"
+      },
+      "B" : {
+        "nombre" : "TurboNome",
+        "tipo" : "Lancero"
       }
     }
   },
-  "dipi" : [
-    "hola",
-    {
-      "tupi" : "hola"
-    },
-    {
-      "tupi" : {
-        "topopopo" : "hola"
-      }
-    },
-    "hola",
-    "hola",
-    "hola",
-    "hola",
-    {
-      "cuca" : "hola"
-    }
-  ],
-  "dopi" : [
+  "vector" : [
     0.000000,
     2.000000,
     4.000000,

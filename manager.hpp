@@ -39,16 +39,16 @@ public:
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
-  bool copy (string& to, string path);
-  bool copy (bool& to, string path);
-  bool copy (double& to, string path);
-  bool copy (float& to, string path);
-  bool copy (int& to, string path);
+  bool get (string& to, string path);
+  bool get (bool& to, string path);
+  bool get (double& to, string path);
+  bool get (float& to, string path);
+  bool get (int& to, string path);
 
-  bool copy (vector<double>& array, string path);
-  bool copy (vector<int>& array, string path);
-  bool copy (vector<bool>& array, string path);
-  bool copy (vector<string>& array, string path);
+  bool get (vector<double>& array, string path);
+  bool get (vector<int>& array, string path);
+  bool get (vector<bool>& array, string path);
+  bool get (vector<string>& array, string path);
 
   bool isNumber (string path);
   bool isBool (string path);
