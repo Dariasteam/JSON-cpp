@@ -1,5 +1,7 @@
 #include "./parser.hpp"
 
+using namespace json;
+
 regex Parser::startBrace = regex ("^(?:\\s*)(\\{)");
 regex Parser::startBracket = regex ("^(?:\\s*)(\\[)");
 regex Parser::keyDef = regex ("^(?:\\s*)(?:\")(.+?)(?:\")(?:\\s*)\\:");
@@ -10,25 +12,28 @@ regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
 regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
 
-int Parser::parseFile (string fileName) {
-	int returnValue = 0;
+int Parser::parseFile (string fileName, JsonTree& tree) {
+	errors.resize (0);
+	warnings.resize (0);
+	int returnValue = OK;
 	if (openFile(fileName)) {
 		stringstream buffer;
 		buffer << getFile().rdbuf();
 		string fileContent = buffer.str();
 		ObjectNameFlag result = parse (fileContent, "");
-		JsonTree* tree = new JsonTree (result.element);
+		tree = JsonTree(result.element);
 		if (fileContent.size())
 			evaluateFlag(NO_CLOSED, ".", "");
 		if (hasErrors())
 			returnValue = returnValue | ERRORS;
 		if (hasWarnings())
 			returnValue = returnValue | WARNINGS;
-		return returnValue;
 	} else {
 		return CANT_OPEN_FILE;
 	}
-	return OK;
+	if (!returnValue)
+		return OK;
+	return returnValue;
 }
 
 Parser::Parser () :
@@ -123,10 +128,12 @@ ObjectNameFlag Parser::parse (string& content, string path) {
 	return {nullptr, "", EMPTY};
 }
 
-int Parser::saveFile (string fileName, JsonTree& info) {
+int Parser::saveFile (string fileName, JsonTree& tree) {
 	ofstream file;
 	file.open (fileName);
-	file << info.toText();
+	if (!file.is_open())
+	 	return CANT_OPEN_FILE;
+	file << tree.toText();
 	file.close ();
-	return 0;
+	return OK;
 }

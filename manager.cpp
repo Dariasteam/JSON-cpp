@@ -1,5 +1,7 @@
 #include "./manager.hpp"
 
+using namespace json;
+
 regex JsonTree::lastTokenRgx = regex ("^(.*)(?:\\.)(.+)$");
 
 JsonTree::JsonTree () {

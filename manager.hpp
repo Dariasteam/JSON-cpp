@@ -10,6 +10,8 @@
 
 using namespace std;
 
+namespace json {
+
 class JsonTree {
 private:
   string objectsTypesReverse [6] = {"Vector",
@@ -33,17 +35,19 @@ private:
   ObjectVector* createVec (vector<bool>& array);
   ObjectVector* createVec (vector<string>& array);
 
+	AbstractObject* insertObject (string path, AbstractObject* obj);
+
 public:
   JsonTree (AbstractObject* root);
   JsonTree ();
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
-  bool get (string& to, string path);
+	bool get (double& to, string path);
+	bool get (float& to, string path);
+	bool get (int& to, string path);
   bool get (bool& to, string path);
-  bool get (double& to, string path);
-  bool get (float& to, string path);
-  bool get (int& to, string path);
+	bool get (string& to, string path);
 
   bool get (vector<double>& array, string path);
   bool get (vector<int>& array, string path);
@@ -104,10 +108,10 @@ public:
 
   // return true if successfully removed or doesn't exist
   bool remove (string path);
-
-  AbstractObject* insertObject (string path, AbstractObject* obj);
   string toText ();
+
 };
 
+}
 
 #endif

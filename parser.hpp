@@ -11,6 +11,8 @@
 
 using namespace std;
 
+namespace json {
+
 // do not move these elements, their numeric value is used for comparisons
 enum JSON_PARSER_FLAG {
 	LAST_ELEMENT,
@@ -80,11 +82,12 @@ private:
 	inline ifstream& getFile () { return file; }
 public:
 	Parser ();
-	JsonTree getTree () { return tree; }
-	int parseFile (string fileName);
-	static int saveFile (string fileName, JsonTree& info);
+	int parseFile (string fileName, JsonTree& tree);
+	static int saveFile (string fileName, JsonTree& tree);
 	inline const vector<JsonLog>& getErrors () { return errors; }
 	inline const vector<JsonLog>& getWarnings () { return warnings; }
 };
+
+}
 
 #endif
