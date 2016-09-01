@@ -1,7 +1,23 @@
 # JSON-cpp
 Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 
----
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [JSON-cpp](#json-cpp)
+	- [Funcionamiento Interno](#funcionamiento-interno)
+	- [Interfaz Provista](#interfaz-provista)
+		- [Objeto Parser](#objeto-parser)
+			- [Constructor](#constructor)
+			- [Métodos](#mtodos)
+		- [Objeto JsonTree](#objeto-jsontree)
+			- [Constructor](#constructor)
+			- [Métodos](#mtodos)
+				- [Lectura del árbol](#lectura-del-rbol)
+				- [Escritura del árbol](#escritura-del-rbol)
+	- [Usage Example](#usage-example)
+	- [ToDo](#todo)
+
+<!-- /TOC -->
 
 ## Funcionamiento Interno
 La información contenida en el fichero. json es almacenada en forma de árbol.
@@ -16,7 +32,7 @@ La información contenida en el fichero. json es almacenada en forma de árbol.
       - ObjectFinalNumber : representa tanto números (**double**) como booleanos
 
 
-- La clase **Parser** permite parsear un fichero generando el árbol contenido en este.
+- La clase **Parser** permite abrir/guardar y parsear un fichero generando el árbol del mismo.
 - La clase **JsonTree** provee la interfaz de acceso y manipulación del árbol.
 
 El acceso a los elementos se realiza a través de su ruta mediante la sintaxis
@@ -89,7 +105,6 @@ Devuelve los mismos flags que el método parseFile. Nótese no se necesita insta
  JsonTree (AbstractObject* root);
  JsonTree ();
 ```
-
 #### Métodos
 ##### Lectura del árbol
 - Checkeo  : Retornan si un elemento de la jerarquía es de un tipo determinado dada su ruta.
@@ -190,7 +205,7 @@ bool remove (string path);
 Retorna true si la ruta es borrada correctamente o no existía
 
 ## Usage Example
-Inpur
+Input
 ```json
 {
   "key_1" : ["element1", "element2"],
