@@ -11,27 +11,24 @@ regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
 
 int Parser::parseFile (string fileName) {
+	int returnValue = 0;
 	if (openFile(fileName)) {
 		stringstream buffer;
 		buffer << getFile().rdbuf();
 		string fileContent = buffer.str();
 		ObjectNameFlag result = parse (fileContent, "");
 		JsonTree* tree = new JsonTree (result.element);
-		if (fileContent.size() > 0)
+		if (fileContent.size())
 			evaluateFlag(NO_CLOSED, ".", "");
-		// return evaluator
-		if (hasErrors() && hasWarnings())
-			return BOTH_ERR_WARN;
-		else if (hasErrors())
-			return ERRORS;
-		else if (hasWarnings())
-			return WARNINGS;
-		else
-			return OK;
+		if (hasErrors())
+			returnValue = returnValue | ERRORS;
+		if (hasWarnings())
+			returnValue = returnValue | WARNINGS;
+		return returnValue;
 	} else {
-		evaluateFlag(CANT_OPEN_FILE, "", "");
 		return CANT_OPEN_FILE;
 	}
+	return OK;
 }
 
 Parser::Parser () :

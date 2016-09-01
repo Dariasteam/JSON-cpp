@@ -16,8 +16,8 @@ enum JSON_PARSER_FLAG {
 	LAST_ELEMENT,
 	REGULAR_ELEMENT,
 	// errors
-	NO_CLOSED,				// there is no end brace / bracket after the last element
-	EXPECTED_MORE,		// there is an end brace / bracket after non last element
+	NO_CLOSED,  		// no end brace / bracket after the last element
+	EXPECTED_MORE,  // end brace / bracket after non last element
 	INVALID_KEY,
 	// warnings
 	CONTROL_WARNING,
@@ -25,12 +25,10 @@ enum JSON_PARSER_FLAG {
 };
 
 enum JSON_PARSE_OUTPUT {
-	CANT_OPEN_FILE,
-	OK,							  // value = 1, allows "if (parser.parseFile ("a.json"))"
-	// FILE_BAD_FORMAT,
-	WARNINGS,
-	ERRORS,
-	BOTH_ERR_WARN
+	OK 						  = 1 << 0,
+	CANT_OPEN_FILE  = 1 << 1,
+	WARNINGS 			  = 1 << 2,
+	ERRORS 				  = 1 << 3
 };
 
 struct ObjectNameFlag {
