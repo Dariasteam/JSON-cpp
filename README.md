@@ -61,12 +61,12 @@ Trata de abrir y parsear el fichero especificado en la ruta `path_to_file`.
 El árbol generado es guardado en el objeto `tree` y retorna uno de los siguientes
 valores:
 
-- **0x0001** JSON_PARSE_OUTPUT::OK
-- **0x0010** JSON_PARSE_OUTPUT::CANT_OPEN_FILE
-- **0x0100** JSON_PARSE_OUTPUT::WARNINGS						         
-- **0x1000** JSON_PARSE_OUTPUT::ERRORS
-
-Para los dos últimos casos existen
+- **0x00001** JSON_PARSE_OUTPUT::OK
+- **0x00010** JSON_PARSE_OUTPUT::CANT_OPEN_FILE
+- **0x00100** JSON_PARSE_OUTPUT::WARNINGS						         
+- **0x01000** JSON_PARSE_OUTPUT::ERRORS
+- **0x10000** JSON_PARSE_OUTPUT::EMPTY_FILE
+Para los casos 3 y 4 existen
 
 ```c++
 	const vector<JsonLog>& getErrors ();

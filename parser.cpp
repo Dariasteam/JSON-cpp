@@ -15,7 +15,7 @@ regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 int Parser::parseFile (string fileName, JsonTree& tree) {
 	errors.resize (0);
 	warnings.resize (0);
-	int returnValue = OK;
+	int returnValue = 0;
 	if (openFile(fileName)) {
 		stringstream buffer;
 		buffer << getFile().rdbuf();
@@ -26,9 +26,11 @@ int Parser::parseFile (string fileName, JsonTree& tree) {
 		if (!fileContent.empty())
 			evaluateFlag(NO_CLOSED, ".", "");
 		if (hasErrors())
-			returnValue = returnValue | ERRORS;
+			returnValue += ERRORS;
 		if (hasWarnings())
-			returnValue = returnValue | WARNINGS;
+			returnValue += WARNINGS;
+		if (result.flag == EMPTY)
+			returnValue += EMPTY_FILE;
 	} else {
 		return CANT_OPEN_FILE;
 	}
