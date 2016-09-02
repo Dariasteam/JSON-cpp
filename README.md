@@ -1,21 +1,20 @@
 # JSON-cpp
 Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [JSON-cpp](#json-cpp)
-	- [Funcionamiento Interno](#funcionamiento-interno)
-	- [Interfaz Provista](#interfaz-provista)
-		- [Objeto Parser](#objeto-parser)
-			- [Constructor](#constructor)
-			- [Métodos](#mtodos)
-		- [Objeto JsonTree](#objeto-jsontree)
-			- [Constructor](#constructor)
-			- [Métodos](#mtodos)
-				- [Lectura del árbol](#lectura-del-rbol)
-				- [Escritura del árbol](#escritura-del-rbol)
-	- [Usage Example](#usage-example)
-	- [ToDo](#todo)
+- [Funcionamiento Interno](#funcionamiento-interno)
+- [Interfaz Provista](#interfaz-provista)
+	- [Objeto Parser](#objeto-parser)
+		- [Constructor](#constructor)
+		- [Métodos](#mtodos)
+	- [Objeto JsonTree](#objeto-jsontree)
+		- [Constructor](#constructor)
+		- [Métodos](#mtodos)
+			- [Lectura del árbol](#lectura-del-rbol)
+			- [Escritura del árbol](#escritura-del-rbol)
+- [Usage Example](#usage-example)
+- [ToDo](#todo)
 
 <!-- /TOC -->
 

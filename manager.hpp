@@ -43,6 +43,7 @@ public:
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
+  // returns true if the path exist, has the appropiate type and the value is copied succesfully
 	bool get (double& to, string path);
 	bool get (float& to, string path);
 	bool get (int& to, string path);
