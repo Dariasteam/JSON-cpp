@@ -21,8 +21,9 @@ int Parser::parseFile (string fileName, JsonTree& tree) {
 		buffer << getFile().rdbuf();
 		string fileContent = buffer.str();
 		ObjectNameFlag result = parse (fileContent, "");
-		tree = JsonTree(result.element);
-		if (fileContent.size())
+		tree = JsonTree (result.element);
+		evaluateFlag(result.flag, ".", "");
+		if (!fileContent.empty())
 			evaluateFlag(NO_CLOSED, ".", "");
 		if (hasErrors())
 			returnValue = returnValue | ERRORS;
