@@ -65,17 +65,18 @@ valores:
 - **0x00010** JSON_PARSE_OUTPUT::CANT_OPEN_FILE
 - **0x00100** JSON_PARSE_OUTPUT::WARNINGS						         
 - **0x01000** JSON_PARSE_OUTPUT::ERRORS
-- **0x10000** JSON_PARSE_OUTPUT::EMPTY_FILE
+- **0x10000** JSON_PARSE_OUTPUT::EMPTY_FILE  
+
 Para los casos 3 y 4 existen
 
 ```c++
-	const vector<JsonLog>& getErrors ();
-	const vector<JsonLog>& getWarnings ();
+const vector<JsonLog>& getErrors ();
+const vector<JsonLog>& getWarnings ();
 
-	struct JsonLog {
-		string path;
-		int flag;
-	};
+struct JsonLog {
+	string path;
+	int flag;
+};
 ```
 Retorna un vector con los errores / warnings encontrados durante el parseo.
 
