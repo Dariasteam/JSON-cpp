@@ -22,9 +22,9 @@ int Parser::parseFile (string fileName, JsonTree& tree) {
 		string fileContent = buffer.str();
 		ObjectNameFlag result = parse (fileContent, "");
 		tree = JsonTree (result.element);
-		evaluateFlag(result.flag, ".", "");
+		// evaluateFlag(result.flag, ".", "");
 		if (!fileContent.empty())
-			evaluateFlag(NO_CLOSED, ".", "");
+			evaluateFlag(EMPTY, ".", "");
 		if (hasErrors())
 			returnValue += ERRORS;
 		if (hasWarnings())

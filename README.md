@@ -150,17 +150,8 @@ Métodos con la siguiente forma si no se especifica lo contrario.
 ```c++
 bool method (<type> value, string path)
 ```
-  Dónde <type> pueden adoptar:
-  - `bool`
-  - `int`
-  - `float`
-  - `double`
-  - `string`
-  - `const char`
-  - `vector<double>`
-  - `vector<int>`
-  - `vector<bool>`
-  - `vector<string>`
+  Dónde _type_ puede adoptar `bool, float, int, double, string, const char,
+vector<double>, vector<int>, vector<bool>, vector<string>`
 
 
 - Adición : Retornan true si no existe la ruta especificada y esta es creada correctamente.
