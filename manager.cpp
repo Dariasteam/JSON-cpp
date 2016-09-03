@@ -124,7 +124,7 @@ bool JsonTree::get (bool &to, string path) {
 bool JsonTree::get (string &to, string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, STRING)) {
-    to = ((ObjectFinalNumber*)obj)->getContent();
+    to = ((ObjectFinalString*)obj)->getContent();
     return true;
   }
   getterError(path, obj, STRING);
