@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <climits>
 
 #include "./object.hpp"
 #include "manager.hpp"

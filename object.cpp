@@ -45,7 +45,7 @@ AbstractObject* ObjectMap::operator[](string key) {
     return nullptr;
 }
 
-bool ObjectVector::insert (string key, AbstractObject* obj) {
+bool ObjectVector::insert (string key, AbstractObject* obj) { 
   if (key == "") {
     array.push_back (obj);
     return true;

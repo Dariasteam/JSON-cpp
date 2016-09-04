@@ -15,7 +15,7 @@ regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 int Parser::parseFile (string fileName, JsonTree& tree) {
 	errors.resize (0);
 	warnings.resize (0);
-	int returnValue = 0;
+	int returnValue = OK;
 	if (openFile(fileName)) {
 		stringstream buffer;
 		buffer << getFile().rdbuf();
@@ -23,19 +23,19 @@ int Parser::parseFile (string fileName, JsonTree& tree) {
 		ObjectNameFlag result = parse (fileContent, "");
 		tree = JsonTree (result.element);
 		// evaluateFlag(result.flag, ".", "");
-		if (!fileContent.empty())
-			evaluateFlag(EMPTY, ".", "");
-		if (hasErrors())
-			returnValue += ERRORS;
 		if (hasWarnings())
 			returnValue += WARNINGS;
-		if (result.flag == EMPTY)
+		if (hasErrors()) {
+			returnValue += ERRORS;
+			returnValue = returnValue & INT_MAX - 1;
+		}
+		if (result.flag == EMPTY) {
 			returnValue += EMPTY_FILE;
+			returnValue = returnValue & INT_MAX - 1;
+		}
 	} else {
 		return CANT_OPEN_FILE;
 	}
-	if (!returnValue)
-		return OK;
 	return returnValue;
 }
 
@@ -80,6 +80,7 @@ ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
 			break;
 		}
 	} while (!regex_search (content, matcher, endSymbol) && aux.flag == REGULAR_ELEMENT);
+	regex_search (content, matcher, endSymbol);
 	if (aux.flag == REGULAR_ELEMENT) {
 		flag = EXPECTED_MORE;
 		evaluateFlag(flag, path, aux.key);
