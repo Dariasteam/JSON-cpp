@@ -12,7 +12,8 @@ regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
 regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
 
-int Parser::parseFile (string fileName, JsonTree& tree) {
+int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
+	verbose = verbs;
 	errors.resize (0);
 	warnings.resize (0);
 	int returnValue = OK;
@@ -97,13 +98,16 @@ ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
 void Parser::evaluateFlag (int flag, string path, string finalElement) {
 	path.append(".").append(finalElement);
 	if (flag < CONTROL_WARNING) {
-		cerr << "Error";
 		errors.push_back ({path, flag});
+		if (verbose)
+			cerr << "Error";
 	} else {
-		cerr << "Warning";
 		warnings.push_back ({path, flag});
+		if (verbose)
+			cerr << "Warning";
 	}
-	cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << endl;
+	if (verbose)
+		cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << endl;
 }
 
 ObjectNameFlag Parser::parseKeyDef (string& content, smatch& matcher, string path) {

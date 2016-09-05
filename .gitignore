@@ -1,4 +1,6 @@
 *.out
+*.o
+Makefile
 main.cpp
 example_file.json
 *.gch

@@ -54,7 +54,7 @@ El acceso a los elementos se realiza a través de su ruta mediante la sintaxis
 ```
 #### Métodos
 ```c++
-  int parseFile (string path_to_file, JsonTree& tree);
+  int parseFile (string path_to_file, JsonTree& tree, bool verbose = true);
 ```
 Trata de abrir y parsear el fichero especificado en la ruta `path_to_file`.
 El árbol generado es guardado en el objeto `tree` y retorna uno de los siguientes
