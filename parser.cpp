@@ -22,17 +22,15 @@ int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
 		buffer << getFile().rdbuf();
 		string fileContent = buffer.str();
 		ObjectNameFlag result = parse (fileContent, "");
+		file.close();
 		tree = JsonTree (result.element);
-		// evaluateFlag(result.flag, ".", "");
+		if (result.flag == EMPTY)
+			return EMPTY_FILE;
 		if (hasWarnings())
 			returnValue += WARNINGS;
 		if (hasErrors()) {
 			returnValue += ERRORS;
-			returnValue = returnValue & INT_MAX - 1;
-		}
-		if (result.flag == EMPTY) {
-			returnValue += EMPTY_FILE;
-			returnValue = returnValue & INT_MAX - 1;
+			return returnValue & (INT_MAX - 1);
 		}
 	} else {
 		return CANT_OPEN_FILE;
@@ -47,7 +45,7 @@ Parser::Parser () :
 	{}
 
 bool Parser::openFile (string fileName) {
-	file.open(fileName);
+	file.open(fileName, ifstream::in);
 	if (file.is_open())
 		return true;
 	else

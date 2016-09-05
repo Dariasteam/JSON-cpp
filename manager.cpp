@@ -114,7 +114,7 @@ bool JsonTree::exist (string path) {
 bool JsonTree::get (bool &to, string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, BOOL)) {
-    to = ((ObjectFinalNumber*)obj)->getContent();
+    to = ((ObjectFinalBool*)obj)->getContent();
     return true;
   }
   getterError(path, obj, BOOL);
@@ -215,6 +215,7 @@ bool JsonTree::get (vector<string>& array, string path) {
 }
 
 bool JsonTree::get (vector<bool>& array, string path) {
+  cout << "Hola soy tu amigo" << endl;
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {
     ObjectVector* vect = (ObjectVector*)obj;

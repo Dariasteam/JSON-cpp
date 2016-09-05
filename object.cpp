@@ -45,7 +45,7 @@ AbstractObject* ObjectMap::operator[](string key) {
     return nullptr;
 }
 
-bool ObjectVector::insert (string key, AbstractObject* obj) { 
+bool ObjectVector::insert (string key, AbstractObject* obj) {
   if (key == "") {
     array.push_back (obj);
     return true;
@@ -94,7 +94,7 @@ AbstractObject* ObjectVector::get (string path) {
 
 AbstractObject* ObjectMap::get (string path) {
   smatch matcher;
-  if (path.size() == 0)
+  if (path.size() == 0 || path == ".")
     return this;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);

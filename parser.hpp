@@ -44,6 +44,9 @@ struct ObjectNameFlag {
 struct JsonLog {
 	string path;
 	int flag;
+	friend bool operator== (const JsonLog& j1, const JsonLog& j2) {
+		return (j1.path == j2.path) && (j1.flag == j2.flag);
+	}
 };
 
 class Parser {
@@ -60,7 +63,7 @@ private:
 	vector <JsonLog> warnings;
 	ifstream file;
 	JsonTree tree;
-	
+
 	bool verbose;
 
 	static regex startBrace;

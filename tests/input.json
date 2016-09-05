@@ -1,0 +1,34 @@
+{
+  "first" : {
+    "element_1" : 12,
+    "element_2" : "Word",
+    "element_3" : true
+  },
+  "second" : [
+    12,
+    "Word",
+    true
+  ],
+  "third" : [
+    {
+      "element_1" : 12,
+      "element_2" : "Word",
+      "element_3" : true
+    },
+    [
+      12,
+      13,
+      14,
+    ],
+    [
+      true,
+      false,
+      true
+    ],
+    [
+      "first",
+      "second",
+      "third"
+    ]
+  ]
+}
