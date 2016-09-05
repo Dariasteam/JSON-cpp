@@ -2,13 +2,13 @@
 
 using namespace json;
 
-regex Parser::startBrace = regex ("^(?:\\s*)(\\{)");
+regex Parser::startBrace = regex 	 ("^(?:\\s*)(\\{)");
 regex Parser::startBracket = regex ("^(?:\\s*)(\\[)");
 regex Parser::keyDef = regex ("^(?:\\s*)(?:\")(.+?)(?:\")(?:\\s*)\\:");
 regex Parser::finalQuote = regex ("^(?:\\s*)(?:\")(.*?)(?:\")(?:\\s*)(,)?");
 regex Parser::finalNumber = regex ("^(?:\\s*)((?:\\+|\\-)?\\d+(?:\\.\\d+)?(?:e(?:\\+|\\-)?\\d+)?)(?:\\s*)(,)?");
 regex Parser::finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
-regex Parser::nextBrace = regex ("^(?:\\s*)(\\})(?:\\s*)(,)?");
+regex Parser::nextBrace = regex 	("^(?:\\s*)(\\})(?:\\s*)(,)?");
 regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
 
@@ -30,7 +30,7 @@ int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
 			returnValue += WARNINGS;
 		if (hasErrors()) {
 			returnValue += ERRORS;
-			return returnValue & (INT_MAX - 1);
+			return returnValue & (INT_MAX - 1); // removes the OK
 		}
 	} else {
 		return CANT_OPEN_FILE;

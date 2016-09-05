@@ -204,7 +204,7 @@ bool JsonTree::get (vector<string>& array, string path) {
     int size = vect->size();
     array.resize (size);
     for (int i = 0; i < size; i++) {
-      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == STRING)
+      if (((ObjectFinalString*)vect->operator[](i))->getType() == STRING)
         array[i] = ((ObjectFinalString*)vect->operator[](i))->getContent();
       else
         return false;
@@ -222,8 +222,8 @@ bool JsonTree::get (vector<bool>& array, string path) {
     int size = vect->size();
     array.resize (size);
     for (int i = 0; i < size; i++) {
-      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == BOOL)
-        array[i] = ((ObjectFinalNumber*)vect->operator[](i))->getContent();
+      if (((ObjectFinalBool*)vect->operator[](i))->getType() == BOOL)
+        array[i] = ((ObjectFinalBool*)vect->operator[](i))->getContent();
       else
         return false;
     }

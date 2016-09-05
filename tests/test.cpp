@@ -14,20 +14,33 @@ using namespace json;
 Parser parser;
 JsonTree tree;
 
-TEST_CASE ("Open Files", "[Return correct flags]") {
+TEST_CASE ("Open Files OK") {
   REQUIRE ((parser.parseFile("tests/input.json", tree) & JSON_PARSE_OUTPUT::OK));
-  REQUIRE (parser.parseFile("nofile", tree) != JSON_PARSE_OUTPUT::OK);
-  REQUIRE (parser.parseFile("nofile", tree) == JSON_PARSE_OUTPUT::CANT_OPEN_FILE);
-  REQUIRE (parser.parseFile("tests/empty.json", tree) == JSON_PARSE_OUTPUT::EMPTY_FILE);
-  REQUIRE (parser.parseFile("tests/error.json", tree) == JSON_PARSE_OUTPUT::ERRORS);
-  REQUIRE (parser.parseFile("tests/warning.json", tree) ==
-                        (JSON_PARSE_OUTPUT::WARNINGS | JSON_PARSE_OUTPUT::OK));
-  REQUIRE (parser.parseFile("tests/both.json", tree) ==
-                          (JSON_PARSE_OUTPUT::WARNINGS | JSON_PARSE_OUTPUT::ERRORS));
-
 }
 
-// tree = JsonTree ();
+TEST_CASE ("Open Files CANT_OPEN_FILE") {
+  REQUIRE (parser.parseFile("nofile", tree) != JSON_PARSE_OUTPUT::OK);
+  REQUIRE (parser.parseFile("nofile", tree) == JSON_PARSE_OUTPUT::CANT_OPEN_FILE);
+}
+
+TEST_CASE ("Open Files EMPTY") {
+  REQUIRE (parser.parseFile("tests/empty.json", tree) == JSON_PARSE_OUTPUT::EMPTY_FILE);
+}
+
+TEST_CASE ("Open Files ERRRORS") {
+  REQUIRE (parser.parseFile("tests/error.json", tree) == JSON_PARSE_OUTPUT::ERRORS);
+}
+
+TEST_CASE ("Open Files WARNINGS") {
+  REQUIRE (parser.parseFile("tests/warning.json", tree) ==
+                        (JSON_PARSE_OUTPUT::WARNINGS | JSON_PARSE_OUTPUT::OK));
+}
+
+TEST_CASE ("Open Files BOTH") {
+  REQUIRE (parser.parseFile("tests/both.json", tree) ==
+                          (JSON_PARSE_OUTPUT::WARNINGS | JSON_PARSE_OUTPUT::ERRORS));
+}
+
 
 TEST_CASE ("Detect warnings / errors", "[Can load error / warning vector]") {
   // OK
@@ -139,11 +152,10 @@ TEST_CASE ("Can get the information of the tree, the informations is consistent"
   CHECK ((tree.get(_string_, "first.element_2") && (_string_ == "Word")));
   CHECK ((tree.get(_bool_,   "first.element_3") && (_bool_   == true)));
   // VECTORS
-  CHECK (tree.exist("third.2"));
-  CHECK (tree.exist("third.3"));
+  CHECK (tree.getSizeAt("third") == 4);
 
   CHECK ((tree.get(_vector_i, "third.1") && (_vector_i == compare_i)));
-  CHECK ((tree.get(_vector_b, "third.2") ));
+  CHECK ((tree.get(_vector_b, "third.2") && (_vector_b == compare_b)));
   CHECK ((tree.get(_vector_s, "third.3") && (_vector_s == compare_s)));
   // WILL FAIL
   CHECK (tree.get(_bool_, "first.element_1") == false);
