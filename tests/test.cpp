@@ -217,3 +217,21 @@ TEST_CASE ("Can add finals to the tree (vector)") {
   CHECK (tree.isString ("fifth.5"));
   CHECK (tree.isString ("fifth.6"));
 }
+
+TEST_CASE ("add methods create entire hash hierarchy if doesn't exist") {
+  // ADD ELEMENTS TO A MAP
+  CHECK (tree.add(double(12.3),   "a.very.long.path.for.testing"));
+  // CHECK IF EXIST
+  CHECK (tree.isNumber ("a.very.long.path.for.testing"));
+  // CANT REPLACE
+  CHECK (tree.add(double(12.3),   "a.very.long.path.for.testing") == false);
+}
+
+TEST_CASE ("Can replace finals in the tree (hash)") {
+  // NON EXISTING ELEMENTS
+  CHECK (tree.replace (double(12.3), "non.existing.path") == false);
+  // NON FINAL EXISTING ELEMENTS
+  CHECK (tree.replace (double(12.3), "fifth") == true);
+  CHECK (tree.replace (double(12.3), "fourth") == true);
+  // ADD ELEMENTS TO A MAP
+}

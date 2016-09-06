@@ -296,8 +296,9 @@ bool JsonTree::replace (AbstractObject *newObj, string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
-      if (father->getType() == MAP)
+      if (father != nullptr && father->getType() == MAP) {
         return ((ObjectMap*)father)->replace (matcher[2], newObj);
+      }
       return false;
   } else if (!path.empty()) {
     return ((ObjectMap*)top)->replace (path, newObj);
@@ -406,7 +407,7 @@ bool JsonTree::erase (string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
-      if (father->getType() == MAP)
+      if (father != nullptr && father->getType() == MAP)
         return ((ObjectMap*)father)->erase (matcher[2]);
       return false;
   } else if (!path.empty())
@@ -420,7 +421,7 @@ bool JsonTree::remove (string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
-      if (father->getType() == MAP)
+      if (father != nullptr && father->getType() == MAP)
         return ((ObjectMap*)father)->remove (matcher[2]);
       return false;
   } else if (!path.empty())
