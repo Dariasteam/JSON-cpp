@@ -134,8 +134,11 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
     string newPath = path.substr(matcher[0].length(), path.size());
-    if (son != nullptr && !newPath.empty()) {
-      return son->add (newPath, obj);
+    if (son != nullptr) {
+      if (!newPath.empty())
+        return son->add (newPath, obj);
+      else
+        return false;
     } else {
       if (!newPath.empty()) {
         son = new ObjectMap();

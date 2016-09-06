@@ -158,29 +158,45 @@ TEST_CASE ("Can get the information of the tree, the informations is consistent"
   CHECK ((tree.get(_vector_b, "third.2") && (_vector_b == compare_b)));
   CHECK ((tree.get(_vector_s, "third.3") && (_vector_s == compare_s)));
   // WILL FAIL
-  CHECK (tree.get(_bool_, "first.element_1") == false);
-  CHECK (tree.get(_string_, "first.element_1") == false);
+  CHECK (tree.get(_bool_,    "first.element_1") == false);
+  CHECK (tree.get(_string_,  "first.element_1") == false);
   CHECK (tree.get(_vector_i, "second") == false);
 }
 
 TEST_CASE ("Can add empty containers to the tree") {
   // ADD CONTAINER
-  CHECK (tree.addVector("fourth"));
-  CHECK (tree.addMap("fifth"));
+  CHECK (tree.addMap     ("fourth"));
+  CHECK (tree.addVector   ("fifth"));
   // CHECK IF EXIST
-  CHECK (tree.isVector("fourth"));
-  CHECK (tree.isMap("fifth"));
+  CHECK (tree.isVector("fifth"));
+  CHECK (tree.isMap   ("fourth"));
   // CAN'T BE REPLACED
   CHECK (tree.addVector("fourth") == false);
-  CHECK (tree.addMap("fourth") == false);
+  CHECK (tree.addMap   ("fourth") == false);
+  CHECK (tree.addVector("fifth") == false);
+  CHECK (tree.addMap   ("fifth") == false);
 }
 
-TEST_CASE ("Can add finals to the tree") {
+TEST_CASE ("Can add finals to the tree (hash)") {
   // ADD ELEMENTS TO A MAP
-  CHECK (tree.add(double(12.3), "fourth.element_1"));
-  CHECK (tree.add(float(12.3), "fourth.element_2"));
-  CHECK (tree.add(int(12), "fourth.element_3"));
-  CHECK (tree.add(bool(true), "fourth.element_4"));
-  CHECK (tree.add("Word", "fourth.element_5"));
+  CHECK (tree.add(double(12.3),   "fourth.element_1"));
+  CHECK (tree.add(float(12.3),    "fourth.element_2"));
+  CHECK (tree.add(int(12),        "fourth.element_3"));
+  CHECK (tree.add(bool(true),     "fourth.element_4"));
+  CHECK (tree.add("Word",         "fourth.element_5"));
   CHECK (tree.add(string("Word"), "fourth.element_6"));
+  // CHECK IF EXIST
+  CHECK (tree.isNumber ("fourth.element_1"));
+  CHECK (tree.isNumber ("fourth.element_2"));
+  CHECK (tree.isNumber ("fourth.element_3"));
+  CHECK (tree.isBool   ("fourth.element_4"));
+  CHECK (tree.isString ("fourth.element_5"));
+  CHECK (tree.isString ("fourth.element_6"));
+  // CAN'T BE REPLACED
+  CHECK (tree.add(12, "fourth.element_1") == false);
+  CHECK (tree.add(12, "fourth.element_2") == false);
+  CHECK (tree.add(12, "fourth.element_3") == false);
+  CHECK (tree.add(12, "fourth.element_4") == false);
+  CHECK (tree.add(12, "fourth.element_5") == false);
+  CHECK (tree.add(12, "fourth.element_6") == false);
 }
