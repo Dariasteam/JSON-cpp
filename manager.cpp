@@ -215,7 +215,6 @@ bool JsonTree::get (vector<string>& array, string path) {
 }
 
 bool JsonTree::get (vector<bool>& array, string path) {
-  cout << "Hola soy tu amigo" << endl;
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {
     ObjectVector* vect = (ObjectVector*)obj;
@@ -282,12 +281,12 @@ bool JsonTree::add (vector<string> &array, string path) {
 }
 
 bool JsonTree::addMap (string path) {
-  AbstractObject* object = new ObjectMap;
+  AbstractObject* object = new ObjectMap ();
   return top->add (path, object);
 }
 
 bool JsonTree::addVector (string path) {
-  AbstractObject* object = new ObjectVector;
+  AbstractObject* object = new ObjectVector ();
   return top->add (path, object);
 }
 
