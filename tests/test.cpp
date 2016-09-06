@@ -174,7 +174,7 @@ TEST_CASE ("Can add empty containers to the tree") {
   CHECK (tree.addVector("fourth") == false);
   CHECK (tree.addMap   ("fourth") == false);
   CHECK (tree.addVector("fifth") == false);
-  CHECK (tree.addMap   ("fifth") == false);
+  CHECK (tree.addMap   ("fifth") == true); // push_back a hash inside the vector
 }
 
 TEST_CASE ("Can add finals to the tree (hash)") {
@@ -199,4 +199,21 @@ TEST_CASE ("Can add finals to the tree (hash)") {
   CHECK (tree.add(12, "fourth.element_4") == false);
   CHECK (tree.add(12, "fourth.element_5") == false);
   CHECK (tree.add(12, "fourth.element_6") == false);
+}
+
+TEST_CASE ("Can add finals to the tree (vector)") {
+  // ADD ELEMENTS TO A MAP
+  CHECK (tree.add(double(12.3),   "fifth"));
+  CHECK (tree.add(float(12.3),    "fifth"));
+  CHECK (tree.add(int(12),        "fifth"));
+  CHECK (tree.add(bool(true),     "fifth"));
+  CHECK (tree.add("Word",         "fifth"));
+  CHECK (tree.add(string("Word"), "fifth"));
+  // CHECK IF EXIST
+  CHECK (tree.isNumber ("fifth.1"));
+  CHECK (tree.isNumber ("fifth.2"));
+  CHECK (tree.isNumber ("fifth.3"));
+  CHECK (tree.isBool   ("fifth.4"));
+  CHECK (tree.isString ("fifth.5"));
+  CHECK (tree.isString ("fifth.6"));
 }
