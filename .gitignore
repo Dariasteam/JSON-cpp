@@ -1,5 +1,4 @@
 *.out
 *.o
-Makefile
 main.cpp
 *.gch

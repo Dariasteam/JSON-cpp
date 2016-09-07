@@ -182,6 +182,15 @@ TEST_CASE ("Can add empty containers to the tree") {
   CHECK (tree.addMap   ("fifth") == true); // push_back a hash inside the vector
 }
 
+TEST_CASE ("Can't copy heterogeneus vectors") {
+  vector <int> _vector_i;
+  vector <int> compare_i (3);
+  compare_i[0] = 12;
+  compare_i[1] = 13;
+  compare_i[2] = 14;
+  CHECK ((tree.get(_vector_i, "second") && (_vector_i == compare_i)) == false);
+}
+
 TEST_CASE ("Can add finals to the tree (hash)") {
   // INITIALIZE
   int _int_;
@@ -415,4 +424,8 @@ TEST_CASE ("Can write files") {
   file.open ("tests/output.json");
   CHECK (file.is_open());
   file.close();
+}
+
+TEST_CASE ("The written file is consistent") {
+  REQUIRE ((parser.parseFile("tests/output.json", tree) & JSON_PARSE_OUTPUT::OK));
 }
