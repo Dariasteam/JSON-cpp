@@ -136,9 +136,9 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
     AbstractObject* son = operator[](matcher[1]);
     string newPath = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
-      if (!newPath.empty() || !(obj->getType() == VECTOR))
+      if (!newPath.empty())
         return son->add (newPath, obj);
-      else if (newPath.empty() && son->getType() == VECTOR)
+      else if (son->getType() == VECTOR)
         return son->add (newPath, obj);
       else
         return false;

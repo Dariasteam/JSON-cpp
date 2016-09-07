@@ -253,16 +253,13 @@ TEST_CASE ("Can add vectors to the tree") {
   compare_s[1] = string("second");
   compare_s[2] = string("third");
   // ADD
-  cout << "Voy a entrar" << endl;
-  CHECK (tree.add(compare_i, "fifth"));     //p should be removed  in future
+  CHECK (tree.add(compare_i, "fifth"));
   CHECK (tree.add(compare_b, "fifth"));
   CHECK (tree.add(compare_s, "fifth"));
   // CHECK IF EXIST
   CHECK ((tree.get(_vector_i, "fifth.8") && (_vector_i == compare_i)));
   CHECK ((tree.get(_vector_b, "fifth.9") && (_vector_b == compare_b)));
   CHECK ((tree.get(_vector_s, "fifth.10") && (_vector_s == compare_s)));
-
-  Parser::saveFile("file", tree);
 }
 
 TEST_CASE ("add methods create entire hash hierarchy if doesn't exist") {
@@ -346,7 +343,31 @@ TEST_CASE ("Can set finals in the tree (hash)") {
 }
 
 TEST_CASE ("Can set vectors in the tree (hash)") {
-
+  vector <int> _vector_i;
+  vector <int> compare_i (3);
+  compare_i[0] = 12;
+  compare_i[1] = 13;
+  compare_i[2] = 14;
+  // VECTOR BOOL
+  vector <bool> _vector_b;
+  vector <bool> compare_b (3);
+  compare_b[0] = true;
+  compare_b[1] = false;
+  compare_b[2] = true;
+  // VECTOR STRING
+  vector <string> _vector_s;
+  vector <string> compare_s (3);
+  compare_s[0] = string("first");
+  compare_s[1] = string("second");
+  compare_s[2] = string("third");
+  // ADD
+  CHECK (tree.set(compare_i, "sixth.vector_1"));
+  CHECK (tree.set(compare_b, "sixth.vector_2"));
+  CHECK (tree.set(compare_s, "sixth.vector_3"));
+  // CHECK IF EXIST
+  CHECK ((tree.get(_vector_i, "sixth.vector_1") && (_vector_i == compare_i)));
+  CHECK ((tree.get(_vector_b, "sixth.vector_2") && (_vector_b == compare_b)));
+  CHECK ((tree.get(_vector_s, "sixth.vector_3") && (_vector_s == compare_s)));
 }
 
 TEST_CASE ("Can erase elements") {
@@ -366,4 +387,32 @@ TEST_CASE ("Can erase elements") {
   CHECK (tree.exist ("sixth.element_4") == false);
   CHECK (tree.exist ("sixth.element_5") == false);
   CHECK (tree.exist ("sixth.element_6") == false);
+}
+
+TEST_CASE ("Can remove elements") {
+  // NON EXISTING ELEMENTS
+  CHECK (tree.remove ("non.existing.path") == true);
+  // FINAL ELEMENTS
+  CHECK (tree.remove ("fourth.element_1"));
+  CHECK (tree.remove ("fourth.element_2"));
+  CHECK (tree.remove ("fourth.element_3"));
+  CHECK (tree.remove ("fourth.element_4"));
+  CHECK (tree.remove ("fourth.element_5"));
+  CHECK (tree.remove ("fourth.element_6"));
+  // CHECK IF EXIST
+  CHECK (tree.exist ("fourth.element_1") == false);
+  CHECK (tree.exist ("fourth.element_2") == false);
+  CHECK (tree.exist ("fourth.element_3") == false);
+  CHECK (tree.exist ("fourth.element_4") == false);
+  CHECK (tree.exist ("fourth.element_5") == false);
+  CHECK (tree.exist ("fourth.element_6") == false);
+}
+
+TEST_CASE ("Can write files") {
+  CHECK (Parser::saveFile ("tests/output.json", tree));
+  CHECK (parser.saveFile ("tests/output.json", tree));
+  ifstream file;
+  file.open ("tests/output.json");
+  CHECK (file.is_open());
+  file.close();
 }

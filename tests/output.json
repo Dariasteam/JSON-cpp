@@ -1,0 +1,66 @@
+{
+  "first" : {
+    "element_1" : 12.000000,
+    "element_2" : "Word",
+    "element_3" : true
+  },
+  "second" : [
+    12.000000,
+    "Word",
+    true
+  ],
+  "third" : [
+    {
+      "element_1" : 12.000000,
+      "element_2" : "Word",
+      "element_3" : true
+    },
+    [
+      12.000000,
+      13.000000,
+      14.000000
+    ],
+    [
+      true,
+      false,
+      true
+    ],
+    [
+      "first",
+      "second",
+      "third"
+    ]
+  ],
+  "a" : {
+    "very" : {
+      "long" : {
+        "path" : {
+          "for" : {
+            "testing" : 12.300000
+          }
+        }
+      }
+    }
+  },
+  "fifth" : 17.300000,
+  "fourth" : 17.300000,
+  "sixth" : {
+    "element_7" : [
+    ],
+    "vector_1" : [
+      12.000000,
+      13.000000,
+      14.000000
+    ],
+    "vector_2" : [
+      true,
+      false,
+      true
+    ],
+    "vector_3" : [
+      "first",
+      "second",
+      "third"
+    ]
+  }
+}

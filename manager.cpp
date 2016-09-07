@@ -430,7 +430,7 @@ bool JsonTree::remove (string path) {
       AbstractObject* father = top->get (matcher[1]);
       if (father != nullptr && father->getType() == MAP)
         return ((ObjectMap*)father)->remove (matcher[2]);
-      return false;
+      return true;
   } else if (!path.empty())
     return ((ObjectMap*)top)->erase (path);
   return false;
