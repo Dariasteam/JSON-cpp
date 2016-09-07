@@ -1,4 +1,6 @@
-# JSON-cpp
+[![Build Status](https://travis-ci.org/Dariasteam/JSON-cpp.svg?branch=master)](https://travis-ci.org/Dariasteam/JSON-cpp)
+# JSON-cpp    
+
 Permite la lectura y manipulación de ficheros **.json** en c++ de forma simple.
 
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
