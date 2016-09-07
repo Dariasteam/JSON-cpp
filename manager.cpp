@@ -109,6 +109,14 @@ bool JsonTree::exist (string path) {
   return top->get(path) != nullptr;
 }
 
+int JsonTree::getType(string path) {
+  AbstractObject* obj = top->get(path);
+  if (obj != nullptr)
+    return obj->getType();
+  else
+    return -1;
+}
+
 // FINALS
 
 bool JsonTree::get (bool &to, string path) {
@@ -296,9 +304,8 @@ bool JsonTree::replace (AbstractObject *newObj, string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
-      if (father != nullptr && father->getType() == MAP) {
+      if (father != nullptr && father->getType() == MAP)
         return ((ObjectMap*)father)->replace (matcher[2], newObj);
-      }
       return false;
   } else if (!path.empty()) {
     return ((ObjectMap*)top)->replace (path, newObj);

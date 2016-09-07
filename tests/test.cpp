@@ -65,7 +65,7 @@ TEST_CASE ("Detect warnings / errors", "[Can load error / warning vector]") {
   CHECK (parser.getWarnings().size() == 0);
 }
 
-TEST_CASE ("Catch correct warnings / errors", "") {
+TEST_CASE ("Catch correct warnings / errors") {
   JsonLog jlog;
   // WARNING
   parser.parseFile("tests/warning.json", tree);
@@ -83,12 +83,18 @@ TEST_CASE ("Catch correct warnings / errors", "") {
   CHECK ((parser.getErrors()[3] == jlog));
 }
 
-TEST_CASE ("Updates JsonTree object succesfully", "") {
+TEST_CASE ("Updates JsonTree object succesfully") {
   parser.parseFile("tests/input.json", tree);
   CHECK (tree.getKeys("").size() == 3);
   CHECK (tree.getKeys(".").size() == 3);
   CHECK (tree.isMap(""));
   CHECK (tree.isMap("."));
+}
+
+TEST_CASE ("Detects wrog path format") {
+  CHECK (tree.exist("first.element_1"));
+  CHECK (tree.exist("first,element_1") == false);
+  CHECK (tree.exist(".first.element_1") == false);
 }
 
 TEST_CASE ("Can access to the hierarchy and the types are correct", "") {
@@ -153,7 +159,6 @@ TEST_CASE ("Can get the information of the tree, the informations is consistent"
   CHECK ((tree.get(_bool_,   "first.element_3") && (_bool_   == true)));
   // VECTORS
   CHECK (tree.getSizeAt("third") == 4);
-
   CHECK ((tree.get(_vector_i, "third.1") && (_vector_i == compare_i)));
   CHECK ((tree.get(_vector_b, "third.2") && (_vector_b == compare_b)));
   CHECK ((tree.get(_vector_s, "third.3") && (_vector_s == compare_s)));
@@ -173,11 +178,17 @@ TEST_CASE ("Can add empty containers to the tree") {
   // CAN'T BE REPLACED
   CHECK (tree.addVector("fourth") == false);
   CHECK (tree.addMap   ("fourth") == false);
-  CHECK (tree.addVector("fifth") == false);
+  CHECK (tree.addVector("fifth") == true); // push back a vector inside the vector
   CHECK (tree.addMap   ("fifth") == true); // push_back a hash inside the vector
 }
 
 TEST_CASE ("Can add finals to the tree (hash)") {
+  // INITIALIZE
+  int _int_;
+  float _float_;
+  double _double_;
+  string _string_;
+  bool _bool_;
   // ADD ELEMENTS TO A MAP
   CHECK (tree.add(double(12.3),   "fourth.element_1"));
   CHECK (tree.add(float(12.3),    "fourth.element_2"));
@@ -186,12 +197,12 @@ TEST_CASE ("Can add finals to the tree (hash)") {
   CHECK (tree.add("Word",         "fourth.element_5"));
   CHECK (tree.add(string("Word"), "fourth.element_6"));
   // CHECK IF EXIST
-  CHECK (tree.isNumber ("fourth.element_1"));
-  CHECK (tree.isNumber ("fourth.element_2"));
-  CHECK (tree.isNumber ("fourth.element_3"));
-  CHECK (tree.isBool   ("fourth.element_4"));
-  CHECK (tree.isString ("fourth.element_5"));
-  CHECK (tree.isString ("fourth.element_6"));
+  CHECK ((tree.get(_double_, "fourth.element_1") && (_double_ == 12.3)));
+  CHECK ((tree.get(_float_,  "fourth.element_2") && (_float_  == float(12.3))));
+  CHECK ((tree.get(_int_,    "fourth.element_3") && (_int_    == 12)));
+  CHECK ((tree.get(_bool_,   "fourth.element_4") && (_bool_   == true)));
+  CHECK ((tree.get(_string_, "fourth.element_5") && (_string_ == "Word")));
+  CHECK ((tree.get(_string_, "fourth.element_6") && (_string_ == "Word")));
   // CAN'T BE REPLACED
   CHECK (tree.add(12, "fourth.element_1") == false);
   CHECK (tree.add(12, "fourth.element_2") == false);
@@ -202,36 +213,157 @@ TEST_CASE ("Can add finals to the tree (hash)") {
 }
 
 TEST_CASE ("Can add finals to the tree (vector)") {
-  // ADD ELEMENTS TO A MAP
-  CHECK (tree.add(double(12.3),   "fifth"));
-  CHECK (tree.add(float(12.3),    "fifth"));
-  CHECK (tree.add(int(12),        "fifth"));
-  CHECK (tree.add(bool(true),     "fifth"));
-  CHECK (tree.add("Word",         "fifth"));
-  CHECK (tree.add(string("Word"), "fifth"));
+  int _int_;
+  float _float_;
+  double _double_;
+  string _string_;
+  bool _bool_;
+  // ADD ELEMENTS TO A VECTOR
+  CHECK (tree.add(double(12.3),    "fifth"));
+  CHECK (tree.add(float(12.3),     "fifth"));
+  CHECK (tree.add(int(12),         "fifth"));
+  CHECK (tree.add(bool(true),      "fifth"));
+  CHECK (tree.add("Word1",         "fifth"));
+  CHECK (tree.add(string("Word2"), "fifth"));
   // CHECK IF EXIST
-  CHECK (tree.isNumber ("fifth.1"));
-  CHECK (tree.isNumber ("fifth.2"));
-  CHECK (tree.isNumber ("fifth.3"));
-  CHECK (tree.isBool   ("fifth.4"));
-  CHECK (tree.isString ("fifth.5"));
-  CHECK (tree.isString ("fifth.6"));
+  CHECK ((tree.get(_double_, "fifth.2") && (_double_ == 12.3)));
+  CHECK ((tree.get(_float_,  "fifth.3") && (_float_ == float(12.3))));
+  CHECK ((tree.get(_int_,    "fifth.4") && (_int_ == 12)));
+  CHECK ((tree.get(_bool_,   "fifth.5") && (_bool_ == true)));
+  CHECK ((tree.get(_string_, "fifth.6") && (_string_ == "Word1")));
+  CHECK ((tree.get(_string_, "fifth.7") && (_string_ == "Word2")));
+}
+
+TEST_CASE ("Can add vectors to the tree") {
+  vector <int> _vector_i;
+  vector <int> compare_i (3);
+  compare_i[0] = 12;
+  compare_i[1] = 13;
+  compare_i[2] = 14;
+  // VECTOR BOOL
+  vector <bool> _vector_b;
+  vector <bool> compare_b (3);
+  compare_b[0] = true;
+  compare_b[1] = false;
+  compare_b[2] = true;
+  // VECTOR STRING
+  vector <string> _vector_s;
+  vector <string> compare_s (3);
+  compare_s[0] = string("first");
+  compare_s[1] = string("second");
+  compare_s[2] = string("third");
+  // ADD
+  cout << "Voy a entrar" << endl;
+  CHECK (tree.add(compare_i, "fifth"));     //p should be removed  in future
+  CHECK (tree.add(compare_b, "fifth"));
+  CHECK (tree.add(compare_s, "fifth"));
+  // CHECK IF EXIST
+  CHECK ((tree.get(_vector_i, "fifth.8") && (_vector_i == compare_i)));
+  CHECK ((tree.get(_vector_b, "fifth.9") && (_vector_b == compare_b)));
+  CHECK ((tree.get(_vector_s, "fifth.10") && (_vector_s == compare_s)));
+
+  Parser::saveFile("file", tree);
 }
 
 TEST_CASE ("add methods create entire hash hierarchy if doesn't exist") {
   // ADD ELEMENTS TO A MAP
-  CHECK (tree.add(double(12.3),   "a.very.long.path.for.testing"));
+  CHECK (tree.add(double(12.3), "a.very.long.path.for.testing"));
   // CHECK IF EXIST
-  CHECK (tree.isNumber ("a.very.long.path.for.testing"));
+  CHECK (tree.isNumber         ("a.very.long.path.for.testing"));
   // CANT REPLACE
-  CHECK (tree.add(double(12.3),   "a.very.long.path.for.testing") == false);
+  CHECK (tree.add(double(12.3), "a.very.long.path.for.testing") == false);
 }
 
-TEST_CASE ("Can replace finals in the tree (hash)") {
+TEST_CASE ("Can replace elements in the tree (hash)") {
+  // INITIALIZE
+  int _int_;
+  float _float_;
+  double _double_;
+  string _string_;
+  bool _bool_;
+  // REPLACE NON EXISTING ELEMENTS
+  CHECK (tree.replace (double(17.3), "non.existing.path") == false);
+  // REPLACE EXISTING FINAL ELEMENTS
+  CHECK (tree.replace (double(17.3),       "fourth.element_6"));
+  CHECK (tree.replace (float(17.3),        "fourth.element_5"));
+  CHECK (tree.replace (int(17),            "fourth.element_4"));
+  CHECK (tree.replace (bool(false),        "fourth.element_3"));
+  CHECK (tree.replace ("replaced",         "fourth.element_2"));
+  CHECK (tree.replace (string("replaced"), "fourth.element_1"));
+  // CHECK IF REPLACED
+  CHECK ((tree.get(_double_, "fourth.element_6") && (_double_ == 17.3)));
+  CHECK ((tree.get(_float_,  "fourth.element_5") && (_float_  == float(17.3))));
+  CHECK ((tree.get(_int_,    "fourth.element_4") && (_int_    == 17)));
+  CHECK ((tree.get(_bool_,   "fourth.element_3") && (_bool_   == false)));
+  CHECK ((tree.get(_string_, "fourth.element_2") && (_string_ == "replaced")));
+  CHECK ((tree.get(_string_, "fourth.element_1") && (_string_ == "replaced")));
+  // REPLACE NON FINAL EXISTING ELEMENTS
+  CHECK (tree.replace (double(17.3), "fifth"));
+  CHECK (tree.replace (double(17.3), "fourth"));
+  // CHECK IF REPLACED
+  CHECK ((tree.get(_double_, "fifth") &&  (_double_ == 17.3)));
+  CHECK ((tree.get(_double_, "fourth") && (_double_ == 17.3)));
+}
+
+TEST_CASE ("Can set finals in the tree (hash)") {
+  // INITIALIZE
+  int _int_;
+  float _float_;
+  double _double_;
+  string _string_;
+  bool _bool_;
+  // CREATE NON EXISTING ELEMENTS
+  CHECK (tree.set (double(12.3),   "sixth.element_1"));
+  CHECK (tree.set (float(12.3),    "sixth.element_2"));
+  CHECK (tree.set (int(12),        "sixth.element_3"));
+  CHECK (tree.set (false,          "sixth.element_4"));
+  CHECK (tree.set ("Word",         "sixth.element_5"));
+  CHECK (tree.set (string("Word"), "sixth.element_6"));
+  // CHECK IF EXIST
+  CHECK ((tree.get(_double_, "sixth.element_1") && (_double_ == 12.3)));
+  CHECK ((tree.get(_float_,  "sixth.element_2") && (_float_  == float(12.3))));
+  CHECK ((tree.get(_int_,    "sixth.element_3") && (_int_    == 12)));
+  CHECK ((tree.get(_bool_,   "sixth.element_4") && (_bool_   == false)));
+  CHECK ((tree.get(_string_, "sixth.element_5") && (_string_ == "Word")));
+  CHECK ((tree.get(_string_, "sixth.element_6") && (_string_ == "Word")));
+  // REPLACE EXISTING ELEMENTS
+  CHECK (tree.set (double(17.3),       "sixth.element_6"));
+  CHECK (tree.set (float(17.3),        "sixth.element_5"));
+  CHECK (tree.set (int(17),            "sixth.element_4"));
+  CHECK (tree.set (true,              "sixth.element_3"));
+  CHECK (tree.set ("replaced",         "sixth.element_2"));
+  CHECK (tree.set (string("replaced"), "sixth.element_1"));
+  // CHECK IF EXIST
+  CHECK ((tree.get(_double_, "sixth.element_6") && (_double_ == 17.3)));
+  CHECK ((tree.get(_float_,  "sixth.element_5") && (_float_  == float(17.3))));
+  CHECK ((tree.get(_int_,    "sixth.element_4") && (_int_    == 17)));
+  CHECK ((tree.get(_bool_,   "sixth.element_3") && (_bool_   == true)));
+  CHECK ((tree.get(_string_, "sixth.element_2") && (_string_ == "replaced")));
+  CHECK ((tree.get(_string_, "sixth.element_1") && (_string_ == "replaced")));
+  // CAN'T SET IN VECTORS
+  tree.addVector ("sixth.element_7");
+  CHECK (tree.set (double(9), "sixth.element_7.0") == false);
+}
+
+TEST_CASE ("Can set vectors in the tree (hash)") {
+
+}
+
+TEST_CASE ("Can erase elements") {
   // NON EXISTING ELEMENTS
-  CHECK (tree.replace (double(12.3), "non.existing.path") == false);
-  // NON FINAL EXISTING ELEMENTS
-  CHECK (tree.replace (double(12.3), "fifth") == true);
-  CHECK (tree.replace (double(12.3), "fourth") == true);
-  // ADD ELEMENTS TO A MAP
+  CHECK (tree.erase ("non.existing.path") == false);
+  // FINAL ELEMENTS
+  CHECK (tree.erase ("sixth.element_1"));
+  CHECK (tree.erase ("sixth.element_2"));
+  CHECK (tree.erase ("sixth.element_3"));
+  CHECK (tree.erase ("sixth.element_4"));
+  CHECK (tree.erase ("sixth.element_5"));
+  CHECK (tree.erase ("sixth.element_6"));
+  // CHECK IF EXIST
+  CHECK (tree.exist ("sixth.element_1") == false);
+  CHECK (tree.exist ("sixth.element_2") == false);
+  CHECK (tree.exist ("sixth.element_3") == false);
+  CHECK (tree.exist ("sixth.element_4") == false);
+  CHECK (tree.exist ("sixth.element_5") == false);
+  CHECK (tree.exist ("sixth.element_6") == false);
 }

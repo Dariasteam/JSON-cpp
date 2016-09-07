@@ -61,6 +61,7 @@ public:
   bool isMap (string path);
   bool isVector (string path);
   bool exist (string path);
+  int getType (string path);
 
   // returns true if doesn't exist and its sucessfully created
   bool add (double value, string path);

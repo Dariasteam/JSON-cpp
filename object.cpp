@@ -86,15 +86,16 @@ AbstractObject* ObjectVector::get (string path) {
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](stoi (matcher[1]));
     path = path.substr(matcher[0].length(), path.size());
-    if (son != nullptr)
+    if (son != nullptr) {
       return son->get (path);
+    }
   }
   return nullptr;
 }
 
 AbstractObject* ObjectMap::get (string path) {
   smatch matcher;
-  if (path.size() == 0 || path == ".")
+  if (path.empty() || path == ".")
     return this;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
@@ -136,6 +137,8 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
     string newPath = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
       if (!newPath.empty() || !(obj->getType() == VECTOR))
+        return son->add (newPath, obj);
+      else if (newPath.empty() && son->getType() == VECTOR)
         return son->add (newPath, obj);
       else
         return false;

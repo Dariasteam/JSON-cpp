@@ -269,6 +269,7 @@ Output
 - [ ] Flag que oblige a todos los elementos de un contenedor a ser del mismo tipo
 - [ ] Mejorar la salida de los numeros enteros
 - [ ] Reescribir README en inglés
+- [ ] Resolver ambigüedad add para vectores
 - [x] Crear namespaces
 - [x] Manejo de errores desde el objeto parser
   - [x] Devolver ruta completa
