@@ -1,9 +1,0 @@
-language: cpp
-
-compiler:
-  - clang
-
-before_script:
-  - ./test.out
-
-script: make
