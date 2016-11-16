@@ -1,7 +1,7 @@
 CC=clang++
-CXXFLAGS=-g -std=c++11
+CXXFLAGS= -std=c++11
 
-OBJS = manager.o parser.o object.o tests/test.o ## main.o
+OBJS = manager.o parser.o object.o main.o ##tests/test.o
 
 all: ${OBJS}
 	$(CC) $(CXXFLAGS) -o jsonParser ${OBJS}
