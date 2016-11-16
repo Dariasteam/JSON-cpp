@@ -1,2 +1,9 @@
-all:
-	clang++ tests/test.cpp manager.cpp parser.cpp object.cpp -std=c++11 -o test.out
+CC=clang++
+CXXFLAGS=-g -std=c++11
+
+OBJS = manager.o parser.o object.o tests/test.o ## main.o
+
+all: ${OBJS}
+	$(CC) $(CXXFLAGS) -o jsonParser ${OBJS}
+clean:
+	rm -rf *.o jsonParser

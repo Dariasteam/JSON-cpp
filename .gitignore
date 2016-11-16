@@ -2,3 +2,5 @@
 *.o
 main.cpp
 *.gch
+jsonParser
+pruebas/

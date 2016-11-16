@@ -4,11 +4,7 @@
     "element_2" : "Word",
     "element_3" : true
   },
-  "second" : [
-    12,
-    "Word",
-    true
-  ],
+  "second" : [12, "Word", true],
   "third" : [
     {
       "element_1" : 12,
@@ -31,4 +27,16 @@
       "third"
     ]
   ]
+}
+
+
+
+{
+
+    [
+      5,
+      0,
+      3,
+      11,
+    ]
 }

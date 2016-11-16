@@ -24,10 +24,12 @@ TEST_CASE ("Open Files CANT_OPEN_FILE") {
 }
 
 TEST_CASE ("Open Files EMPTY") {
+  REQUIRE (parser.parseFile("nofile", tree) != JSON_PARSE_OUTPUT::OK);
   REQUIRE (parser.parseFile("tests/empty.json", tree) == JSON_PARSE_OUTPUT::EMPTY_FILE);
 }
 
 TEST_CASE ("Open Files ERRRORS") {
+  REQUIRE (parser.parseFile("nofile", tree) != JSON_PARSE_OUTPUT::OK);
   REQUIRE (parser.parseFile("tests/error.json", tree) == JSON_PARSE_OUTPUT::ERRORS);
 }
 
@@ -37,6 +39,7 @@ TEST_CASE ("Open Files WARNINGS") {
 }
 
 TEST_CASE ("Open Files BOTH") {
+  REQUIRE (parser.parseFile("nofile", tree) != JSON_PARSE_OUTPUT::OK);
   REQUIRE (parser.parseFile("tests/both.json", tree) ==
                           (JSON_PARSE_OUTPUT::WARNINGS | JSON_PARSE_OUTPUT::ERRORS));
 }
