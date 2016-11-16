@@ -1,0 +1,122 @@
+#include <iostream>
+
+#include "manager.hpp"
+#include "parser.hpp"
+
+#include <string>
+
+#define SERIAL_START void serializer () {serialize (
+#define SERIAL_END ); }
+
+using namespace json;
+using namespace std;
+
+struct functor {
+  int i;
+  string path;
+  int size;
+  string operator() () {
+    int aux = i;
+    if (i < size - 1)
+      i++;
+    return path + "." + to_string(aux);
+  }
+};
+
+class Serializable {
+private:
+  bool op;
+  JsonTree* oTree;
+  string path;
+public:
+  virtual void serializer () = 0;
+  void serializeIn (JsonTree* tree, string p) {
+    op = true;
+    path = p;
+    oTree = tree;
+    serializer();
+  }
+  void serializeOut (JsonTree* tree, string p) {
+    op = false;
+    path = p;
+    oTree = tree;
+    serializer();
+  }
+
+  template <class... Args>
+  void serialize (Args... args) {
+    if (!op){
+      oTree->erase(path);
+      oTree->addVector(path);
+      retribution (oTree, path, args...);
+    } else {
+      functor f {0, path, oTree->getSizeAt(path)};
+      initialize (oTree, f, args...);
+    }
+  }
+
+  template <class t>
+  void static retribution (JsonTree* tree, string path, t element) {
+    tree->add(*element, path);
+  }
+
+  template <class t, class... Args>
+  void static retribution (JsonTree* tree, string path, t element, Args... args) {
+    tree->add(*element, path);
+    retribution (tree, path, args...);
+  }
+
+  // Read
+  template <class t, class func>
+  void static initialize (JsonTree* tree, func functor, t element) {
+    tree->get(*element, functor());
+  }
+
+  template <class t, class func, class... Args>
+  void static initialize (JsonTree* tree, func functor, t element, Args... args) {
+    tree->get(*element, functor());
+    initialize (tree, functor, args...);
+  }
+};
+
+// ------------------------------------------------------------------------
+
+class A : public Serializable {
+public:
+  int a;
+  int b;
+  string c;
+  string m;
+  vector <int> vec;
+  vector <string> words;
+
+  SERIAL_START
+  &a,
+  &b,
+  &c,
+  &m,
+  &vec,
+  &words
+  SERIAL_END
+
+public:
+  A () {}
+};
+
+int main (void) {
+  JsonTree tree;
+  Parser parser;
+
+  A obj;
+  parser.parseFile("./pruebas/javi1.json", tree);
+  obj.serializeIn(&tree, "clase_1");
+
+  /* Escribe código que cambie los valores de
+   * los parámetros de obj */
+  obj.a = 1212;
+  obj.b = 0000;
+  obj.c = "tío los miercoles me gusta hacer caca";
+
+  obj.serializeOut(&tree, "clase_1");
+  Parser::saveFile("./pruebas/javi1.json", tree);
+}
