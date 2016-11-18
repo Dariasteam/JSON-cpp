@@ -18,7 +18,8 @@ enum ObjetsTypes {
   VECTOR,
   MAP,
   FINAL,   // used for comparisons, if (getType() > FINAL) -> is a final object
-  NUMBER,
+  NUMBER_FLOAT,
+  NUMBER_INT,
   STRING,
   BOOL
 };
@@ -93,13 +94,24 @@ public:
   bool add (string path,  AbstractObject* obj);
 };
 
-class ObjectFinalNumber : public ObjectFinal {
+class ObjectFinalNumberFloat : public ObjectFinal {
 private:
   double number;
 public:
-  ObjectFinalNumber () : ObjectFinal (NUMBER) {}
-  ObjectFinalNumber (double n) : ObjectFinal (NUMBER), number (n) {}
+  ObjectFinalNumberFloat () : ObjectFinal (NUMBER_FLOAT) {}
+  ObjectFinalNumberFloat (double n) : ObjectFinal (NUMBER_FLOAT), number (n) {}
   inline double getContent () { return number; }
+  void replaceValue (string value);
+  void toTxt (string &txt, int indentLvl);
+};
+
+class ObjectFinalNumberInt : public ObjectFinal {
+private:
+  long int number;
+public:
+  ObjectFinalNumberInt () : ObjectFinal (NUMBER_INT) {}
+  ObjectFinalNumberInt (long int n) : ObjectFinal (NUMBER_INT), number (n) {}
+  inline long int getContent () { return number; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };

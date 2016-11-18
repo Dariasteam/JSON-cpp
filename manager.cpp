@@ -28,7 +28,7 @@ void JsonTree::getterError (string path, AbstractObject* obj, int type) {
 ObjectVector* JsonTree::createVec (vector<double> &array) {
   ObjectVector* object = new ObjectVector ();
   for (double number : array) {
-    object->insert("", new ObjectFinalNumber (number));
+    object->insert("", new ObjectFinalNumberFloat (number));
   }
   return object;
 }
@@ -36,7 +36,7 @@ ObjectVector* JsonTree::createVec (vector<double> &array) {
 ObjectVector* JsonTree::createVec (vector<int> &array) {
   ObjectVector* object = new ObjectVector ();
   for (int number : array) {
-    object->insert("", new ObjectFinalNumber (float(number)));
+    object->insert("", new ObjectFinalNumberInt (float(number)));
   }
   return object;
 }
@@ -82,7 +82,15 @@ string JsonTree::toText () {
 }
 
 bool JsonTree::isNumber (string path) {
-  return isType (top->get(path), NUMBER);
+  return (isFloat(path) || isInt(path));
+}
+
+bool JsonTree::isFloat (string path) {
+  return isType (top->get(path), NUMBER_FLOAT);
+}
+
+bool JsonTree::isInt (string path) {
+  return isType (top->get(path), NUMBER_INT);
 }
 
 bool JsonTree::isBool (string path) {
@@ -141,31 +149,42 @@ bool JsonTree::get (string &to, string path) {
 
 bool JsonTree::get (double &to, string path) {
   AbstractObject* obj = top->get(path);
-  if (isType(obj, NUMBER)) {
-    to = ((ObjectFinalNumber*)obj)->getContent();
+  if (isType(obj, NUMBER_INT)) {
+    to = ((ObjectFinalNumberInt*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, NUMBER);
+  if (isType(obj, NUMBER_FLOAT)) {
+    to = ((ObjectFinalNumberFloat*)obj)->getContent();
+    return true;
+  }
   return false;
 }
 
 bool JsonTree::get (float &to, string path) {
   AbstractObject* obj = top->get(path);
-  if (isType(obj, NUMBER)) {
-    to = ((ObjectFinalNumber*)obj)->getContent();
+  if (isType(obj, NUMBER_INT)) {
+    to = ((ObjectFinalNumberInt*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, NUMBER);
+  if (isType(obj, NUMBER_FLOAT)) {
+    to = ((ObjectFinalNumberFloat*)obj)->getContent();
+    return true;
+  }
+  getterError(path, obj, NUMBER_FLOAT);
   return false;
 }
 
 bool JsonTree::get (int &to, string path) {
   AbstractObject* obj = top->get(path);
-  if (isType(obj, NUMBER)) {
-    to = ((ObjectFinalNumber*)obj)->getContent();
+  if (isType(obj, NUMBER_INT)) {
+    to = ((ObjectFinalNumberInt*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, NUMBER);
+  if (isType(obj, NUMBER_FLOAT)) {
+    to = ((ObjectFinalNumberFloat*)obj)->getContent();
+    return true;
+  }
+  getterError(path, obj, NUMBER_INT);
   return false;
 }
 
@@ -178,8 +197,10 @@ bool JsonTree::get (vector<double>& array, string path) {
     int size = vect->size();
     array.resize (size);
     for (int i = 0; i < size; i++) {
-      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == NUMBER)
-        array[i] = ((ObjectFinalNumber*)vect->operator[](i))->getContent();
+      if (((ObjectFinalNumberFloat*)vect->operator[](i))->getType() == NUMBER_FLOAT)
+        array[i] = int(((ObjectFinalNumberFloat*)vect->operator[](i))->getContent());
+      else if (((ObjectFinalNumberInt*)vect->operator[](i))->getType() == NUMBER_INT)
+        array[i] = int(((ObjectFinalNumberInt*)vect->operator[](i))->getContent());
       else
         return false;
     }
@@ -195,8 +216,10 @@ bool JsonTree::get (vector<int>& array, string path) {
     int size = vect->size();
     array.resize (size);
     for (int i = 0; i < size; i++) {
-      if (((ObjectFinalNumber*)vect->operator[](i))->getType() == NUMBER)
-        array[i] = int(((ObjectFinalNumber*)vect->operator[](i))->getContent());
+      if (((ObjectFinalNumberFloat*)vect->operator[](i))->getType() == NUMBER_FLOAT)
+        array[i] = int(((ObjectFinalNumberFloat*)vect->operator[](i))->getContent());
+      else if (((ObjectFinalNumberInt*)vect->operator[](i))->getType() == NUMBER_INT)
+        array[i] = int(((ObjectFinalNumberInt*)vect->operator[](i))->getContent());
       else
         return false;
     }
@@ -246,7 +269,7 @@ AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
 // ADD
 
 bool JsonTree::add (double value, string path) {
-  AbstractObject* object = new ObjectFinalNumber (value);
+  AbstractObject* object = new ObjectFinalNumberFloat (value);
   return top->add (path, object);
 };
 
@@ -255,7 +278,8 @@ bool JsonTree::add (float value, string path) {
 };
 
 bool JsonTree::add (int value, string path) {
-  return add (double(value), path);
+  AbstractObject* object = new ObjectFinalNumberInt (value);
+  return top->add (path, object);
 };
 
 bool JsonTree::add (bool value, string path) {
@@ -314,7 +338,7 @@ bool JsonTree::replace (AbstractObject *newObj, string path) {
 }
 
 bool JsonTree::replace (double from, string path) {
-  AbstractObject* object = new ObjectFinalNumber (from);
+  AbstractObject* object = new ObjectFinalNumberFloat (from);
   return replace (object, path);
 }
 
@@ -323,7 +347,8 @@ bool JsonTree::replace (float from, string path) {
 }
 
 bool JsonTree::replace (int from, string path) {
-  return replace (double(from), path);
+  AbstractObject* object = new ObjectFinalNumberInt (from);
+  return replace (object, path);
 }
 
 bool JsonTree::replace (bool from, string path) {
@@ -366,7 +391,7 @@ bool JsonTree::set(AbstractObject *newObj, string path) {
 }
 
 bool JsonTree::set (double from, string path) {
-  AbstractObject* object = new ObjectFinalNumber (from);
+  AbstractObject* object = new ObjectFinalNumberFloat (from);
   return set (object, path);
 }
 
@@ -375,7 +400,8 @@ bool JsonTree::set (float from, string path) {
 }
 
 bool JsonTree::set (int from, string path) {
-  return set (double(from), path);
+  AbstractObject* object = new ObjectFinalNumberInt (from);
+  return set (object, path);
 }
 
 bool JsonTree::set (bool from, string path) {

@@ -23,8 +23,12 @@ void ObjectFinalBool::replaceValue (string value) {
     boolean = false;
 }
 
-void ObjectFinalNumber::replaceValue (string value) {
+void ObjectFinalNumberFloat::replaceValue (string value) {
   number = stod (value);
+}
+
+void ObjectFinalNumberInt::replaceValue (string value) {
+  number = atol (value.c_str());
 }
 
 void ObjectFinalString::replaceValue (string value) {
@@ -180,10 +184,16 @@ bool ObjectFinal::add (string path,  AbstractObject* obj) {
 void ObjectVector::toTxt (string& txt, int indentLvl) {
   txt.append("[");
   indentLvl++;
+  AbstractObject* obj = this;
   for (int i = 0; i < size(); i++) {
-    txt.append(END_LINE);
-    txtIndent (txt, indentLvl);
-    operator[](i)->toTxt(txt, indentLvl);
+    if (obj->getType() != NUMBER_INT) {
+      txt.append(END_LINE);
+      txtIndent (txt, indentLvl);
+    } else {
+      txt.append(" ");
+    }
+    obj = operator[](i);
+    obj->toTxt(txt, indentLvl);
     txt.append(COMMA);
   }
   if (size() > 0)
@@ -219,7 +229,11 @@ void ObjectFinalBool::toTxt (string& txt, int indentLvl) {
     txt.append("false");
 }
 
-void ObjectFinalNumber::toTxt (string& txt, int indentLvl) {
+void ObjectFinalNumberFloat::toTxt (string& txt, int indentLvl) {
+  txt.append(to_string(getContent()));
+}
+
+void ObjectFinalNumberInt::toTxt (string& txt, int indentLvl) {
   txt.append(to_string(getContent()));
 }
 

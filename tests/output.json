@@ -1,24 +1,21 @@
 {
   "first" : {
-    "element_1" : 12.000000,
+    "element_1" : 12,
     "element_2" : "Word",
     "element_3" : true
   },
   "second" : [
-    12.000000,
-    "Word",
+    12, "Word",
     true
   ],
   "third" : [
     {
-      "element_1" : 12.000000,
+      "element_1" : 12,
       "element_2" : "Word",
       "element_3" : true
     },
     [
-      12.000000,
-      13.000000,
-      14.000000
+      12, 13, 14
     ],
     [
       true,
@@ -48,9 +45,7 @@
     "element_7" : [
     ],
     "vector_1" : [
-      12.000000,
-      13.000000,
-      14.000000
+      12, 13, 14
     ],
     "vector_2" : [
       true,
