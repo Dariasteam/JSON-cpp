@@ -45,15 +45,35 @@ protected:
   }
 
   // Write
+
+  // NON SERIALIZABLE classes
   template <typename t>
-  void static retribution (JsonTree* tree, int index, string path, t* element) {
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t* element) {
     tree->add(*element, path);
   }
 
 
   template <class t, class... Args>
-  void static retribution (JsonTree* tree, int index, string path, t element, Args... args) {
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t element, Args... args) {
     tree->add(*element, path);
+    retribution (tree, index+1, path, args...);
+  }
+
+  // SERIALIZABLE classes
+
+  template <typename t>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t* element) {
+    //tree->add(*element, path);
+  }
+
+
+  template <class t, class... Args>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t* element, Args... args) {
+    //tree->add(*element, path);
     retribution (tree, index+1, path, args...);
   }
 
@@ -82,17 +102,65 @@ protected:
     retribution (tree, index+1, path, args...);
   }
 
+  // Pointers of SERIALIZABLE classes
+  template <typename t>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t** element) {
+    //tree->add(*element, path);
+  }
+
+
+  template <class t, class... Args>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t** element, Args... args) {
+    //tree->add(*element, path);
+    retribution (tree, index+1, path, args...);
+  }
+
+
+  // Pointers of NON SERIALIZABLE classes
+  template <typename t>
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t** element) {
+    tree->add(**element, path);
+  }
+
+
+  template <class t, class... Args>
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t** element, Args... args) {
+    tree->add(**element, path);
+    retribution (tree, index+1, path, args...);
+  }
 
   // Read
+
+  // NON SERIALIZABLE classes
   template <typename t, class func>
-  void static initialize (JsonTree* tree, func functor, t* element) {
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t* element) {
     tree->get(*element, functor());
+  }
+
+  template <class t, class func, class... Args>
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t* element, Args... args) {
+    tree->get(*element, functor());
+    initialize (tree, functor, args...);
+  }
+
+  // SERIALIZABLE classes
+  template <typename t, class func>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t* element) {
+    element->serializeIn (*tree, functor());
   }
 
 
   template <class t, class func, class... Args>
-  void static initialize (JsonTree* tree, func functor, t* element, Args... args) {
-    tree->get(*element, functor());
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t* element, Args... args) {
+    element->serializeIn (*tree, functor());
     initialize (tree, functor, args...);
   }
 
@@ -129,7 +197,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  //Pointers of SERIALIZABLE classes
+  // Pointers of SERIALIZABLE classes
 
   template <class t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
@@ -146,26 +214,24 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  //Pointers of NON SERIALIZABLE classes
+  // Pointers of NON SERIALIZABLE classes
+
   template <class t, class func>
-  typename std::enable_if<std::is_fundamental<t>::value, void>::type
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t** element) {
     *element = new t ();
     tree->get(**element, functor());
   }
 
   template <class t, class func, class... Args>
-  typename std::enable_if<std::is_fundamental<t>::value, void>::type
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t** element, Args... args) {
     *element = new t ();
     tree->get(**element, functor());
     initialize (tree, functor, args...);
   }
-
 
 };
 
 }
 #endif // SERIALIZABLE_H
-
-
