@@ -2,7 +2,7 @@
 #define SERIALIZABLE_H
 
 #include <string>
-
+#include <type_traits>
 #include "manager.hpp"
 
 #define SERIAL_START void serializer (JsonTree* _json_tree_, bool _json_op_, string _json_path_) {serialize (_json_op_, _json_path_, _json_tree_,
@@ -128,6 +128,16 @@ protected:
     }
     initialize (tree, functor, args...);
   }
+
+  //Pointers
+  template <class t, class func>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t** element) {
+    cout << "puntero" << endl;
+    *element = new t ();
+    (*element)->serializeIn (*tree, functor());
+  }
+
 
 };
 
