@@ -15,15 +15,16 @@ namespace json {
 class JsonTree {
 private:
   string objectsTypesReverse [7] = { "Vector",
-                                            "Map",
-                                            "Final",
-                                            "Number_Float",
-                                            "Number_Int",
-                                            "String",
-                                            "Bool"};
+                                           "Map",
+                                           "Final",
+                                           "Number_Float",
+                                           "Number_Int",
+                                           "String",
+                                           "Bool"};
+  static regex lastTokenRgx;
+
   ObjectMap* top;
 
-  static regex lastTokenRgx;
 
   bool isType (AbstractObject* obj, int type);
   void getterError (string path, AbstractObject* obj, int type);
@@ -31,16 +32,17 @@ private:
   bool replace (AbstractObject* newObj, string path);
   bool set (AbstractObject* newObj, string path);
 
-  ObjectVector* createVec (vector<double>& array);
-  ObjectVector* createVec (vector<int>& array);
-  ObjectVector* createVec (vector<bool>& array);
-  ObjectVector* createVec (vector<string>& array);
+  static ObjectVector* createVec (vector<double>& array);
+  static ObjectVector* createVec (vector<int>& array);
+  static ObjectVector* createVec (vector<bool>& array);
+  static ObjectVector* createVec (vector<string>& array);
 
-  AbstractObject* insertObject (string path, AbstractObject* obj);
+  static AbstractObject* insertObject (string path, AbstractObject* obj);
 
 public:
   JsonTree (AbstractObject* root);
   JsonTree ();
+
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 
@@ -115,6 +117,7 @@ public:
   bool remove (string path);
   string toText ();
 
+  bool getSubTree (JsonTree* tree, string path);
 };
 
 }

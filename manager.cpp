@@ -461,3 +461,10 @@ bool JsonTree::remove (string path) {
     return ((ObjectMap*)top)->erase (path);
   return false;
 }
+
+// SUBTREE
+
+bool JsonTree::getSubTree(JsonTree* tree, string path) {
+  tree = new JsonTree(top->get(path));
+  return tree != nullptr;
+}
