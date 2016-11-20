@@ -91,14 +91,14 @@ protected:
 
 
   template <class t, class func, class... Args>
-  void static initialize (JsonTree* tree, func functor, t element, Args... args) {
+  void static initialize (JsonTree* tree, func functor, t* element, Args... args) {
     tree->get(*element, functor());
     initialize (tree, functor, args...);
   }
 
   // Vector
   template <class t, class func>
-  void static initialize (JsonTree* tree, func functor, vector<vector <t> >* vect) {
+  void static initialize (JsonTree* tree, func functor, vector <t>* vect) {
     string newPath = functor();
     int size = tree->getSizeAt(newPath);
     vect->resize (size);
@@ -113,7 +113,7 @@ protected:
   }
 
   template <class t, class func, class... Args>
-  void static initialize (JsonTree* tree, func functor, vector <vector <t> >* vect, Args... args) {
+  void static initialize (JsonTree* tree, func functor, vector <t>* vect, Args... args) {
     string newPath = functor();
 
     int size = tree->getSizeAt(newPath);
@@ -129,13 +129,37 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  //Pointers
+  //Pointers of SERIALIZABLE classes
+
   template <class t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t** element) {
-    cout << "puntero" << endl;
     *element = new t ();
     (*element)->serializeIn (*tree, functor());
+  }
+
+  template <class t, class func, class... Args>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t** element, Args... args) {
+    *element = new t ();
+    (*element)->serializeIn (*tree, functor());
+    initialize (tree, functor, args...);
+  }
+
+  //Pointers of NON SERIALIZABLE classes
+  template <class t, class func>
+  typename std::enable_if<std::is_fundamental<t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t** element) {
+    *element = new t ();
+    tree->get(**element, functor());
+  }
+
+  template <class t, class func, class... Args>
+  typename std::enable_if<std::is_fundamental<t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, t** element, Args... args) {
+    *element = new t ();
+    tree->get(**element, functor());
+    initialize (tree, functor, args...);
   }
 
 
