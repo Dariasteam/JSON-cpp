@@ -44,6 +44,19 @@ protected:
     }
   }
 
+  // Write
+  template <typename t>
+  void static retribution (JsonTree* tree, int index, string path, t* element) {
+    tree->add(*element, path);
+  }
+
+
+  template <class t, class... Args>
+  void static retribution (JsonTree* tree, int index, string path, t element, Args... args) {
+    tree->add(*element, path);
+    retribution (tree, index+1, path, args...);
+  }
+
   // Vector
 
   template <class t>
@@ -70,66 +83,57 @@ protected:
   }
 
 
-  // Write
-  template <typename t>
-  void static retribution (JsonTree* tree, int index, string path, t* element) {
-    tree->add(*element, path);
-  }
-
-
-  template <class t, class... Args>
-  void static retribution (JsonTree* tree, int index, string path, t element, Args... args) {
-    tree->add(*element, path);
-    retribution (tree, index+1, path, args...);
-  }
-
-
-
-  // Vector
-  template <class t, class func>
-  void static initialize (JsonTree* tree, func functor, vector <t>* vect) {
-    string newPath = functor();
-
-    int size = tree->getSizeAt(newPath);
-    vect->resize (size);
-
-    int i = 0;
-    for (int j = 0; j < vect->size(); j++) {
-      initialize (tree, [&] () {
-        return newPath + "." + to_string(i);
-      }, &(*vect)[j]);
-      i++;
-    }
-  }
-
-  template <class t, class func, class... Args>
-  void static initialize (JsonTree* tree, func functor, vector <t>* vect, Args... args) {
-    string newPath = functor();
-
-    int size = tree->getSizeAt(newPath);
-    vect->resize (size);
-
-    int i = 0;
-    for (int j = 0; j < vect->size(); j++) {
-      initialize (tree, [&] () {
-        return newPath + "." + to_string(i);
-      }, &(*vect)[j]);
-      i++;
-    }
-    initialize (tree, functor, args...);
-  }
-
-
   // Read
   template <typename t, class func>
   void static initialize (JsonTree* tree, func functor, t* element) {
-    tree->get(*element, functor());
+    cout << tree->get(*element, functor()) <<endl;
   }
 
 
   template <class t, class func, class... Args>
   void static initialize (JsonTree* tree, func functor, t element, Args... args) {
-    tree->get(*element, functor());
+    cout << tree->get(*element, functor()) << endl;
+    initialize (tree, functor, args...);
+  }
+
+  // Vector
+  template <class t, class func>
+  void static initialize (JsonTree* tree, func functor, vector<vector <t> >* vect) {
+    string newPath = functor();
+  cout << "asdasd" << endl;
+
+    if (tree->isVector(newPath)) {
+
+      int size = tree->getSizeAt(newPath);
+      vect->resize (size);
+
+      int i = 0;
+      for (int j = 0; j < size; j++) {
+        initialize (tree, [&] () {
+          return newPath + "." + to_string(i);
+        }, &(*vect)[j]);
+        i++;
+      }
+    } else {
+      return;
+    }
+  }
+
+  template <class t, class func, class... Args>
+  void static initialize (JsonTree* tree, func functor, vector <vector <t> >* vect, Args... args) {
+    string newPath = functor();
+
+    cout << "asdasd" << endl;
+    int size = tree->getSizeAt(newPath);
+    vect->resize (size);
+
+    int i = 0;
+    for (int j = 0; j < vect->size(); j++) {
+      initialize (tree, [&] () {
+        return newPath + "." + to_string(i);
+      }, &(*vect)[j]);
+      i++;
+    }
     initialize (tree, functor, args...);
   }
 

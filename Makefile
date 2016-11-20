@@ -1,15 +1,10 @@
 CC=clang++
-CXXFLAGS= -std=c++11
+CXXFLAGS=-g -std=c++11
 
-OBJS = manager.o parser.o object.o tests/test.o
-TEST = tests/test.o
-MAIN = main.o
+OBJS = object.o manager.o parser.o serializable.o main.o
 
 all: ${OBJS}
-	$(CC) $(CXXFLAGS) -o tests/jsonParser ${OBJS}
-clean:
-	rm -rf *.o tests/test
-
-tests: ${OBJS}
 	$(CC) $(CXXFLAGS) -o jsonParser ${OBJS}
+clean:
+	rm -rf *.o jsonParser
 

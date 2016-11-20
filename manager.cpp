@@ -201,11 +201,14 @@ bool JsonTree::get (vector<double>& array, string path) {
         array[i] = int(((ObjectFinalNumberFloat*)vect->operator[](i))->getContent());
       else if (((ObjectFinalNumberInt*)vect->operator[](i))->getType() == NUMBER_INT)
         array[i] = int(((ObjectFinalNumberInt*)vect->operator[](i))->getContent());
-      else
+      else {
+        getterError(path, obj, VECTOR);
         return false;
+      }
     }
     return true;
   }
+  getterError(path, obj, VECTOR);
   return false;
 }
 
@@ -220,11 +223,14 @@ bool JsonTree::get (vector<int>& array, string path) {
         array[i] = int(((ObjectFinalNumberFloat*)vect->operator[](i))->getContent());
       else if (((ObjectFinalNumberInt*)vect->operator[](i))->getType() == NUMBER_INT)
         array[i] = int(((ObjectFinalNumberInt*)vect->operator[](i))->getContent());
-      else
+      else {
+        getterError(path, obj, VECTOR);
         return false;
+      }
     }
     return true;
   }
+  getterError(path, obj, VECTOR);
   return false;
 }
 
@@ -237,11 +243,14 @@ bool JsonTree::get (vector<string>& array, string path) {
     for (int i = 0; i < size; i++) {
       if (((ObjectFinalString*)vect->operator[](i))->getType() == STRING)
         array[i] = ((ObjectFinalString*)vect->operator[](i))->getContent();
-      else
+      else {
+        getterError(path, obj, VECTOR);
         return false;
+      }
     }
     return true;
   }
+  getterError(path, obj, VECTOR);
   return false;
 }
 
@@ -254,11 +263,14 @@ bool JsonTree::get (vector<bool>& array, string path) {
     for (int i = 0; i < size; i++) {
       if (((ObjectFinalBool*)vect->operator[](i))->getType() == BOOL)
         array[i] = ((ObjectFinalBool*)vect->operator[](i))->getContent();
-      else
+      else {
+        getterError(path, obj, VECTOR);
         return false;
+      }
     }
     return true;
   }
+  getterError(path, obj, VECTOR);
   return false;
 }
 
