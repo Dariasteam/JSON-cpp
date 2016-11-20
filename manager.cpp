@@ -157,6 +157,7 @@ bool JsonTree::get (double &to, string path) {
     to = ((ObjectFinalNumberFloat*)obj)->getContent();
     return true;
   }
+  getterError(path, obj, NUMBER_FLOAT);
   return false;
 }
 
