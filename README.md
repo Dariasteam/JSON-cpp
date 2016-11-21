@@ -269,7 +269,7 @@ Output
 - [x] Interfaz para crear árbol desde un objeto
 - [x] Permitir escribir archivos
 - [ ] Flag que oblige a todos los elementos de un contenedor a ser del mismo tipo
-- [ ] Mejorar la salida de los numeros enteros
+- [x] Mejorar la salida de los numeros enteros
 - [ ] Reescribir README en inglés
 - [ ] Resolver ambigüedad add para vectores
 - [x] Crear namespaces
