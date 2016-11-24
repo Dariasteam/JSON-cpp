@@ -33,12 +33,15 @@ protected:
     } else {
       int i = 0;
       int size = _json_tree_->getSizeAt(_json_path_);
-      initialize (_json_tree_, [&] ()
+      initialize (_json_tree_, [&] (string key = "")
         {
           int aux = i;
           if (i < size - 1)
             i++;
-          return _json_path_ + "." + to_string(aux);
+          if (key != "")
+            return _json_path_ + "." + key;
+          else
+            return _json_path_ + "." + to_string(aux);
         },
       args...);
     }
@@ -53,12 +56,26 @@ protected:
     tree->add(*element, path);
   }
 
+  template <class t, class... Args>
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, t* element, Args... args) {
+    tree->add(*element, path);
+    retribution (tree, index+1, path, args...);
+  }
+
+  // WITH HASH KEY
+
+  template <class t>
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, string key, t* element) {
+    //tree->add(*element, key);
+  }
 
   template <class t, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-  static retribution (JsonTree* tree, int index, string path, t element, Args... args) {
-    tree->add(*element, path);
-    retribution (tree, index+1, path, args...);
+  static retribution (JsonTree* tree, int index, string path, string key, t* element, Args... args) {
+    //tree->add(*element, key);
+    retribution (tree, index + 1, path, args...);
   }
 
   // SERIALIZABLE classes
@@ -69,7 +86,6 @@ protected:
     //tree->add(*element, path);
   }
 
-
   template <class t, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, int index, string path, t* element, Args... args) {
@@ -77,8 +93,22 @@ protected:
     retribution (tree, index+1, path, args...);
   }
 
-  // Vector
+  // WITH HASH KEY
 
+  template <class t>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, string key, t** element) {
+    //tree->add(*element, key);
+  }
+
+  template <class t, class... Args>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static retribution (JsonTree* tree, int index, string path, string key, t** element, Args... args) {
+    //tree->add(*element, key);
+    retribution (tree, index + 1, path, args...);
+  }
+
+  // Vector
   template <class t>
   void static retribution (JsonTree* tree, int index, string path, vector <t>* vect) {
 
@@ -94,6 +124,29 @@ protected:
   void static retribution (JsonTree* tree, int index, string path, vector<t>* vect, Args... args) {
 
     tree->addVector(path);
+    string newPath = path + "." + to_string(index);
+
+    for (int j = 0; j < vect->size(); j++)
+      retribution (tree, j, newPath, &(*vect)[j]);
+
+    retribution (tree, index+1, path, args...);
+  }
+
+  // WITH HASH KEY
+  template <class t>
+  void static retribution (JsonTree* tree, int index, string path, string key, vector <t>* vect) {
+
+    tree->addVector(path + key);
+    path = path + "." + to_string(index);
+
+    for (int j = 0; j < vect->size(); j++)
+      retribution (tree, j, path, &(*vect)[j]);
+  }
+
+  template <class t, class... Args>
+  void static retribution (JsonTree* tree, int index, string path, string key, vector<t>* vect, Args... args) {
+
+    tree->addVector(path + key);
     string newPath = path + "." + to_string(index);
 
     for (int j = 0; j < vect->size(); j++)
@@ -149,6 +202,20 @@ protected:
     initialize (tree, functor, args...);
   }
 
+  // WITH HASH KEY
+  template <class t, class func, class... Args>
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, const string key, t* element, Args... args) {
+    tree->get(*element, functor(key));
+    initialize (tree, functor, args...);
+  }
+
+  template <class t, class func>
+  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, const string key, t* element) {
+    tree->get(*element, functor(key));
+  }
+
   // SERIALIZABLE classes
   template <typename t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
@@ -161,6 +228,21 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t* element, Args... args) {
     element->serializeIn (*tree, functor());
+    initialize (tree, functor, args...);
+  }
+
+  // WITH HASH KEY
+  template <typename t, class func>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, const string key, t* element) {
+    element->serializeIn (*tree, functor(key));
+  }
+
+
+  template <class t, class func, class... Args>
+  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
+  static initialize (JsonTree* tree, func functor, const string key, t* element, Args... args) {
+    element->serializeIn (*tree, functor(key));
     initialize (tree, functor, args...);
   }
 
@@ -183,6 +265,40 @@ protected:
   template <class t, class func, class... Args>
   void static initialize (JsonTree* tree, func functor, vector <t>* vect, Args... args) {
     string newPath = functor();
+
+    int size = tree->getSizeAt(newPath);
+    vect->resize (size);
+
+    int i = 0;
+    for (int j = 0; j < vect->size(); j++) {
+      initialize (tree, [&] () {
+        return newPath + "." + to_string(i);
+      }, &(*vect)[j]);
+      i++;
+    }
+    initialize (tree, functor, args...);
+  }
+
+  // WITH HASH KEY
+  template <class t, class func>
+  void static initialize (JsonTree* tree, func functor, const string path, vector <t>* vect) {
+    string newPath = functor(path);
+
+    int size = tree->getSizeAt(newPath);
+    vect->resize (size);
+
+    int i = 0;
+    for (int j = 0; j < size; j++) {
+      initialize (tree, [&] () {
+        return newPath + "." + to_string(i);
+      }, &(*vect)[j]);
+      i++;
+    }
+  }
+
+  template <class t, class func, class... Args>
+  void static initialize (JsonTree* tree, func functor, const string path, vector <t>* vect, Args... args) {
+    string newPath = functor(path);
 
     int size = tree->getSizeAt(newPath);
     vect->resize (size);
