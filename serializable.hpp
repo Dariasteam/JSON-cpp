@@ -33,17 +33,29 @@ protected:
     } else {
       int i = 0;
       int size = _json_tree_->getSizeAt(_json_path_);
-      initialize (_json_tree_, [&] (string key = "")
+      initialize (_json_tree_, [&] ()
         {
           int aux = i;
           if (i < size - 1)
             i++;
-          if (key != "")
-            return _json_path_ + "." + key;
-          else
-            return _json_path_ + "." + to_string(aux);
+          return _json_path_ + "." + to_string(aux);
         },
       args...);
+    }
+  }
+
+  template <class... Args>
+  static void serialize (bool _json_op_, string _json_path_, JsonTree* _json_tree_, const string path, Args... args) {
+    if (_json_op_){
+      _json_tree_->erase(_json_path_);
+      _json_tree_->addMap(_json_path_);
+      retribution (_json_tree_, _json_path_, path, args...);
+    } else {
+      initialize (_json_tree_, [&] (string key)
+        {
+          return _json_path_ + "." + key;
+        },
+      path, args...);
     }
   }
 
@@ -64,22 +76,20 @@ protected:
   }
 
   // WITH HASH KEY
-
   template <class t>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-  static retribution (JsonTree* tree, int index, string path, string key, t* element) {
-    //tree->add(*element, key);
+  static retribution (JsonTree* tree, string path, string key, t* element) {
+    tree->add(*element, path + "." + key);
   }
 
   template <class t, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-  static retribution (JsonTree* tree, int index, string path, string key, t* element, Args... args) {
-    //tree->add(*element, key);
-    retribution (tree, index + 1, path, args...);
+  static retribution (JsonTree* tree, string path, string key, t* element, Args... args) {
+    tree->add(*element, path + "." + key);
+    retribution (tree, path, args...);
   }
 
   // SERIALIZABLE classes
-
   template <typename t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, int index, string path, t* element) {
@@ -97,27 +107,25 @@ protected:
 
   template <class t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-  static retribution (JsonTree* tree, int index, string path, string key, t** element) {
+  static retribution (JsonTree* tree, string path, string key, t** element) {
     //tree->add(*element, key);
   }
 
   template <class t, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-  static retribution (JsonTree* tree, int index, string path, string key, t** element, Args... args) {
+  static retribution (JsonTree* tree, string path, string key, t** element, Args... args) {
     //tree->add(*element, key);
-    retribution (tree, index + 1, path, args...);
+    retribution (tree, path, args...);
   }
 
   // Vector
   template <class t>
   void static retribution (JsonTree* tree, int index, string path, vector <t>* vect) {
-
     tree->addVector(path);
     path = path + "." + to_string(index);
 
     for (int j = 0; j < vect->size(); j++)
       retribution (tree, j, path, &(*vect)[j]);
-
   }
 
   template <class t, class... Args>
@@ -134,25 +142,25 @@ protected:
 
   // WITH HASH KEY
   template <class t>
-  void static retribution (JsonTree* tree, int index, string path, string key, vector <t>* vect) {
+  void static retribution (JsonTree* tree, string path, string key, vector <t>* vect) {
 
-    tree->addVector(path + key);
-    path = path + "." + to_string(index);
+    string newPath = path + "." + key;
+    tree->addVector(newPath);
 
     for (int j = 0; j < vect->size(); j++)
-      retribution (tree, j, path, &(*vect)[j]);
+      retribution (tree, j, newPath, &(*vect)[j]);
   }
 
   template <class t, class... Args>
-  void static retribution (JsonTree* tree, int index, string path, string key, vector<t>* vect, Args... args) {
+  void static retribution (JsonTree* tree, string path, string key, vector<t>* vect, Args... args) {
 
-    tree->addVector(path + key);
-    string newPath = path + "." + to_string(index);
+    string newPath = path + "." + key;
+    tree->addVector(newPath);
 
     for (int j = 0; j < vect->size(); j++)
       retribution (tree, j, newPath, &(*vect)[j]);
 
-    retribution (tree, index+1, path, args...);
+    retribution (tree, newPath, path, args...);
   }
 
   // Pointers of SERIALIZABLE classes
