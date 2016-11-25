@@ -4,3 +4,9 @@ main.cpp
 *.gch
 jsonParser
 pruebas/
+jsonCpp.config
+jsonCpp.creator
+jsonCpp.files
+jsonCpp.includes
+jsonCpp.creator.user
+
