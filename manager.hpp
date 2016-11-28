@@ -49,7 +49,7 @@ public:
   int getSizeAt (string path);
 
   inline AbstractObject* getTop () {return top;}
-  inline void setTop (AbstractObject* root) { top = (ObjectMap*)root; }
+  inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }
 
   // returns true if the path exist, has the appropiate type and the value is copied succesfully
   bool get (double& to, string path);

@@ -5,11 +5,13 @@ using namespace json;
 regex JsonTree::lastTokenRgx = regex ("^(.*)(?:\\.)(.+)$");
 
 JsonTree::JsonTree () {
+  delete top;
   top = new ObjectMap ();
 }
 
-JsonTree::JsonTree (AbstractObject* root)
-  { top = (ObjectMap*)root; }
+JsonTree::JsonTree (AbstractObject* root) {
+  top = (ObjectMap*)root;
+}
 
 
 JsonTree::~JsonTree () {
