@@ -32,9 +32,9 @@ protected:
 public:
   virtual ~AbstractObject () = 0;
   inline unsigned short getType () { return type; }
-  virtual AbstractObject* get (string path);
-  virtual bool add (string path, AbstractObject* obj);
-  virtual void toTxt (string &txt, int indentLvl);
+  virtual AbstractObject* get (string path) = 0;
+  virtual bool add (string path, AbstractObject* obj) = 0;
+  virtual void toTxt (string &txt, int indentLvl) = 0;
   void txtIndent (string& txt, int indentLvl);
 };
 
@@ -45,8 +45,8 @@ protected:
 public:
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
   virtual const AbstractObject* operator[](string key) { return nullptr; };
-  virtual bool insert (string key, AbstractObject* obj);
-  virtual int size ();
+  virtual bool insert (string key, AbstractObject* obj) = 0;
+  virtual int size () = 0;
 };
 
 class ObjectVector : public ObjectContainer{

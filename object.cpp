@@ -1,11 +1,5 @@
 #include "./object.hpp"
 
-AbstractObject::~AbstractObject() {}
-
-ObjectContainer::~ObjectContainer() {}
-
-ObjectFinal::~ObjectFinal() {}
-
 #include <iostream>
 
 regex ObjectVector::tokenRgx = regex ("^(?:\\[)?(\\d+)(:?\\])?(:?\\.)?");
@@ -243,11 +237,11 @@ void ObjectFinalString::toTxt (string& txt, int indentLvl) {
 
 
 ObjectVector::~ObjectVector () {
-
+  array.clear();
 }
 
 ObjectMap::~ObjectMap () {
-
+  hash.clear();
 }
 
 ObjectFinalBool::~ObjectFinalBool () {
@@ -266,5 +260,10 @@ ObjectFinalString::~ObjectFinalString () {
 
 }
 
+AbstractObject::~AbstractObject() {}
+
+ObjectContainer::~ObjectContainer() {}
+
+ObjectFinal::~ObjectFinal() {}
 
 
