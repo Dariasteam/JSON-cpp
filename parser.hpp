@@ -28,11 +28,11 @@ enum JSON_PARSER_FLAG {
 };
 
 enum JSON_PARSE_OUTPUT {
-  OK 						  = 1 << 0,
+  OK          	  = 1 << 0,
   CANT_OPEN_FILE  = 1 << 1,
-  WARNINGS 			  = 1 << 2,
-  ERRORS 				  = 1 << 3,
-  EMPTY_FILE   		= 1 << 4
+  WARNINGS    	  = 1 << 2,
+  ERRORS      	  = 1 << 3,
+  EMPTY_FILE      = 1 << 4
 };
 
 struct ObjectNameFlag {
