@@ -15,12 +15,12 @@ namespace json {
 class JsonTree {
 private:
   string objectsTypesReverse [7] = { "Vector",
-                                           "Map",
-                                           "Final",
-                                           "Number_Float",
-                                           "Number_Int",
-                                           "String",
-                                           "Bool"};
+                                     "Map",
+                                     "Final",
+                                     "Number_Float",
+                                     "Number_Int",
+                                     "String",
+                                     "Bool"};
   static regex lastTokenRgx;
 
   ObjectMap* top;
@@ -45,6 +45,8 @@ public:
 
   vector <string> getKeys (string path);
   int getSizeAt (string path);
+
+  inline AbstractObject* getTop () {return top;}
 
   // returns true if the path exist, has the appropiate type and the value is copied succesfully
   bool get (double& to, string path);
@@ -118,6 +120,7 @@ public:
   string toText ();
 
   bool getSubTree (JsonTree* tree, string path);
+  bool addSubTree (JsonTree* tree, string path);
 };
 
 }

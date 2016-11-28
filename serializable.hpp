@@ -136,7 +136,9 @@ protected:
   template <class t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const string key, t* element) {
-    //tree->add(*element, key);
+    JsonTree* auxTree = new JsonTree;
+    //*element
+    tree->add(*element, key);
   }
 
   template <class t, class... Args>
@@ -592,7 +594,7 @@ protected:
 
   template <class t, class func, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-  static initialize (JsonTree* tree, func functor,  const char* key, t** element, Args... args) {
+  static initialize (JsonTree* tree, func functor, const char* key, t** element, Args... args) {
     *element = new t ();
     tree->get(**element, functor(key));
     initialize (tree, functor, args...);

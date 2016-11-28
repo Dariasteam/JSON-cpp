@@ -481,3 +481,7 @@ bool JsonTree::getSubTree(JsonTree* tree, string path) {
   tree = new JsonTree(top->get(path));
   return tree != nullptr;
 }
+
+bool JsonTree::addSubTree(JsonTree *tree, string path) {
+  return tree->set (tree->getTop(), path);
+}
