@@ -43,6 +43,8 @@ public:
   JsonTree (AbstractObject* root);
   JsonTree ();
 
+  ~JsonTree ();
+
   vector <string> getKeys (string path);
   int getSizeAt (string path);
 

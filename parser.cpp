@@ -24,7 +24,7 @@ int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
     string fileContent = buffer.str();
     ObjectNameFlag result = parse (fileContent, "");
     file.close();
-    tree = JsonTree (result.element);
+    tree = *new JsonTree (result.element);
     if (result.flag == EMPTY)
       return EMPTY_FILE;
     if (hasWarnings())

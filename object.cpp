@@ -240,3 +240,31 @@ void ObjectFinalNumberInt::toTxt (string& txt, int indentLvl) {
 void ObjectFinalString::toTxt (string& txt, int indentLvl) {
   txt.append(QUOTE).append(getContent()).append(QUOTE);
 }
+
+
+ObjectVector::~ObjectVector () {
+
+}
+
+ObjectMap::~ObjectMap () {
+
+}
+
+ObjectFinalBool::~ObjectFinalBool () {
+
+}
+
+ObjectFinalNumberFloat::~ObjectFinalNumberFloat () {
+
+}
+
+ObjectFinalNumberInt::~ObjectFinalNumberInt () {
+
+}
+
+ObjectFinalString::~ObjectFinalString () {
+
+}
+
+
+

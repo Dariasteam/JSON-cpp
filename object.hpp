@@ -32,9 +32,9 @@ protected:
 public:
   virtual ~AbstractObject () = 0;
   inline unsigned short getType () { return type; }
-  virtual AbstractObject* get (string path) = 0;
-  virtual bool add (string path, AbstractObject* obj) = 0;
-  virtual void toTxt (string &txt, int indentLvl) = 0;
+  virtual AbstractObject* get (string path);
+  virtual bool add (string path, AbstractObject* obj);
+  virtual void toTxt (string &txt, int indentLvl);
   void txtIndent (string& txt, int indentLvl);
 };
 
@@ -45,8 +45,8 @@ protected:
 public:
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
   virtual const AbstractObject* operator[](string key) { return nullptr; };
-  virtual bool insert (string key, AbstractObject* obj) = 0;
-  virtual int size () = 0;
+  virtual bool insert (string key, AbstractObject* obj);
+  virtual int size ();
 };
 
 class ObjectVector : public ObjectContainer{
@@ -54,6 +54,7 @@ private:
   vector <AbstractObject*> array;
   static regex tokenRgx;
 public:
+  ~ObjectVector ();
   ObjectVector () : ObjectContainer (VECTOR) {}
   AbstractObject* getContentAt (int indeox);
   bool insert (string key, AbstractObject* obj);
@@ -70,6 +71,7 @@ private:
   map <string, AbstractObject*> hash;
   static regex tokenRgx;
 public:
+  ~ObjectMap ();
   ObjectMap () : ObjectContainer (MAP) {}
   bool insert (string key, AbstractObject* obj);
   inline int size () { return hash.size(); }
@@ -98,6 +100,7 @@ class ObjectFinalNumberFloat : public ObjectFinal {
 private:
   double number;
 public:
+  ~ObjectFinalNumberFloat ();
   ObjectFinalNumberFloat () : ObjectFinal (NUMBER_FLOAT) {}
   ObjectFinalNumberFloat (double n) : ObjectFinal (NUMBER_FLOAT), number (n) {}
   inline double getContent () { return number; }
@@ -109,6 +112,7 @@ class ObjectFinalNumberInt : public ObjectFinal {
 private:
   long int number;
 public:
+  ~ObjectFinalNumberInt ();
   ObjectFinalNumberInt () : ObjectFinal (NUMBER_INT) {}
   ObjectFinalNumberInt (long int n) : ObjectFinal (NUMBER_INT), number (n) {}
   inline long int getContent () { return number; }
@@ -120,6 +124,7 @@ class ObjectFinalString : public ObjectFinal {
 private:
   string text;
 public:
+  ~ObjectFinalString ();
   ObjectFinalString () : ObjectFinal (STRING) {}
   ObjectFinalString (string s) : ObjectFinal (STRING), text (s) {}
   inline string getContent () { return text; }
@@ -131,6 +136,7 @@ class ObjectFinalBool : public ObjectFinal {
 private:
   bool boolean;
 public:
+  ~ObjectFinalBool ();
   ObjectFinalBool() : ObjectFinal (BOOL), boolean (false) {}
   ObjectFinalBool(string s) : ObjectFinal (BOOL) { replaceValue(s); }
   ObjectFinalBool(bool s) : ObjectFinal (BOOL), boolean (s) {}

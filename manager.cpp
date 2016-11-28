@@ -11,6 +11,11 @@ JsonTree::JsonTree () {
 JsonTree::JsonTree (AbstractObject* root)
   { top = (ObjectMap*)root; }
 
+
+JsonTree::~JsonTree () {
+  delete top;
+}
+
 void JsonTree::getterError (string path, AbstractObject* obj, int type) {
   cerr << "ERROR : ";
   if (obj == nullptr) {

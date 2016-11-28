@@ -594,7 +594,8 @@ protected:
 
   template <class t, class func, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-  static initialize (JsonTree* tree, func functor, const char* key, t** element, Args... args) {
+  static initialize
+  (JsonTree* tree, func functor, const char* key, t** element, Args... args) {
     *element = new t ();
     tree->get(**element, functor(key));
     initialize (tree, functor, args...);
