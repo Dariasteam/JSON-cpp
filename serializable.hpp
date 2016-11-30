@@ -74,9 +74,9 @@ protected:
     }
   }
 
-  // Write
+  //- Write
 
-  // NON SERIALIZABLE classes
+  //- NON SERIALIZABLE classes
   template <typename t>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, int index, string path, t* element) {
@@ -90,7 +90,7 @@ protected:
     retribution (tree, index+1, path, args...);
   }
 
-  // NON SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- NON SERIALIZABLE classes WITH HASH KEY (STRING)
   template <class t>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, string key, t* element) {
@@ -104,7 +104,7 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <class t>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const char* key, t* element) {
@@ -118,7 +118,7 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // SERIALIZABLE classes
+  //- SERIALIZABLE classes
   template <typename t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, int index, const string path, t* element) {
@@ -132,7 +132,7 @@ protected:
     retribution (tree, index+1, path, args...);
   }
 
-  // SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- SERIALIZABLE classes WITH HASH KEY (STRING)
   template <class t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const string key, t* element) {
@@ -148,7 +148,7 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <class t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const char* key, t* element) {
@@ -162,7 +162,7 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // Vector
+  //- Vector
   template <class t>
   void static retribution (JsonTree* tree, int index, string path, vector <t>* vect) {
     tree->addVector(path);
@@ -184,7 +184,7 @@ protected:
     retribution (tree, index+1, path, args...);
   }
 
-  // Vector WITH HASH KEY (STRING)
+  //- Vector WITH HASH KEY (STRING)
   template <class t>
   void static retribution (JsonTree* tree, string path, const string key, vector <t>* vect) {
 
@@ -207,7 +207,7 @@ protected:
     retribution (tree, newPath, path, args...);
   }
 
-  // Vector WITH HASH KEY (CHAR*)
+  //- Vector WITH HASH KEY (CHAR*)
   template <class t>
   void static retribution (JsonTree* tree, string path, const char* key, vector <t>* vect) {
 
@@ -230,7 +230,7 @@ protected:
     retribution (tree, newPath, path, args...);
   }
 
-  // Pointers of SERIALIZABLE classes
+  //- Pointers of SERIALIZABLE classes
   template <typename t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, int index, string path, t** element) {
@@ -244,7 +244,7 @@ protected:
     retribution (tree, index+1, path, args...);
   }
 
-  // Pointers of SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- Pointers of SERIALIZABLE classes WITH HASH KEY (STRING)
   template <typename t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const string key, t** element) {
@@ -258,7 +258,7 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // Pointers of SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- Pointers of SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <typename t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const char* key, t** element) {
@@ -272,7 +272,7 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // Pointers of NON SERIALIZABLE classes
+  //- Pointers of NON SERIALIZABLE classes
   template <typename t>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, int index, string path, t** element) {
@@ -286,7 +286,7 @@ protected:
     retribution (tree, index+1, path, args...);
   }
 
-  // Pointers of NON SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- Pointers of NON SERIALIZABLE classes WITH HASH KEY (STRING)
   template <typename t>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const string key, t** element) {
@@ -300,7 +300,7 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // Pointers of NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- Pointers of NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <typename t>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static retribution (JsonTree* tree, string path, const  char* key, t** element) {
@@ -314,9 +314,9 @@ protected:
     retribution (tree, path, args...);
   }
 
-  // Read
+  //- Read
 
-  // NON SERIALIZABLE classes
+  //- NON SERIALIZABLE classes
   template <typename t, class func>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t* element) {
@@ -330,7 +330,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // NON SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- NON SERIALIZABLE classes WITH HASH KEY (STRING)
   template <class t, class func, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const string key, t* element, Args... args) {
@@ -344,7 +344,7 @@ protected:
     tree->get(*element, functor(key));
   }
 
-  // NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <class t, class func, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const char* key, t* element, Args... args) {
@@ -358,7 +358,7 @@ protected:
     tree->get(*element, functor(key));
   }
 
-  // SERIALIZABLE classes
+  //- SERIALIZABLE classes
   template <typename t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t* element) {
@@ -373,7 +373,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- SERIALIZABLE classes WITH HASH KEY (STRING)
   template <typename t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const string key, t* element) {
@@ -387,7 +387,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <typename t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const char* key, t* element) {
@@ -401,7 +401,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Vector
+  //- Vector
   template <class t, class func>
   void static initialize (JsonTree* tree, func functor, vector <t>* vect) {
     string newPath = functor();
@@ -434,7 +434,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Vector WITH HASH KEY (STRING)
+  //- Vector WITH HASH KEY (STRING)
   template <class t, class func>
   void static initialize (JsonTree* tree, func functor, const string path, vector <t>* vect) {
     string newPath = functor(path);
@@ -468,7 +468,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Vector WITH HASH KEY (CHAR*)
+  //- Vector WITH HASH KEY (CHAR*)
   template <class t, class func>
   void static initialize (JsonTree* tree, func functor, const char* path, vector <t>* vect) {
     string newPath = functor(path);
@@ -502,7 +502,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Pointers of SERIALIZABLE classes
+  //- Pointers of SERIALIZABLE classes
 
   template <class t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
@@ -519,7 +519,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Pointers of SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- Pointers of SERIALIZABLE classes WITH HASH KEY (STRING)
   template <class t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const string key, t** element) {
@@ -535,7 +535,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Pointers of SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- Pointers of SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <class t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const char* key, t** element) {
@@ -551,7 +551,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Pointers of NON SERIALIZABLE classes
+  //- Pointers of NON SERIALIZABLE classes
 
   template <class t, class func>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
@@ -568,7 +568,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Pointers of NON SERIALIZABLE classes WITH HASH KEY (STRING)
+  //- Pointers of NON SERIALIZABLE classes WITH HASH KEY (STRING)
   template <class t, class func>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const string key, t** element) {
@@ -584,7 +584,7 @@ protected:
     initialize (tree, functor, args...);
   }
 
-  // Pointers of NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
+  //- Pointers of NON SERIALIZABLE classes WITH HASH KEY (CHAR*)
   template <class t, class func>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, const char* key, t** element) {

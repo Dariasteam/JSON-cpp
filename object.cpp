@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+using namespace json;
+
 regex ObjectVector::tokenRgx = regex ("^(?:\\[)?(\\d+)(:?\\])?(:?\\.)?");
 regex ObjectMap::tokenRgx = regex    ("^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
 

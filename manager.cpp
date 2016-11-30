@@ -4,10 +4,9 @@ using namespace json;
 
 regex JsonTree::lastTokenRgx = regex ("^(.*)(?:\\.)(.+)$");
 
-JsonTree::JsonTree () {
-  delete top;
-  top = new ObjectMap ();
-}
+JsonTree::JsonTree () :
+  top (new ObjectMap())
+{}
 
 JsonTree::JsonTree (AbstractObject* root) {
   top = (ObjectMap*)root;
@@ -333,13 +332,11 @@ bool JsonTree::add (vector<string> &array, string path) {
 }
 
 bool JsonTree::addMap (string path) {
-  AbstractObject* object = new ObjectMap ();
-  return top->add (path, object);
+  return top->add (path, new ObjectMap ());
 }
 
 bool JsonTree::addVector (string path) {
-  AbstractObject* object = new ObjectVector ();
-  return top->add (path, object);
+  return top->add (path, new ObjectVector ());
 }
 
 // REPLACE
@@ -480,15 +477,4 @@ bool JsonTree::remove (string path) {
   } else if (!path.empty())
     return ((ObjectMap*)top)->erase (path);
   return false;
-}
-
-// SUBTREE
-
-bool JsonTree::getSubTree(JsonTree* tree, string path) {
-  tree = new JsonTree(top->get(path));
-  return tree != nullptr;
-}
-
-bool JsonTree::addSubTree(JsonTree *tree, string path) {
-  return tree->set (tree->getTop(), path);
 }

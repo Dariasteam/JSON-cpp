@@ -42,7 +42,6 @@ private:
 public:
   JsonTree (AbstractObject* root);
   JsonTree ();
-
   ~JsonTree ();
 
   vector <string> getKeys (string path);
@@ -73,7 +72,7 @@ public:
   bool exist (string path);
   int getType (string path);
 
-  // returns true if doesn't exist and its sucessfully created
+  // returns true if doesn't exist and its sucessfully created 
   bool add (double value, string path);
   bool add (float value, string path);
   bool add (int value, string path);
@@ -121,9 +120,6 @@ public:
   // return true if successfully removed or doesn't exist
   bool remove (string path);
   string toText ();
-
-  bool getSubTree (JsonTree* tree, string path);
-  bool addSubTree (JsonTree* tree, string path);
 };
 
 }

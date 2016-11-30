@@ -18,11 +18,15 @@ namespace json {
 enum JSON_PARSER_FLAG {
   LAST_ELEMENT,
   REGULAR_ELEMENT,
-  // errors
-  NO_CLOSED,  		// no end brace / bracket after the last element
-  EXPECTED_MORE,  // end brace / bracket after non last element
+  //-erros
+
+  // no end brace / bracket after the last element
+  NO_CLOSED,
+  // end brace / bracket after comma (non last element)
+  EXPECTED_MORE,
   INVALID_KEY,
-  // warnings
+
+  //- warnings
   CONTROL_WARNING,
   EMPTY
 };

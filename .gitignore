@@ -9,4 +9,5 @@ jsonCpp.creator
 jsonCpp.files
 jsonCpp.includes
 jsonCpp.creator.user
-
+callgrind*
+doc/

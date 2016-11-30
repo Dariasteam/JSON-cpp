@@ -14,10 +14,13 @@ using namespace std;
 #define POINTS " : "
 #define COMMA ","
 
+namespace json {
+
 enum ObjetsTypes {
   VECTOR,
   MAP,
-  FINAL,   // used for comparisons, if (getType() > FINAL) -> is a final object
+  // final is used for comparisons, if (getType() > FINAL) -> is a final object
+  FINAL,
   NUMBER_FLOAT,
   NUMBER_INT,
   STRING,
@@ -57,8 +60,11 @@ public:
   ~ObjectVector ();
   ObjectVector () : ObjectContainer (VECTOR) {}
   AbstractObject* getContentAt (int indeox);
+
   bool insert (string key, AbstractObject* obj);
+
   inline int size () { return array.size(); }
+
   AbstractObject* operator[](unsigned index);
   AbstractObject* get (string path);
   bool add (string path, AbstractObject* obj);
@@ -145,4 +151,6 @@ public:
   void toTxt (string &txt, int indentLvl);
 };
 
+
+}
 #endif
