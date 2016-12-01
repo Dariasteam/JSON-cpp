@@ -1,6 +1,8 @@
 CC=clang++
 CXXFLAGS=-g -std=c++11
 
+main.o : main.cpp serializable.hpp
+
 OBJS = object.o manager.o parser.o main.o
 TESTS = object.o manager.o parser.o tests/test.o
 
