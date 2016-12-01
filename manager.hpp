@@ -50,7 +50,7 @@ public:
   inline AbstractObject* getTop () {return top;}
   inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }
 
-  // returns true if the path exist, has the appropiate type and the value is copied succesfully
+  //- returns true if the path exist, has the appropiate type and the value is copied succesfully
   bool get (double& to, string path);
   bool get (float& to, string path);
   bool get (int& to, string path);
@@ -72,7 +72,7 @@ public:
   bool exist (string path);
   int getType (string path);
 
-  // returns true if doesn't exist and its sucessfully created 
+  //- returns true if doesn't exist and its sucessfully created
   bool add (double value, string path);
   bool add (float value, string path);
   bool add (int value, string path);
@@ -88,7 +88,7 @@ public:
   bool addVector (string path);
   bool addMap (string map);
 
-  // returns true if exist and its sucessfully updated
+  //- returns true if exist and its sucessfully updated
   bool replace (double from, string path);
   bool replace (float from, string path);
   bool replace (int from, string path);
@@ -101,7 +101,7 @@ public:
   bool replace (vector<bool>& array, string path);
   bool replace (vector<string>& array, string path);
 
-  // returns true if its sucessfully created or replaced if previously exist
+  //- returns true if its sucessfully created or replaced if previously exist
   bool set (double value, string path);
   bool set (float value, string path);
   bool set (int value, string path);
@@ -114,10 +114,10 @@ public:
   bool set (vector<bool>& array, string path);
   bool set (vector<string>& array, string path);
 
-  // return true if exist and its successfully removed, false if doesn't exist
+  //- return true if exist and its successfully removed, false if doesn't exist
   bool erase (string path);
 
-  // return true if successfully removed or doesn't exist
+  //- return true if successfully removed or doesn't exist
   bool remove (string path);
   string toText ();
 };

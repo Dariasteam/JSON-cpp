@@ -3,6 +3,7 @@
 main.cpp
 *.gch
 jsonParser
+jsonTests
 pruebas/
 jsonCpp.config
 jsonCpp.creator
@@ -10,4 +11,4 @@ jsonCpp.files
 jsonCpp.includes
 jsonCpp.creator.user
 callgrind*
-doc/
+docs/

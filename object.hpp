@@ -19,7 +19,7 @@ namespace json {
 enum ObjetsTypes {
   VECTOR,
   MAP,
-  // final is used for comparisons, if (getType() > FINAL) -> is a final object
+  // used for comparisons, if (getType() > FINAL) -> is a final object
   FINAL,
   NUMBER_FLOAT,
   NUMBER_INT,

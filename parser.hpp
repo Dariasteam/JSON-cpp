@@ -14,7 +14,7 @@ using namespace std;
 
 namespace json {
 
-// do not move these elements, their numeric value is used for comparisons
+//- do not move these elements, their numeric value is used for comparisons
 enum JSON_PARSER_FLAG {
   LAST_ELEMENT,
   REGULAR_ELEMENT,
