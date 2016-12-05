@@ -19,5 +19,5 @@ doc:
 
 clean:
 	rm -rf *.o jsonParser
-	rm -rf tests/*.o tests/jsonTests
+	rm -rf tests/*.o jsonTests
 
