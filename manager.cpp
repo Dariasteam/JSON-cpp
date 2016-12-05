@@ -345,21 +345,22 @@ bool JsonTree::replace (AbstractObject *newObj, string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
-      if (father != nullptr && father->getType() == MAP)
+      if (father != nullptr && father->getType() == MAP) {
         return ((ObjectMap*)father)->replace (matcher[2], newObj);
-      return false;
+      } else {
+        delete newObj;
+        return false;
+      }
   } else if (!path.empty()) {
     return ((ObjectMap*)top)->replace (path, newObj);
   }
+  delete newObj;
   return false;
 }
 
 bool JsonTree::replace (double from, string path) {
   AbstractObject* object = new ObjectFinalNumberFloat (from);
-  if(replace (object, path))
-    return true;
-  delete object;
-  return false;
+  return replace (object, path);
 }
 
 bool JsonTree::replace (float from, string path) {
@@ -368,26 +369,17 @@ bool JsonTree::replace (float from, string path) {
 
 bool JsonTree::replace (int from, string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
-  if(replace (object, path))
-    return true;
-  delete object;
-  return false;
+  return replace (object, path);
 }
 
 bool JsonTree::replace (bool from, string path) {
   AbstractObject* object = new ObjectFinalBool (from);
-  if(replace (object, path))
-    return true;
-  delete object;
-  return false;
+  return replace (object, path);
 }
 
 bool JsonTree::replace (string from, string path) {
   AbstractObject* object = new ObjectFinalString (from);
-  if(replace (object, path))
-    return true;
-  delete object;
-  return false;
+  return replace (object, path);
 }
 
 bool JsonTree::replace (const char* from, string path) {
@@ -421,10 +413,7 @@ bool JsonTree::set(AbstractObject *newObj, string path) {
 
 bool JsonTree::set (double from, string path) {
   AbstractObject* object = new ObjectFinalNumberFloat (from);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (float from, string path) {
@@ -433,26 +422,17 @@ bool JsonTree::set (float from, string path) {
 
 bool JsonTree::set (int from, string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (bool from, string path) {
   AbstractObject* object = new ObjectFinalBool (from);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (string value, string path) {
   AbstractObject* object = new ObjectFinalString (value);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set(const char *value, string path) {
@@ -461,34 +441,22 @@ bool JsonTree::set(const char *value, string path) {
 
 bool JsonTree::set (vector<double>& array, string path) {
   AbstractObject* object = createVec (array);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (vector<int>& array, string path) {
   AbstractObject* object = createVec (array);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (vector<bool>& array, string path) {
   AbstractObject* object = createVec (array);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 bool JsonTree::set (vector<string>& array, string path) {
   AbstractObject* object = createVec (array);
-  if(set (object, path))
-    return true;
-  delete object;
-  return false;
+  return set (object, path);
 }
 
 // ERASE

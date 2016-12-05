@@ -50,6 +50,7 @@ bool ObjectVector::insert (string key, AbstractObject* obj) {
     array.push_back (obj);
     return true;
   } else {
+    delete obj;
     return false;
   }
 }
@@ -60,6 +61,7 @@ bool ObjectMap::insert (string key, AbstractObject* obj) {
     hash.insert(pair <string, AbstractObject*> (key, obj));
     return true;
   } else {
+    delete obj;
     return false;
   }
 }
@@ -136,23 +138,25 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
     AbstractObject* son = operator[](matcher[1]);
     string newPath = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
-      if (!newPath.empty() || son->getType() == VECTOR)
+      if (!newPath.empty() || son->getType() == VECTOR) {
         return son->add (newPath, obj);
-      else
+      } else {
+        delete obj;
         return false;
+      }
     } else {
       if (!newPath.empty()) {
         son = new ObjectMap();
-        insert (matcher[1], son);
-        if(son->add (newPath, obj))
-          return true;
-        delete son;
-        return false;
+        if (insert (matcher[1], son))
+          return son->add (newPath, obj);
+        else
+          return false;
       } else {
         return insert (path, obj);
       }
     }
   }
+  delete obj;
   return false;
 }
 
@@ -162,21 +166,27 @@ bool ObjectVector::add (string path,  AbstractObject* obj) {
   if (regex_search (path, matcher, tokenRgx)) {
     son = operator[](stoi (matcher[1]));
     string newPath = path.substr(matcher[0].length(), path.size());
-    if (son != nullptr)
+    if (son != nullptr) {
       return son->add (newPath, obj);
-    else
+    } else {
+      delete obj;
       return false;
+    }
   } else if (path.empty()) {
     return insert ("", obj);
   } else {
     son = new ObjectMap();
-    insert ("", son);
-    return son->add (path, obj);
+    if(insert ("", son))
+      return son->add (path, obj);
+    else
+      return false;
   }
+  delete obj;
   return false;
 }
 
 bool ObjectFinal::add (string path,  AbstractObject* obj) {
+  delete obj;
   return false;
 }
 
