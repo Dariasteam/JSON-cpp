@@ -144,7 +144,10 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
       if (!newPath.empty()) {
         son = new ObjectMap();
         insert (matcher[1], son);
-        return son->add (newPath, obj);
+        if(son->add (newPath, obj))
+          return true;
+        delete son;
+        return false;
       } else {
         return insert (path, obj);
       }
