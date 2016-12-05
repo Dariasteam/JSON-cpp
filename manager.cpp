@@ -460,19 +460,35 @@ bool JsonTree::set(const char *value, string path) {
 }
 
 bool JsonTree::set (vector<double>& array, string path) {
-  return set (createVec (array), path);
+  AbstractObject* object = createVec (array);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::set (vector<int>& array, string path) {
-  return set (createVec (array), path);
+  AbstractObject* object = createVec (array);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::set (vector<bool>& array, string path) {
-  return set (createVec (array), path);
+  AbstractObject* object = createVec (array);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::set (vector<string>& array, string path) {
-  return set (createVec (array), path);
+  AbstractObject* object = createVec (array);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 // ERASE
