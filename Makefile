@@ -12,7 +12,6 @@ all: ${OBJS}
 
 tests: ${TESTS}
 	${CC} ${CXXFLAGS} -o jsonTests ${TESTS}
-	./jsonTests
 
 doc:
 	cldoc generate -std=c++11 -- --merge docs/manual_doc.md --output docs --report *.hpp
