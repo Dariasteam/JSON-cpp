@@ -87,8 +87,7 @@ private:
   ObjectNameFlag parse (string& content, string path);
   ObjectNameFlag parseKeyDef (string& content, smatch& matcher, string path);
   ObjectNameFlag parseFinal (string& content, smatch& matcher, ObjectFinal* obj);
-  ObjectNameFlag parseContainer (string& content, smatch& matcher,
-                            regex& endSymbol, ObjectContainer* obj, string path);
+  ObjectNameFlag parseContainer (string& content, smatch& matcher, regex& endSymbol, ObjectContainer* obj, string path);
 
   inline bool hasErrors () { return errors.size() > 0; }
   inline bool hasWarnings () { return warnings.size() > 0; }

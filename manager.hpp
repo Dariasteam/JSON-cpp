@@ -20,11 +20,10 @@ private:
                                      "Number_Float",
                                      "Number_Int",
                                      "String",
-                                     "Bool"};
+                                     "Bool" };
   static regex lastTokenRgx;
 
   ObjectMap* top;
-
 
   bool isType (AbstractObject* obj, int type);
   void getterError (string path, AbstractObject* obj, int type);
@@ -120,6 +119,7 @@ public:
   //- return true if successfully removed or doesn't exist
   bool remove (string path);
   string toText ();
+
 };
 
 }
