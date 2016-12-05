@@ -356,7 +356,10 @@ bool JsonTree::replace (AbstractObject *newObj, string path) {
 
 bool JsonTree::replace (double from, string path) {
   AbstractObject* object = new ObjectFinalNumberFloat (from);
-  return replace (object, path);
+  if(replace (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::replace (float from, string path) {
@@ -365,17 +368,26 @@ bool JsonTree::replace (float from, string path) {
 
 bool JsonTree::replace (int from, string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
-  return replace (object, path);
+  if(replace (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::replace (bool from, string path) {
   AbstractObject* object = new ObjectFinalBool (from);
-  return replace (object, path);
+  if(replace (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::replace (string from, string path) {
   AbstractObject* object = new ObjectFinalString (from);
-  return replace (object, path);
+  if(replace (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::replace (const char* from, string path) {
@@ -409,7 +421,10 @@ bool JsonTree::set(AbstractObject *newObj, string path) {
 
 bool JsonTree::set (double from, string path) {
   AbstractObject* object = new ObjectFinalNumberFloat (from);
-  return set (object, path);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::set (float from, string path) {
@@ -418,17 +433,26 @@ bool JsonTree::set (float from, string path) {
 
 bool JsonTree::set (int from, string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
-  return set (object, path);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::set (bool from, string path) {
   AbstractObject* object = new ObjectFinalBool (from);
-  return set (object, path);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::set (string value, string path) {
   AbstractObject* object = new ObjectFinalString (value);
-  return set (object, path);
+  if(set (object, path))
+    return true;
+  delete object;
+  return false;
 }
 
 bool JsonTree::set(const char *value, string path) {
