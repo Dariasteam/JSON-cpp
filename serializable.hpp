@@ -24,6 +24,7 @@ public:
 protected:
   virtual void serializer (JsonTree* tree, bool b, string path) = 0;
 
+  //- without HASH
   template <class... Args>
   static void serialize (bool _json_op_, string _json_path_, JsonTree* _json_tree_, Args... args) {
     if (_json_op_){
@@ -44,6 +45,7 @@ protected:
     }
   }
 
+  //- With HASH
   template <class str, class... Args>
   typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
   static serialize (bool _json_op_, string _json_path_, JsonTree* _json_tree_, const str path, Args... args) {
@@ -400,8 +402,8 @@ protected:
   template <class t, class str, class func>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static initialize (JsonTree* tree, func functor, const str key, t** element) {
+    *element = new t ();
     tree->get(**element, functor(key));
-    (*element)->serializeIn (*tree, functor(key));
   }
 
   template <class t, class func, class str, class... Args>

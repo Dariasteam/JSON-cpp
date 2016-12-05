@@ -292,10 +292,6 @@ bool JsonTree::add (double value, string path) {
   return top->add (path, object);
 };
 
-bool JsonTree::add (float value, string path) {
-  return add (double(value), path);
-};
-
 bool JsonTree::add (int value, string path) {
   AbstractObject* object = new ObjectFinalNumberInt (value);
   return top->add (path, object);
@@ -309,6 +305,10 @@ bool JsonTree::add (bool value, string path) {
 bool JsonTree::add (string value, string path) {
   AbstractObject* object = new ObjectFinalString (value);
   return top->add (path, object);
+};
+
+bool JsonTree::add (float value, string path) {
+  return add (double(value), path);
 };
 
 bool JsonTree::add (const char* value, string path) {

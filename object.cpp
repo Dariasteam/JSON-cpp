@@ -132,7 +132,7 @@ bool ObjectMap::erase (string key) {
     return remove (key);
 }
 
-bool ObjectMap::add (string path,  AbstractObject* obj) {
+bool ObjectMap::add (string path, AbstractObject* obj) {
   smatch matcher;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
@@ -160,7 +160,7 @@ bool ObjectMap::add (string path,  AbstractObject* obj) {
   return false;
 }
 
-bool ObjectVector::add (string path,  AbstractObject* obj) {
+bool ObjectVector::add (string path, AbstractObject* obj) {
   smatch matcher;
   AbstractObject* son;
   if (regex_search (path, matcher, tokenRgx)) {
@@ -185,7 +185,7 @@ bool ObjectVector::add (string path,  AbstractObject* obj) {
   return false;
 }
 
-bool ObjectFinal::add (string path,  AbstractObject* obj) {
+bool ObjectFinal::add (string path, AbstractObject* obj) {
   delete obj;
   return false;
 }
