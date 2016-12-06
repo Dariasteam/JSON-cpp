@@ -61,6 +61,7 @@ public:
   bool get (vector<bool>& array, string path);
   bool get (vector<string>& array, string path);
 
+  //- returns if the element on the path exist and is of the type
   bool isNumber (string path);
   bool isFloat (string path);
   bool isInt (string path);
@@ -69,6 +70,8 @@ public:
   bool isMap (string path);
   bool isVector (string path);
   bool exist (string path);
+
+  //- returns the type
   int getType (string path);
 
   //- returns true if doesn't exist and its sucessfully created
