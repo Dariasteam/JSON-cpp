@@ -34,11 +34,13 @@ protected:
   AbstractObject (unsigned short t) : type (t) {}
 public:
   virtual ~AbstractObject () = 0;
-  inline unsigned short getType () { return type; }
+  inline unsigned short getType () const { return type; }
   virtual AbstractObject* get (string path) = 0;
   virtual bool add (string path, AbstractObject* obj) = 0;
   virtual void toTxt (string &txt, int indentLvl) = 0;
   void txtIndent (string& txt, int indentLvl);
+
+  static AbstractObject* copy (const AbstractObject* obj);
 };
 
 class ObjectContainer : public AbstractObject {
@@ -65,6 +67,7 @@ public:
   bool insert (string key, AbstractObject* obj);
 
   inline int size () const { return array.size(); }
+  inline const vector<AbstractObject*>& getContent () const { return array; }
 
   AbstractObject* operator[](unsigned index);
   AbstractObject* get (string path);
@@ -84,6 +87,7 @@ public:
 
   inline int size () const { return hash.size(); }
   inline const vector <string>& getKeys () const { return keys; }
+  inline const map<string, AbstractObject*>& getContent () const { return hash; }
 
   AbstractObject* operator[](string key);
   AbstractObject* get (string path);

@@ -12,30 +12,66 @@ void AbstractObject::txtIndent(string &txt, int indentLvl) {
     txt.append(INDENT);
 }
 
+AbstractObject* AbstractObject::copy (const AbstractObject* obj) {
+  switch (obj->getType()) {
+    case BOOL:
+      return new ObjectFinalBool (*((ObjectFinalBool*)obj));
+      break;
+    case NUMBER_FLOAT:
+      return new ObjectFinalNumberFloat (*((ObjectFinalNumberFloat*)obj));
+      break;
+    case NUMBER_INT:
+      return new ObjectFinalNumberInt (*((ObjectFinalNumberInt*)obj));
+      break;
+    case STRING:
+      return new ObjectFinalString (*((ObjectFinalString*)obj));
+      break;
+    case MAP:
+      return new ObjectMap (*((ObjectMap*)obj));
+      break;
+    case VECTOR:
+      return new ObjectVector (*((ObjectVector*)obj));
+      break;
+    }
+}
+
 ObjectFinalBool::ObjectFinalBool (const ObjectFinalBool &obj) :
   ObjectFinal (BOOL),
   boolean(obj.getContent())
 {}
 
-ObjectFinalNumberFloat::ObjectFinalNumberFloat (const ObjectFinalNumberFloat &obj) : ObjectFinal (NUMBER_FLOAT) {
-  number = obj.getContent();
-}
+ObjectFinalNumberFloat::ObjectFinalNumberFloat (const ObjectFinalNumberFloat &obj) :
+  ObjectFinal (NUMBER_FLOAT),
+  number(obj.getContent())
+{}
 
-ObjectFinalNumberInt::ObjectFinalNumberInt (const ObjectFinalNumberInt &obj) : ObjectFinal (NUMBER_INT){
-  number = obj.getContent();
-}
+ObjectFinalNumberInt::ObjectFinalNumberInt (const ObjectFinalNumberInt &obj) :
+  ObjectFinal (NUMBER_INT),
+  number(obj.getContent())
+{}
 
-ObjectFinalString::ObjectFinalString (const ObjectFinalString &obj) : ObjectFinal (STRING){
-  text = obj.getContent();
-}
+ObjectFinalString::ObjectFinalString (const ObjectFinalString &obj) :
+  ObjectFinal (STRING),
+  text(obj.getContent())
+{}
 
-ObjectMap::ObjectMap (const ObjectMap &obj) : ObjectContainer (MAP){
+ObjectMap::ObjectMap (const ObjectMap &obj) :
+  ObjectContainer (MAP),
+  keys(obj.getKeys())
+  {
+    for (string key : keys) {
+      hash[key] = copy (obj.getContent().at(key));
+    }
+  }
 
-}
-
-ObjectVector::ObjectVector (const ObjectVector &obj) : ObjectContainer (VECTOR){
-
-}
+ObjectVector::ObjectVector (const ObjectVector &obj) :
+  ObjectContainer (VECTOR),
+  array(obj.size())
+  {
+    for (int i = 0; i < obj.size(); i++){
+      array[i] = copy (obj.getContent()[i]);
+    }
+  }
 
 void ObjectFinalBool::replaceValue (string value) {
   if (value == "true")
