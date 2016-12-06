@@ -339,6 +339,14 @@ bool JsonTree::addVector (string path) {
   return top->add (path, new ObjectVector ());
 }
 
+bool JsonTree::add(JsonTree &tree, string path) {
+
+}
+
+bool JsonTree::add(JsonTree &tree, string from, string path) {
+
+}
+
 // REPLACE
 
 bool JsonTree::replace (AbstractObject *newObj, string path) {
