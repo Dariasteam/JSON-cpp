@@ -138,8 +138,8 @@ protected:
     tree->addVector(path);
     string newPath = path + "." + to_string(index);
 
-    for (int j = 0; j < vect->size(); j++)
-      retribution (tree, j, newPath, &(*vect)[j]);
+    for (int j = 0; j < vect.size(); j++)
+      retribution (tree, j, newPath, vect[j]);
 
     retribution (tree, index+1, path, args...);
   }
@@ -152,7 +152,7 @@ protected:
     tree->addVector(newPath);
 
     for (int j = 0; j < vect->size(); j++)
-      retribution (tree, j, newPath, &(*vect)[j]);
+      retribution (tree, j, newPath, vect[j]);
   }
 
   template <class t, class str, class... Args>
@@ -301,15 +301,12 @@ protected:
   template <class t, class func, class... Args>
   void static initialize (JsonTree* tree, func functor, vector <t>& vect, Args&... args) {
     string newPath = functor();
-
-    int size = tree->getSizeAt(newPath);
-    vect->resize (size);
-
+    vect.resize (tree->getSizeAt(newPath));
     int i = 0;
-    for (int j = 0; j < vect->size(); j++) {
+    for (int j = 0; j < vect.size(); j++) {
       initialize (tree, [&] () {
         return newPath + "." + to_string(i);
-      }, &(*vect)[j]);
+      }, vect[j]);
       i++;
     }
     initialize (tree, functor, args...);
@@ -317,33 +314,29 @@ protected:
 
   //- Vector WITH HASH KEY (STRING)
   template <class t, class str, class func>
-  void static initialize (JsonTree* tree, func functor, const str path, vector <t>* vect) {
+  typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
+  static initialize (JsonTree* tree, func functor, const str path, vector <t>& vect) {
     string newPath = functor(path);
-
-    int size = tree->getSizeAt(newPath);
-    vect->resize (size);
-
+    vect.resize (tree->getSizeAt(newPath));
     int i = 0;
-    for (int j = 0; j < size; j++) {
+    for (int j = 0; j < vect.size(); j++) {
       initialize (tree, [&] () {
         return newPath + "." + to_string(i);
-      }, &(*vect)[j]);
+      }, vect[j]);
       i++;
     }
   }
 
   template <class t, class func, class str, class... Args>
-  void static initialize (JsonTree* tree, func functor, const str path, vector <t>* vect, Args&... args) {
+  typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
+  static initialize (JsonTree* tree, func functor, const str path, vector <t>& vect, Args&... args) {
     string newPath = functor(path);
-
-    int size = tree->getSizeAt(newPath);
-    vect->resize (size);
-
+    vect.resize (tree->getSizeAt(newPath));
     int i = 0;
-    for (int j = 0; j < vect->size(); j++) {
+    for (int j = 0; j < vect.size(); j++) {
       initialize (tree, [&] () {
         return newPath + "." + to_string(i);
-      }, &(*vect)[j]);
+      }, vect[j]);
       i++;
     }
     initialize (tree, functor, args...);
@@ -353,15 +346,15 @@ protected:
   template <class t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t*& element) {
-    *element = new t ();
-    (*element)->serializeIn (*tree, functor());
+    element = new t ();
+    element->serializeIn (*tree, functor());
   }
 
   template <class t, class func, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static initialize (JsonTree* tree, func functor, t*& element, Args&... args) {
     *element = new t ();
-    (*element)->serializeIn (*tree, functor());
+    element->serializeIn (*tree, functor());
     initialize (tree, functor, args...);
   }
 
@@ -376,8 +369,8 @@ protected:
   template <class t, class func, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static initialize (JsonTree* tree, func functor,  const str key, t*& element, Args&... args) {
-    *element = new t ();
-    (*element)->serializeIn (*tree, functor(key));
+    element = new t ();
+    element->serializeIn (*tree, functor(key));
     initialize (tree, functor, args...);
   }
 
