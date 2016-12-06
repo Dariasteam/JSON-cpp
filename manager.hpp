@@ -46,7 +46,7 @@ public:
   vector <string> getKeys (const string path);
   int getSizeAt (const string path);
 
-  ObjectMap& getCopy ();
+  ObjectMap* getCopy ();
   inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }
 
   //- returns true if the path exist, has the appropiate type and the value is copied succesfully

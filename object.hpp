@@ -49,7 +49,7 @@ public:
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
   virtual const AbstractObject* operator[](string key) { return nullptr; };
   virtual bool insert (string key, AbstractObject* obj) = 0;
-  virtual int size () = 0;
+  // virtual int size () = 0;
 };
 
 class ObjectVector : public ObjectContainer{
@@ -58,12 +58,13 @@ private:
   static regex tokenRgx;
 public:
   ~ObjectVector ();
+  ObjectVector (const ObjectVector& obj);
   ObjectVector () : ObjectContainer (VECTOR) {}
   AbstractObject* getContentAt (int indeox);
 
   bool insert (string key, AbstractObject* obj);
 
-  inline int size () { return array.size(); }
+  inline int size () const { return array.size(); }
 
   AbstractObject* operator[](unsigned index);
   AbstractObject* get (string path);
@@ -78,12 +79,16 @@ private:
   static regex tokenRgx;
 public:
   ~ObjectMap ();
+  ObjectMap (const ObjectMap& obj);
   ObjectMap () : ObjectContainer (MAP) {}
-  bool insert (string key, AbstractObject* obj);
-  inline int size () { return hash.size(); }
-  inline const vector <string>& getKeys () { return keys; }
+
+  inline int size () const { return hash.size(); }
+  inline const vector <string>& getKeys () const { return keys; }
+
   AbstractObject* operator[](string key);
   AbstractObject* get (string path);
+
+  bool insert (string key, AbstractObject* obj);
   bool add (string path, AbstractObject* obj);
   void toTxt (string &txt, int indentLvl);
   bool replace (string key, AbstractObject* obj);
@@ -107,9 +112,10 @@ private:
   double number;
 public:
   ~ObjectFinalNumberFloat ();
+  ObjectFinalNumberFloat (const ObjectFinalNumberFloat& obj);
   ObjectFinalNumberFloat () : ObjectFinal (NUMBER_FLOAT) {}
   ObjectFinalNumberFloat (double n) : ObjectFinal (NUMBER_FLOAT), number (n) {}
-  inline double getContent () { return number; }
+  inline double getContent () const { return number; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };
@@ -119,9 +125,10 @@ private:
   long int number;
 public:
   ~ObjectFinalNumberInt ();
+  ObjectFinalNumberInt (const ObjectFinalNumberInt& obj);
   ObjectFinalNumberInt () : ObjectFinal (NUMBER_INT) {}
   ObjectFinalNumberInt (long int n) : ObjectFinal (NUMBER_INT), number (n) {}
-  inline long int getContent () { return number; }
+  inline long int getContent () const { return number; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };
@@ -131,9 +138,10 @@ private:
   string text;
 public:
   ~ObjectFinalString ();
+  ObjectFinalString (const ObjectFinalString& obj);
   ObjectFinalString () : ObjectFinal (STRING) {}
   ObjectFinalString (string s) : ObjectFinal (STRING), text (s) {}
-  inline string getContent () { return text; }
+  inline string getContent () const { return text; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };
@@ -143,10 +151,11 @@ private:
   bool boolean;
 public:
   ~ObjectFinalBool ();
+  ObjectFinalBool (const ObjectFinalBool& obj);
   ObjectFinalBool() : ObjectFinal (BOOL), boolean (false) {}
   ObjectFinalBool(string s) : ObjectFinal (BOOL) { replaceValue(s); }
   ObjectFinalBool(bool s) : ObjectFinal (BOOL), boolean (s) {}
-  inline bool getContent () { return boolean; }
+  inline bool getContent () const { return boolean; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
 };

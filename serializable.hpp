@@ -110,7 +110,7 @@ protected:
   template <class t, class str>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static retribution (JsonTree& tree, string path, const str key, t& element) {
-    JsonTree& auxTree = new JsonTree;
+    JsonTree* auxTree = new JsonTree;
     //*element
     tree.add(*element, key);
   }

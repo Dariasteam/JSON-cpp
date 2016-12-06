@@ -17,6 +17,10 @@ JsonTree::~JsonTree () {
   delete top;
 }
 
+ObjectMap* JsonTree::getCopy() {
+  return nullptr;
+}
+
 void JsonTree::getterError (string path, AbstractObject* obj, int type) {
   cerr << "ERROR : ";
   if (obj == nullptr) {

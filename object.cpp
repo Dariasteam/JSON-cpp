@@ -12,6 +12,31 @@ void AbstractObject::txtIndent(string &txt, int indentLvl) {
     txt.append(INDENT);
 }
 
+ObjectFinalBool::ObjectFinalBool (const ObjectFinalBool &obj) :
+  ObjectFinal (BOOL),
+  boolean(obj.getContent())
+{}
+
+ObjectFinalNumberFloat::ObjectFinalNumberFloat (const ObjectFinalNumberFloat &obj) : ObjectFinal (NUMBER_FLOAT) {
+  number = obj.getContent();
+}
+
+ObjectFinalNumberInt::ObjectFinalNumberInt (const ObjectFinalNumberInt &obj) : ObjectFinal (NUMBER_INT){
+  number = obj.getContent();
+}
+
+ObjectFinalString::ObjectFinalString (const ObjectFinalString &obj) : ObjectFinal (STRING){
+  text = obj.getContent();
+}
+
+ObjectMap::ObjectMap (const ObjectMap &obj) : ObjectContainer (MAP){
+
+}
+
+ObjectVector::ObjectVector (const ObjectVector &obj) : ObjectContainer (VECTOR){
+
+}
+
 void ObjectFinalBool::replaceValue (string value) {
   if (value == "true")
     boolean = true;
