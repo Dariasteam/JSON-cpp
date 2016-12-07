@@ -12,16 +12,34 @@ JsonTree::JsonTree (AbstractObject* root) {
   top = (ObjectMap*)root;
 }
 
+JsonTree::JsonTree (const JsonTree &tree, const string path) :
+  top(new ObjectMap())
+  {
+    tree.copyFrom(top, path);
+  }
 
 JsonTree::~JsonTree () {
   delete top;
 }
 
-ObjectMap* JsonTree::getCopy() {
-  return nullptr;
+bool JsonTree::copyFrom(AbstractObject* obj, const string path) const {
+  AbstractObject* from;
+  if (path.empty() || path == ".")
+    from = top;
+  else
+    from = top->get(path);
+
+  if (from == nullptr) {
+    return false;
+  } else {
+    if (obj != nullptr)
+      delete obj;
+    obj = AbstractObject::copy (from);
+    return true;
+  }
 }
 
-void JsonTree::getterError (string path, AbstractObject* obj, int type) {
+void JsonTree::getterError (const string path, AbstractObject* obj, int type) {
   cerr << "ERROR : ";
   if (obj == nullptr) {
     cerr << "Attempting to load the element " << path
@@ -67,7 +85,7 @@ ObjectVector* JsonTree::createVec (vector<string> &array) {
   return object;
 }
 
-vector <string> JsonTree::getKeys (string path) {
+vector <string> JsonTree::getKeys (const string path) {
   AbstractObject* obj = top->get(path);
   if (obj != nullptr && obj->getType() == MAP) {
     return ((ObjectMap*)obj)->getKeys();
@@ -76,7 +94,7 @@ vector <string> JsonTree::getKeys (string path) {
   }
 }
 
-int JsonTree::getSizeAt (string path) {
+int JsonTree::getSizeAt (const string path) {
   AbstractObject* obj = top->get(path);
   if (obj != nullptr && obj->getType() == VECTOR) {
     return ((ObjectVector*)obj)->size();
@@ -91,31 +109,31 @@ string JsonTree::toText () {
   return txt;
 }
 
-bool JsonTree::isNumber (string path) {
+bool JsonTree::isNumber (const string path) {
   return (isFloat(path) || isInt(path));
 }
 
-bool JsonTree::isFloat (string path) {
+bool JsonTree::isFloat (const string path) {
   return isType (top->get(path), NUMBER_FLOAT);
 }
 
-bool JsonTree::isInt (string path) {
+bool JsonTree::isInt (const string path) {
   return isType (top->get(path), NUMBER_INT);
 }
 
-bool JsonTree::isBool (string path) {
+bool JsonTree::isBool (const string path) {
   return isType (top->get(path), BOOL);
 }
 
-bool JsonTree::isString (string path) {
+bool JsonTree::isString (const string path) {
   return isType (top->get(path), STRING);
 }
 
-bool JsonTree::isMap (string path) {
+bool JsonTree::isMap (const string path) {
   return isType (top->get(path), MAP);
 }
 
-bool JsonTree::isVector (string path) {
+bool JsonTree::isVector (const string path) {
   return isType (top->get(path), VECTOR);
 }
 
@@ -123,11 +141,11 @@ bool JsonTree::isType (AbstractObject* obj, int type) {
   return (obj != nullptr && obj->getType() == type);
 }
 
-bool JsonTree::exist (string path) {
+bool JsonTree::exist (const string path) {
   return top->get(path) != nullptr;
 }
 
-int JsonTree::getType(string path) {
+int JsonTree::getType(const string path) {
   AbstractObject* obj = top->get(path);
   if (obj != nullptr)
     return obj->getType();
@@ -137,7 +155,7 @@ int JsonTree::getType(string path) {
 
 // FINALS
 
-bool JsonTree::get (bool &to, string path) {
+bool JsonTree::get (bool &to, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, BOOL)) {
     to = ((ObjectFinalBool*)obj)->getContent();
@@ -147,7 +165,7 @@ bool JsonTree::get (bool &to, string path) {
   return false;
 }
 
-bool JsonTree::get (string &to, string path) {
+bool JsonTree::get (string &to, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, STRING)) {
     to = ((ObjectFinalString*)obj)->getContent();
@@ -157,7 +175,7 @@ bool JsonTree::get (string &to, string path) {
   return false;
 }
 
-bool JsonTree::get (double &to, string path) {
+bool JsonTree::get (double &to, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, NUMBER_INT)) {
     to = ((ObjectFinalNumberInt*)obj)->getContent();
@@ -171,7 +189,7 @@ bool JsonTree::get (double &to, string path) {
   return false;
 }
 
-bool JsonTree::get (float &to, string path) {
+bool JsonTree::get (float &to, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, NUMBER_INT)) {
     to = ((ObjectFinalNumberInt*)obj)->getContent();
@@ -185,7 +203,7 @@ bool JsonTree::get (float &to, string path) {
   return false;
 }
 
-bool JsonTree::get (int &to, string path) {
+bool JsonTree::get (int &to, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, NUMBER_INT)) {
     to = ((ObjectFinalNumberInt*)obj)->getContent();
@@ -201,7 +219,7 @@ bool JsonTree::get (int &to, string path) {
 
 // VECTORS
 
-bool JsonTree::get (vector<double>& array, string path) {
+bool JsonTree::get (vector<double>& array, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {
     ObjectVector* vect = (ObjectVector*)obj;
@@ -223,7 +241,7 @@ bool JsonTree::get (vector<double>& array, string path) {
   return false;
 }
 
-bool JsonTree::get (vector<int>& array, string path) {
+bool JsonTree::get (vector<int>& array, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {
     ObjectVector* vect = (ObjectVector*)obj;
@@ -245,7 +263,7 @@ bool JsonTree::get (vector<int>& array, string path) {
   return false;
 }
 
-bool JsonTree::get (vector<string>& array, string path) {
+bool JsonTree::get (vector<string>& array, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {
     ObjectVector* vect = (ObjectVector*)obj;
@@ -265,7 +283,7 @@ bool JsonTree::get (vector<string>& array, string path) {
   return false;
 }
 
-bool JsonTree::get (vector<bool>& array, string path) {
+bool JsonTree::get (vector<bool>& array, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType (obj, VECTOR)) {
     ObjectVector* vect = (ObjectVector*)obj;
@@ -285,75 +303,75 @@ bool JsonTree::get (vector<bool>& array, string path) {
   return false;
 }
 
-AbstractObject* JsonTree::insertObject(string path, AbstractObject *obj) {
+AbstractObject* JsonTree::insertObject(const string path, AbstractObject *obj) {
   return nullptr;
 }
 
 // ADD
 
-bool JsonTree::add (double value, string path) {
+bool JsonTree::add (double value, const string path) {
   AbstractObject* object = new ObjectFinalNumberFloat (value);
   return top->add (path, object);
 };
 
-bool JsonTree::add (int value, string path) {
+bool JsonTree::add (int value, const string path) {
   AbstractObject* object = new ObjectFinalNumberInt (value);
   return top->add (path, object);
 };
 
-bool JsonTree::add (bool value, string path) {
+bool JsonTree::add (bool value, const string path) {
   AbstractObject* object = new ObjectFinalBool (value);
   return top->add (path, object);
 };
 
-bool JsonTree::add (string value, string path) {
+bool JsonTree::add (string value, const string path) {
   AbstractObject* object = new ObjectFinalString (value);
   return top->add (path, object);
 };
 
-bool JsonTree::add (float value, string path) {
+bool JsonTree::add (float value, const string path) {
   return add (double(value), path);
 };
 
-bool JsonTree::add (const char* value, string path) {
+bool JsonTree::add (const char* value, const string path) {
   return add (string(value), path);
 };
 
-bool JsonTree::add (vector<double> &array, string path) {
+bool JsonTree::add (vector<double> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
-bool JsonTree::add (vector<int> &array, string path) {
+bool JsonTree::add (vector<int> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
-bool JsonTree::add (vector<bool> &array, string path) {
+bool JsonTree::add (vector<bool> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
-bool JsonTree::add (vector<string> &array, string path) {
+bool JsonTree::add (vector<string> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
-bool JsonTree::addMap (string path) {
+bool JsonTree::addMap (const string path) {
   return top->add (path, new ObjectMap ());
 }
 
-bool JsonTree::addVector (string path) {
+bool JsonTree::addVector (const string path) {
   return top->add (path, new ObjectVector ());
 }
 
-bool JsonTree::add(JsonTree &tree, string path) {
+bool JsonTree::add(JsonTree &tree, const string path) {
 
 }
 
-bool JsonTree::add(JsonTree &tree, string from, string path) {
+bool JsonTree::add(JsonTree &tree, string from, const string path) {
 
 }
 
 // REPLACE
 
-bool JsonTree::replace (AbstractObject *newObj, string path) {
+bool JsonTree::replace (AbstractObject *newObj, const string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
@@ -370,110 +388,110 @@ bool JsonTree::replace (AbstractObject *newObj, string path) {
   return false;
 }
 
-bool JsonTree::replace (double from, string path) {
+bool JsonTree::replace (double from, const string path) {
   AbstractObject* object = new ObjectFinalNumberFloat (from);
   return replace (object, path);
 }
 
-bool JsonTree::replace (float from, string path) {
+bool JsonTree::replace (float from, const string path) {
   return replace (double(from), path);
 }
 
-bool JsonTree::replace (int from, string path) {
+bool JsonTree::replace (int from, const string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
   return replace (object, path);
 }
 
-bool JsonTree::replace (bool from, string path) {
+bool JsonTree::replace (bool from, const string path) {
   AbstractObject* object = new ObjectFinalBool (from);
   return replace (object, path);
 }
 
-bool JsonTree::replace (string from, string path) {
+bool JsonTree::replace (string from, const string path) {
   AbstractObject* object = new ObjectFinalString (from);
   return replace (object, path);
 }
 
-bool JsonTree::replace (const char* from, string path) {
+bool JsonTree::replace (const char* from, const string path) {
   return replace (string(from), path);
 }
 
-bool JsonTree::replace (vector<double>& array, string path) {
+bool JsonTree::replace (vector<double>& array, const string path) {
   return replace (createVec (array), path);
 }
 
-bool JsonTree::replace (vector<int>& array, string path) {
+bool JsonTree::replace (vector<int>& array, const string path) {
   return replace (createVec (array), path);
 }
 
-bool JsonTree::replace (vector<bool>& array, string path) {
+bool JsonTree::replace (vector<bool>& array, const string path) {
   return replace (createVec (array), path);
 }
 
-bool JsonTree::replace (vector<string>& array, string path) {
+bool JsonTree::replace (vector<string>& array, const string path) {
   return replace (createVec (array), path);
 }
 
 // SET
 
-bool JsonTree::set(AbstractObject *newObj, string path) {
+bool JsonTree::set(AbstractObject *newObj, const string path) {
   if (exist (path))
     return replace (newObj, path);
   else
     return top->add (path, newObj);
 }
 
-bool JsonTree::set (double from, string path) {
+bool JsonTree::set (double from, const string path) {
   AbstractObject* object = new ObjectFinalNumberFloat (from);
   return set (object, path);
 }
 
-bool JsonTree::set (float from, string path) {
+bool JsonTree::set (float from, const string path) {
   return set (double(from), path);
 }
 
-bool JsonTree::set (int from, string path) {
+bool JsonTree::set (int from, const string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
   return set (object, path);
 }
 
-bool JsonTree::set (bool from, string path) {
+bool JsonTree::set (bool from, const string path) {
   AbstractObject* object = new ObjectFinalBool (from);
   return set (object, path);
 }
 
-bool JsonTree::set (string value, string path) {
+bool JsonTree::set (string value, const string path) {
   AbstractObject* object = new ObjectFinalString (value);
   return set (object, path);
 }
 
-bool JsonTree::set(const char *value, string path) {
+bool JsonTree::set(const char *value, const string path) {
   return set (string(value), path);
 }
 
-bool JsonTree::set (vector<double>& array, string path) {
+bool JsonTree::set (vector<double>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
 
-bool JsonTree::set (vector<int>& array, string path) {
+bool JsonTree::set (vector<int>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
 
-bool JsonTree::set (vector<bool>& array, string path) {
+bool JsonTree::set (vector<bool>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
 
-bool JsonTree::set (vector<string>& array, string path) {
+bool JsonTree::set (vector<string>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
 
 // ERASE
 
-bool JsonTree::erase (string path) {
+bool JsonTree::erase (const string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
@@ -487,7 +505,7 @@ bool JsonTree::erase (string path) {
 
 // REMOVE
 
-bool JsonTree::remove (string path) {
+bool JsonTree::remove (const string path) {
   smatch matcher;
   if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);

@@ -41,12 +41,16 @@ private:
 public:
   JsonTree (AbstractObject* root);
   JsonTree ();
+  JsonTree (const JsonTree& tree, const string path = "");
   ~JsonTree ();
 
   vector <string> getKeys (const string path);
   int getSizeAt (const string path);
 
-  ObjectMap* getCopy ();
+  // returns if the path exist and its content is succesfully copid in obj.
+  // Obj is deleted if the copy is valid, otherwise is not modified
+  bool copyFrom (AbstractObject* obj, const string path) const;
+
   inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }
 
   //- returns true if the path exist, has the appropiate type and the value is copied succesfully
@@ -91,10 +95,10 @@ public:
   bool addMap (string map);
 
   // returns true if succesfully copied the tree in the path
-  bool add (JsonTree& tree, const string path);
+  bool add (JsonTree& tree, const string path = "");
 
   // returns true if successfully copied the elements indicated in 'from' in the path
-  bool add (JsonTree& tree, string from, const string path);
+  bool add (JsonTree& tree, string from, const string path = "");
 
   //- returns true if exist and its sucessfully updated
   bool replace (double from,      const string path);
