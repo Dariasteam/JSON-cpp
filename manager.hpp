@@ -94,10 +94,8 @@ public:
   bool addVector (const string path);
   bool addMap (string map);
 
-  // returns true if succesfully copied the tree in the path
-  bool add (JsonTree& tree, const string path = "");
-
-  // returns true if successfully copied the elements indicated in 'from' in the path
+  // returns true if successfully copied the elements indicated in 'from' in the path.
+  // The path mustn't exist previously
   bool add (JsonTree& tree, string from, const string path = "");
 
   //- returns true if exist and its sucessfully updated
