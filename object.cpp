@@ -4,8 +4,8 @@
 
 using namespace json;
 
-regex ObjectVector::tokenRgx = regex ("^(?:\\[)?(\\d+)(:?\\])?(:?\\.)?");
-regex ObjectMap::tokenRgx = regex    ("^(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
+regex ObjectVector::tokenRgx = regex ("^(?:\\.)?(?:\\[)?(\\d+)(:?\\])?(:?\\.)?");
+regex ObjectMap::tokenRgx = regex    ("^(?:\\.)?(?:\\[')?(\\w+)(:?'\\])?(:?\\.)?");
 
 void AbstractObject::txtIndent(string &txt, int indentLvl) {
   for (int i = 0; i < indentLvl; i++)
