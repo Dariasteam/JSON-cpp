@@ -49,7 +49,7 @@ public:
 
   // returns if the path exist and its content is succesfully copied in obj.
   // Obj previous content is deleted if the copy is valid, otherwise is not modified
-  bool copyFrom (AbstractObject* obj, const string path) const;
+  bool copyFrom (AbstractObject*& obj, const string path) const;
 
   inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }
 

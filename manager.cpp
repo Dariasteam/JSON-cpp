@@ -15,15 +15,17 @@ JsonTree::JsonTree (AbstractObject* root) {
 JsonTree::JsonTree (const JsonTree &tree, const string path) :
   top(new ObjectMap())
   {
-    tree.copyFrom(top, path);
+    AbstractObject* aux = top;
+    tree.copyFrom(aux, path);
+    top = (ObjectMap*)aux;
   }
 
 JsonTree::~JsonTree () {
   delete top;
 }
 
-bool JsonTree::copyFrom(AbstractObject* obj, const string path) const {
-  AbstractObject* from;
+bool JsonTree::copyFrom(AbstractObject*& obj, const string path) const {
+  AbstractObject* from = nullptr;
   if (path.empty() || path == ".")
     from = top;
   else
@@ -32,8 +34,6 @@ bool JsonTree::copyFrom(AbstractObject* obj, const string path) const {
   if (from == nullptr) {
     return false;
   } else {
-    if (obj != nullptr)
-      delete obj;
     obj = AbstractObject::copy (from);
     return true;
   }
@@ -364,12 +364,16 @@ bool JsonTree::addVector (const string path) {
 bool JsonTree::add(JsonTree &tree, string from, const string path) {
   AbstractObject* obj = top->get(path);
   if (obj == nullptr) {
-    if(top->add(path, obj))
-      return tree.copyFrom(obj, from);
+    // the object will be deleted
+    if(tree.copyFrom(obj, from))
+      return top->add(path, obj);
     else
-      return false;
+       return false;
   } else if (obj->getType() == VECTOR) {
-    return tree.copyFrom(obj, from);
+    AbstractObject* aux = nullptr;
+    if(tree.copyFrom(aux, from))
+      return ((ObjectVector*)obj)->add("", aux);
+    return false;
   }
   return false;
 }
