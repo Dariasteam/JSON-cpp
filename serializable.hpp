@@ -28,8 +28,13 @@ protected:
   template <class... Args>
   static const void serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, Args&... args) {
     if (_json_op_){
-      _json_tree_.erase(_json_path_);
-      _json_tree_.addVector(_json_path_);
+      if (!_json_path_.empty()) {
+        _json_tree_.erase(_json_path_);
+        _json_tree_.addVector(_json_path_);
+      } else {
+        _json_tree_.erase(".");
+        _json_tree_.addVector(".");
+      }
       retribution (_json_tree_, 0, _json_path_, args...);
     } else {
       int i = 0;
@@ -48,10 +53,15 @@ protected:
   //- With HASH
   template <class str, class... Args>
   typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
-  static const serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, const str path = 0, Args&... args) {
+  static const serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, const str path, Args&... args) {
     if (_json_op_){
-      _json_tree_.erase(_json_path_);
-      _json_tree_.addMap(_json_path_);
+      if (!_json_path_.empty()) {
+        _json_tree_.erase(_json_path_);
+        _json_tree_.addVector(_json_path_);
+      } else {
+        _json_tree_.erase(".");
+        _json_tree_.addVector(".");
+      }
       retribution (_json_tree_, _json_path_, path, args...);
     } else {
       initialize (_json_tree_, [&] (string key)
@@ -82,13 +92,13 @@ protected:
   template <class t, class str>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element) {
-    //tree.add (element, path + "." + key);
+    tree.add (element, path + "." + key);
   }
 
   template <class t, class str, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element, Args&... args) {
-    //tree.add(element, path + "." + key);
+    tree.add(element, path + "." + key);
     retribution (tree, path, args...);
   }
 
@@ -96,13 +106,18 @@ protected:
   template <typename t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, const string path, t& element) {
-    //tree.add(*element, path);
+    JsonTree auxTree;
+    element->serializeIn (auxTree);
+    tree.add(auxTree, " ", path);
   }
 
   template <class t, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, const string path, t& element, Args&... args) {
-    //tree.add(*element, path);
+    JsonTree auxTree;
+    element->serializeIn (auxTree);
+    tree.add(auxTree, " ", path);
+
     retribution (tree, index+1, path, args...);
   }
 
@@ -110,30 +125,33 @@ protected:
   template <class t, class str>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element) {
-    JsonTree* auxTree = new JsonTree;
-    //*element
-    tree.add(*element, key);
+    JsonTree auxTree;
+    element->serializeIn (auxTree);
+    tree.add(auxTree, " ", path + "." + key);
   }
 
   template <class t, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element, Args&... args) {
-    //tree.add(*element, key);
+    JsonTree auxTree;
+    element->serializeIn (auxTree);
+    tree.add(auxTree, " ", path + "." + key);
+
     retribution (tree, path, args...);
   }
 
   //- Vector
   template <class t>
-  void static const retribution (JsonTree& tree, int index, string path, vector <t>& vect) {
+  void static const retribution (JsonTree& tree, int index, const string path, vector <t>& vect) {
     tree.addVector(path);
-    path = path + "." + to_string(index);
 
+    string newPath = path + "." + to_string(index);
     for (int j = 0; j < vect.size(); j++)
-      retribution (tree, j, path, vect[j]);
+      retribution (tree, j, newPath, vect[j]);
   }
 
   template <class t, class... Args>
-  void static const retribution (JsonTree& tree, int index, string path, vector<t>& vect, Args&... args) {
+  void static const retribution (JsonTree& tree, int index, const string path, vector<t>& vect, Args&... args) {
 
     tree.addVector(path);
     string newPath = path + "." + to_string(index);
@@ -146,25 +164,25 @@ protected:
 
   //- Vector WITH HASH KEY
   template <class t, class str>
-  void static const retribution (JsonTree& tree, string path, const str key, vector <t>* vect) {
+  void static const retribution (JsonTree& tree, string path, const str key, vector <t>& vect) {
 
     string newPath = path + "." + key;
     tree.addVector(newPath);
 
-    for (int j = 0; j < vect->size(); j++)
+    for (int j = 0; j < vect.size(); j++)
       retribution (tree, j, newPath, vect[j]);
   }
 
   template <class t, class str, class... Args>
-  void static const retribution (JsonTree& tree, string path, const str key, vector<t>* vect, Args&... args) {
+  void static const retribution (JsonTree& tree, string path, const str key, vector<t>& vect, Args&... args) {
 
     string newPath = path + "." + key;
     tree.addVector(newPath);
 
-    for (int j = 0; j < vect->size(); j++)
-      retribution (tree, j, newPath, &(*vect)[j]);
+    for (int j = 0; j < vect.size(); j++)
+      retribution (tree, j, newPath, vect[j]);
 
-    retribution (tree, newPath, path, args...);
+    retribution (tree, newPath, args...);
   }
 
   //- Pointers of SERIALIZABLE classes

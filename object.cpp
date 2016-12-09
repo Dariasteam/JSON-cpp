@@ -313,10 +313,14 @@ void ObjectFinalString::toTxt (string& txt, int indentLvl) {
 
 
 ObjectVector::~ObjectVector () {
+  for (auto element : array)
+    delete element;
   array.clear();
 }
 
 ObjectMap::~ObjectMap () {
+  for (auto element : hash)
+    delete element.second;
   hash.clear();
 }
 

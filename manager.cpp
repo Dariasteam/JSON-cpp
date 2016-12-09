@@ -493,15 +493,20 @@ bool JsonTree::set (vector<string>& array, const string path) {
 
 // ERASE
 
+// Can't send empty string for security
 bool JsonTree::erase (const string path) {
   smatch matcher;
-  if (regex_search (path, matcher, lastTokenRgx)) {
+  if (path == ".") {
+    delete top;
+    top = new ObjectMap();
+  } else if (regex_search (path, matcher, lastTokenRgx)) {
       AbstractObject* father = top->get (matcher[1]);
       if (father != nullptr && father->getType() == MAP)
         return ((ObjectMap*)father)->erase (matcher[2]);
       return false;
-  } else if (!path.empty())
+  } else if (!path.empty()) {
     return ((ObjectMap*)top)->erase (path);
+  }
   return false;
 }
 
