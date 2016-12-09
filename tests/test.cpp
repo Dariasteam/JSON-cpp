@@ -97,7 +97,7 @@ TEST_CASE ("Updates JsonTree object succesfully") {
 TEST_CASE ("Detects wrog path format") {
   CHECK (tree.exist("first.element_1"));
   CHECK (tree.exist("first,element_1") == false);
-  CHECK (tree.exist(".first.element_1") == false);
+  CHECK (tree.exist(".first.element_1") == true);
 }
 
 TEST_CASE ("Can access to the hierarchy and the types are correct", "") {
