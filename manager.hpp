@@ -47,8 +47,8 @@ public:
   vector <string> getKeys (const string path);
   int getSizeAt (const string path);
 
-  // returns if the path exist and its content is succesfully copid in obj.
-  // Obj is deleted if the copy is valid, otherwise is not modified
+  // returns if the path exist and its content is succesfully copied in obj.
+  // Obj previous content is deleted if the copy is valid, otherwise is not modified
   bool copyFrom (AbstractObject* obj, const string path) const;
 
   inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }

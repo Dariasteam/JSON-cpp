@@ -363,11 +363,13 @@ bool JsonTree::addVector (const string path) {
 
 bool JsonTree::add(JsonTree &tree, string from, const string path) {
   AbstractObject* obj = top->get(path);
-  if (obj == nullptr || obj->getType() == VECTOR) {
+  if (obj == nullptr) {
     if(top->add(path, obj))
       return tree.copyFrom(obj, from);
     else
       return false;
+  } else if (obj->getType() == VECTOR) {
+    return tree.copyFrom(obj, from);
   }
   return false;
 }

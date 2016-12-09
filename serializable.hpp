@@ -105,16 +105,16 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, const string path, t& element) {
     JsonTree auxTree;
-    element.serializeIn (auxTree);
-    tree.add(auxTree, " ", path);
+    element.serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path);
   }
 
   template <class t, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, const string path, t& element, Args&... args) {
     JsonTree auxTree;
-    element.serializeIn (auxTree);
-    tree.add(auxTree, " ", path);
+    element.serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path);
 
     retribution (tree, index+1, path, args...);
   }
@@ -124,16 +124,16 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element) {
     JsonTree auxTree;
-    element->serializeOut (auxTree);
-    tree.add(auxTree, " ", path + "." + key);
+    element.serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path + "." + key);
   }
 
   template <class t, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element, Args&... args) {
     JsonTree auxTree;
-    element->serializeOut (auxTree);
-    tree.add(auxTree, " ", path + "." + key);
+    element.serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path + "." + key);
 
     retribution (tree, path, args...);
   }
@@ -195,7 +195,11 @@ protected:
   template <class t, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, string path, t*& element, Args&... args) {
-    //tree.add(*element, path);
+    JsonTree auxTree;
+    element->serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path);
+
+
     retribution (tree, index+1, path, args...);
   }
 
@@ -203,13 +207,18 @@ protected:
   template <typename t, class str>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t*& element) {
-    //tree.add(*element, path);
+    JsonTree auxTree;
+    element->serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path + key);
   }
 
   template <class t, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t*& element, Args&... args) {
-    //tree.add(*element, path);
+    JsonTree auxTree;
+    element->serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path + key);
+
     retribution (tree, path, args...);
   }
 
@@ -283,6 +292,7 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const initialize (JsonTree& tree, func functor, t& element, Args&... args) {
     element.serializeIn (tree, functor());
+
     initialize (tree, functor, args...);
   }
 
@@ -290,13 +300,14 @@ protected:
   template <typename t, class str, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const initialize (JsonTree& tree, func functor, const str key, t& element) {
-    element->serializeIn (tree, functor(key));
+    element.serializeIn (tree, functor(key));
   }
 
   template <class t, class func, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const initialize (JsonTree& tree, func functor, const str key, t& element, Args&... args) {
-    element->serializeIn (tree, functor(key));
+    element.serializeIn (tree, functor(key));
+
     initialize (tree, functor, args...);
   }
 
@@ -371,8 +382,9 @@ protected:
   template <class t, class func, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const initialize (JsonTree& tree, func functor, t*& element, Args&... args) {
-    *element = new t ();
+    element = new t ();
     element->serializeIn (tree, functor());
+
     initialize (tree, functor, args...);
   }
 
@@ -380,15 +392,18 @@ protected:
   template <class t, class str, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const initialize (JsonTree& tree, func functor, const str key, t*& element) {
-    *element = new t ();
-    (*element)->serializeIn (tree, functor(key));
+    element = new t ();
+
+    element->serializeIn (tree, functor(key));
   }
 
   template <class t, class func, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const initialize (JsonTree& tree, func functor,  const str key, t*& element, Args&... args) {
     element = new t ();
+
     element->serializeIn (tree, functor(key));
+
     initialize (tree, functor, args...);
   }
 
