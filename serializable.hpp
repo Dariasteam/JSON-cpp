@@ -170,7 +170,7 @@ protected:
     tree.addVector(newPath);
 
     for (int j = 0; j < vect.size(); j++)
-      retribution (tree, j, newPath, vect[j]);
+      retribution (tree, j, path, vect[j]);
   }
 
   template <class t, class str, class... Args>
@@ -182,7 +182,7 @@ protected:
     for (int j = 0; j < vect.size(); j++)
       retribution (tree, j, newPath, vect[j]);
 
-    retribution (tree, newPath, args...);
+    retribution (tree, path, args...);
   }
 
   //- Pointers of SERIALIZABLE classes
