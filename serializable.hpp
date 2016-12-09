@@ -33,7 +33,6 @@ protected:
         _json_tree_.addVector(_json_path_);
       } else {
         _json_tree_.erase(".");
-        _json_tree_.addVector(".");
       }
       retribution (_json_tree_, 0, _json_path_, args...);
     } else {
@@ -60,7 +59,6 @@ protected:
         _json_tree_.addVector(_json_path_);
       } else {
         _json_tree_.erase(".");
-        _json_tree_.addVector(".");
       }
       retribution (_json_tree_, _json_path_, path, args...);
     } else {
@@ -107,7 +105,7 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, const string path, t& element) {
     JsonTree auxTree;
-    element->serializeIn (auxTree);
+    element.serializeIn (auxTree);
     tree.add(auxTree, " ", path);
   }
 
@@ -115,7 +113,7 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, const string path, t& element, Args&... args) {
     JsonTree auxTree;
-    element->serializeIn (auxTree);
+    element.serializeIn (auxTree);
     tree.add(auxTree, " ", path);
 
     retribution (tree, index+1, path, args...);
@@ -126,7 +124,7 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element) {
     JsonTree auxTree;
-    element->serializeIn (auxTree);
+    element->serializeOut (auxTree);
     tree.add(auxTree, " ", path + "." + key);
   }
 
@@ -134,7 +132,7 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t& element, Args&... args) {
     JsonTree auxTree;
-    element->serializeIn (auxTree);
+    element->serializeOut (auxTree);
     tree.add(auxTree, " ", path + "." + key);
 
     retribution (tree, path, args...);
@@ -170,7 +168,7 @@ protected:
     tree.addVector(newPath);
 
     for (int j = 0; j < vect.size(); j++)
-      retribution (tree, j, path, vect[j]);
+      retribution (tree, j, newPath, vect[j]);
   }
 
   template <class t, class str, class... Args>
@@ -189,7 +187,9 @@ protected:
   template <typename t>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   static const retribution (JsonTree& tree, int index, string path, t*& element) {
-    //tree.add(*element, path);
+    JsonTree auxTree;
+    element->serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path);
   }
 
   template <class t, class... Args>
