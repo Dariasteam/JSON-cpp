@@ -56,7 +56,6 @@ protected:
     if (_json_op_){
       if (!_json_path_.empty()) {
         _json_tree_.erase(_json_path_);
-        // _json_tree_.addVector(_json_path_);
       } else {
         _json_tree_.erase(".");
       }

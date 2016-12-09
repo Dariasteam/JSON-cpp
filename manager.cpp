@@ -34,6 +34,8 @@ bool JsonTree::copyFrom(AbstractObject*& obj, const string path) const {
   if (from == nullptr) {
     return false;
   } else {
+    if (obj != nullptr)
+      delete obj;
     obj = AbstractObject::copy (from);
     return true;
   }
