@@ -213,7 +213,7 @@ bool ObjectMap::add (string path, AbstractObject* obj) {
         else
           return false;
       } else {
-        return insert (path, obj);
+        return insert (matcher[1], obj);
       }
     }
   }
