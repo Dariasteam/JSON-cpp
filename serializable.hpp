@@ -208,7 +208,7 @@ protected:
   static const retribution (JsonTree& tree, string path, const str key, t*& element) {
     JsonTree auxTree;
     element->serializeOut (auxTree, "p");
-    tree.add(auxTree, "p", path + key);
+    tree.add(auxTree, "p", path + "." + key);
   }
 
   template <class t, class str, class... Args>
