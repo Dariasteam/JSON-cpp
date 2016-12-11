@@ -20,6 +20,10 @@ public:
   }
 
   inline void serializeOut (JsonTree& tree, string p = "") {
+    if (!p.empty())
+      tree.erase(p);
+    else
+      tree.erase(".");
     serializer(tree, true, p);
   }
 
@@ -45,11 +49,6 @@ protected:
   template <class... Args>
   static const void serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, Args&... args) {
     if (_json_op_){
-      if (!_json_path_.empty()) {
-        _json_tree_.erase(_json_path_);
-      } else {
-        _json_tree_.erase(".");
-      }
       _json_tree_.addVector(_json_path_);
       retribution (_json_tree_, 0, _json_path_, args...);
     } else {
@@ -71,11 +70,6 @@ protected:
   typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
   static const serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, const str path, Args&... args) {
     if (_json_op_){
-      if (!_json_path_.empty()) {
-        _json_tree_.erase(_json_path_);
-      } else {
-        _json_tree_.erase(".");
-      }
       retribution (_json_tree_, _json_path_, path, args...);
     } else {
       initialize (_json_tree_, [&] (string key)

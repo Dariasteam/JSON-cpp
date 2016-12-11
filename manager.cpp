@@ -41,6 +41,10 @@ bool JsonTree::copyFrom(AbstractObject*& obj, const string path) const {
   }
 }
 
+bool JsonTree::set_union(JsonTree &tree) {
+  return add(tree);
+}
+
 void JsonTree::getterError (const string path, AbstractObject* obj, int type) {
   cerr << "ERROR : ";
   if (obj == nullptr) {
@@ -363,19 +367,25 @@ bool JsonTree::addVector (const string path) {
   return top->add (path, new ObjectVector ());
 }
 
-bool JsonTree::add(JsonTree &tree, string from, const string path) {
+bool JsonTree::add(JsonTree &tree, const string from, const string path) {
   AbstractObject* obj = top->get(path);
   if (obj == nullptr) {
-    // the object will be deleted
-    if(tree.copyFrom(obj, from))
+    if(tree.copyFrom(obj, from)) {
       return top->add(path, obj);
-    else
+    } else {
+       if (obj != nullptr)
+        delete obj;
        return false;
+    }
   } else if (obj->getType() == VECTOR) {
     AbstractObject* aux = nullptr;
-    if(tree.copyFrom(aux, from))
+    if(tree.copyFrom(aux, from)) {
       return ((ObjectVector*)obj)->add("", aux);
-    return false;
+    } else {
+      if (obj != nullptr)
+        delete obj;
+      return false;
+    }
   }
   return false;
 }

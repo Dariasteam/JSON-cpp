@@ -43,6 +43,7 @@ public:
   JsonTree ();
   JsonTree (const JsonTree& tree, const string path = "");
   ~JsonTree ();
+  inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }
 
   vector <string> getKeys (const string path);
   int getSizeAt (const string path);
@@ -51,7 +52,8 @@ public:
   // Obj previous content is deleted if the copy is valid, otherwise is not modified
   bool copyFrom (AbstractObject*& obj, const string path) const;
 
-  inline void setTop (AbstractObject* root) { delete top; top = (ObjectMap*)root; }
+  // returns if this object is successfuly transformed to the union between tree and itself
+  bool set_union (JsonTree& tree);
 
   //- returns true if the path exist, has the appropiate type and the value is copied succesfully
   bool get (double& to, const string path);
@@ -96,7 +98,7 @@ public:
 
   // returns true if successfully copied the elements indicated in 'from' in the path.
   // The path mustn't exist previously
-  bool add (JsonTree& tree, string from, const string path = "");
+  bool add (JsonTree& tree, const string from = "", const string path = "");
 
   //- returns true if exist and its sucessfully updated
   bool replace (double from,      const string path);
