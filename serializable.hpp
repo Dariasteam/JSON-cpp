@@ -3,7 +3,9 @@
 
 #include <string>
 #include <type_traits>
+
 #include "manager.hpp"
+#include "parser.hpp"
 
 #define SERIAL_START void serializer (JsonTree& _json_tree_, bool _json_op_, string _json_path_) { serialize (_json_op_, _json_path_, _json_tree_,
 #define SERIAL_END ); }
@@ -19,6 +21,21 @@ public:
 
   inline void serializeOut (JsonTree& tree, string p = "") {
     serializer(tree, true, p);
+  }
+
+  inline void serializeIn (string file, string p = "") {
+    JsonTree tree;
+    Parser parser;
+    if (parser.parseFile(file, tree) & JSON_PARSE_OUTPUT::OK)
+      serializer(tree, false, p);
+    else
+      return;
+  }
+
+  inline void serializeOut (string file, string p = "") {
+    JsonTree tree;
+    serializer(tree, true, p);
+    Parser::saveFile(file, tree);
   }
 
 protected:
@@ -198,7 +215,6 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
   static const retribution (JsonTree& tree, string path, const str key, t*& element, Args&... args) {
     retribution (tree, path, key, element);
-
     retribution (tree, path, args...);
   }
 
