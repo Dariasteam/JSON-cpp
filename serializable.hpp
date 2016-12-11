@@ -306,7 +306,8 @@ protected:
   void static const initialize (JsonTree& tree, func functor, vector <t>& vect) {
     string newPath = functor();
     int size = tree.getSizeAt(newPath);
-    vect.resize (size);
+    if (size > 0)
+      vect.resize (size);
 
     int i = 0;
     for (int j = 0; j < size; j++) {
@@ -329,7 +330,9 @@ protected:
   typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
   static const initialize (JsonTree& tree, func functor, const str path, vector <t>& vect) {
     string newPath = functor(path);
-    vect.resize (tree.getSizeAt(newPath));
+    int size = tree.getSizeAt(newPath);
+    if (size > 0)
+      vect.resize (size);
     int i = 0;
     for (int j = 0; j < vect.size(); j++) {
       initialize (tree, [&] () {

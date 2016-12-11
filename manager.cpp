@@ -105,7 +105,8 @@ int JsonTree::getSizeAt (const string path) {
   if (obj != nullptr && obj->getType() == VECTOR) {
     return ((ObjectVector*)obj)->size();
   } else {
-    return 0;
+    getterError(path, obj, VECTOR);
+    return -1;
   }
 }
 
