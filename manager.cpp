@@ -224,6 +224,16 @@ bool JsonTree::get (int &to, const string path) {
   return false;
 }
 
+bool JsonTree::get (char &to, const string path) {
+  AbstractObject* obj = top->get(path);
+  if (isType(obj, STRING)) {
+    to = ((ObjectFinalString*)obj)->getContent()[0];
+    return true;
+  }
+  getterError(path, obj, STRING);
+  return false;
+}
+
 // VECTORS
 
 bool JsonTree::get (vector<double>& array, const string path) {

@@ -33,6 +33,7 @@ AbstractObject* AbstractObject::copy (const AbstractObject* obj) {
       return new ObjectVector (*((ObjectVector*)obj));
       break;
     }
+  return nullptr;
 }
 
 ObjectFinalBool::ObjectFinalBool (const ObjectFinalBool &obj) :

@@ -61,6 +61,7 @@ public:
   bool get (int& to,    const string path);
   bool get (bool& to,   const string path);
   bool get (string& to, const string path);
+  bool get (char& to,   const string path);
 
   bool get (vector<double>& array, const string path);
   bool get (vector<int>& array,    const string path);
