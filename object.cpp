@@ -312,6 +312,53 @@ void ObjectFinalString::toTxt (string& txt, int indentLvl) {
   txt.append(QUOTE).append(getContent()).append(QUOTE);
 }
 
+//* Ugly
+
+void ObjectVector::toTxtUgly (string& txt) {
+  txt.append("[");
+  AbstractObject* obj = this;
+  for (int i = 0; i < size(); i++) {
+    txt.append(" ");
+    obj = operator[](i);
+    obj->toTxtUgly(txt);
+    txt.append(COMMA);
+  }
+  if (size() > 0)
+    txt.pop_back();
+  txt.append("]");
+}
+
+void ObjectMap::toTxtUgly (string& txt) {
+  txt.append("{");
+  for (int i = 0; i < getKeys().size(); i++) {
+    txt.append(QUOTE).append(getKeys()[i]).append(QUOTE).append(POINTS);
+    operator[](getKeys()[i])->toTxtUgly(txt);
+    txt.append(COMMA);
+  }
+  if (getKeys().size() > 0)
+    txt.pop_back();
+  txt.append("}");
+}
+
+void ObjectFinalBool::toTxtUgly (string& txt) {
+  if (getContent())
+    txt.append("true");
+  else
+    txt.append("false");
+}
+
+void ObjectFinalNumberFloat::toTxtUgly (string& txt) {
+  txt.append(to_string(getContent()));
+}
+
+void ObjectFinalNumberInt::toTxtUgly (string& txt) {
+  txt.append(to_string(getContent()));
+}
+
+void ObjectFinalString::toTxtUgly (string& txt) {
+  txt.append(QUOTE).append(getContent()).append(QUOTE);
+}
+
 
 ObjectVector::~ObjectVector () {
   for (auto element : array)

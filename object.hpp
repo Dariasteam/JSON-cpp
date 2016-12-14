@@ -38,6 +38,7 @@ public:
   virtual AbstractObject* get (string path) = 0;
   virtual bool add (string path, AbstractObject* obj) = 0;
   virtual void toTxt (string &txt, int indentLvl) = 0;
+  virtual void toTxtUgly (string &txt) = 0;
   void txtIndent (string& txt, int indentLvl);
 
   static AbstractObject* copy (const AbstractObject* obj);
@@ -51,7 +52,6 @@ public:
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
   virtual const AbstractObject* operator[](string key) { return nullptr; };
   virtual bool insert (string key, AbstractObject* obj) = 0;
-  // virtual int size () = 0;
 };
 
 class ObjectVector : public ObjectContainer{
@@ -73,6 +73,7 @@ public:
   AbstractObject* get (string path);
   bool add (string path, AbstractObject* obj);
   void toTxt (string &txt, int indentLvl);
+  void toTxtUgly (string &txt);
 };
 
 class ObjectMap : public ObjectContainer {
@@ -95,6 +96,7 @@ public:
   bool insert (string key, AbstractObject* obj);
   bool add (string path, AbstractObject* obj);
   void toTxt (string &txt, int indentLvl);
+  void toTxtUgly (string &txt);
   bool replace (string key, AbstractObject* obj);
   bool set (string key, AbstractObject* obj);
   bool remove (string key);
@@ -122,6 +124,7 @@ public:
   inline double getContent () const { return number; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
+  void toTxtUgly (string &txt);
 };
 
 class ObjectFinalNumberInt : public ObjectFinal {
@@ -135,6 +138,7 @@ public:
   inline long int getContent () const { return number; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
+  void toTxtUgly (string &txt);
 };
 
 class ObjectFinalString : public ObjectFinal {
@@ -148,6 +152,7 @@ public:
   inline string getContent () const { return text; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
+  void toTxtUgly (string &txt);
 };
 
 class ObjectFinalBool : public ObjectFinal {
@@ -162,6 +167,7 @@ public:
   inline bool getContent () const { return boolean; }
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
+  void toTxtUgly (string &txt);
 };
 
 

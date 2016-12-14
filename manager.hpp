@@ -132,7 +132,7 @@ public:
 
   //- return true if successfully removed or doesn't exist
   bool remove (const string path);
-  string toText ();
+  string toText (bool uglify = false);
 
 };
 

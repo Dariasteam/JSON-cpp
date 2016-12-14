@@ -95,7 +95,7 @@ private:
 public:
   Parser ();
   int parseFile (string fileName, JsonTree& tree, bool verbs = true);
-  static int saveFile (string fileName, JsonTree& tree);
+  static int saveFile (string fileName, JsonTree& tree, bool uglify = false);
   inline const vector<JsonLog>& getErrors () { return errors; }
   inline const vector<JsonLog>& getWarnings () { return warnings; }
 };

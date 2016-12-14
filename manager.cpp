@@ -110,9 +110,12 @@ int JsonTree::getSizeAt (const string path) {
   }
 }
 
-string JsonTree::toText () {
+string JsonTree::toText (bool uglify) {
   string txt;
-  top->toTxt(txt, 0);
+  if (uglify)
+    top->toTxtUgly(txt);
+  else
+    top->toTxt(txt, 0);
   return txt;
 }
 

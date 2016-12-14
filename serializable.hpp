@@ -39,7 +39,7 @@ public:
   inline void serializeOut (string file, string p = "") {
     JsonTree tree;
     serializer(tree, true, p);
-    Parser::saveFile(file, tree);
+    Parser::saveFile(file, tree, true);
   }
 
 protected:

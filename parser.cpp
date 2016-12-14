@@ -137,12 +137,12 @@ ObjectNameFlag Parser::parse (string& content, string path) {
   return {nullptr, "", EMPTY};
 }
 
-int Parser::saveFile (string fileName, JsonTree& tree) {
+int Parser::saveFile (string fileName, JsonTree& tree, bool uglify) {
   ofstream file;
   file.open (fileName);
   if (!file.is_open())
     return CANT_OPEN_FILE;
-  file << tree.toText();
+  file << tree.toText(uglify);
   file.close ();
   return OK;
 }
