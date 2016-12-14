@@ -11,7 +11,8 @@ using namespace std;
 #define END_LINE "\n"
 #define INDENT "  "
 #define QUOTE "\""
-#define POINTS " : "
+#define POINTS ":"
+#define SPACE " "
 #define COMMA ","
 
 namespace json {

@@ -261,7 +261,7 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
       txt.append(END_LINE);
       txtIndent (txt, indentLvl);
     } else {
-      txt.append(" ");
+      txt.append(SPACE);
     }
     obj = operator[](i);
     obj->toTxt(txt, indentLvl);
@@ -281,7 +281,7 @@ void ObjectMap::toTxt (string& txt, int indentLvl) {
   for (int i = 0; i < getKeys().size(); i++) {
     txt.append(END_LINE);
     txtIndent (txt, indentLvl);
-    txt.append(QUOTE).append(getKeys()[i]).append(QUOTE).append(POINTS);
+    txt.append(QUOTE).append(getKeys()[i]).append(QUOTE).append(SPACE).append(POINTS).append(SPACE);
     operator[](getKeys()[i])->toTxt(txt, indentLvl);
     txt.append(COMMA);
   }
@@ -318,7 +318,6 @@ void ObjectVector::toTxtUgly (string& txt) {
   txt.append("[");
   AbstractObject* obj = this;
   for (int i = 0; i < size(); i++) {
-    txt.append(" ");
     obj = operator[](i);
     obj->toTxtUgly(txt);
     txt.append(COMMA);
