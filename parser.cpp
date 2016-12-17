@@ -55,13 +55,13 @@ bool Parser::hasComma (string buffer) {
   return (buffer.size() > 0);
 }
 
-ObjectNameFlag Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
+Parser::ObjectNameFlag Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
   obj->replaceValue(matcher[1]);
   content = content.substr(matcher[0].length(), content.size());
   return {obj, "", hasComma(matcher[2])};
 }
 
-ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
+Parser::ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
                             regex& endSymbol, ObjectContainer* obj, string path)
 {
   content = content.substr(matcher[0].length(), content.size());
@@ -107,7 +107,7 @@ void Parser::evaluateFlag (int flag, string path, string finalElement) {
     cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << endl;
 }
 
-ObjectNameFlag Parser::parseKeyDef (string& content, smatch& matcher, string path) {
+Parser::ObjectNameFlag Parser::parseKeyDef (string& content, smatch& matcher, string path) {
   string key = matcher[1];
   content = content.substr(matcher[0].length(), content.size());
   path.append(".").append(key);
@@ -115,7 +115,7 @@ ObjectNameFlag Parser::parseKeyDef (string& content, smatch& matcher, string pat
   return {aux.element, key, aux.flag};
 }
 
-ObjectNameFlag Parser::parse (string& content, string path) {
+Parser::ObjectNameFlag Parser::parse (string& content, string path) {
   smatch matcher;
   ObjectNameFlag Obj;
   if (regex_search (content, matcher, keyDef))

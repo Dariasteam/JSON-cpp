@@ -28,14 +28,38 @@ enum JSON_PARSE_OUTPUT {
   EMPTY_FILE      = 1 << 4
 };
 
-
-struct ObjectNameFlag {
-  AbstractObject* element;
-  string key;
-  int flag;
+//- do not move these elements, their numeric value is used for comparisons
+// Flags used to tell the status of each element of a json tree
+enum JSON_PARSER_FLAG {
+  // the element has no comma at the end, should be the last element of the collection
+  LAST_ELEMENT,
+  // the element has comma at the end, should not be the last element of the collection
+  REGULAR_ELEMENT,
+  // [ERROR] no end brace / bracket after the last element
+  NO_CLOSED,
+  // [ERROR] end brace / bracket after comma (non last element)
+  EXPECTED_MORE,
+  // [ERROR] the key has extraneous characters
+  INVALID_KEY,
+  // used to check type. Greaters values are warnings, lower errors
+  CONTROL_WARNING,
+  // [WARNING] the collection is empty
+  EMPTY
 };
 
-
+/* Contains information about errors
+ *
+ * - path:  json path of the problematic elment
+ * - flag:  <JSON_PARSER_FLAG> indicating the problem
+ *
+ * Instances of this are created by <Parser::parseFile>
+ * when a syntax error or interesting situation is detected
+ * in a json file.
+ *
+ * They can be retrieved after with
+ * <Parser::getWarnings> and <Parser::getErrors>
+ *
+ */
 struct JsonLog {
   string path;
   int flag;
@@ -47,22 +71,10 @@ struct JsonLog {
 class Parser {
   private:
 
-  //- do not move these elements, their numeric value is used for comparisons
-  enum JSON_PARSER_FLAG {
-    // the element has no comma at the end, should be the last element of the collection
-    LAST_ELEMENT,
-    // the element has comma at the end, should not be the last element of the collection
-    REGULAR_ELEMENT,
-    // [ERROR] no end brace / bracket after the last element
-    NO_CLOSED,
-    // [ERROR] end brace / bracket after comma (non last element)
-    EXPECTED_MORE,
-    // [ERROR] the key has extraneous characters
-    INVALID_KEY,
-    // used to check type. Greaters values are warnings, lower errors
-    CONTROL_WARNING,
-    // [WARNING] the collection is empty
-    EMPTY
+  struct ObjectNameFlag {
+    AbstractObject* element;
+    string key;
+    int flag;
   };
 
   const string reverseflag [7] = {"LAST_ELEMENT",
@@ -115,7 +127,7 @@ public:
    * starting the process.
    *
    * If there are syntax errors in the input file, they will be
-   * catched and a <JsonLog> is generated for any of them. Those
+   * catched and a <JsonLog> is generated for each of them. Those
    * structs can be accessed with <getErrors> and <getWarnings> functions
    *
    * @return <JSON_PARSE_OUTPUT> with the result of the operation
