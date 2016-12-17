@@ -14,7 +14,7 @@ using namespace std;
 
 namespace json {
 
-// Hex flags used as output for <Parser::parseFile> and <Parser::saveFile> functions.
+// Binary flags used as output for <Parser::parseFile> and <Parser::saveFile> functions.
 enum JSON_PARSE_OUTPUT {
   // the file has been opened and parsed successfuly
   OK          	  = 1 << 0,
@@ -44,13 +44,6 @@ struct JsonLog {
   }
 };
 
-
-/* Manage I/O of .json files
- *
- *
- *
- *
-*/
 class Parser {
   private:
 
@@ -117,8 +110,8 @@ public:
    * @tree object wich will store the hierarchy specificated in the file
    * @verbs use or not verbose mode, by default =true
    *
-   * Tries to parse the file and create the hierarchy of it.
-   * The method check if the file exists and can be open before
+   * Tries to parse the file and creates the hierarchy of it.
+   * The method checks if the file exists and can be open before
    * starting the process.
    *
    * If there are syntax errors in the input file, they will be
