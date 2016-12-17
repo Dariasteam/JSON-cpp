@@ -3,15 +3,14 @@
 using namespace json;
 
 regex Parser::startBrace = regex 	 ("^(?:\\s*)(\\{)");
-regex Parser::startBracket = regex ("^(?:\\s*)(\\[)");
-regex Parser::keyDef = regex ("^(?:\\s*)(?:\")(\\w+?)(?:\")(?:\\s*)\\:");
-regex Parser::finalQuote = regex ("^(?:\\s*)(?:\")(.*?)(?:\")(?:\\s*)(,)?");
-regex Parser::finalNumberInt = regex ("^(?:\\s*)((?:\\+|\\-)?\\d+)(?:\\s*)(,)?");
-regex Parser::finalNumberFloat = regex ("^(?:\\s*)((?:\\+|\\-)?(?:\\d+)?(?:(?:(?:\\.\\d+)?e(?:\\+|\\-)?\\d+)|(?:\\.\\d+)))(?:\\s*)(,)?");
-regex Parser::finalBoolean = regex ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
-regex Parser::nextBrace = regex 	("^(?:\\s*)(\\})(?:\\s*)(,)?");
-regex Parser::nextBracket = regex ("^(?:\\s*)(\\])(?:\\s*)(,)?");
-
+regex Parser::startBracket = regex       ("^(?:\\s*)(\\[)");
+regex Parser::keyDef = regex             ("^(?:\\s*)(?:\")(\\w+?)(?:\")(?:\\s*)\\:");
+regex Parser::finalQuote = regex         ("^(?:\\s*)(?:\")(.*?)(?:\")(?:\\s*)(,)?");
+regex Parser::finalNumberInt = regex     ("^(?:\\s*)((?:\\+|\\-)?\\d+)(?:\\s*)(,)?");
+regex Parser::finalNumberFloat = regex   ("^(?:\\s*)((?:\\+|\\-)?(?:\\d+)?(?:(?:(?:\\.\\d+)?e(?:\\+|\\-)?\\d+)|(?:\\.\\d+)))(?:\\s*)(,)?");
+regex Parser::finalBoolean = regex       ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
+regex Parser::nextBrace = regex 	 ("^(?:\\s*)(\\})(?:\\s*)(,)?");
+regex Parser::nextBracket = regex        ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
 int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
   verbose = verbs;
