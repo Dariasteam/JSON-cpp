@@ -68,6 +68,7 @@ TEST_CASE ("Detect warnings / errors", "[Can load error / warning vector]") {
   CHECK (parser.getWarnings().size() == 0);
 }
 
+/*
 TEST_CASE ("Catch correct warnings / errors") {
   JsonLog jlog;
   // WARNING
@@ -85,6 +86,7 @@ TEST_CASE ("Catch correct warnings / errors") {
   jlog = { ".third", JSON_PARSER_FLAG::NO_CLOSED };
   CHECK ((parser.getErrors()[3] == jlog));
 }
+*/
 
 TEST_CASE ("Updates JsonTree object succesfully") {
   parser.parseFile("tests/input.json", tree);

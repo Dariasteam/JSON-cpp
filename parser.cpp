@@ -40,8 +40,7 @@ int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
 
 Parser::Parser () :
   errors (0),
-  warnings (0),
-  tree (nullptr)
+  warnings (0)
   {}
 
 bool Parser::openFile (string fileName) {

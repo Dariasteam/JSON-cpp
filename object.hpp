@@ -50,8 +50,8 @@ protected:
   ObjectContainer (int type) : AbstractObject (type) {}
   ~ObjectContainer () = 0;
 public:
-  virtual const AbstractObject* operator[](unsigned index) { return nullptr; };
-  virtual const AbstractObject* operator[](string key) { return nullptr; };
+  virtual const AbstractObject* operator[](unsigned index) { return nullptr; }
+  virtual const AbstractObject* operator[](string key) { return nullptr; }
   virtual bool insert (string key, AbstractObject* obj) = 0;
 };
 

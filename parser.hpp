@@ -14,25 +14,6 @@ using namespace std;
 
 namespace json {
 
-//- do not move these elements, their numeric value is used for comparisons
-
-enum JSON_PARSER_FLAG {
-  // the element has no comma at the end, should be the last element of the collection
-  LAST_ELEMENT,
-  // the element has comma at the end, should not be the last element of the collection
-  REGULAR_ELEMENT,
-  // [ERROR] no end brace / bracket after the last element
-  NO_CLOSED,
-  // [ERROR] end brace / bracket after comma (non last element)
-  EXPECTED_MORE,
-  // [ERROR] the key has extraneous characters
-  INVALID_KEY,
-  // used to check type. Greaters values are warnings, lower errors
-  CONTROL_WARNING,
-  // [WARNING] the collection is empty
-  EMPTY
-};
-
 // Hex flags used as output for <Parser::parseFile> and <Parser::saveFile> functions.
 enum JSON_PARSE_OUTPUT {
   // the file has been opened and parsed successfuly
@@ -63,8 +44,33 @@ struct JsonLog {
   }
 };
 
+
+/* Manage I/O of .json files
+ *
+ *
+ *
+ *
+*/
 class Parser {
   private:
+
+  //- do not move these elements, their numeric value is used for comparisons
+  enum JSON_PARSER_FLAG {
+    // the element has no comma at the end, should be the last element of the collection
+    LAST_ELEMENT,
+    // the element has comma at the end, should not be the last element of the collection
+    REGULAR_ELEMENT,
+    // [ERROR] no end brace / bracket after the last element
+    NO_CLOSED,
+    // [ERROR] end brace / bracket after comma (non last element)
+    EXPECTED_MORE,
+    // [ERROR] the key has extraneous characters
+    INVALID_KEY,
+    // used to check type. Greaters values are warnings, lower errors
+    CONTROL_WARNING,
+    // [WARNING] the collection is empty
+    EMPTY
+  };
 
   const string reverseflag [7] = {"LAST_ELEMENT",
                                   "REGULAR_ELEMENT",
@@ -77,7 +83,6 @@ class Parser {
   vector <JsonLog> errors;
   vector <JsonLog> warnings;
   ifstream file;
-  JsonTree tree;
 
   bool verbose;
 
