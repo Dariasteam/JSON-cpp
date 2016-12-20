@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<index xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <namespace name="json" ref="json#json">
+    <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
+    <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
+      <brief> Contains information about errors</brief>
+    </struct>
+    <class name="JsonTree" ref="json::JsonTree#json::JsonTree" />
+    <class name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
+    <class name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+    <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
+    <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
+    <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt" />
+    <class name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString" />
+    <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap" />
+    <class name="ObjectVector" ref="json::ObjectVector#json::ObjectVector" />
+    <class name="Parser" ref="json::Parser#json::Parser">
+      <brief>Manage I/O of .json files</brief>
+    </class>
+    <class name="Serializable" ref="json::Serializable#json::Serializable" />
+  </namespace>
+  <report name="Documentation generator" ref="report" />
+</index>

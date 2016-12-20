@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="json::AbstractObject" name="AbstractObject" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <subclass access="public" name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
+  <subclass access="public" name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+  <destructor abstract="yes" id="json::AbstractObject::~AbstractObject" name="~AbstractObject" virtual="yes" />
+  <method abstract="yes" id="json::AbstractObject::add" name="add" virtual="yes">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::AbstractObject::add::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::AbstractObject::add::obj" name="obj">
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::AbstractObject::copy" name="copy" static="yes">
+    <return>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <argument id="json::AbstractObject::copy::obj" name="obj">
+      <type name="AbstractObject" qualifier=" const *" ref="json::AbstractObject#json::AbstractObject" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::AbstractObject::get" name="get" virtual="yes">
+    <return>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <argument id="json::AbstractObject::get::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+  </method>
+  <method id="json::AbstractObject::getType" name="getType">
+    <return>
+      <type builtin="yes" name="unsigned short" />
+    </return>
+  </method>
+  <method abstract="yes" id="json::AbstractObject::toTxt" name="toTxt" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::AbstractObject::toTxt::txt" name="txt">
+      <type name="std::__cxx11::string" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::AbstractObject::toTxt::indentLvl" name="indentLvl">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::AbstractObject::toTxtUgly" name="toTxtUgly" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::AbstractObject::toTxtUgly::txt" name="txt">
+      <type name="std::__cxx11::string" qualifier=" &amp;" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::AbstractObject::txtIndent" name="txtIndent">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::AbstractObject::txtIndent::txt" name="txt">
+      <type name="std::__cxx11::string" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::AbstractObject::txtIndent::indentLvl" name="indentLvl">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <constructor access="protected" id="json::AbstractObject::AbstractObject" name="AbstractObject">
+    <argument id="json::AbstractObject::AbstractObject::t" name="t">
+      <type builtin="yes" name="unsigned short" />
+    </argument>
+  </constructor>
+</class>

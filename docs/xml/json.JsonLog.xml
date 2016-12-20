@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<struct id="json::JsonLog" name="JsonLog" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> Contains information about errors</brief>
+  <doc>- path:  json path of the problematic elment
+- flag:  <ref ref="json#json::JSON_PARSER_FLAG">json::JSON_PARSER_FLAG</ref> indicating the problem
+
+Instances of this are created by <ref ref="json::Parser#json::Parser::parseFile">json::Parser::parseFile</ref>
+when a syntax error or interesting situation is detected
+in a json file.
+
+They can be retrieved after with
+<ref ref="json::Parser#json::Parser::getWarnings">json::Parser::getWarnings</ref> and <ref ref="json::Parser#json::Parser::getErrors">json::Parser::getErrors</ref>
+
+</doc>
+  <field id="json::JsonLog::path" name="path">
+    <type name="std::__cxx11::string" />
+  </field>
+  <field id="json::JsonLog::flag" name="flag">
+    <type builtin="yes" name="int" />
+  </field>
+</struct>

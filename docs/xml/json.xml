@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<namespace id="json" name="json" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
+  <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
+    <brief> Contains information about errors</brief>
+  </struct>
+  <class name="JsonTree" ref="json::JsonTree#json::JsonTree" />
+  <class name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
+  <class name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+  <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
+  <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
+  <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt" />
+  <class name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString" />
+  <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap" />
+  <class name="ObjectVector" ref="json::ObjectVector#json::ObjectVector" />
+  <class name="Parser" ref="json::Parser#json::Parser">
+    <brief>Manage I/O of .json files</brief>
+  </class>
+  <class name="Serializable" ref="json::Serializable#json::Serializable" />
+  <enum anonymous="yes" id="json::JSON_PARSE_OUTPUT" name="JSON_PARSE_OUTPUT">
+    <brief>Binary flags used as output for <ref ref="json::Parser#json::Parser::parseFile">json::Parser::parseFile</ref> and <ref ref="json::Parser#json::Parser::saveFile">json::Parser::saveFile</ref> functions.</brief>
+    <enumvalue id="json::OK" name="OK" value="1">
+      <brief>the file has been opened and parsed successfuly</brief>
+    </enumvalue>
+    <enumvalue id="json::CANT_OPEN_FILE" name="CANT_OPEN_FILE" value="2">
+      <brief>the file can not be opened</brief>
+    </enumvalue>
+    <enumvalue id="json::WARNINGS" name="WARNINGS" value="4">
+      <brief>the parse operation has detected non critical extraneous situations in the format of the input file</brief>
+    </enumvalue>
+    <enumvalue id="json::ERRORS" name="ERRORS" value="8">
+      <brief>the parse operation has detected critical problems in the format of the input file</brief>
+    </enumvalue>
+    <enumvalue id="json::EMPTY_FILE" name="EMPTY_FILE" value="16">
+      <brief>the file is empty and can not be parsed</brief>
+    </enumvalue>
+  </enum>
+  <enum anonymous="yes" id="json::JSON_PARSER_FLAG" name="JSON_PARSER_FLAG">
+    <brief>Flags used to tell the status of each element of a json tree</brief>
+    <enumvalue id="json::LAST_ELEMENT" name="LAST_ELEMENT" value="0">
+      <brief>the element has no comma at the end, should be the last element of the collection</brief>
+    </enumvalue>
+    <enumvalue id="json::REGULAR_ELEMENT" name="REGULAR_ELEMENT" value="1">
+      <brief>the element has comma at the end, should not be the last element of the collection</brief>
+    </enumvalue>
+    <enumvalue id="json::NO_CLOSED" name="NO_CLOSED" value="2">
+      <brief>[ERROR] no end brace / bracket after the last element</brief>
+    </enumvalue>
+    <enumvalue id="json::EXPECTED_MORE" name="EXPECTED_MORE" value="3">
+      <brief>[ERROR] end brace / bracket after comma (non last element)</brief>
+    </enumvalue>
+    <enumvalue id="json::INVALID_KEY" name="INVALID_KEY" value="4">
+      <brief>[ERROR] the key has extraneous characters</brief>
+    </enumvalue>
+    <enumvalue id="json::CONTROL_WARNING" name="CONTROL_WARNING" value="5">
+      <brief>used to check type. Greaters values are warnings, lower errors</brief>
+    </enumvalue>
+    <enumvalue id="json::EMPTY" name="EMPTY" value="6">
+      <brief>[WARNING] the collection is empty</brief>
+    </enumvalue>
+  </enum>
+  <enum anonymous="yes" id="json::ObjetsTypes" name="ObjetsTypes">
+    <enumvalue id="json::VECTOR" name="VECTOR" value="0" />
+    <enumvalue id="json::MAP" name="MAP" value="1" />
+    <enumvalue id="json::FINAL" name="FINAL" value="2">
+      <brief>used for comparisons, if (getType() &gt; FINAL) -&gt; is a final object</brief>
+    </enumvalue>
+    <enumvalue id="json::NUMBER_FLOAT" name="NUMBER_FLOAT" value="3" />
+    <enumvalue id="json::NUMBER_INT" name="NUMBER_INT" value="4" />
+    <enumvalue id="json::STRING" name="STRING" value="5" />
+    <enumvalue id="json::BOOL" name="BOOL" value="6" />
+  </enum>
+</namespace>

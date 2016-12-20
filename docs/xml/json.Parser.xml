@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="json::Parser" name="Parser" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>Manage I/O of .json files</brief>
+  <doc>## Description
+Provides functionalities for generating a <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> with the information retrieved from  a `.json` file  and vice versa.
+If errors are detected in the file manipulation process, the methods involved returns a flag from <ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref>
+
+If errors or extraneous situations are detected in the json syntax, they are reflected as a <ref ref="json::JsonLog#json::JsonLog">json::JsonLog</ref> objects.
+Those situations are clasified in two groups:
+
+  - Warnings: empty container (hash or array)
+  - Errors:   everything else
+
+As described in <ref ref="json#json::JSON_PARSER_FLAG">json::JSON_PARSER_FLAG</ref>
+
+## Usage example:
+```c++
+include "parser.hpp"
+
+int main (void) {
+
+  json::Parser parser;
+  json::JsonTree tree;
+
+  std::cout &lt;&lt; "Parsing" &lt;&lt; std::endl;
+
+  // Parsing
+  std::cout &lt;&lt; parser.parseFile("no_file.json", tree)                       &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::CANT_OPEN_FILE&gt;
+  std::cout &lt;&lt; parser.parseFile("file_empty.json", tree)                    &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::EMPTY_FILE&gt;
+  std::cout &lt;&lt; parser.parseFile("file_with_errors.json", tree)              &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::ERRORS&gt;
+  std::cout &lt;&lt; parser.parseFile("file_with_warnings.json", tree)            &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::WARNINGS&gt; + 1
+  std::cout &lt;&lt; parser.parseFile("file_with_warnings_and_errors.json", tree) &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::WARNINGS&gt; + &lt;JSON_PARSE_OUTPUT::ERRORS&gt;
+  std::cout &lt;&lt; parser.parseFile("file_ok.json", tree)                       &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::OK&gt;
+
+  std::cout &lt;&lt; parser.parseFile("some_file.json", tree, true)               &lt;&lt; std::endl; // shows information about parsing while doing it
+
+  // Error handling
+  parser.getErrors();                                                                     // returns vector &lt;JsonLog&gt; of errors
+  parser.getWarnings();                                                                   // returns vector &lt;JsonLog&gt; of warnings
+
+  std::cout &lt;&lt; "Saving" &lt;&lt; std::endl;
+
+  // Saving
+  std::cout &lt;&lt; parser.saveFile("/path/with/no/permissions/new_file", tree) &lt;&lt; std::endl;  // returns &lt;JSON_PARSE_OUTPUT::CANT_OPEN_FILE&gt;
+  std::cout &lt;&lt; parser.saveFile("new_file.json", tree) &lt;&lt; std::endl;                       // creates human readable file, returns &lt;JSON_PARSE_OUTPUT::OK&gt;
+  std::cout &lt;&lt; parser.saveFile("new_file_ugly.json", tree, true) &lt;&lt; std::endl;            // creates non human readable file, returns &lt;JSON_PARSE_OUTPUT::OK&gt;
+
+}
+```
+### Output
+```
+Parsing
+2  // 0x00010
+16 // 0x10000
+8  // 0x01000
+4  // 0x00100
+12 // 0x01100
+1  // 0x00001
+Saving
+2  // 0x00010
+1  // 0x00001
+```
+### Generated files
+#### new_file
+```json
+{
+  "element" : 12,
+  "boolean" : true
+}
+```
+#### new_file_ugly
+```json
+{"element":12,"boolean":true}
+```
+
+
+</doc>
+  <constructor abstract="yes" id="json::Parser::Parser" name="Parser">
+    <brief>Default constructor</brief>
+  </constructor>
+  <method id="json::Parser::getErrors" name="getErrors">
+    <brief> Get errors vector</brief>
+    <return>
+      <doc>errors detected wile parsing</doc>
+      <type name="std::vector&lt;json::JsonLog, std::allocator&lt;json::JsonLog&gt; &gt;" qualifier=" const &amp;" />
+    </return>
+  </method>
+  <method id="json::Parser::getWarnings" name="getWarnings">
+    <brief> Get warnings vector</brief>
+    <return>
+      <doc>warnings detected wile parsing</doc>
+      <type name="std::vector&lt;json::JsonLog, std::allocator&lt;json::JsonLog&gt; &gt;" qualifier=" const &amp;" />
+    </return>
+  </method>
+  <method abstract="yes" id="json::Parser::parseFile" name="parseFile">
+    <brief> Read a .json file</brief>
+    <doc>Tries to parse the file and creates the hierarchy of it.
+The method checks if the file exists and can be open before
+starting the process.
+
+If there are syntax errors in the input file, they will be
+catched and a <ref ref="json::JsonLog#json::JsonLog">json::JsonLog</ref> is generated for each of them. Those
+structs can be accessed with <ref ref="json::Parser#json::Parser::getErrors">json::Parser::getErrors</ref> and <ref ref="json::Parser#json::Parser::getWarnings">json::Parser::getWarnings</ref> functions
+
+</doc>
+    <return>
+      <doc><ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref> with the result of the operation</doc>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="json::Parser::parseFile::fileName" name="fileName">
+      <doc>path of the input file to be parsed</doc>
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Parser::parseFile::tree" name="tree">
+      <doc>object wich will store the hierarchy specificated in the file</doc>
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Parser::parseFile::verbs" name="verbs">
+      <doc>use or not verbose mode, by default =true</doc>
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::Parser::saveFile" name="saveFile" static="yes">
+    <brief> Create a .json file</brief>
+    <doc>Tries to create the file and writes the tree's content in it.
+As <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> objects are incoherence free, the only errors
+that could happen are those involved in the manipulation of the file,
+so the method can be static.
+
+</doc>
+    <return>
+      <doc><ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref> with the result of the operation</doc>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="json::Parser::saveFile::fileName" name="fileName">
+      <doc>input file to be parsed</doc>
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Parser::saveFile::tree" name="tree">
+      <doc>hierarchy that wil be stored in the file</doc>
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Parser::saveFile::uglify" name="uglify">
+      <doc>store content as human readable or minimizing file size. By default =false (human readable, max filesize)</doc>
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+</class>

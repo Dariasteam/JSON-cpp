@@ -1,0 +1,913 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="json::Serializable" name="Serializable" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <method id="json::Serializable::serializeIn" name="serializeIn">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::Serializable::serializeIn::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::serializeIn::p" name="p">
+      <type name="std::__cxx11::string" />
+    </argument>
+  </method>
+  <method id="json::Serializable::serializeIn" name="serializeIn">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::Serializable::serializeIn::file" name="file">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::serializeIn::p" name="p">
+      <type name="std::__cxx11::string" />
+    </argument>
+  </method>
+  <method id="json::Serializable::serializeOut" name="serializeOut">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::Serializable::serializeOut::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::serializeOut::p" name="p">
+      <type name="std::__cxx11::string" />
+    </argument>
+  </method>
+  <method id="json::Serializable::serializeOut" name="serializeOut">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::Serializable::serializeOut::file" name="file">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::serializeOut::p" name="p">
+      <type name="std::__cxx11::string" />
+    </argument>
+  </method>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type builtin="yes" name="void" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type builtin="yes" name="void" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::path" name="path">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::path" name="path">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::initialize" name="initialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::initialize::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::initialize::functor" name="functor">
+      <type name="func" />
+    </argument>
+    <argument id="json::Serializable::initialize::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::initialize::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::initialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::initialize::t" name="t" />
+    <templatetypeparameter id="json::Serializable::initialize::func" name="func" />
+    <templatetypeparameter id="json::Serializable::initialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::initialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <brief>gola</brief>
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <brief>aaa</brief>
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type builtin="yes" name="void" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type builtin="yes" name="void" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type builtin="yes" name="void" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type builtin="yes" name="void" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::vect" name="vect">
+      <type name="std::vector&lt;_Tp, _Alloc&gt;" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::retribution" name="retribution" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;!std::is_base_of&lt;Serializable, t&gt;::value &amp;&amp; (std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value), void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::retribution::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::retribution::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::retribution::key" name="key">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::retribution::element" name="element">
+      <type name="t" qualifier="* &amp;" />
+    </argument>
+    <argument id="json::Serializable::retribution::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::retribution::t" name="t" />
+    <templatetypeparameter id="json::Serializable::retribution::str" name="str" />
+    <templatetypeparameter id="json::Serializable::retribution::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::serialize" name="serialize" static="yes">
+    <return>
+      <type builtin="yes" name="void" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::serialize::_json_op_" name="_json_op_">
+      <type builtin="yes" name="bool" />
+    </argument>
+    <argument id="json::Serializable::serialize::_json_path_" name="_json_path_">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::serialize::_json_tree_" name="_json_tree_">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::serialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::serialize::Args" name="Args" />
+  </methodtemplate>
+  <methodtemplate access="protected" id="json::Serializable::serialize" name="serialize" static="yes">
+    <return>
+      <type name="const typename std::enable_if&lt;std::is_same&lt;string, str&gt;::value || std::is_same&lt;const char *, str&gt;::value, void&gt;::type" qualifier=" const" />
+    </return>
+    <argument id="json::Serializable::serialize::_json_op_" name="_json_op_">
+      <type builtin="yes" name="bool" />
+    </argument>
+    <argument id="json::Serializable::serialize::_json_path_" name="_json_path_">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <argument id="json::Serializable::serialize::_json_tree_" name="_json_tree_">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::serialize::path" name="path">
+      <type name="const str" qualifier=" const" />
+    </argument>
+    <argument id="json::Serializable::serialize::args" name="args">
+      <type name="Args &amp;..." />
+    </argument>
+    <templatetypeparameter id="json::Serializable::serialize::str" name="str" />
+    <templatetypeparameter id="json::Serializable::serialize::Args" name="Args" />
+  </methodtemplate>
+  <method abstract="yes" access="protected" id="json::Serializable::serializer" name="serializer" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::Serializable::serializer::tree" name="tree">
+      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+    </argument>
+    <argument id="json::Serializable::serializer::b" name="b">
+      <type builtin="yes" name="bool" />
+    </argument>
+    <argument id="json::Serializable::serializer::path" name="path">
+      <type name="std::__cxx11::string" />
+    </argument>
+  </method>
+</class>

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="json::ObjectFinalBool" name="ObjectFinalBool" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <base access="public">
+    <type name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+  </base>
+  <constructor abstract="yes" id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
+    <argument id="json::ObjectFinalBool::ObjectFinalBool::obj" name="obj">
+      <type name="ObjectFinalBool" qualifier=" const &amp;" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
+    </argument>
+  </constructor>
+  <constructor id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool" />
+  <constructor id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
+    <argument id="json::ObjectFinalBool::ObjectFinalBool::s" name="s">
+      <type name="std::__cxx11::string" />
+    </argument>
+  </constructor>
+  <constructor id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
+    <argument id="json::ObjectFinalBool::ObjectFinalBool::s" name="s">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="json::ObjectFinalBool::~ObjectFinalBool" name="~ObjectFinalBool" virtual="yes" />
+  <method id="json::ObjectFinalBool::getContent" name="getContent">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+  </method>
+  <method abstract="yes" id="json::ObjectFinalBool::replaceValue" name="replaceValue" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::ObjectFinalBool::replaceValue::value" name="value">
+      <type name="std::__cxx11::string" />
+    </argument>
+    <override name="ObjectFinal::replaceValue" ref="json::ObjectFinal#json::ObjectFinal::replaceValue" />
+  </method>
+  <method abstract="yes" id="json::ObjectFinalBool::toTxt" name="toTxt" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::ObjectFinalBool::toTxt::txt" name="txt">
+      <type name="std::__cxx11::string" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::ObjectFinalBool::toTxt::indentLvl" name="indentLvl">
+      <type builtin="yes" name="int" />
+    </argument>
+    <override name="AbstractObject::toTxt" ref="json::AbstractObject#json::AbstractObject::toTxt" />
+  </method>
+  <method abstract="yes" id="json::ObjectFinalBool::toTxtUgly" name="toTxtUgly" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::ObjectFinalBool::toTxtUgly::txt" name="txt">
+      <type name="std::__cxx11::string" qualifier=" &amp;" />
+    </argument>
+    <override name="AbstractObject::toTxtUgly" ref="json::AbstractObject#json::AbstractObject::toTxtUgly" />
+  </method>
+</class>
