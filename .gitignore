@@ -5,9 +5,9 @@ main.cpp
 jsonParser
 jsonTests
 pruebas/
-jsonCpp.config
-jsonCpp.creator
-jsonCpp.files
-jsonCpp.includes
-jsonCpp.creator.user
+JsonCpp.config
+JsonCpp.creator
+JsonCpp.files
+JsonCpp.includes
+JsonCpp.creator.user
 callgrind*
