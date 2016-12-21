@@ -278,11 +278,11 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
 void ObjectMap::toTxt (string& txt, int indentLvl) {
   txt.append("{");
   indentLvl++;
-  for (int i = 0; i < getKeys().size(); i++) {
+  for (string key : getKeys()) {
     txt.append(END_LINE);
     txtIndent (txt, indentLvl);
-    txt.append(QUOTE).append(getKeys()[i]).append(QUOTE).append(SPACE).append(POINTS).append(SPACE);
-    operator[](getKeys()[i])->toTxt(txt, indentLvl);
+    txt.append(QUOTE).append(key).append(QUOTE).append(SPACE).append(POINTS).append(SPACE);
+    operator[](key)->toTxt(txt, indentLvl);
     txt.append(COMMA);
   }
   if (getKeys().size() > 0)

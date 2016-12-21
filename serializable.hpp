@@ -15,7 +15,7 @@
 
 #define DISAMBIGUATOR_START Serializable* dissambiguator (string s) {
 #define ELEMENT(x) if (s == STRING(x)) { return new x; }
-#define DISAMBIGUATOR_END }
+#define DISAMBIGUATOR_END return nullptr; }
 
 namespace json {
 
@@ -53,7 +53,21 @@ public:
 
 protected:
 
-  // As seen in http://stackoverflow.com/questions/12877521/human-readable-type-info-name
+  // Pointers generator (solve problems with pure abstract classes)
+  template <class t>
+  typename std::enable_if<!is_abstract<t>::value, t*>::type
+  const initializePointer (t*& element) {
+    return new t();
+  }
+
+  template <class t>
+  typename std::enable_if<is_abstract<t>::value, t*>::type
+  const initializePointer (t*& element) {
+    return nullptr;
+  }
+
+  //- As seen in http://stackoverflow.com/questions/12877521/human-readable-type-info-name
+  // Used for get the class name
   string  demangle(const char* mangled) {
     int status;
     unique_ptr<char[], void (*)(void*)> result(
@@ -202,7 +216,11 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
    const retribution (JsonTree& tree, int index, string path, t*& element) {
     JsonTree auxTree;
-    element->serializeOut (auxTree, "p");
+
+    if (element == nullptr)
+      element->serializeOut (auxTree, "p");
+    else
+      return;
 
     cout << demangle(typeid(element).name()) << endl;
 
@@ -222,7 +240,12 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const retribution (JsonTree& tree, string path, const str key, t*& element) {
     JsonTree auxTree;
-    element->serializeOut (auxTree, "p");
+
+    if (element == nullptr)
+      element->serializeOut (auxTree, "p");
+    else
+      return;
+
 
     cout << demangle(typeid(element).name()) << endl;
 
@@ -377,15 +400,17 @@ protected:
   //- Pointers of SERIALIZABLE classes
   template <class t, class func>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-   const initialize (JsonTree& tree, func functor, t*& element) {
+  const initialize (JsonTree& tree, func functor, t*& element) {
 
-    Serializable* obj = dissambiguator("U");
-    if (obj != nullptr)
+    Serializable* obj = dissambiguator("F");
+
+    if (obj != nullptr) {
       element = dynamic_cast<t*> (obj);
-    else
-      element = new t();
+      element->serializeIn (tree, functor());
+    } else {
+      element = initializePointer (element) ;
+    }
 
-    element->serializeIn (tree, functor());
   }
 
   template <class t, class func, class... Args>
@@ -401,13 +426,13 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const initialize (JsonTree& tree, func functor, const str key, t*& element) {
 
-    Serializable* obj = dissambiguator("B");
-    if (obj != nullptr)
+    Serializable* obj = dissambiguator("F");
+    if (obj != nullptr) {
       element = dynamic_cast<t*> (obj);
-    else
-      element = new t();
-
-    element->serializeIn (tree, functor(key));
+      element->serializeIn (tree, functor());
+    } else {
+      element = initializePointer (element) ;
+    }
   }
 
   template <class t, class func, class str, class... Args>
