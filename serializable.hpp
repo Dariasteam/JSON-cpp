@@ -13,9 +13,9 @@
 
 #define STRING(s) #s
 
-#define DISSAMBIGUATOR_START Serializable* dissambiguator (string s) {
+#define DISAMBIGUATOR_START Serializable* dissambiguator (string s) {
 #define ELEMENT(x) if (s == STRING(x)) { return new x; }
-#define DISSAMBIGUATOR_END }
+#define DISAMBIGUATOR_END }
 
 namespace json {
 
