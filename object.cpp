@@ -316,7 +316,7 @@ void ObjectFinalString::toTxt (string& txt, int indentLvl) {
 
 void ObjectVector::toTxtUgly (string& txt) {
   txt.append("[");
-  AbstractObject* obj = this;
+  AbstractObject* obj;
   for (int i = 0; i < size(); i++) {
     obj = operator[](i);
     obj->toTxtUgly(txt);
