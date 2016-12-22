@@ -78,6 +78,8 @@ public:
 
 protected:
 
+  virtual bool serializer (JsonTree& tree, bool b, string path, InheritanceIndex& from) = 0;
+
   virtual Serializable* dissambiguator (string s) { return nullptr; }
 
   // If we are in the top class, serialize from the first element
@@ -121,9 +123,6 @@ protected:
     return result.get() ? string(result.get()) : "error occurred";
   }
 
-  virtual bool serializer (JsonTree& tree, bool b, string path, InheritanceIndex& from) = 0;
-
-
  //- without HASH, with depth
  template <class... Args>
   const bool serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, Args&... args) {
@@ -139,7 +138,7 @@ protected:
          if (in.index < size - 1)
            in.index++;
          in.path = _json_path_ + "." + to_string(aux);
-         return _json_path_ + "." + to_string(aux);
+         return in.path;
        },
      args...);
    }
@@ -147,7 +146,7 @@ protected:
 
   //- With HASH
   template <class str, class... Args>
-  typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
+  typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, bool>::type
    const serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, const str path, Args&... args) {
     if (_json_op_){
       retribution (_json_tree_, _json_path_, path, args...);
