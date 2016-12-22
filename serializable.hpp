@@ -20,7 +20,7 @@
 #define ELEMENT(x) if (s == STRING(x)) { return new x; }
 #define DISAMBIGUATOR_END return nullptr; }
 
-#define INHERITS_FROM(x) virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) {if (!x::isTopClass()) { x::callFatherSerializer (tree, path, op, from); } else { x::serializer(tree, op, path, from); } return serializer(tree, op, path, from); } bool isTopClass() { return false; }
+#define INHERITS_FROM(y, x) virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { if (x::isTopClass()) { x::serializer (tree, op, path, from); } else if (!isTopClass()) { x::callFatherSerializer (tree, path, op, from); } return y::serializer(tree, op, path, from);} bool isTopClass() { return false; }
 
 struct InheritanceIndex {
   int index;
@@ -71,10 +71,8 @@ public:
   inline void serializeOut (string file, string p = "") {
     JsonTree tree;
     InheritanceIndex from = {0, p};
-    if (!isTopClass())
-      callFatherSerializer (tree, p, true, from);
-    else
-      serializer(tree, true, p, from);
+    callFatherSerializer (tree, p, true, from);
+    serializer(tree, true, p, from);
     Parser::saveFile(file, tree);
   }
 
@@ -83,7 +81,7 @@ protected:
   virtual Serializable* dissambiguator (string s) { return nullptr; }
 
   // If we are in the top class, serialize from the first element
-  virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { if (!isTopClass()) {return serializer(tree, op, path, from);} }
+  virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { if (!isTopClass()) return serializer(tree, op, path, from); }
 
   // check if is the top class
   virtual bool isTopClass () {return true;}
@@ -234,8 +232,10 @@ protected:
     tree.addVector(path);
 
     string newPath = path + "." + to_string(index);
-    for (int j = 0; j < vect.size(); j++)
-      retribution (tree, j, newPath, vect[j]);
+    for (int j = 0; j < vect.size(); j++) {
+      int index = j;
+      retribution (tree, index, newPath, vect[j]);
+    }
     ++index;
   }
 
@@ -253,8 +253,10 @@ protected:
     string newPath = path + "." + key;
     tree.addVector(newPath);
 
-    for (int j = 0; j < vect.size(); j++)
-      retribution (tree, j, newPath, vect[j]);
+    for (int j = 0; j < vect.size(); j++) {
+      int index = j;
+      retribution (tree, index, newPath, vect[j]);
+    }
   }
 
   template <class t, class str, class... Args>
