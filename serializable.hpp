@@ -11,16 +11,35 @@
 #define CLASS_TYPE "classType"
 #define CLASS_CONTENT "classContent"
 
-#define SERIAL_START virtual bool serializer (JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
+#define SERIAL_START_INHERITED(y, x) INHERITS_FROM (y, x)                                                                                                 \
+                                      virtual bool serializer (JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { \
+                                        return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
+
+#define SERIAL_START virtual bool serializer (JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { \
+                       return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
+
+
 #define SERIAL_END ); }
 
-#define STRING(s) #s
-
 #define DISAMBIGUATOR_START Serializable* dissambiguator (string s) {
-#define ELEMENT(x) if (s == STRING(x)) { return new x; }
+#define ELEMENT(x) if (s == #x) { return new x; }
 #define DISAMBIGUATOR_END return nullptr; }
 
-#define INHERITS_FROM(y, x) virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { if (x::isTopClass()) { x::serializer (tree, op, path, from); } else if (!isTopClass()) { x::callFatherSerializer (tree, path, op, from); } return y::serializer(tree, op, path, from);} bool isTopClass() { return false; }
+#define INHERITS_FROM(y, x) static bool init () {                                      \
+                              json::Serializable::addSon( #y , [] { return new y; });  \
+                            }                                                          \
+                                                                                       \
+                            static bool trigger;                                       \
+                                                                                       \
+                            virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { \
+                              if (x::isTopClass())                                                                             \
+                                x::serializer (tree, op, path, from);                                                          \
+                              else if (!isTopClass())                                                                          \
+                                x::callFatherSerializer (tree, path, op, from);                                                \
+                              return y::serializer(tree, op, path, from);                                                      \
+                            }                                                                                                  \
+                                                                                                                               \
+                            bool isTopClass() { return false; }
 
 struct InheritanceIndex {
   int index;
@@ -30,8 +49,9 @@ struct InheritanceIndex {
 namespace json {
 
 class Serializable {
-private:
-
+protected:
+  static map<string, function<Serializable*()> > dictionary;
+  static void addSon (string name, function<Serializable*()> lambda) { dictionary[name] = lambda; }
 public:
 
   inline void serializeIn (JsonTree& tree, string p = "") {
@@ -80,8 +100,6 @@ protected:
 
   virtual bool serializer (JsonTree& tree, bool b, string path, InheritanceIndex& from) = 0;
 
-  virtual Serializable* dissambiguator (string s) { return nullptr; }
-
   // If we are in the top class, serialize from the first element
   virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { if (!isTopClass()) return serializer(tree, op, path, from); }
 
@@ -116,13 +134,14 @@ protected:
 
   //- As seen in http://stackoverflow.com/questions/12877521/human-readable-type-info-name
   // Used for get the class name
-  string  demangle(const char* mangled) {
+  static string demangle(const char* mangled) {
     int status;
     unique_ptr<char[], void (*)(void*)> result(
       abi::__cxa_demangle(mangled, 0, 0, &status), free);
     return result.get() ? string(result.get()) : "error occurred";
   }
 
+protected:
  //- without HASH, with depth
  template <class... Args>
   const bool serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, Args&... args) {
@@ -271,12 +290,10 @@ protected:
    const retribution (JsonTree& tree, int& index, string path, t*& element) {
     JsonTree auxTree;
 
-
-    tree.addMap(path);
-
     if (element == nullptr)
       return;
 
+    tree.addMap(path);
     element->serializeOut (auxTree, "p");
 
     string className = demangle(typeid(*element).name());
@@ -466,10 +483,11 @@ protected:
     string path = functor();
     string type;
     tree.get(type, path + "." + CLASS_TYPE);
-    Serializable* obj = dissambiguator(type);
+
+    auto obj = dictionary[type];
 
     if (obj != nullptr) {
-      element = dynamic_cast<t*> (obj);
+      element = static_cast<t*>(obj());
       element->serializeIn (tree, path + "." + CLASS_CONTENT);
     } else {
       element = initializePointer (element) ;
@@ -492,10 +510,11 @@ protected:
     string path = functor(key);
     string type;
     tree.get(type, path + "." + CLASS_TYPE);
-    Serializable* obj = dissambiguator(type);
+
+    auto obj = dictionary[type];
 
     if (obj != nullptr) {
-      element = dynamic_cast<t*> (obj);
+      element = static_cast<t*>(obj());
       element->serializeIn (tree, path + "." + CLASS_CONTENT);
     } else {
       element = initializePointer (element);
