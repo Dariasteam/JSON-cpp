@@ -12,14 +12,15 @@
 #define CLASS_CONTENT "classContent"
 
 #define SERIAL_START_INHERITED(y, x) INHERITS_FROM (y, x)                                                                                                 \
-                                      virtual bool serializer (JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { \
+                                      virtual bool serializer (json::JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { \
                                         return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
 
-#define SERIAL_START virtual bool serializer (JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { \
+#define SERIAL_START virtual bool serializer (json::JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { \
                        return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
 
 
 #define SERIAL_END ); }
+#define INHERITS(x) bool x::trigger = x::init ();
 
 #define DISAMBIGUATOR_START Serializable* dissambiguator (string s) {
 #define ELEMENT(x) if (s == #x) { return new x; }
@@ -31,7 +32,7 @@
                                                                                        \
                             static bool trigger;                                       \
                                                                                        \
-                            virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { \
+                            virtual bool callFatherSerializer (json::JsonTree& tree, string path, bool op, InheritanceIndex& from) { \
                               if (x::isTopClass())                                                                             \
                                 x::serializer (tree, op, path, from);                                                          \
                               else if (!isTopClass())                                                                          \
@@ -165,7 +166,7 @@ protected:
 
   //- With HASH
   template <class str, class... Args>
-  typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, bool>::type
+  typename std::enable_if<std::is_same<const string, str>::value || std::is_same<const char*, str>::value, bool>::type
    const serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, const str path, Args&... args) {
     if (_json_op_){
       retribution (_json_tree_, _json_path_, path, args...);
