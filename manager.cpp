@@ -395,7 +395,7 @@ bool JsonTree::addVector (const string path) {
   return top->add (path, new ObjectVector ());
 }
 
-bool JsonTree::add(JsonTree &tree, const string from, const string path) {
+bool JsonTree::add(const JsonTree &tree, const string from, const string path) {
   AbstractObject* obj = top->get(path);
   if (obj == nullptr) {
     if(tree.copyFrom(obj, from)) {

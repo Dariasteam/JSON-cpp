@@ -75,7 +75,7 @@ public:
       serializer(tree, true, p, from);
   }
 
-  inline void serializeIn (string file, string p = "") {
+  inline void serializeIn (const string file, string p = "") {
     JsonTree tree;
     Parser parser;
     if (parser.parseFile(file, tree) & JSON_PARSE_OUTPUT::OK) {
@@ -89,7 +89,7 @@ public:
     }
   }
 
-  inline void serializeOut (string file, string p = "") {
+  inline void serializeOut (const string file, string p = "") {
     JsonTree tree;
     InheritanceIndex from = {0, p};
     callFatherSerializer (tree, p, true, from);
@@ -145,7 +145,7 @@ protected:
 protected:
  //- without HASH, with depth
  template <class... Args>
-  const bool serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, Args&... args) {
+  const bool serialize (bool _json_op_, const string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, Args&... args) {
    if (_json_op_){
      if (in.index == 0)
       _json_tree_.addVector(_json_path_);
@@ -167,7 +167,7 @@ protected:
   //- With HASH
   template <class str, class... Args>
   typename std::enable_if<std::is_same<const string, str>::value || std::is_same<const char*, str>::value, bool>::type
-   const serialize (bool _json_op_, string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, const str path, Args&... args) {
+   const serialize (const bool _json_op_, const string _json_path_, JsonTree& _json_tree_, InheritanceIndex& in, const str path, Args&... args) {
     if (_json_op_){
       retribution (_json_tree_, _json_path_, path, args...);
     } else {

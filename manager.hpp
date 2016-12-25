@@ -55,15 +55,15 @@ public:
   // returns if this object is successfuly transformed to the union between tree and itself
   bool set_union (JsonTree& tree);
 
-  //- returns true if the path exist, has the appropiate type and the value is copied succesfully
-  bool get (double& to, const string path);
-  bool get (float& to,  const string path);
-  bool get (int& to,    const string path);
-  bool get (long& to,    const string path);
+  //- returns true if the path exist, has the appropiate type and the value is succesfully copied
+  bool get (double& to,       const string path);
+  bool get (float& to,        const string path);
+  bool get (int& to,          const string path);
+  bool get (long& to,         const string path);
   bool get (long long& to,    const string path);
-  bool get (bool& to,   const string path);
-  bool get (string& to, const string path);
-  bool get (char& to,   const string path);
+  bool get (bool& to,         const string path);
+  bool get (string& to,       const string path);
+  bool get (char& to,         const string path);
 
   bool get (vector<double>& array, const string path);
   bool get (vector<int>& array,    const string path);
@@ -103,7 +103,7 @@ public:
 
   // returns true if successfully copied the elements indicated in 'from' in the path.
   // The path mustn't exist previously
-  bool add (JsonTree& tree, const string from = "", const string path = "");
+  bool add (const JsonTree& tree, const string from = "", const string path = "");
 
   //- returns true if exist and its sucessfully updated
   bool replace (const double from,      const string path);
