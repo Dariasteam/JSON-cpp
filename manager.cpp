@@ -59,7 +59,7 @@ void JsonTree::getterError (const string path, AbstractObject* obj, int type) {
   }
 }
 
-ObjectVector* JsonTree::createVec (vector<double> &array) {
+ObjectVector* JsonTree::createVec (const vector<double> &array) {
   ObjectVector* object = new ObjectVector ();
   for (double number : array) {
     object->insert("", new ObjectFinalNumberFloat (number));
@@ -67,7 +67,7 @@ ObjectVector* JsonTree::createVec (vector<double> &array) {
   return object;
 }
 
-ObjectVector* JsonTree::createVec (vector<int> &array) {
+ObjectVector* JsonTree::createVec (const vector<int> &array) {
   ObjectVector* object = new ObjectVector ();
   for (int number : array) {
     object->insert("", new ObjectFinalNumberInt (float(number)));
@@ -75,7 +75,7 @@ ObjectVector* JsonTree::createVec (vector<int> &array) {
   return object;
 }
 
-ObjectVector* JsonTree::createVec (vector<bool> &array) {
+ObjectVector* JsonTree::createVec (const vector<bool> &array) {
   ObjectVector* object = new ObjectVector ();
   for (bool boolean : array) {
     object->insert("", new ObjectFinalBool (boolean));
@@ -83,7 +83,7 @@ ObjectVector* JsonTree::createVec (vector<bool> &array) {
   return object;
 }
 
-ObjectVector* JsonTree::createVec (vector<string> &array) {
+ObjectVector* JsonTree::createVec (const vector<string> &array) {
   ObjectVector* object = new ObjectVector ();
   for (string word : array) {
     object->insert("", new ObjectFinalString (word));
@@ -110,7 +110,7 @@ int JsonTree::getSizeAt (const string path) {
   }
 }
 
-string JsonTree::toText (bool uglify) {
+string JsonTree::toText (const bool uglify) {
   string txt;
   if (uglify)
     top->toTxtUgly(txt);
@@ -371,19 +371,19 @@ bool JsonTree::add (const char* value, const string path) {
   return add (string(value), path);
 };
 
-bool JsonTree::add (vector<double> &array, const string path) {
+bool JsonTree::add (const vector<double> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
-bool JsonTree::add (vector<int> &array, const string path) {
+bool JsonTree::add (const vector<int> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
-bool JsonTree::add (vector<bool> &array, const string path) {
+bool JsonTree::add (const vector<bool> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
-bool JsonTree::add (vector<string> &array, const string path) {
+bool JsonTree::add (const vector<string> &array, const string path) {
   return top->add (path, createVec(array));
 }
 
@@ -475,19 +475,19 @@ bool JsonTree::replace (const char* from, const string path) {
   return replace (string(from), path);
 }
 
-bool JsonTree::replace (vector<double>& array, const string path) {
+bool JsonTree::replace (const vector<double>& array, const string path) {
   return replace (createVec (array), path);
 }
 
-bool JsonTree::replace (vector<int>& array, const string path) {
+bool JsonTree::replace (const vector<int>& array, const string path) {
   return replace (createVec (array), path);
 }
 
-bool JsonTree::replace (vector<bool>& array, const string path) {
+bool JsonTree::replace (const vector<bool>& array, const string path) {
   return replace (createVec (array), path);
 }
 
-bool JsonTree::replace (vector<string>& array, const string path) {
+bool JsonTree::replace (const vector<string>& array, const string path) {
   return replace (createVec (array), path);
 }
 
@@ -538,22 +538,22 @@ bool JsonTree::set(const char *value, const string path) {
   return set (string(value), path);
 }
 
-bool JsonTree::set (vector<double>& array, const string path) {
+bool JsonTree::set (const vector<double>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
 
-bool JsonTree::set (vector<int>& array, const string path) {
+bool JsonTree::set (const vector<int>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
 
-bool JsonTree::set (vector<bool>& array, const string path) {
+bool JsonTree::set (const vector<bool>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
 
-bool JsonTree::set (vector<string>& array, const string path) {
+bool JsonTree::set (const vector<string>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }

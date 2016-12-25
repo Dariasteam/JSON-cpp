@@ -31,10 +31,10 @@ private:
   bool replace (AbstractObject* newObj, const string path);
   bool set (AbstractObject* newObj,     const string path);
 
-  static ObjectVector* createVec (vector<double>& array);
-  static ObjectVector* createVec (vector<int>& array);
-  static ObjectVector* createVec (vector<bool>& array);
-  static ObjectVector* createVec (vector<string>& array);
+  static ObjectVector* createVec (const vector<double>& array);
+  static ObjectVector* createVec (const vector<int>& array);
+  static ObjectVector* createVec (const vector<bool>& array);
+  static ObjectVector* createVec (const vector<string>& array);
 
   static AbstractObject* insertObject (const string path, AbstractObject* obj);
 
@@ -84,63 +84,63 @@ public:
   int getType (const string path);
 
   //- returns true if doesn't exist and its sucessfully created
-  bool add (double value,      const string path);
-  bool add (float value,       const string path);
-  bool add (int value,         const string path);
-  bool add (long value,         const string path);
-  bool add (long long value,         const string path);
-  bool add (bool value,        const string path);
-  bool add (string value,      const string path);
-  bool add (const char* value, const string path);
+  bool add (const double value,      const string path);
+  bool add (const float value,       const string path);
+  bool add (const int value,         const string path);
+  bool add (const long value,        const string path);
+  bool add (const long long value,   const string path);
+  bool add (const bool value,        const string path);
+  bool add (const string value,      const string path);
+  bool add (const char* value,       const string path);
 
-  bool add (vector<double>& array, const string path);
-  bool add (vector<int>& array,    const string path);
-  bool add (vector<bool>& array,   const string path);
-  bool add (vector<string>& array, const string path);
+  bool add (const vector<double>& array, const string path);
+  bool add (const vector<int>& array,    const string path);
+  bool add (const vector<bool>& array,   const string path);
+  bool add (const vector<string>& array, const string path);
 
   bool addVector (const string path);
-  bool addMap (string map);
+  bool addMap (const string path);
 
   // returns true if successfully copied the elements indicated in 'from' in the path.
   // The path mustn't exist previously
   bool add (JsonTree& tree, const string from = "", const string path = "");
 
   //- returns true if exist and its sucessfully updated
-  bool replace (double from,      const string path);
-  bool replace (float from,       const string path);
-  bool replace (int from,         const string path);
-  bool replace (long from,         const string path);
-  bool replace (long long from,         const string path);
-  bool replace (bool from,        const string path);
-  bool replace (string from,      const string path);
-  bool replace (const char* from, const string path);
+  bool replace (const double from,      const string path);
+  bool replace (const float from,       const string path);
+  bool replace (const int from,         const string path);
+  bool replace (const long from,        const string path);
+  bool replace (const long long from,   const string path);
+  bool replace (const bool from,        const string path);
+  bool replace (const string from,      const string path);
+  bool replace (const char* from,       const string path);
 
-  bool replace (vector<double>& array, const string path);
-  bool replace (vector<int>& array,    const string path);
-  bool replace (vector<bool>& array,   const string path);
-  bool replace (vector<string>& array, const string path);
+  bool replace (const vector<double>& array, const string path);
+  bool replace (const vector<int>& array,    const string path);
+  bool replace (const vector<bool>& array,   const string path);
+  bool replace (const vector<string>& array, const string path);
 
   //- returns true if its sucessfully created or replaced if previously exist
-  bool set (double value,      const string path);
-  bool set (float value,       const string path);
-  bool set (int value,         const string path);
-  bool set (long value,         const string path);
-  bool set (long long value,         const string path);
-  bool set (bool value,        const string path);
-  bool set (string value,      const string path);
-  bool set (const char* value, const string path);
+  bool set (const double value,      const string path);
+  bool set (const float value,       const string path);
+  bool set (const int value,         const string path);
+  bool set (const long value,        const string path);
+  bool set (const long long value,   const string path);
+  bool set (const bool value,        const string path);
+  bool set (const string value,      const string path);
+  bool set (const char* value,       const string path);
 
-  bool set (vector<double>& array, const string path);
-  bool set (vector<int>& array,    const string path);
-  bool set (vector<bool>& array,   const string path);
-  bool set (vector<string>& array, const string path);
+  bool set (const vector<double>& array, const string path);
+  bool set (const vector<int>& array,    const string path);
+  bool set (const vector<bool>& array,   const string path);
+  bool set (const vector<string>& array, const string path);
 
   //- return true if exist and its successfully removed, false if doesn't exist
   bool erase (const string path);
 
   //- return true if successfully removed or doesn't exist
   bool remove (const string path);
-  string toText (bool uglify = false);
+  string toText (const bool uglify = false);
 
 };
 
