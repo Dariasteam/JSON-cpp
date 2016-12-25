@@ -199,21 +199,7 @@ bool JsonTree::get (double &to, const string path) {
   return false;
 }
 
-bool JsonTree::get (float &to, const string path) {
-  AbstractObject* obj = top->get(path);
-  if (isType(obj, NUMBER_INT)) {
-    to = ((ObjectFinalNumberInt*)obj)->getContent();
-    return true;
-  }
-  if (isType(obj, NUMBER_FLOAT)) {
-    to = ((ObjectFinalNumberFloat*)obj)->getContent();
-    return true;
-  }
-  getterError(path, obj, NUMBER_FLOAT);
-  return false;
-}
-
-bool JsonTree::get (int &to, const string path) {
+bool JsonTree::get (long long &to, const string path) {
   AbstractObject* obj = top->get(path);
   if (isType(obj, NUMBER_INT)) {
     to = ((ObjectFinalNumberInt*)obj)->getContent();
@@ -225,6 +211,24 @@ bool JsonTree::get (int &to, const string path) {
   }
   getterError(path, obj, NUMBER_INT);
   return false;
+}
+
+bool JsonTree::get (long &to, const string path) {
+  long long aux;
+  get (aux, path);
+  to = aux;
+}
+
+bool JsonTree::get (int &to, const string path) {
+  long long aux;
+  get (aux, path);
+  to = aux;
+}
+
+bool JsonTree::get (float &to, const string path) {
+  double aux;
+  get (aux, path);
+  to = aux;
 }
 
 bool JsonTree::get (char &to, const string path) {
@@ -334,9 +338,19 @@ bool JsonTree::add (double value, const string path) {
   return top->add (path, object);
 };
 
-bool JsonTree::add (int value, const string path) {
+bool JsonTree::add (long long value, const string path) {
   AbstractObject* object = new ObjectFinalNumberInt (value);
   return top->add (path, object);
+}
+
+bool JsonTree::add (long value, const string path) {
+  long long aux = value;
+  return add (aux, path);
+}
+
+bool JsonTree::add (int value, const string path) {
+  long long aux = value;
+  return add (aux, path);
 };
 
 bool JsonTree::add (bool value, const string path) {
@@ -432,9 +446,19 @@ bool JsonTree::replace (float from, const string path) {
   return replace (double(from), path);
 }
 
-bool JsonTree::replace (int from, const string path) {
+bool JsonTree::replace (long long from, const string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
   return replace (object, path);
+}
+
+bool JsonTree::replace (long from, const string path) {
+  long long aux = from;
+  return replace (aux, path);
+}
+
+bool JsonTree::replace (int from, const string path) {
+  long long aux = from;
+  return replace (aux, path);
 }
 
 bool JsonTree::replace (bool from, const string path) {
@@ -485,9 +509,19 @@ bool JsonTree::set (float from, const string path) {
   return set (double(from), path);
 }
 
-bool JsonTree::set (int from, const string path) {
+bool JsonTree::set (long long from, const string path) {
   AbstractObject* object = new ObjectFinalNumberInt (from);
   return set (object, path);
+}
+
+bool JsonTree::set (long from, const string path) {
+  long long aux = from;
+  return set (aux, path);
+}
+
+bool JsonTree::set (int from, const string path) {
+  long long aux = from;
+  return set (aux, path);
 }
 
 bool JsonTree::set (bool from, const string path) {

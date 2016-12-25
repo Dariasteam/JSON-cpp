@@ -59,6 +59,8 @@ public:
   bool get (double& to, const string path);
   bool get (float& to,  const string path);
   bool get (int& to,    const string path);
+  bool get (long& to,    const string path);
+  bool get (long long& to,    const string path);
   bool get (bool& to,   const string path);
   bool get (string& to, const string path);
   bool get (char& to,   const string path);
@@ -85,6 +87,8 @@ public:
   bool add (double value,      const string path);
   bool add (float value,       const string path);
   bool add (int value,         const string path);
+  bool add (long value,         const string path);
+  bool add (long long value,         const string path);
   bool add (bool value,        const string path);
   bool add (string value,      const string path);
   bool add (const char* value, const string path);
@@ -105,6 +109,8 @@ public:
   bool replace (double from,      const string path);
   bool replace (float from,       const string path);
   bool replace (int from,         const string path);
+  bool replace (long from,         const string path);
+  bool replace (long long from,         const string path);
   bool replace (bool from,        const string path);
   bool replace (string from,      const string path);
   bool replace (const char* from, const string path);
@@ -118,6 +124,8 @@ public:
   bool set (double value,      const string path);
   bool set (float value,       const string path);
   bool set (int value,         const string path);
+  bool set (long value,         const string path);
+  bool set (long long value,         const string path);
   bool set (bool value,        const string path);
   bool set (string value,      const string path);
   bool set (const char* value, const string path);
