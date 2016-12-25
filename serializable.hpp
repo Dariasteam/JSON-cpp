@@ -480,7 +480,6 @@ protected:
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
   const initialize (JsonTree& tree, func functor, t*& element) {
 
-
     string path = functor();
     string type;
     tree.get(type, path + "." + CLASS_TYPE);

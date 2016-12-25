@@ -5,6 +5,8 @@
 #include <string>
 #include <map>
 #include <regex>
+#include <iomanip>
+#include <iostream>
 
 using namespace std;
 
@@ -130,7 +132,7 @@ public:
 
 class ObjectFinalNumberInt : public ObjectFinal {
 private:
-  long int number;
+  long long number;
 public:
   ~ObjectFinalNumberInt ();
   ObjectFinalNumberInt (const ObjectFinalNumberInt& obj);

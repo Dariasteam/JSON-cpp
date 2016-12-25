@@ -1,7 +1,5 @@
 #include "./object.hpp"
 
-#include <iostream>
-
 using namespace json;
 
 regex ObjectVector::tokenRgx = regex ("^(?:\\.)?(?:\\[)?(\\d+)(?:\\])?(?:\\.)?");
@@ -301,7 +299,9 @@ void ObjectFinalBool::toTxt (string& txt, int indentLvl) {
 }
 
 void ObjectFinalNumberFloat::toTxt (string& txt, int indentLvl) {
-  txt.append(to_string(getContent()));
+  std::ostringstream strs;
+  strs << setprecision(19) << getContent() << flush;
+  txt.append(strs.str());
 }
 
 void ObjectFinalNumberInt::toTxt (string& txt, int indentLvl) {
