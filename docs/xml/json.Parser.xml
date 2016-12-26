@@ -79,14 +79,14 @@ Saving
     <brief>Default constructor</brief>
   </constructor>
   <method id="json::Parser::getErrors" name="getErrors">
-    <brief> Get errors vector</brief>
+    <brief> Gets error vector</brief>
     <return>
       <doc>errors detected wile parsing</doc>
       <type name="std::vector&lt;json::JsonLog, std::allocator&lt;json::JsonLog&gt; &gt;" qualifier=" const &amp;" />
     </return>
   </method>
   <method id="json::Parser::getWarnings" name="getWarnings">
-    <brief> Get warnings vector</brief>
+    <brief> Gets warning vector</brief>
     <return>
       <doc>warnings detected wile parsing</doc>
       <type name="std::vector&lt;json::JsonLog, std::allocator&lt;json::JsonLog&gt; &gt;" qualifier=" const &amp;" />

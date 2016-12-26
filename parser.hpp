@@ -148,13 +148,13 @@ public:
   */
   static int saveFile (string fileName, JsonTree& tree, bool uglify = false);
 
-  /* Get error vector
+  /* Gets error vector
    *
    * @return errors detected wile parsing
   */
   inline const vector<JsonLog>& getErrors () { return errors; }
 
-  /* Get warning vector
+  /* Gets warning vector
    *
    * @return warnings detected wile parsing
   */

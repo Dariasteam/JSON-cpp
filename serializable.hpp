@@ -53,6 +53,7 @@ class Serializable {
 protected:
   static map<string, function<Serializable*()> > dictionary;
   static void addSon (string name, function<Serializable*()> lambda) { dictionary[name] = lambda; }
+
 public:
 
   inline void serializeIn (JsonTree& tree, string p = "") {

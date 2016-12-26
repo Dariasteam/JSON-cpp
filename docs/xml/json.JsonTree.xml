@@ -1,26 +1,88 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::JsonTree" name="JsonTree" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <constructor abstract="yes" id="json::JsonTree::JsonTree" name="JsonTree">
-    <argument id="json::JsonTree::JsonTree::root" name="root">
-      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
-    </argument>
+    <brief> Default constructor</brief>
+    <doc>Internally generates a new empty ObjectMap for the root of this tree
+</doc>
   </constructor>
-  <constructor abstract="yes" id="json::JsonTree::JsonTree" name="JsonTree" />
   <constructor abstract="yes" id="json::JsonTree::JsonTree" name="JsonTree">
+    <brief> Copy constructor</brief>
+    <doc>Copies the element at `path` in the object `tree` and its possible derived nodes to this object.
+The path's element copy is the root of this object
+</doc>
     <argument id="json::JsonTree::JsonTree::tree" name="tree">
+      <doc>contains the information to be copied</doc>
       <type name="JsonTree" qualifier=" const &amp;" ref="json::JsonTree#json::JsonTree" />
     </argument>
     <argument id="json::JsonTree::JsonTree::path" name="path">
+      <doc>Subpath of the tree that will be copied, by default ="" (root)</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </constructor>
   <destructor abstract="yes" id="json::JsonTree::~JsonTree" name="~JsonTree" />
   <method abstract="yes" id="json::JsonTree::add" name="add">
+    <brief> Adds information</brief>
+    <doc>## Explanation
+
+Tries to add information to the hierarchy. If the route indicated by path
+already exist, the operation is cancelled and the method returns false. Otherwise,
+the route is created as a hierarchy of hashes, where the last element has a **copy** of the
+information of 'value'.
+
+Note that this method has many overloads for many 'value' variable types.
+
+## Usage Example
+
+
+#### Initial hirarchy
+```json
+{
+ "A" : 40
+}
+```
+
+#### Code
+```c++
+json::JsonTree tree;
+//some code
+tree.add(56, "A");                   // will return false, the path "A" already exist
+tree.add(56, "some.long.path");      // will return true, adds the element at the correct path (which is created)
+tree.add(70, "some.long.otherPath"); // will return true, adds the element at the correct path (which now mostly exists because of the previous function call)
+```
+
+##### Modified hierarchy
+```json
+{
+ "A" : 40,
+ "some" : {
+  "long" : {
+   "path" : 56,
+   "otherPath" : 70
+  }
+ }
+}
+```
+
+</doc>
+    <return>
+      <doc>true if `path` doesn't exist and its sucessfully created</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::add::value" name="value">
+      <doc>Variable with the information to be added</doc>
+      <type builtin="yes" name="double" qualifier=" const" />
+    </argument>
+    <argument id="json::JsonTree::add::path" name="path">
+      <doc>Path in which one the info will be added</doc>
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::add" name="add">
     <return>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::value" name="value">
-      <type builtin="yes" name="double" />
+      <type builtin="yes" name="float" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -31,7 +93,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::value" name="value">
-      <type builtin="yes" name="float" />
+      <type builtin="yes" name="int" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -42,7 +104,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::value" name="value">
-      <type builtin="yes" name="int" />
+      <type builtin="yes" name="long" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -53,7 +115,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::value" name="value">
-      <type builtin="yes" name="bool" />
+      <type builtin="yes" name="long long" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -64,7 +126,18 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::value" name="value">
-      <type name="std::__cxx11::string" />
+      <type builtin="yes" name="bool" qualifier=" const" />
+    </argument>
+    <argument id="json::JsonTree::add::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::add" name="add">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::add::value" name="value">
+      <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -86,7 +159,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::array" name="array">
-      <type name="std::vector&lt;double, std::allocator&lt;double&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;double, std::allocator&lt;double&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -97,7 +170,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::array" name="array">
-      <type name="std::vector&lt;int, std::allocator&lt;int&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;int, std::allocator&lt;int&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -108,7 +181,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::array" name="array">
-      <type name="std::vector&lt;bool, std::allocator&lt;bool&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;bool, std::allocator&lt;bool&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -119,81 +192,187 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::array" name="array">
-      <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::add" name="add">
-    <brief>returns true if successfully copied the elements indicated in 'from' in the path.</brief>
-    <doc>The path mustn't exist previously</doc>
+    <brief> Copy info between JsonTree's</brief>
+    <doc>Tries to copy information from `tree` to this object. The `path` must not exist in this object due this is an add method
+(can not replace or set data) but will be created.
+
+</doc>
     <return>
+      <doc>true if `path` didn't exist, is successfuly created and the elemets of `tree` indicated in from are copied into it</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::add::tree" name="tree">
-      <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
+      <doc>Contains the informaton to be copied</doc>
+      <type name="JsonTree" qualifier=" const &amp;" ref="json::JsonTree#json::JsonTree" />
     </argument>
     <argument id="json::JsonTree::add::from" name="from">
+      <doc>route to the elements of `tree` to be copied</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::add::path" name="path">
+      <doc>route where the elements will be stored</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::addMap" name="addMap">
+    <brief> Adds a map</brief>
+    <doc>Tries to create a map in the route specificated by `path`.
+If already exist something there, the method returns false and
+no map is created
+
+</doc>
     <return>
+      <doc>true if the map is created at `path`</doc>
       <type builtin="yes" name="bool" />
     </return>
-    <argument id="json::JsonTree::addMap::map" name="map">
-      <type name="std::__cxx11::string" />
+    <argument id="json::JsonTree::addMap::path" name="path">
+      <doc>Where the map should be added</doc>
+      <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::addVector" name="addVector">
+    <brief> Adds a vector</brief>
+    <doc>Tries to create a vector in the route specifacted by `path`.
+If already exist something there, the method returns false and
+no vector is created
+
+</doc>
     <return>
+      <doc>true if the vector is created at `path`</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::addVector::path" name="path">
+      <doc>Where the vector should be added</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::copyFrom" name="copyFrom">
-    <brief>returns if the path exist and its content is succesfully copied in obj.</brief>
-    <doc>Obj previous content is deleted if the copy is valid, otherwise is not modified</doc>
+    <brief> Copy raw elements</brief>
+    <doc>Returns if the path exist and its content is succesfully copied in obj.
+obj's previous content is deleted if the copy is valid, otherwise is not modified
+
+</doc>
     <return>
+      <doc>the operation successfuly finish</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::copyFrom::obj" name="obj">
+      <doc>top of the subtree in which the elements of this will be replicated</doc>
       <type name="AbstractObject" qualifier="* &amp;" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
     <argument id="json::JsonTree::copyFrom::path" name="path">
+      <doc>Path to the elements to be copied</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::erase" name="erase">
+    <brief> Delete existing elements</brief>
+    <doc>Checks if `path` exists in this object, and if so it recursively delete its content
+If not exists returns false
+
+</doc>
     <return>
+      <doc>true if `path` exist and is successfully removed, false if doesn't exist</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::erase::path" name="path">
+      <doc>Path to the elements to be deleted</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::exist" name="exist">
+    <brief> Checks exists</brief>
     <return>
+      <doc>the element exists</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::exist::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::get" name="get">
+    <brief> Retrieves information</brief>
+    <doc>## Explanation
+Tries to get the information indicated by path and to copy it into 'to' variable.
+The method follows these steps:
+
+1. Check the `path` exists
+2. Check the element at `path` is of the same type that `to` variable
+3. Assing the value at `path` to `to`
+
+There are 3 possible situations
+
+- The path exist and it's content has the same type of 'to':
+  The element in path is copied into 'to' and the method returns true
+- The path exist and it's content has not the same type as 'to':
+  The operation is aborted, the method returns false and 'to' is not modified. cerr shows this message:
+
+  `ERROR : Attempting to load the element $path as a $to_type when is of type $path_type.`
+
+- The path does not exist:
+  The operation is aborted, the method returns false and 'to' is not modified. cerr shows this message:
+
+  `ERROR : Attempting to load the element $path which does not exist.`
+
+Note that this method has many overloads for supporting many 'to' variable types. However, you must know the type of the element
+which want to retrieve from 'path' in order to call this method with a 'to' variable of the appropiate type. To check the type of 'path' use
+one of these methods:
+
+-  <ref ref="json::JsonTree#json::JsonTree::isNumber">json::JsonTree::isNumber</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isFloat">json::JsonTree::isFloat</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isInt">json::JsonTree::isInt</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isBool">json::JsonTree::isBool</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isString">json::JsonTree::isString</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isVector">json::JsonTree::isVector</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isMap">json::JsonTree::isMap</ref>
+
+## Usage Example
+#### Initial hirarchy
+```json
+{
+ "A" : 40
+}
+```
+#### Code
+```c++
+json::JsonTree tree;
+//some code
+
+std::string aux_str = "default value";
+int aux_int = 0;
+
+tree.get (aux_str, "A"); // will return false, the element "A" exists but is not a string but a number. aux_string is not modified
+tree.get (aux_int, "O"); // will return false, the element "O" does not exist. aux_int is not modified
+tree.get (aux_int, "A"); // will return true, now aux_int contains the value 40
+
+std::cout &lt;&lt; "Value: " &lt;&lt; aux_str &lt;&lt; " " &lt;&lt; aux_int &lt;&lt; std::endl;
+```
+#### Output
+```
+ERROR : Attempting to load the element A as a String when is of type Number_Int.
+ERROR : Attempting to load the element O which does not exist.
+Values: default value 40
+```
+
+</doc>
     <return>
+      <doc>true if the path exist, has the appropiate type and the value is succesfully copied</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::get::to" name="to">
+      <doc>Variable to be assigned with the information retrieved</doc>
       <type builtin="yes" name="double" qualifier=" &amp;" />
     </argument>
     <argument id="json::JsonTree::get::path" name="path">
+      <doc>Path to the information to be retrieved</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
@@ -214,6 +393,28 @@
     </return>
     <argument id="json::JsonTree::get::to" name="to">
       <type builtin="yes" name="int" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::JsonTree::get::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::get" name="get">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::get::to" name="to">
+      <type builtin="yes" name="long" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::JsonTree::get::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::get" name="get">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::get::to" name="to">
+      <type builtin="yes" name="long long" qualifier=" &amp;" />
     </argument>
     <argument id="json::JsonTree::get::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -297,90 +498,181 @@
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::getKeys" name="getKeys">
+    <brief> Gets the keys of a Map in the hierarchy</brief>
     <return>
+      <doc>keys of the map</doc>
       <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" />
     </return>
     <argument id="json::JsonTree::getKeys::path" name="path">
+      <doc>Path of the map</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::getSizeAt" name="getSizeAt">
+    <brief> Gets the size of a vector in the nierarchy</brief>
     <return>
+      <doc>size of the vector, if the element indicated by path is not a vector, returns -1</doc>
       <type builtin="yes" name="int" />
     </return>
     <argument id="json::JsonTree::getSizeAt::path" name="path">
-      <type name="std::__cxx11::string" qualifier=" const" />
-    </argument>
-  </method>
-  <method abstract="yes" id="json::JsonTree::getType" name="getType">
-    <return>
-      <type builtin="yes" name="int" />
-    </return>
-    <argument id="json::JsonTree::getType::path" name="path">
+      <doc>Path of the vector</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::isBool" name="isBool">
+    <brief> Checks type Bool</brief>
     <return>
+      <doc>the element specifacated by path is a bool</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::isBool::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::isFloat" name="isFloat">
+    <brief> Checks type Float</brief>
+    <doc>Checks if the element specifacated by path is a floating point number (inner it will be a double for better precision)
+
+</doc>
     <return>
+      <doc>the element specifacated by path is a floating point number</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::isFloat::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::isInt" name="isInt">
+    <brief> Checks type Int</brief>
+    <doc>Checks if the element specifacated by path is an integer (inner it will be a long long int for better precision)
+
+</doc>
     <return>
+      <doc>the element specifacated by path is an integer</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::isInt::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::isMap" name="isMap">
+    <brief> Checks type Map</brief>
     <return>
+      <doc>the element specifacated by path is a map (hash)</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::isMap::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::isNumber" name="isNumber">
+    <brief> Checks type Numeric</brief>
+    <doc>Checks if the element specifacated by path is numeric (double or long long int equally)
+
+</doc>
     <return>
+      <doc>the element specifacated by path is numeric</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::isNumber::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::isString" name="isString">
+    <brief> Checks type String</brief>
     <return>
+      <doc>the element specifacated by path is a string</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::isString::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::isVector" name="isVector">
+    <brief> Checks type Vector</brief>
     <return>
+      <doc>the element specifacated by path is a vector</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::isVector::path" name="path">
+      <doc>Path of the element to be checked</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::remove" name="remove">
+    <brief> Delete possible elements</brief>
+    <doc>Checks if `path` exists in this object, and if so it recursively delete its content.
+If not exists also returns true
+
+</doc>
     <return>
+      <doc>true if `path` is successfully removed or doesn't previously exist</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::remove::path" name="path">
+      <doc>Path to the elements to be deleted</doc>
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::replace" name="replace">
+    <brief> Replace information</brief>
+    <doc>## Explanation
+
+Tries to replace one element of the hierarchy. If the route does not exist the operation is aborted and
+the method returns false. Otherwise, the information at path is replaced by a **copy** of the one inside 'from' and after that is recursively deleted.
+
+**Warning**: The replacement can be **from any type to any type** and the previous data will **be completely lost**.
+You can use this as a morphing method changing for example values from int to vector&amp;lt;int&amp;gt;.
+
+Note that this method has many overloads for many 'from' variable types.
+
+## Usage Example
+
+#### Initial hirarchy
+```json
+{
+ "A" : 40
+}
+```
+
+#### Code
+```c++
+json::JsonTree tree;
+//some code
+tree.replace(56, "O");                   // will return false, the path "O" does not exist so can not be replaced
+tree.replace(56.8, "A");                 // will return true, now A contains a float which value is 56.8, instead of the original integer
+tree.replace("this is a string", "A");   // will return true, now A contains a string which value is "this is a string" instead of the previous float
+
+std::vector &lt;int&gt; array_of_int = {1, 3, 4, 5, 6};
+tree.replace(array_of_int, "A");         // will return true, now A contains a copy of the vector `array_of_int`
+```
+
+##### Modified hierarchy
+```json
+{
+ "A" : [
+   1, 3, 4, 5, 6
+ ]
+}
+```
+
+</doc>
+    <return>
+      <doc>true if `path` exists and is sucessfully replaced</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::replace::from" name="from">
+      <doc>Contains the information to be used</doc>
+      <type builtin="yes" name="double" qualifier=" const" />
+    </argument>
+    <argument id="json::JsonTree::replace::path" name="path">
+      <doc>Path to the element to be replaced</doc>
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
@@ -389,7 +681,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::from" name="from">
-      <type builtin="yes" name="double" />
+      <type builtin="yes" name="float" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -400,7 +692,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::from" name="from">
-      <type builtin="yes" name="float" />
+      <type builtin="yes" name="int" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -411,7 +703,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::from" name="from">
-      <type builtin="yes" name="int" />
+      <type builtin="yes" name="long" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -422,7 +714,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::from" name="from">
-      <type builtin="yes" name="bool" />
+      <type builtin="yes" name="long long" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -433,7 +725,18 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::from" name="from">
-      <type name="std::__cxx11::string" />
+      <type builtin="yes" name="bool" qualifier=" const" />
+    </argument>
+    <argument id="json::JsonTree::replace::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::replace" name="replace">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::replace::from" name="from">
+      <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -455,7 +758,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::array" name="array">
-      <type name="std::vector&lt;double, std::allocator&lt;double&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;double, std::allocator&lt;double&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -466,7 +769,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::array" name="array">
-      <type name="std::vector&lt;int, std::allocator&lt;int&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;int, std::allocator&lt;int&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -477,7 +780,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::array" name="array">
-      <type name="std::vector&lt;bool, std::allocator&lt;bool&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;bool, std::allocator&lt;bool&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -488,18 +791,68 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::replace::array" name="array">
-      <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::replace::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::set" name="set">
+    <brief> Set information</brief>
+    <doc>## Explanation
+
+Tries to set information at `path` (either it previously exist or not)
+This method guarantees that the information will be stored unless a major
+problem happen. As same as`replace` methods, it has the danger of erase useful information
+if not propperly used.
+
+Note that this method has many overloads for many 'value' variable types.
+
+## Usage Example
+
+#### Initial hirarchy
+```json
+{
+ "A" : 40
+}
+```
+
+#### Code
+```c++
+json::JsonTree tree;
+//some code
+tree.set(56, "A");                       // will return true, the path A already exist but its value is replaced by a 56
+tree.replace("this is a string", "O");   // will return true, the path O didn't exist but is created with "this is a string" as content
+```
+
+##### Modified hierarchy
+```json
+{
+ "A" : 56,
+ "B" : "this is a string"
+}
+```
+
+</doc>
+    <return>
+      <doc>true if `path` its sucessfully created or replaced if previously exist</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::set::value" name="value">
+      <doc>Contains the information to be used</doc>
+      <type builtin="yes" name="double" qualifier=" const" />
+    </argument>
+    <argument id="json::JsonTree::set::path" name="path">
+      <doc>Path to the element to be setted</doc>
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::set" name="set">
     <return>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::value" name="value">
-      <type builtin="yes" name="double" />
+      <type builtin="yes" name="float" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -510,7 +863,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::value" name="value">
-      <type builtin="yes" name="float" />
+      <type builtin="yes" name="int" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -521,7 +874,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::value" name="value">
-      <type builtin="yes" name="int" />
+      <type builtin="yes" name="long" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -532,7 +885,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::value" name="value">
-      <type builtin="yes" name="bool" />
+      <type builtin="yes" name="long long" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -543,7 +896,18 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::value" name="value">
-      <type name="std::__cxx11::string" />
+      <type builtin="yes" name="bool" qualifier=" const" />
+    </argument>
+    <argument id="json::JsonTree::set::path" name="path">
+      <type name="std::__cxx11::string" qualifier=" const" />
+    </argument>
+  </method>
+  <method abstract="yes" id="json::JsonTree::set" name="set">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::JsonTree::set::value" name="value">
+      <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -565,7 +929,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::array" name="array">
-      <type name="std::vector&lt;double, std::allocator&lt;double&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;double, std::allocator&lt;double&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -576,7 +940,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::array" name="array">
-      <type name="std::vector&lt;int, std::allocator&lt;int&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;int, std::allocator&lt;int&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -587,7 +951,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::array" name="array">
-      <type name="std::vector&lt;bool, std::allocator&lt;bool&gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;bool, std::allocator&lt;bool&gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -598,7 +962,7 @@
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::JsonTree::set::array" name="array">
-      <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" &amp;" />
+      <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" const &amp;" />
     </argument>
     <argument id="json::JsonTree::set::path" name="path">
       <type name="std::__cxx11::string" qualifier=" const" />
@@ -614,19 +978,43 @@
     </argument>
   </method>
   <method id="json::JsonTree::setTop" name="setTop">
+    <brief> Changes the tree</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="json::JsonTree::setTop::root" name="root">
+      <doc>Root of a json hierarchy to replace the root (top) of this object</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
   </method>
   <method abstract="yes" id="json::JsonTree::toText" name="toText">
+    <brief> Formats content for output as json</brief>
+    <doc>#### Uglified
+```json
+{"pah_a":45,"path_b":[1,3,4,5],"path_c":{"subpath_a":false,"subpath_b":"hello"}}
+```
+#### Not uglified
+```json
+{
+ "pah_a" : 45,
+ "path_b" : [
+   1, 3, 4, 5
+ ],
+ "path_c" : {
+   "subpath_a" : false,
+   "subpath_b" : "hello"
+ }
+}
+```
+
+</doc>
     <return>
+      <doc>json formatted content</doc>
       <type name="std::__cxx11::string" />
     </return>
     <argument id="json::JsonTree::toText::uglify" name="uglify">
-      <type builtin="yes" name="bool" />
+      <doc>compacts or not the json information, by default =false (not compact, human readable)</doc>
+      <type builtin="yes" name="bool" qualifier=" const" />
     </argument>
   </method>
 </class>

@@ -19,5 +19,6 @@
     </class>
     <class name="Serializable" ref="json::Serializable#json::Serializable" />
   </namespace>
+  <struct name="InheritanceIndex" ref="InheritanceIndex#InheritanceIndex" />
   <report name="Documentation generator" ref="report" />
 </index>

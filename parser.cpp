@@ -30,7 +30,7 @@ int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
       returnValue += WARNINGS;
     if (hasErrors()) {
       returnValue += ERRORS;
-      return returnValue & (INT_MAX - 1); // removes the OK
+      return returnValue & (INT_MAX - 1); // removes the OK flag
     }
   } else {
     return CANT_OPEN_FILE;

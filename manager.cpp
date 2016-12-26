@@ -8,10 +8,6 @@ JsonTree::JsonTree () :
   top (new ObjectMap())
 {}
 
-JsonTree::JsonTree (AbstractObject* root) {
-  top = (ObjectMap*)root;
-}
-
 JsonTree::JsonTree (const JsonTree &tree, const string path) :
   top(new ObjectMap())
   {
@@ -49,13 +45,11 @@ void JsonTree::getterError (const string path, AbstractObject* obj, int type) {
   cerr << "ERROR : ";
   if (obj == nullptr) {
     cerr << "Attempting to load the element " << path
-         << " which does not exist."
-         << " The default value will be returned " << endl;
+         << " which does not exist." << endl;
   } else {
     cerr << "Attempting to load the element " << path
          << " as a "<< objectsTypesReverse[type] << " when is of type "
-         << objectsTypesReverse[obj->getType()]
-         << ". The default value will be returned " << endl;
+         << objectsTypesReverse[obj->getType()] << "." << endl;
   }
 }
 
