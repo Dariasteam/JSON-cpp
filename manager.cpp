@@ -2,6 +2,14 @@
 
 using namespace json;
 
+string const JsonTree::objectsTypesReverse[7] = { "Vector",
+                                                  "Map",
+                                                  "Final",
+                                                  "Number_Float",
+                                                  "Number_Int",
+                                                  "String",
+                                                  "Bool" };
+
 regex JsonTree::lastTokenRgx = regex ("^(.*)(?:\\.)(.+)$");
 
 JsonTree::JsonTree () :

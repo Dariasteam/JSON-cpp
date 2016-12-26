@@ -14,13 +14,7 @@ namespace json {
 
 class JsonTree {
 private:
-  string objectsTypesReverse [7] = { "Vector",
-                                     "Map",
-                                     "Final",
-                                     "Number_Float",
-                                     "Number_Int",
-                                     "String",
-                                     "Bool" };
+  static string const objectsTypesReverse [7];
   static regex lastTokenRgx;
 
   ObjectMap* top;
