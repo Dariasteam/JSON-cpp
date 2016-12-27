@@ -20,19 +20,19 @@
   <enum anonymous="yes" id="json::JSON_PARSE_OUTPUT" name="JSON_PARSE_OUTPUT">
     <brief>Binary flags used as output for <ref ref="json::Parser#json::Parser::parseFile">json::Parser::parseFile</ref> and <ref ref="json::Parser#json::Parser::saveFile">json::Parser::saveFile</ref> functions.</brief>
     <enumvalue id="json::OK" name="OK" value="1">
-      <brief>the file has been opened and parsed successfuly</brief>
+      <brief>`0x00001` the file has been opened and parsed successfuly</brief>
     </enumvalue>
     <enumvalue id="json::CANT_OPEN_FILE" name="CANT_OPEN_FILE" value="2">
-      <brief>the file can not be opened</brief>
+      <brief>`0x00010` the file can not be opened</brief>
     </enumvalue>
     <enumvalue id="json::WARNINGS" name="WARNINGS" value="4">
-      <brief>the parse operation has detected non critical extraneous situations in the format of the input file</brief>
+      <brief>`0x00100` the parse operation has detected non critical extraneous situations in the format of the input file. Parsing can continue</brief>
     </enumvalue>
     <enumvalue id="json::ERRORS" name="ERRORS" value="8">
-      <brief>the parse operation has detected critical problems in the format of the input file</brief>
+      <brief>`0x01000` the parse operation has detected critical problems in the format of the input file. parsing cannot continue</brief>
     </enumvalue>
     <enumvalue id="json::EMPTY_FILE" name="EMPTY_FILE" value="16">
-      <brief>the file is empty and can not be parsed</brief>
+      <brief>`0x10000` the file is empty and can not be parsed</brief>
     </enumvalue>
   </enum>
   <enum anonymous="yes" id="json::JSON_PARSER_FLAG" name="JSON_PARSER_FLAG">

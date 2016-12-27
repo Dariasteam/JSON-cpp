@@ -93,18 +93,75 @@ Saving
     </return>
   </method>
   <method abstract="yes" id="json::Parser::parseFile" name="parseFile">
-    <brief> Read a .json file</brief>
-    <doc>Tries to parse the file and creates the hierarchy of it.
-The method checks if the file exists and can be open before
+    <brief> Reads a json file</brief>
+    <doc>## Explanation
+
+Tries to parse the file and to create the hierarchy of it in `tree`.
+The method checks if the file exists, can be opened and is not empty before
 starting the process.
 
-If there are syntax errors in the input file, they will be
+If there are syntax errors in the input file, they are
 catched and a <ref ref="json::JsonLog#json::JsonLog">json::JsonLog</ref> is generated for each of them. Those
-structs can be accessed with <ref ref="json::Parser#json::Parser::getErrors">json::Parser::getErrors</ref> and <ref ref="json::Parser#json::Parser::getWarnings">json::Parser::getWarnings</ref> functions
+structs are stacked in inner vectors nad are accesible with the <ref ref="json::Parser#json::Parser::getErrors">json::Parser::getErrors</ref> and <ref ref="json::Parser#json::Parser::getWarnings">json::Parser::getWarnings</ref> functions. The method returns a
+binary flag informing possible problems. The cases are described at <ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref>
+
+If verbosity is activated, the method shows messages by cerr when errors or
+warnings happen. **There are no message for errors in file handling**.
+Errors / Warnings are described at &amp;lt;JSON\_PARSER\_FLAGS&amp;gt;
+
+  - Warnings: empty container (hash or array)
+  - Errors:   everything else
+
+Those message use this syntax:
+
+  - Warning parsing JSON: <ref ref="json#json::EMPTY">json::EMPTY</ref> in path: $path_of_the_warning
+  - Error parsing JSON: &amp;lt;NO\_CLOSED|EXPECTED\_MORE|INVALID\_KEY&amp;gt; in path: $path_of_the_error
+
+`tree` object is only modified if there are no errors (warnings are allowed) and the method returns 1 or 5.
+
+## Example
+```c++
+json::JsonTree tree;                                                  // object to store the information of the file
+json::Parser parser;
+
+parser.parseFile ("no_file", tree, false);                            // returns 2, JSON_PARSE_OUTPUT::CANT_OPEN_FILE, no output by cerr
+parser.parseFile ("no_file", tree, true);                             // returns 2, JSON_PARSE_OUTPUT::CANT_OPEN_FILE, no output by cerr
+parser.parseFile ("no_file", tree);                                   // returns 2, JSON_PARSE_OUTPUT::CANT_OPEN_FILE, no output by cerr
+
+parser.parseFile ("empty_file.json", tree, false);                    // returns 16, JSON_PARSE_OUTPUT::EMPTY_FILE, no output by cerr
+parser.parseFile ("empty_file.json", tree, true);                     // returns 16, JSON_PARSE_OUTPUT::EMPTY_FILE, no output by cerr
+parser.parseFile ("empty_file.json", tree);                           // returns 16, JSON_PARSE_OUTPUT::EMPTY_FILE, no output by cerr
+
+parser.parseFile ("file_with_errors.json", tree, false);              // returns 8, JSON_PARSE_OUTPUT::ERRRORS, no output by cerr
+parser.parseFile ("file_with_errors.json", tree, true);               // returns 8, JSON_PARSE_OUTPUT::ERRRORS, output by cerr
+parser.parseFile ("file_with_errors.json", tree);                     // returns 8, JSON_PARSE_OUTPUT::ERRRORS, output by cerr
+
+parser.parseFile ("file_with_warnings.json", tree, false);            // returns 5, JSON_PARSE_OUTPUT::WARNINGS + JSON_PARSE_OUTPUT::OK, no output by cerr
+parser.parseFile ("file_with_warnings.json", tree, true);             // returns 5, JSON_PARSE_OUTPUT::WARNINGS + JSON_PARSE_OUTPUT::OK, output by cerr
+parser.parseFile ("file_with_warnings.json", tree);                   // returns 5, JSON_PARSE_OUTPUT::WARNINGS + JSON_PARSE_OUTPUT::OK, output by cerr
+
+parser.parseFile ("file_with_warnings_and_errors.json", tree, false); // returns 12, JSON_PARSE_OUTPUT::WARNINGS + JSON_PARSE_OUTPUT::ERRORS, no output by cerr
+parser.parseFile ("file_with_warnings_and_errors.json", tree, true);  // returns 12, JSON_PARSE_OUTPUT::WARNINGS + JSON_PARSE_OUTPUT::ERRORS, output by cerr
+parser.parseFile ("file_with_warnings_and_errors.json", tree);        // returns 12, JSON_PARSE_OUTPUT::WARNINGS + JSON_PARSE_OUTPUT::ERRORS, output by cerr
+
+parser.parseFile ("well_formated_file.json", tree, false);            // returns 1, JSON_PARSE_OUTPUT::OK, no output by cerr
+parser.parseFile ("well_formated_file.json", tree, true);             // returns 1, JSON_PARSE_OUTPUT::OK, output by cerr
+parser.parseFile ("well_formated_file.json", tree);                   // returns 1, JSON_PARSE_OUTPUT::OK, output by cerr
+```
+#### Fast checking everything went well
+
+```c++
+json::JsonTree tree;
+json::Parser parser;
+
+if (parser.parseFile ("example.json", tree) &amp; json::JSON_PARSE_OUTPUT::OK) {
+ // if we are here tree contains the info of example.json file
+}
+```
 
 </doc>
     <return>
-      <doc><ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref> with the result of the operation</doc>
+      <doc>combination of flags <ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref> with the result of the operation</doc>
       <type builtin="yes" name="int" />
     </return>
     <argument id="json::Parser::parseFile::fileName" name="fileName">
@@ -121,12 +178,31 @@ structs can be accessed with <ref ref="json::Parser#json::Parser::getErrors">jso
     </argument>
   </method>
   <method abstract="yes" id="json::Parser::saveFile" name="saveFile" static="yes">
-    <brief> Create a .json file</brief>
-    <doc>Tries to create the file and writes the tree's content in it.
-As <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> objects are incoherence free, the only errors
-that could happen are those involved in the manipulation of the file,
-so the method can be static.
+    <brief> Creates a json file</brief>
+    <doc>## Explanation
 
+Tries to create the file `fileName` and to write the tree's content in it.
+As <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> objects are incoherence free, the only errors
+that can happen are those involved in the manipulation of the file,
+so the method can be static (no entries to check at <ref ref="json::Parser#json::Parser::getErrors">json::Parser::getErrors</ref> / <ref ref="json::Parser#json::Parser::getWarnings">json::Parser::getWarnings</ref>)
+
+Note: This method **does not append information to other files or checks if they previously exist**. Only generates / overwrites the file
+indicated by `fileName`
+
+Uglification is explained at <ref ref="json::JsonTree#json::JsonTree::toText">json::JsonTree::toText</ref>
+
+## Example
+
+```c++
+json::JsonTree tree;
+// some code
+
+json::Parser::saveFile ("/path/with/no/permissions", tree, false);        // returns 16, JSON_PARSE_OUTPUT::CANT_OPEN_FILE
+json::Parser::saveFile ("/path/with/no/permissions", tree, true) ;        // returns 16, JSON_PARSE_OUTPUT::CANT_OPEN_FILE
+
+json::Parser::saveFile ("example_1.json", tree, false);                   // returns 1, JSON_PARSE_OUTPUT::OK. The file is human readable
+json::Parser::saveFile ("example_2.json", tree, true );                   // returns 1, JSON_PARSE_OUTPUT::OK. The file is uglified
+```
 </doc>
     <return>
       <doc><ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref> with the result of the operation</doc>
