@@ -105,7 +105,7 @@ protected:
   // If we are in the top class, serialize from the first element
   virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { if (!isTopClass()) return serializer(tree, op, path, from); }
 
-  // check if is the top class
+  // checks if is the top class
   virtual bool isTopClass () {return true;}
 
   // Pointers generator (solve problems with pure abstract classes)

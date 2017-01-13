@@ -4,7 +4,9 @@
   <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
     <brief> Contains information about errors</brief>
   </struct>
-  <class name="JsonTree" ref="json::JsonTree#json::JsonTree" />
+  <class name="JsonTree" ref="json::JsonTree#json::JsonTree">
+    <brief> Contains a json hirarchy and allows its manipulation</brief>
+  </class>
   <class name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
   <class name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
   <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
@@ -53,7 +55,7 @@
       <brief>[ERROR] the key has extraneous characters</brief>
     </enumvalue>
     <enumvalue id="json::CONTROL_WARNING" name="CONTROL_WARNING" value="5">
-      <brief>used to check type. Greaters values are warnings, lower errors</brief>
+      <brief>used to check type. Greater values are warnings, lower errors</brief>
     </enumvalue>
     <enumvalue id="json::EMPTY" name="EMPTY" value="6">
       <brief>[WARNING] the collection is empty</brief>

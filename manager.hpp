@@ -12,6 +12,44 @@ using namespace std;
 
 namespace json {
 
+/* Contains a json hirarchy and allows its manipulation
+ * ## Description
+ * This class acts like a wrapper for a <json::AbstractObject> tree. While that structures contains all the hierarchied information, for security and
+ * convenience, its content only can be used through this object. For that, it contains a pointer to the root node of an <json::AbstractObject>'s tree (which is always <json::ObjectMap>)
+ * and the methods for accessing and manipulatng its data.
+ * The initialization of the object can be done handly or using a <json::Parser> to read the info from a file.
+ *
+ * The interface is designed to never expose raw nodes out of the class, only <setTop> and <copyFrom> works directly with nodes and must be used
+ * carefuly (For most situations there is a non-raw secure method for wathever you are trying to do).
+ *
+ * The acessing / manipulation methods are clasified like this
+ *
+ * - is*. Checks if the element at the path given is of certain type.
+ *  - isNumber
+ *  - isBool
+ *  - isVector
+ *  - isMap
+ *  - isString
+ *  - isInt
+ *  - insFloat
+ *
+ * - get. Copies information of the tree to a variable given a path
+ * - add. Adds information from a variable to the tree if **the given path doesn't previously exist**
+ * - replace. Adds information from a variable to the tree if **the given path previously exist**
+ * - set. Adds information from a variable to the tree **both if previously exist or not the path given**
+ * - erase. Deletes information from the tree if the given path previously exist
+ * - remove. Deletes information from the tree both if the given path previously exist or not
+ *
+ * All these methods share this syntax for simplicity:
+ *
+ * ```
+ * bool METHOD_NAME (<optional variable>, <path>)
+ * ```
+ * Where optional variable exist o not depending of the method and can be of several types (int, float, vector<int>, etc.) so the methods are heavily overloaded for supporting each type.
+ *
+ * There is also a method for get the information as a string in json format. <toText>
+ *
+ * */
 class JsonTree {
 private:
   static string const objectsTypesReverse [7];
@@ -47,6 +85,11 @@ public:
    * The path's element copy is the root of this object
    * */
   JsonTree (const JsonTree& tree, const string path = "");
+
+  /* Default destroyer
+   *
+   * Recursively deletes the information of the tree
+   * */
   ~JsonTree ();
 
   /* Changes the tree
@@ -85,7 +128,7 @@ public:
    * @to Variable to be assigned with the information retrieved
    * @path Path to the information to be retrieved
    *
-   * ## Explanation
+   * ## Description
    * Tries to get the information indicated by path and to copy it into 'to' variable.
    * The method follows these steps:
    *
@@ -134,9 +177,9 @@ public:
    * std::string aux_str = "default value";
    * int aux_int = 0;
    *
-   * tree.get (aux_str, "A"); // will return false, the element "A" exists but is not a string but a number. aux_string is not modified
-   * tree.get (aux_int, "O"); // will return false, the element "O" does not exist. aux_int is not modified
-   * tree.get (aux_int, "A"); // will return true, now aux_int contains the value 40
+   * tree.get (aux_str, "A"); // returns false, the element "A" exists but is not a string but a number. aux_string is not modified
+   * tree.get (aux_int, "O"); // returns false, the element "O" does not exist. aux_int is not modified
+   * tree.get (aux_int, "A"); // returns true, now aux_int contains the value 40
    *
    * std::cout << "Value: " << aux_str << " " << aux_int << std::endl;
    *```
@@ -223,14 +266,14 @@ public:
    * @value Variable with the information to be added
    * @path Path in which one the info will be added
    *
-   * ## Explanation
+   * ## Description
    *
    * Tries to add information to the hierarchy. If the route indicated by path
    * already exist, the operation is cancelled and the method returns false. Otherwise,
    * the route is created as a hierarchy of hashes, where the last element has a **copy** of the
    * information of 'value'.
    *
-   * Note that this method has many overloads for many 'value' variable types.
+   * Note that this method has many overloads for many `value` variable types.
    *
    * ## Usage Example
    *
@@ -246,9 +289,9 @@ public:
    * ```c++
    * json::JsonTree tree;
    * //some code
-   * tree.add(56, "A");                   // will return false, the path "A" already exist
-   * tree.add(56, "some.long.path");      // will return true, adds the element at the correct path (which is created)
-   * tree.add(70, "some.long.otherPath"); // will return true, adds the element at the correct path (which now mostly exists because of the previous function call)
+   * tree.add(56, "A");                   // returns false, the path "A" already exist
+   * tree.add(56, "some.long.path");      // returns true, adds the element at the correct path (which is created)
+   * tree.add(70, "some.long.otherPath"); // returns true, adds the element at the correct path (which now mostly exists because of the previous function call)
    * ```
    *
    * ##### Modified hierarchy
@@ -321,7 +364,7 @@ public:
    * @from Contains the information to be used
    * @path Path to the element to be replaced
    *
-   * ## Explanation
+   * ## Description
    *
    * Tries to replace one element of the hierarchy. If the route does not exist the operation is aborted and
    * the method returns false. Otherwise, the information at path is replaced by a **copy** of the one inside 'from' and after that is recursively deleted.
@@ -329,7 +372,7 @@ public:
    * **Warning**: The replacement can be **from any type to any type** and the previous data will **be completely lost**.
    * You can use this as a morphing method changing for example values from int to vector<int>.
    *
-   * Note that this method has many overloads for many 'from' variable types.
+   * Note that this method has many overloads for many `from` variable types.
    *
    * ## Usage Example
    *
@@ -344,12 +387,12 @@ public:
    * ```c++
    * json::JsonTree tree;
    * //some code
-   * tree.replace(56, "O");                   // will return false, the path "O" does not exist so can not be replaced
-   * tree.replace(56.8, "A");                 // will return true, now A contains a float which value is 56.8, instead of the original integer
-   * tree.replace("this is a string", "A");   // will return true, now A contains a string which value is "this is a string" instead of the previous float
+   * tree.replace(56, "O");                   // returns false, the path "O" does not exist so can not be replaced
+   * tree.replace(56.8, "A");                 // returns true, now A contains a float which value is 56.8, instead of the original integer
+   * tree.replace("this is a string", "A");   // returns true, now A contains a string which value is "this is a string" instead of the previous float
    *
    * std::vector <int> array_of_int = {1, 3, 4, 5, 6};
-   * tree.replace(array_of_int, "A");         // will return true, now A contains a copy of the vector `array_of_int`
+   * tree.replace(array_of_int, "A");         // returns true, now A contains a copy of the vector `array_of_int`
    * ```
    *
    * ##### Modified hierarchy
@@ -383,14 +426,14 @@ public:
    * @value Contains the information to be used
    * @path Path to the element to be setted
    *
-   * ## Explanation
+   * ## Description
    *
    * Tries to set information at `path` (either it previously exist or not)
    * This method guarantees that the information will be stored unless a major
    * problem happen. As same as`replace` methods, it has the danger of erase useful information
    * if not propperly used.
    *
-   * Note that this method has many overloads for many 'value' variable types.
+   * Note that this method has many overloads for many `value` variable types.
    *
    * ## Usage Example
    *
@@ -405,8 +448,8 @@ public:
    * ```c++
    * json::JsonTree tree;
    * //some code
-   * tree.set(56, "A");                       // will return true, the path A already exist but its value is replaced by a 56
-   * tree.replace("this is a string", "O");   // will return true, the path O didn't exist but is created with "this is a string" as content
+   * tree.set(56, "A");                       // returns true, the path A already exist but its value is replaced by a 56
+   * tree.replace("this is a string", "O");   // returns true, the path O didn't exist but is created with "this is a string" as content
    * ```
    *
    * ##### Modified hierarchy
@@ -455,6 +498,8 @@ public:
 
   /* Formats content for output as json
    * @uglify compacts or not the json information, by default =false (not compact, human readable)
+   *
+   * Creates a string which content is the hierarchy of this object formatted as json
    *
    * #### Uglified
    * ```json

@@ -487,12 +487,9 @@ return values.
         <location column="1" file="serializable.hpp" line="50" />
       </undocumented>
     </type>
-    <type documented="0" name="destructor" undocumented="10">
+    <type documented="1" name="destructor" undocumented="9">
       <undocumented id="json::AbstractObject::~AbstractObject" name="~AbstractObject">
         <location column="3" file="object.hpp" line="39" />
-      </undocumented>
-      <undocumented id="json::JsonTree::~JsonTree" name="~JsonTree">
-        <location column="3" file="manager.hpp" line="50" />
       </undocumented>
       <undocumented id="json::ObjectContainer::~ObjectContainer" name="~ObjectContainer">
         <location column="3" file="object.hpp" line="53" />
@@ -565,136 +562,136 @@ return values.
         <location column="3" file="object.hpp" line="45" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="270" />
+        <location column="3" file="manager.hpp" line="313" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="271" />
+        <location column="3" file="manager.hpp" line="314" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="272" />
+        <location column="3" file="manager.hpp" line="315" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="273" />
+        <location column="3" file="manager.hpp" line="316" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="274" />
+        <location column="3" file="manager.hpp" line="317" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="275" />
+        <location column="3" file="manager.hpp" line="318" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="276" />
+        <location column="3" file="manager.hpp" line="319" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="278" />
+        <location column="3" file="manager.hpp" line="321" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="279" />
+        <location column="3" file="manager.hpp" line="322" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="280" />
+        <location column="3" file="manager.hpp" line="323" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="281" />
+        <location column="3" file="manager.hpp" line="324" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="153" />
+        <location column="3" file="manager.hpp" line="196" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="154" />
+        <location column="3" file="manager.hpp" line="197" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="155" />
+        <location column="3" file="manager.hpp" line="198" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="156" />
+        <location column="3" file="manager.hpp" line="199" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="157" />
+        <location column="3" file="manager.hpp" line="200" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="158" />
+        <location column="3" file="manager.hpp" line="201" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="159" />
+        <location column="3" file="manager.hpp" line="202" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="161" />
+        <location column="3" file="manager.hpp" line="204" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="162" />
+        <location column="3" file="manager.hpp" line="205" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="163" />
+        <location column="3" file="manager.hpp" line="206" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="164" />
+        <location column="3" file="manager.hpp" line="207" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="367" />
+        <location column="3" file="manager.hpp" line="410" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="368" />
+        <location column="3" file="manager.hpp" line="411" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="369" />
+        <location column="3" file="manager.hpp" line="412" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="370" />
+        <location column="3" file="manager.hpp" line="413" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="371" />
+        <location column="3" file="manager.hpp" line="414" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="372" />
+        <location column="3" file="manager.hpp" line="415" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="373" />
+        <location column="3" file="manager.hpp" line="416" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="375" />
+        <location column="3" file="manager.hpp" line="418" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="376" />
+        <location column="3" file="manager.hpp" line="419" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="377" />
+        <location column="3" file="manager.hpp" line="420" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="378" />
+        <location column="3" file="manager.hpp" line="421" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="423" />
+        <location column="3" file="manager.hpp" line="466" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="424" />
+        <location column="3" file="manager.hpp" line="467" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="425" />
+        <location column="3" file="manager.hpp" line="468" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="426" />
+        <location column="3" file="manager.hpp" line="469" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="427" />
+        <location column="3" file="manager.hpp" line="470" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="428" />
+        <location column="3" file="manager.hpp" line="471" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="429" />
+        <location column="3" file="manager.hpp" line="472" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="431" />
+        <location column="3" file="manager.hpp" line="474" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="432" />
+        <location column="3" file="manager.hpp" line="475" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="433" />
+        <location column="3" file="manager.hpp" line="476" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="434" />
+        <location column="3" file="manager.hpp" line="477" />
       </undocumented>
       <undocumented id="json::ObjectContainer::insert" name="insert">
         <location column="3" file="object.hpp" line="57" />
@@ -934,12 +931,9 @@ return values.
         <location column="3" file="object.hpp" line="23" />
       </undocumented>
     </type>
-    <type documented="1" name="class" undocumented="11">
+    <type documented="2" name="class" undocumented="10">
       <undocumented id="json::AbstractObject" name="AbstractObject">
         <location column="1" file="object.hpp" line="33" />
-      </undocumented>
-      <undocumented id="json::JsonTree" name="JsonTree">
-        <location column="1" file="manager.hpp" line="15" />
       </undocumented>
       <undocumented id="json::ObjectContainer" name="ObjectContainer">
         <location column="1" file="object.hpp" line="50" />
@@ -972,7 +966,7 @@ return values.
   </coverage>
   <arguments>
     <function id="json::JsonTree::set_union" name="set_union">
-      <location column="3" file="manager.hpp" line="82" />
+      <location column="3" file="manager.hpp" line="125" />
       <undocumented-return />
       <undocumented name="tree" />
     </function>
@@ -1006,8 +1000,14 @@ return values.
     </function>
   </arguments>
   <references>
+    <class id="json::JsonTree" name="JsonTree">
+      <location column="1" file="manager.hpp" line="53" />
+      <doctype name="doc">
+        <ref name="int" />
+      </doctype>
+    </class>
     <method id="json::JsonTree::replace" name="replace">
-      <location column="3" file="manager.hpp" line="366" />
+      <location column="3" file="manager.hpp" line="409" />
       <doctype name="doc">
         <ref name="int" />
       </doctype>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="json:Parser" name="json:Parser" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <category name="parseFile" ref="json:Parser::parseFile#json:Parser::parseFile">
+    <brief>Reads a json file</brief>
+  </category>
+</category>

@@ -986,7 +986,7 @@
     </argument>
   </method>
   <method access="protected" id="json::Serializable::isTopClass" name="isTopClass" virtual="yes">
-    <brief>check if is the top class</brief>
+    <brief>checks if is the top class</brief>
     <return>
       <type builtin="yes" name="bool" />
     </return>

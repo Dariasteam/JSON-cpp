@@ -41,7 +41,7 @@ enum JSON_PARSER_FLAG {
   EXPECTED_MORE,
   // [ERROR] the key has extraneous characters
   INVALID_KEY,
-  // used to check type. Greaters values are warnings, lower errors
+  // used to check type. Greater values are warnings, lower errors
   CONTROL_WARNING,
   // [WARNING] the collection is empty
   EMPTY

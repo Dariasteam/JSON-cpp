@@ -73,7 +73,6 @@ Saving
 {"element":12,"boolean":true}
 ```
 
-
 </doc>
   <constructor abstract="yes" id="json::Parser::Parser" name="Parser">
     <brief>Default constructor</brief>

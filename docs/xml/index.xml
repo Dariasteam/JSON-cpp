@@ -5,7 +5,9 @@
     <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
       <brief> Contains information about errors</brief>
     </struct>
-    <class name="JsonTree" ref="json::JsonTree#json::JsonTree" />
+    <class name="JsonTree" ref="json::JsonTree#json::JsonTree">
+      <brief> Contains a json hirarchy and allows its manipulation</brief>
+    </class>
     <class name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
     <class name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
     <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />

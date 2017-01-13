@@ -11,3 +11,4 @@ JsonCpp.files
 JsonCpp.includes
 JsonCpp.creator.user
 callgrind*
+*.autosave
