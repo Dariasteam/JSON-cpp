@@ -125,7 +125,7 @@ bool JsonTree::isNumber (const string path) {
   return (isFloat(path) || isInt(path));
 }
 
-bool JsonTree::isNumber (AbstractObject* obj) {
+bool JsonTree::isNumber (AbstractObject* const obj) {
   return (isFloat(obj) || isInt(obj));
 }
 
@@ -133,7 +133,7 @@ bool JsonTree::isFloat (const string path) {
   return isFloat (top->get(path));
 }
 
-bool JsonTree::isFloat (AbstractObject* obj) {
+bool JsonTree::isFloat (AbstractObject* const obj) {
   return dynamic_cast<ObjectFinalNumberFloat*> (obj);
 }
 
@@ -141,7 +141,7 @@ bool JsonTree::isInt (const string path) {
   return isInt (top->get(path));
 }
 
-bool JsonTree::isInt (AbstractObject* obj) {
+bool JsonTree::isInt (AbstractObject* const obj) {
   return dynamic_cast<ObjectFinalNumberInt*> (obj);
 }
 
@@ -149,7 +149,7 @@ bool JsonTree::isBool (const string path) {
   return isBool (top->get(path));
 }
 
-bool JsonTree::isBool (AbstractObject* obj) {
+bool JsonTree::isBool (AbstractObject* const obj) {
   return dynamic_cast<ObjectFinalBool*> (obj);
 }
 
@@ -157,7 +157,7 @@ bool JsonTree::isString (const string path) {
   return isString (top->get(path));
 }
 
-bool JsonTree::isString (AbstractObject* obj) {
+bool JsonTree::isString (AbstractObject* const obj) {
   return dynamic_cast<ObjectFinalString*> (obj);
 }
 
@@ -165,7 +165,7 @@ bool JsonTree::isMap (const string path) {
    return isMap (top->get(path));
 }
 
-bool JsonTree::isMap (AbstractObject* obj) {
+bool JsonTree::isMap (AbstractObject* const obj) {
    return dynamic_cast<ObjectMap*> (obj);
 }
 

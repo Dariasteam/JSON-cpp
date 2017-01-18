@@ -64,13 +64,13 @@ private:
   bool replace (AbstractObject* newObj, const string path);
   bool set (AbstractObject* newObj,     const string path);
 
-  bool isNumber (AbstractObject* obj);
-  bool isFloat (AbstractObject* obj);
-  bool isInt (AbstractObject* obj);
-  bool isBool (AbstractObject* obj);
-  bool isString (AbstractObject* obj);
-  bool isMap (AbstractObject* obj);
-  bool isVector (AbstractObject* obj);  
+  static bool isNumber (AbstractObject* const obj);
+  static bool isFloat (AbstractObject* const obj);
+  static bool isInt (AbstractObject* const obj);
+  static bool isBool (AbstractObject* const obj);
+  static bool isString (AbstractObject* const obj);
+  static bool isMap (AbstractObject* const obj);
+  static bool isVector (AbstractObject* const obj);
 
   static ObjectVector* createVec (const vector<double>& array);
   static ObjectVector* createVec (const vector<int>& array);
