@@ -10,52 +10,40 @@ void AbstractObject::txtIndent(string &txt, int indentLvl) {
     txt.append(INDENT);
 }
 
-AbstractObject* AbstractObject::copy (const AbstractObject* obj) {
-  switch (obj->getType()) {
-    case BOOL:
-      return new ObjectFinalBool (*((ObjectFinalBool*)obj));
-      break;
-    case NUMBER_FLOAT:
-      return new ObjectFinalNumberFloat (*((ObjectFinalNumberFloat*)obj));
-      break;
-    case NUMBER_INT:
-      return new ObjectFinalNumberInt (*((ObjectFinalNumberInt*)obj));
-      break;
-    case STRING:
-      return new ObjectFinalString (*((ObjectFinalString*)obj));
-      break;
-    case MAP:
-      return new ObjectMap (*((ObjectMap*)obj));
-      break;
-    case VECTOR:
-      return new ObjectVector (*((ObjectVector*)obj));
-      break;
-    }
-  return nullptr;
+AbstractObject* AbstractObject::copy (AbstractObject* obj) {
+  if (dynamic_cast <ObjectFinalBool*> (obj))
+    return new ObjectFinalBool (*((ObjectFinalBool*)obj));
+  else if (dynamic_cast <ObjectFinalNumberFloat*> (obj))
+    return new ObjectFinalNumberFloat (*((ObjectFinalNumberFloat*)obj));
+  else if (dynamic_cast <ObjectFinalNumberInt*> (obj))
+    return new ObjectFinalNumberInt (*((ObjectFinalNumberInt*)obj));
+  else if (dynamic_cast <ObjectFinalString*> (obj))
+    return new ObjectFinalString (*((ObjectFinalString*)obj));
+  else if (dynamic_cast <ObjectMap*> (obj))
+    return new ObjectMap (*((ObjectMap*)obj));
+  else if (dynamic_cast <ObjectVector*> (obj))
+    return new ObjectVector (*((ObjectVector*)obj));
+  else
+    return nullptr;
 }
 
-ObjectFinalBool::ObjectFinalBool (const ObjectFinalBool &obj) :
-  ObjectFinal (BOOL),
+ObjectFinalBool::ObjectFinalBool (const ObjectFinalBool &obj) :  
   boolean(obj.getContent())
 {}
 
-ObjectFinalNumberFloat::ObjectFinalNumberFloat (const ObjectFinalNumberFloat &obj) :
-  ObjectFinal (NUMBER_FLOAT),
+ObjectFinalNumberFloat::ObjectFinalNumberFloat (const ObjectFinalNumberFloat &obj) :  
   number(obj.getContent())
 {}
 
-ObjectFinalNumberInt::ObjectFinalNumberInt (const ObjectFinalNumberInt &obj) :
-  ObjectFinal (NUMBER_INT),
+ObjectFinalNumberInt::ObjectFinalNumberInt (const ObjectFinalNumberInt &obj) :  
   number(obj.getContent())
 {}
 
-ObjectFinalString::ObjectFinalString (const ObjectFinalString &obj) :
-  ObjectFinal (STRING),
+ObjectFinalString::ObjectFinalString (const ObjectFinalString &obj) :  
   text(obj.getContent())
 {}
 
-ObjectMap::ObjectMap (const ObjectMap &obj) :
-  ObjectContainer (MAP),
+ObjectMap::ObjectMap (const ObjectMap &obj) :  
   keys(obj.getKeys())
   {
     for (string key : keys) {
@@ -64,7 +52,6 @@ ObjectMap::ObjectMap (const ObjectMap &obj) :
   }
 
 ObjectVector::ObjectVector (const ObjectVector &obj) :
-  ObjectContainer (VECTOR),
   array(obj.size())
   {
     for (int i = 0; i < obj.size(); i++){
@@ -198,7 +185,7 @@ bool ObjectMap::add (string path, AbstractObject* obj) {
     AbstractObject* son = operator[](matcher[1]);
     string newPath = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
-      if (!newPath.empty() || son->getType() == VECTOR) {
+      if (!newPath.empty() || dynamic_cast<ObjectVector*>(son)) {
         return son->add (newPath, obj);
       } else {
         delete obj;
@@ -255,7 +242,7 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
   indentLvl++;
   AbstractObject* obj = this;
   for (int i = 0; i < size(); i++) {
-    if (obj->getType() != NUMBER_INT) {
+    if (!dynamic_cast<ObjectFinalNumberInt*>(obj)) {
       txt.append(END_LINE);
       txtIndent (txt, indentLvl);
     } else {

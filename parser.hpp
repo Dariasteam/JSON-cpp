@@ -1,4 +1,4 @@
-#ifndef PARSER_H
+ifndef PARSER_H
 #define PARSER_H
 
 #include <regex>
@@ -122,7 +122,7 @@ public:
    * @tree object wich will store the hierarchy specificated in the file
    * @verbs use or not verbose mode, by default =true
    *
-   * ## Explanation
+   * ## Description
    *
    * Tries to parse the file and to create the hierarchy of it in `tree`.
    * The method checks if the file exists, can be opened and is not empty before
@@ -196,7 +196,7 @@ public:
    * @tree hierarchy that wil be stored in the file
    * @uglify store content as human readable or minimizing file size. By default =false (human readable, max filesize)
    *
-   * ## Explanation
+   * ## Description
    *
    * Tries to create the file `fileName` and to write the tree's content in it.
    * As <JsonTree> objects are incoherence free, the only errors

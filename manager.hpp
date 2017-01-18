@@ -8,6 +8,7 @@
 
 #include "object.hpp"
 
+
 using namespace std;
 
 namespace json {
@@ -62,7 +63,14 @@ private:
 
   bool replace (AbstractObject* newObj, const string path);
   bool set (AbstractObject* newObj,     const string path);
-  int getType (const string path);
+
+  bool isNumber (AbstractObject* obj);
+  bool isFloat (AbstractObject* obj);
+  bool isInt (AbstractObject* obj);
+  bool isBool (AbstractObject* obj);
+  bool isString (AbstractObject* obj);
+  bool isMap (AbstractObject* obj);
+  bool isVector (AbstractObject* obj);  
 
   static ObjectVector* createVec (const vector<double>& array);
   static ObjectVector* createVec (const vector<int>& array);
