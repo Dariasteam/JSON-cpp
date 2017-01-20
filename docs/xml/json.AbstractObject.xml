@@ -19,7 +19,7 @@
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::AbstractObject::copy::obj" name="obj">
-      <type name="AbstractObject" qualifier=" const *" ref="json::AbstractObject#json::AbstractObject" />
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
   </method>
   <method abstract="yes" id="json::AbstractObject::get" name="get" virtual="yes">
@@ -30,7 +30,7 @@
       <type name="std::__cxx11::string" />
     </argument>
   </method>
-  <method id="json::AbstractObject::getType" name="getType">
+  <method abstract="yes" id="json::AbstractObject::getType" name="getType" virtual="yes">
     <return>
       <type builtin="yes" name="unsigned short" />
     </return>
@@ -65,9 +65,5 @@
       <type builtin="yes" name="int" />
     </argument>
   </method>
-  <constructor access="protected" id="json::AbstractObject::AbstractObject" name="AbstractObject">
-    <argument id="json::AbstractObject::AbstractObject::t" name="t">
-      <type builtin="yes" name="unsigned short" />
-    </argument>
-  </constructor>
+  <constructor access="protected" id="json::AbstractObject::AbstractObject" name="AbstractObject" />
 </class>

@@ -5,6 +5,13 @@ using namespace json;
 regex ObjectVector::tokenRgx = regex ("^(?:\\.)?(?:\\[)?(\\d+)(?:\\])?(?:\\.)?");
 regex ObjectMap::tokenRgx = regex    ("^(?:\\.)?(?:\\[')?(\\w+)(?:'\\])?(?:\\.)?");
 
+const char* const ObjectVector::name = "VECTOR";
+const char* const ObjectMap::name = "MAP";
+const char* const ObjectFinalBool::name = "BOOL";
+const char* const ObjectFinalString::name = "STRING";
+const char* const ObjectFinalNumberFloat::name = "NUMBER_FLOAT";
+const char* const ObjectFinalNumberInt::name = "NUMBER_INT";
+
 void AbstractObject::txtIndent(string &txt, int indentLvl) {
   for (int i = 0; i < indentLvl; i++)
     txt.append(INDENT);

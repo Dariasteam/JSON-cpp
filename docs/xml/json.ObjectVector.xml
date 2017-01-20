@@ -3,12 +3,12 @@
   <base access="public">
     <type name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
   </base>
+  <constructor id="json::ObjectVector::ObjectVector" name="ObjectVector" />
   <constructor abstract="yes" id="json::ObjectVector::ObjectVector" name="ObjectVector">
     <argument id="json::ObjectVector::ObjectVector::obj" name="obj">
       <type name="ObjectVector" qualifier=" const &amp;" ref="json::ObjectVector#json::ObjectVector" />
     </argument>
   </constructor>
-  <constructor id="json::ObjectVector::ObjectVector" name="ObjectVector" />
   <destructor abstract="yes" id="json::ObjectVector::~ObjectVector" name="~ObjectVector" virtual="yes" />
   <method abstract="yes" id="json::ObjectVector::add" name="add" override="yes" virtual="yes">
     <return>
@@ -43,6 +43,12 @@
     <argument id="json::ObjectVector::getContentAt::indeox" name="indeox">
       <type builtin="yes" name="int" />
     </argument>
+  </method>
+  <method id="json::ObjectVector::getType" name="getType" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="unsigned short" />
+    </return>
+    <override name="AbstractObject::getType" ref="json::AbstractObject#json::AbstractObject::getType" />
   </method>
   <method abstract="yes" id="json::ObjectVector::insert" name="insert" override="yes" virtual="yes">
     <return>

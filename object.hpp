@@ -19,18 +19,9 @@ using namespace std;
 
 namespace json {
 
-enum ObjetsTypes {
-  VECTOR,
-  MAP,
-  NUMBER_FLOAT,
-  NUMBER_INT,
-  STRING,
-  BOOL
-};
-
 class AbstractObject {
 protected:
-  AbstractObject () {}
+  AbstractObject () {}  
 public:
   virtual ~AbstractObject () = 0;  
   virtual AbstractObject* get (string path) = 0;
@@ -39,7 +30,7 @@ public:
   virtual void toTxtUgly (string &txt) = 0;
   void txtIndent (string& txt, int indentLvl);
 
-  virtual unsigned short getType () = 0;
+  virtual const char* getName () = 0;
 
   static AbstractObject* copy (AbstractObject* obj);
 };
@@ -59,14 +50,15 @@ private:
   vector <AbstractObject*> array;
   static regex tokenRgx;
 public:
+  const static char* const name;
+  inline const char* getName () { return name; }
+
   ObjectVector () {}
   ~ObjectVector ();
   ObjectVector (const ObjectVector& obj);
   AbstractObject* getContentAt (int indeox);
 
-  bool insert (string key, AbstractObject* obj);
-
-  inline unsigned short getType () { return VECTOR; }
+  bool insert (string key, AbstractObject* obj);  
 
   inline int size () const { return array.size(); }
   inline const vector<AbstractObject*>& getContent () const { return array; }
@@ -84,6 +76,8 @@ private:
   map <string, AbstractObject*> hash;
   static regex tokenRgx;
 public:
+  const static char* const name;
+  inline const char* getName () { return name; }
   ~ObjectMap ();
   ObjectMap () {}
   ObjectMap (const ObjectMap& obj);
@@ -92,7 +86,6 @@ public:
   inline const vector <string>& getKeys () const { return keys; }
   inline const map<string, AbstractObject*>& getContent () const { return hash; }
 
-  inline unsigned short getType () { return MAP; }
 
   AbstractObject* operator[](string key);
   AbstractObject* get (string path);
@@ -120,12 +113,14 @@ class ObjectFinalNumberFloat : public ObjectFinal {
 private:
   double number;
 public:
+  const static char* const name;
+   inline const char* getName () { return name; }
+
   ~ObjectFinalNumberFloat ();
   ObjectFinalNumberFloat (const ObjectFinalNumberFloat& obj);
   ObjectFinalNumberFloat () : ObjectFinal () {}
   ObjectFinalNumberFloat (double n) : number (n) {}
-  inline double getContent () const { return number; }
-  inline unsigned short getType () { return NUMBER_FLOAT; }
+  inline double getContent () const { return number; }  
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
@@ -135,12 +130,14 @@ class ObjectFinalNumberInt : public ObjectFinal {
 private:
   long long number;
 public:
+  const static char* const name;
+  inline const char* getName () { return name; }
+
   ~ObjectFinalNumberInt ();
   ObjectFinalNumberInt () {}
   ObjectFinalNumberInt (const ObjectFinalNumberInt& obj);  
   ObjectFinalNumberInt (long int n) : number (n) {}
-  inline long int getContent () const { return number; }
-  inline unsigned short getType () { return NUMBER_INT; }
+  inline long int getContent () const { return number; }  
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
@@ -150,12 +147,14 @@ class ObjectFinalString : public ObjectFinal {
 private:
   string text;
 public:
+  const static char* const name;
+  inline const char* getName () { return name; }
+
   ~ObjectFinalString ();
   ObjectFinalString () {}
   ObjectFinalString (const ObjectFinalString& obj);
   ObjectFinalString (string s) : text (s) {}
-  inline string getContent () const { return text; }
-  inline unsigned short getType () { return STRING; }
+  inline string getContent () const { return text; }  
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
@@ -165,13 +164,15 @@ class ObjectFinalBool : public ObjectFinal {
 private:
   bool boolean;
 public:
+  const static char* const name;
+  inline const char* getName () { return name; }
+
   ~ObjectFinalBool ();  
   ObjectFinalBool (const ObjectFinalBool& obj);
   ObjectFinalBool() : boolean (false) {}
   ObjectFinalBool(string s) { replaceValue(s); }
   ObjectFinalBool(bool s) : boolean (s) {}
-  inline bool getContent () const { return boolean; }
-  inline unsigned short getType () { return BOOL; }
+  inline bool getContent () const { return boolean; }  
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);

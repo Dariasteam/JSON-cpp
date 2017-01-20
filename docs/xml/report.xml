@@ -482,38 +482,38 @@ return values.
     <type documented="0" name="namespace" undocumented="1">
       <undocumented id="json" name="json">
         <location column="1" file="object.hpp" line="20" />
-        <location column="1" file="manager.hpp" line="13" />
+        <location column="1" file="manager.hpp" line="14" />
         <location column="1" file="parser.hpp" line="15" />
         <location column="1" file="serializable.hpp" line="50" />
       </undocumented>
     </type>
     <type documented="1" name="destructor" undocumented="9">
       <undocumented id="json::AbstractObject::~AbstractObject" name="~AbstractObject">
-        <location column="3" file="object.hpp" line="39" />
+        <location column="3" file="object.hpp" line="35" />
       </undocumented>
       <undocumented id="json::ObjectContainer::~ObjectContainer" name="~ObjectContainer">
-        <location column="3" file="object.hpp" line="53" />
+        <location column="3" file="object.hpp" line="50" />
       </undocumented>
       <undocumented id="json::ObjectFinal::~ObjectFinal" name="~ObjectFinal">
         <location column="3" file="object.hpp" line="112" />
       </undocumented>
       <undocumented id="json::ObjectFinalBool::~ObjectFinalBool" name="~ObjectFinalBool">
-        <location column="3" file="object.hpp" line="165" />
+        <location column="3" file="object.hpp" line="168" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberFloat::~ObjectFinalNumberFloat" name="~ObjectFinalNumberFloat">
         <location column="3" file="object.hpp" line="123" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberInt::~ObjectFinalNumberInt" name="~ObjectFinalNumberInt">
-        <location column="3" file="object.hpp" line="137" />
+        <location column="3" file="object.hpp" line="138" />
       </undocumented>
       <undocumented id="json::ObjectFinalString::~ObjectFinalString" name="~ObjectFinalString">
-        <location column="3" file="object.hpp" line="151" />
+        <location column="3" file="object.hpp" line="153" />
       </undocumented>
       <undocumented id="json::ObjectMap::~ObjectMap" name="~ObjectMap">
-        <location column="3" file="object.hpp" line="88" />
+        <location column="3" file="object.hpp" line="87" />
       </undocumented>
       <undocumented id="json::ObjectVector::~ObjectVector" name="~ObjectVector">
-        <location column="3" file="object.hpp" line="65" />
+        <location column="3" file="object.hpp" line="63" />
       </undocumented>
     </type>
     <type documented="0" name="field" undocumented="7">
@@ -539,48 +539,27 @@ return values.
         <location column="5" file="parser.hpp" line="76" />
       </undocumented>
     </type>
-    <type documented="30" name="method" undocumented="101">
+    <type documented="30" name="method" undocumented="107">
       <undocumented id="json::AbstractObject::add" name="add">
-        <location column="3" file="object.hpp" line="42" />
+        <location column="3" file="object.hpp" line="37" />
       </undocumented>
       <undocumented id="json::AbstractObject::copy" name="copy">
-        <location column="3" file="object.hpp" line="47" />
-      </undocumented>
-      <undocumented id="json::AbstractObject::get" name="get">
-        <location column="3" file="object.hpp" line="41" />
-      </undocumented>
-      <undocumented id="json::AbstractObject::getType" name="getType">
-        <location column="3" file="object.hpp" line="40" />
-      </undocumented>
-      <undocumented id="json::AbstractObject::toTxt" name="toTxt">
-        <location column="3" file="object.hpp" line="43" />
-      </undocumented>
-      <undocumented id="json::AbstractObject::toTxtUgly" name="toTxtUgly">
         <location column="3" file="object.hpp" line="44" />
       </undocumented>
+      <undocumented id="json::AbstractObject::get" name="get">
+        <location column="3" file="object.hpp" line="36" />
+      </undocumented>
+      <undocumented id="json::AbstractObject::getType" name="getType">
+        <location column="3" file="object.hpp" line="42" />
+      </undocumented>
+      <undocumented id="json::AbstractObject::toTxt" name="toTxt">
+        <location column="3" file="object.hpp" line="38" />
+      </undocumented>
+      <undocumented id="json::AbstractObject::toTxtUgly" name="toTxtUgly">
+        <location column="3" file="object.hpp" line="39" />
+      </undocumented>
       <undocumented id="json::AbstractObject::txtIndent" name="txtIndent">
-        <location column="3" file="object.hpp" line="45" />
-      </undocumented>
-      <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="313" />
-      </undocumented>
-      <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="314" />
-      </undocumented>
-      <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="315" />
-      </undocumented>
-      <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="316" />
-      </undocumented>
-      <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="317" />
-      </undocumented>
-      <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="318" />
-      </undocumented>
-      <undocumented id="json::JsonTree::add" name="add">
-        <location column="3" file="manager.hpp" line="319" />
+        <location column="3" file="object.hpp" line="40" />
       </undocumented>
       <undocumented id="json::JsonTree::add" name="add">
         <location column="3" file="manager.hpp" line="321" />
@@ -594,26 +573,26 @@ return values.
       <undocumented id="json::JsonTree::add" name="add">
         <location column="3" file="manager.hpp" line="324" />
       </undocumented>
-      <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="196" />
+      <undocumented id="json::JsonTree::add" name="add">
+        <location column="3" file="manager.hpp" line="325" />
       </undocumented>
-      <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="197" />
+      <undocumented id="json::JsonTree::add" name="add">
+        <location column="3" file="manager.hpp" line="326" />
       </undocumented>
-      <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="198" />
+      <undocumented id="json::JsonTree::add" name="add">
+        <location column="3" file="manager.hpp" line="327" />
       </undocumented>
-      <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="199" />
+      <undocumented id="json::JsonTree::add" name="add">
+        <location column="3" file="manager.hpp" line="329" />
       </undocumented>
-      <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="200" />
+      <undocumented id="json::JsonTree::add" name="add">
+        <location column="3" file="manager.hpp" line="330" />
       </undocumented>
-      <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="201" />
+      <undocumented id="json::JsonTree::add" name="add">
+        <location column="3" file="manager.hpp" line="331" />
       </undocumented>
-      <undocumented id="json::JsonTree::get" name="get">
-        <location column="3" file="manager.hpp" line="202" />
+      <undocumented id="json::JsonTree::add" name="add">
+        <location column="3" file="manager.hpp" line="332" />
       </undocumented>
       <undocumented id="json::JsonTree::get" name="get">
         <location column="3" file="manager.hpp" line="204" />
@@ -627,26 +606,26 @@ return values.
       <undocumented id="json::JsonTree::get" name="get">
         <location column="3" file="manager.hpp" line="207" />
       </undocumented>
-      <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="410" />
+      <undocumented id="json::JsonTree::get" name="get">
+        <location column="3" file="manager.hpp" line="208" />
       </undocumented>
-      <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="411" />
+      <undocumented id="json::JsonTree::get" name="get">
+        <location column="3" file="manager.hpp" line="209" />
       </undocumented>
-      <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="412" />
+      <undocumented id="json::JsonTree::get" name="get">
+        <location column="3" file="manager.hpp" line="210" />
       </undocumented>
-      <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="413" />
+      <undocumented id="json::JsonTree::get" name="get">
+        <location column="3" file="manager.hpp" line="212" />
       </undocumented>
-      <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="414" />
+      <undocumented id="json::JsonTree::get" name="get">
+        <location column="3" file="manager.hpp" line="213" />
       </undocumented>
-      <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="415" />
+      <undocumented id="json::JsonTree::get" name="get">
+        <location column="3" file="manager.hpp" line="214" />
       </undocumented>
-      <undocumented id="json::JsonTree::replace" name="replace">
-        <location column="3" file="manager.hpp" line="416" />
+      <undocumented id="json::JsonTree::get" name="get">
+        <location column="3" file="manager.hpp" line="215" />
       </undocumented>
       <undocumented id="json::JsonTree::replace" name="replace">
         <location column="3" file="manager.hpp" line="418" />
@@ -660,26 +639,26 @@ return values.
       <undocumented id="json::JsonTree::replace" name="replace">
         <location column="3" file="manager.hpp" line="421" />
       </undocumented>
-      <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="466" />
+      <undocumented id="json::JsonTree::replace" name="replace">
+        <location column="3" file="manager.hpp" line="422" />
       </undocumented>
-      <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="467" />
+      <undocumented id="json::JsonTree::replace" name="replace">
+        <location column="3" file="manager.hpp" line="423" />
       </undocumented>
-      <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="468" />
+      <undocumented id="json::JsonTree::replace" name="replace">
+        <location column="3" file="manager.hpp" line="424" />
       </undocumented>
-      <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="469" />
+      <undocumented id="json::JsonTree::replace" name="replace">
+        <location column="3" file="manager.hpp" line="426" />
       </undocumented>
-      <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="470" />
+      <undocumented id="json::JsonTree::replace" name="replace">
+        <location column="3" file="manager.hpp" line="427" />
       </undocumented>
-      <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="471" />
+      <undocumented id="json::JsonTree::replace" name="replace">
+        <location column="3" file="manager.hpp" line="428" />
       </undocumented>
-      <undocumented id="json::JsonTree::set" name="set">
-        <location column="3" file="manager.hpp" line="472" />
+      <undocumented id="json::JsonTree::replace" name="replace">
+        <location column="3" file="manager.hpp" line="429" />
       </undocumented>
       <undocumented id="json::JsonTree::set" name="set">
         <location column="3" file="manager.hpp" line="474" />
@@ -693,14 +672,35 @@ return values.
       <undocumented id="json::JsonTree::set" name="set">
         <location column="3" file="manager.hpp" line="477" />
       </undocumented>
+      <undocumented id="json::JsonTree::set" name="set">
+        <location column="3" file="manager.hpp" line="478" />
+      </undocumented>
+      <undocumented id="json::JsonTree::set" name="set">
+        <location column="3" file="manager.hpp" line="479" />
+      </undocumented>
+      <undocumented id="json::JsonTree::set" name="set">
+        <location column="3" file="manager.hpp" line="480" />
+      </undocumented>
+      <undocumented id="json::JsonTree::set" name="set">
+        <location column="3" file="manager.hpp" line="482" />
+      </undocumented>
+      <undocumented id="json::JsonTree::set" name="set">
+        <location column="3" file="manager.hpp" line="483" />
+      </undocumented>
+      <undocumented id="json::JsonTree::set" name="set">
+        <location column="3" file="manager.hpp" line="484" />
+      </undocumented>
+      <undocumented id="json::JsonTree::set" name="set">
+        <location column="3" file="manager.hpp" line="485" />
+      </undocumented>
       <undocumented id="json::ObjectContainer::insert" name="insert">
-        <location column="3" file="object.hpp" line="57" />
+        <location column="3" file="object.hpp" line="54" />
       </undocumented>
       <undocumented id="json::ObjectContainer::operator[]" name="operator[]">
-        <location column="3" file="object.hpp" line="55" />
+        <location column="3" file="object.hpp" line="52" />
       </undocumented>
       <undocumented id="json::ObjectContainer::operator[]" name="operator[]">
-        <location column="3" file="object.hpp" line="56" />
+        <location column="3" file="object.hpp" line="53" />
       </undocumented>
       <undocumented id="json::ObjectFinal::add" name="add">
         <location column="3" file="object.hpp" line="116" />
@@ -712,118 +712,136 @@ return values.
         <location column="3" file="object.hpp" line="114" />
       </undocumented>
       <undocumented id="json::ObjectFinalBool::getContent" name="getContent">
-        <location column="3" file="object.hpp" line="170" />
+        <location column="3" file="object.hpp" line="173" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalBool::getType" name="getType">
+        <location column="3" file="object.hpp" line="174" />
       </undocumented>
       <undocumented id="json::ObjectFinalBool::replaceValue" name="replaceValue">
-        <location column="3" file="object.hpp" line="171" />
+        <location column="3" file="object.hpp" line="175" />
       </undocumented>
       <undocumented id="json::ObjectFinalBool::toTxt" name="toTxt">
-        <location column="3" file="object.hpp" line="172" />
+        <location column="3" file="object.hpp" line="176" />
       </undocumented>
       <undocumented id="json::ObjectFinalBool::toTxtUgly" name="toTxtUgly">
-        <location column="3" file="object.hpp" line="173" />
+        <location column="3" file="object.hpp" line="177" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberFloat::getContent" name="getContent">
         <location column="3" file="object.hpp" line="127" />
       </undocumented>
-      <undocumented id="json::ObjectFinalNumberFloat::replaceValue" name="replaceValue">
+      <undocumented id="json::ObjectFinalNumberFloat::getType" name="getType">
         <location column="3" file="object.hpp" line="128" />
       </undocumented>
-      <undocumented id="json::ObjectFinalNumberFloat::toTxt" name="toTxt">
+      <undocumented id="json::ObjectFinalNumberFloat::replaceValue" name="replaceValue">
         <location column="3" file="object.hpp" line="129" />
       </undocumented>
-      <undocumented id="json::ObjectFinalNumberFloat::toTxtUgly" name="toTxtUgly">
+      <undocumented id="json::ObjectFinalNumberFloat::toTxt" name="toTxt">
         <location column="3" file="object.hpp" line="130" />
       </undocumented>
-      <undocumented id="json::ObjectFinalNumberInt::getContent" name="getContent">
-        <location column="3" file="object.hpp" line="141" />
+      <undocumented id="json::ObjectFinalNumberFloat::toTxtUgly" name="toTxtUgly">
+        <location column="3" file="object.hpp" line="131" />
       </undocumented>
-      <undocumented id="json::ObjectFinalNumberInt::replaceValue" name="replaceValue">
+      <undocumented id="json::ObjectFinalNumberInt::getContent" name="getContent">
         <location column="3" file="object.hpp" line="142" />
       </undocumented>
-      <undocumented id="json::ObjectFinalNumberInt::toTxt" name="toTxt">
+      <undocumented id="json::ObjectFinalNumberInt::getType" name="getType">
         <location column="3" file="object.hpp" line="143" />
       </undocumented>
-      <undocumented id="json::ObjectFinalNumberInt::toTxtUgly" name="toTxtUgly">
+      <undocumented id="json::ObjectFinalNumberInt::replaceValue" name="replaceValue">
         <location column="3" file="object.hpp" line="144" />
       </undocumented>
+      <undocumented id="json::ObjectFinalNumberInt::toTxt" name="toTxt">
+        <location column="3" file="object.hpp" line="145" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalNumberInt::toTxtUgly" name="toTxtUgly">
+        <location column="3" file="object.hpp" line="146" />
+      </undocumented>
       <undocumented id="json::ObjectFinalString::getContent" name="getContent">
-        <location column="3" file="object.hpp" line="155" />
-      </undocumented>
-      <undocumented id="json::ObjectFinalString::replaceValue" name="replaceValue">
-        <location column="3" file="object.hpp" line="156" />
-      </undocumented>
-      <undocumented id="json::ObjectFinalString::toTxt" name="toTxt">
         <location column="3" file="object.hpp" line="157" />
       </undocumented>
-      <undocumented id="json::ObjectFinalString::toTxtUgly" name="toTxtUgly">
+      <undocumented id="json::ObjectFinalString::getType" name="getType">
         <location column="3" file="object.hpp" line="158" />
       </undocumented>
+      <undocumented id="json::ObjectFinalString::replaceValue" name="replaceValue">
+        <location column="3" file="object.hpp" line="159" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalString::toTxt" name="toTxt">
+        <location column="3" file="object.hpp" line="160" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalString::toTxtUgly" name="toTxtUgly">
+        <location column="3" file="object.hpp" line="161" />
+      </undocumented>
       <undocumented id="json::ObjectMap::add" name="add">
-        <location column="3" file="object.hpp" line="100" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::erase" name="erase">
-        <location column="3" file="object.hpp" line="106" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::get" name="get">
-        <location column="3" file="object.hpp" line="97" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::getContent" name="getContent">
-        <location column="3" file="object.hpp" line="94" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::getKeys" name="getKeys">
-        <location column="3" file="object.hpp" line="93" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::insert" name="insert">
-        <location column="3" file="object.hpp" line="99" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::operator[]" name="operator[]">
-        <location column="3" file="object.hpp" line="96" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::remove" name="remove">
-        <location column="3" file="object.hpp" line="105" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::replace" name="replace">
-        <location column="3" file="object.hpp" line="103" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::set" name="set">
-        <location column="3" file="object.hpp" line="104" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::size" name="size">
-        <location column="3" file="object.hpp" line="92" />
-      </undocumented>
-      <undocumented id="json::ObjectMap::toTxt" name="toTxt">
         <location column="3" file="object.hpp" line="101" />
       </undocumented>
-      <undocumented id="json::ObjectMap::toTxtUgly" name="toTxtUgly">
+      <undocumented id="json::ObjectMap::erase" name="erase">
+        <location column="3" file="object.hpp" line="107" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::get" name="get">
+        <location column="3" file="object.hpp" line="98" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::getContent" name="getContent">
+        <location column="3" file="object.hpp" line="93" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::getKeys" name="getKeys">
+        <location column="3" file="object.hpp" line="92" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::getType" name="getType">
+        <location column="3" file="object.hpp" line="95" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::insert" name="insert">
+        <location column="3" file="object.hpp" line="100" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::operator[]" name="operator[]">
+        <location column="3" file="object.hpp" line="97" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::remove" name="remove">
+        <location column="3" file="object.hpp" line="106" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::replace" name="replace">
+        <location column="3" file="object.hpp" line="104" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::set" name="set">
+        <location column="3" file="object.hpp" line="105" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::size" name="size">
+        <location column="3" file="object.hpp" line="91" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::toTxt" name="toTxt">
         <location column="3" file="object.hpp" line="102" />
       </undocumented>
-      <undocumented id="json::ObjectVector::add" name="add">
-        <location column="3" file="object.hpp" line="77" />
+      <undocumented id="json::ObjectMap::toTxtUgly" name="toTxtUgly">
+        <location column="3" file="object.hpp" line="103" />
       </undocumented>
-      <undocumented id="json::ObjectVector::get" name="get">
+      <undocumented id="json::ObjectVector::add" name="add">
         <location column="3" file="object.hpp" line="76" />
       </undocumented>
-      <undocumented id="json::ObjectVector::getContent" name="getContent">
-        <location column="3" file="object.hpp" line="73" />
-      </undocumented>
-      <undocumented id="json::ObjectVector::getContentAt" name="getContentAt">
-        <location column="3" file="object.hpp" line="68" />
-      </undocumented>
-      <undocumented id="json::ObjectVector::insert" name="insert">
-        <location column="3" file="object.hpp" line="70" />
-      </undocumented>
-      <undocumented id="json::ObjectVector::operator[]" name="operator[]">
+      <undocumented id="json::ObjectVector::get" name="get">
         <location column="3" file="object.hpp" line="75" />
       </undocumented>
-      <undocumented id="json::ObjectVector::size" name="size">
+      <undocumented id="json::ObjectVector::getContent" name="getContent">
         <location column="3" file="object.hpp" line="72" />
       </undocumented>
+      <undocumented id="json::ObjectVector::getContentAt" name="getContentAt">
+        <location column="3" file="object.hpp" line="65" />
+      </undocumented>
+      <undocumented id="json::ObjectVector::getType" name="getType">
+        <location column="3" file="object.hpp" line="69" />
+      </undocumented>
+      <undocumented id="json::ObjectVector::insert" name="insert">
+        <location column="3" file="object.hpp" line="67" />
+      </undocumented>
+      <undocumented id="json::ObjectVector::operator[]" name="operator[]">
+        <location column="3" file="object.hpp" line="74" />
+      </undocumented>
+      <undocumented id="json::ObjectVector::size" name="size">
+        <location column="3" file="object.hpp" line="71" />
+      </undocumented>
       <undocumented id="json::ObjectVector::toTxt" name="toTxt">
-        <location column="3" file="object.hpp" line="78" />
+        <location column="3" file="object.hpp" line="77" />
       </undocumented>
       <undocumented id="json::ObjectVector::toTxtUgly" name="toTxtUgly">
-        <location column="3" file="object.hpp" line="79" />
+        <location column="3" file="object.hpp" line="78" />
       </undocumented>
       <undocumented id="json::Serializable::addSon" name="addSon">
         <location column="3" file="serializable.hpp" line="55" />
@@ -844,27 +862,24 @@ return values.
         <location column="3" file="serializable.hpp" line="103" />
       </undocumented>
     </type>
-    <type documented="3" name="constructor" undocumented="20">
+    <type documented="3" name="constructor" undocumented="19">
       <undocumented id="json::AbstractObject::AbstractObject" name="AbstractObject">
-        <location column="3" file="object.hpp" line="37" />
+        <location column="3" file="object.hpp" line="33" />
       </undocumented>
       <undocumented id="json::ObjectContainer::ObjectContainer" name="ObjectContainer">
-        <location column="3" file="object.hpp" line="52" />
-      </undocumented>
-      <undocumented id="json::ObjectFinal::ObjectFinal" name="ObjectFinal">
-        <location column="3" file="object.hpp" line="111" />
-      </undocumented>
-      <undocumented id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
-        <location column="3" file="object.hpp" line="166" />
-      </undocumented>
-      <undocumented id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
-        <location column="3" file="object.hpp" line="167" />
-      </undocumented>
-      <undocumented id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
-        <location column="3" file="object.hpp" line="168" />
+        <location column="3" file="object.hpp" line="49" />
       </undocumented>
       <undocumented id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
         <location column="3" file="object.hpp" line="169" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
+        <location column="3" file="object.hpp" line="170" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
+        <location column="3" file="object.hpp" line="171" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
+        <location column="3" file="object.hpp" line="172" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberFloat::ObjectFinalNumberFloat" name="ObjectFinalNumberFloat">
         <location column="3" file="object.hpp" line="124" />
@@ -876,34 +891,34 @@ return values.
         <location column="3" file="object.hpp" line="126" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt">
-        <location column="3" file="object.hpp" line="138" />
-      </undocumented>
-      <undocumented id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt">
         <location column="3" file="object.hpp" line="139" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt">
         <location column="3" file="object.hpp" line="140" />
       </undocumented>
-      <undocumented id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString">
-        <location column="3" file="object.hpp" line="152" />
-      </undocumented>
-      <undocumented id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString">
-        <location column="3" file="object.hpp" line="153" />
+      <undocumented id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt">
+        <location column="3" file="object.hpp" line="141" />
       </undocumented>
       <undocumented id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString">
         <location column="3" file="object.hpp" line="154" />
       </undocumented>
+      <undocumented id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString">
+        <location column="3" file="object.hpp" line="155" />
+      </undocumented>
+      <undocumented id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString">
+        <location column="3" file="object.hpp" line="156" />
+      </undocumented>
+      <undocumented id="json::ObjectMap::ObjectMap" name="ObjectMap">
+        <location column="3" file="object.hpp" line="88" />
+      </undocumented>
       <undocumented id="json::ObjectMap::ObjectMap" name="ObjectMap">
         <location column="3" file="object.hpp" line="89" />
       </undocumented>
-      <undocumented id="json::ObjectMap::ObjectMap" name="ObjectMap">
-        <location column="3" file="object.hpp" line="90" />
+      <undocumented id="json::ObjectVector::ObjectVector" name="ObjectVector">
+        <location column="3" file="object.hpp" line="62" />
       </undocumented>
       <undocumented id="json::ObjectVector::ObjectVector" name="ObjectVector">
-        <location column="3" file="object.hpp" line="66" />
-      </undocumented>
-      <undocumented id="json::ObjectVector::ObjectVector" name="ObjectVector">
-        <location column="3" file="object.hpp" line="67" />
+        <location column="3" file="object.hpp" line="64" />
       </undocumented>
     </type>
     <type documented="0" name="variable" undocumented="1">
@@ -911,21 +926,21 @@ return values.
         <location column="3" file="serializable.hpp" line="54" />
       </undocumented>
     </type>
-    <type documented="13" name="enumvalue" undocumented="6">
+    <type documented="12" name="enumvalue" undocumented="6">
       <undocumented id="json::BOOL" name="BOOL">
-        <location column="3" file="object.hpp" line="30" />
+        <location column="3" file="object.hpp" line="28" />
       </undocumented>
       <undocumented id="json::MAP" name="MAP">
         <location column="3" file="object.hpp" line="24" />
       </undocumented>
       <undocumented id="json::NUMBER_FLOAT" name="NUMBER_FLOAT">
-        <location column="3" file="object.hpp" line="27" />
+        <location column="3" file="object.hpp" line="25" />
       </undocumented>
       <undocumented id="json::NUMBER_INT" name="NUMBER_INT">
-        <location column="3" file="object.hpp" line="28" />
+        <location column="3" file="object.hpp" line="26" />
       </undocumented>
       <undocumented id="json::STRING" name="STRING">
-        <location column="3" file="object.hpp" line="29" />
+        <location column="3" file="object.hpp" line="27" />
       </undocumented>
       <undocumented id="json::VECTOR" name="VECTOR">
         <location column="3" file="object.hpp" line="23" />
@@ -933,31 +948,31 @@ return values.
     </type>
     <type documented="2" name="class" undocumented="10">
       <undocumented id="json::AbstractObject" name="AbstractObject">
-        <location column="1" file="object.hpp" line="33" />
+        <location column="1" file="object.hpp" line="31" />
       </undocumented>
       <undocumented id="json::ObjectContainer" name="ObjectContainer">
-        <location column="1" file="object.hpp" line="50" />
+        <location column="1" file="object.hpp" line="47" />
       </undocumented>
       <undocumented id="json::ObjectFinal" name="ObjectFinal">
-        <location column="1" file="object.hpp" line="109" />
+        <location column="1" file="object.hpp" line="110" />
       </undocumented>
       <undocumented id="json::ObjectFinalBool" name="ObjectFinalBool">
-        <location column="1" file="object.hpp" line="161" />
+        <location column="1" file="object.hpp" line="164" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberFloat" name="ObjectFinalNumberFloat">
         <location column="1" file="object.hpp" line="119" />
       </undocumented>
       <undocumented id="json::ObjectFinalNumberInt" name="ObjectFinalNumberInt">
-        <location column="1" file="object.hpp" line="133" />
+        <location column="1" file="object.hpp" line="134" />
       </undocumented>
       <undocumented id="json::ObjectFinalString" name="ObjectFinalString">
-        <location column="1" file="object.hpp" line="147" />
+        <location column="1" file="object.hpp" line="149" />
       </undocumented>
       <undocumented id="json::ObjectMap" name="ObjectMap">
-        <location column="1" file="object.hpp" line="82" />
+        <location column="1" file="object.hpp" line="81" />
       </undocumented>
       <undocumented id="json::ObjectVector" name="ObjectVector">
-        <location column="1" file="object.hpp" line="60" />
+        <location column="1" file="object.hpp" line="57" />
       </undocumented>
       <undocumented id="json::Serializable" name="Serializable">
         <location column="1" file="serializable.hpp" line="52" />
@@ -966,7 +981,7 @@ return values.
   </coverage>
   <arguments>
     <function id="json::JsonTree::set_union" name="set_union">
-      <location column="3" file="manager.hpp" line="125" />
+      <location column="3" file="manager.hpp" line="133" />
       <undocumented-return />
       <undocumented name="tree" />
     </function>
@@ -1001,13 +1016,13 @@ return values.
   </arguments>
   <references>
     <class id="json::JsonTree" name="JsonTree">
-      <location column="1" file="manager.hpp" line="53" />
+      <location column="1" file="manager.hpp" line="54" />
       <doctype name="doc">
         <ref name="int" />
       </doctype>
     </class>
     <method id="json::JsonTree::replace" name="replace">
-      <location column="3" file="manager.hpp" line="409" />
+      <location column="3" file="manager.hpp" line="417" />
       <doctype name="doc">
         <ref name="int" />
       </doctype>

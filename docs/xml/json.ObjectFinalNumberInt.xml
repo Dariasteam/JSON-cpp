@@ -3,12 +3,12 @@
   <base access="public">
     <type name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
   </base>
+  <constructor id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt" />
   <constructor abstract="yes" id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt">
     <argument id="json::ObjectFinalNumberInt::ObjectFinalNumberInt::obj" name="obj">
       <type name="ObjectFinalNumberInt" qualifier=" const &amp;" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt" />
     </argument>
   </constructor>
-  <constructor id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt" />
   <constructor id="json::ObjectFinalNumberInt::ObjectFinalNumberInt" name="ObjectFinalNumberInt">
     <argument id="json::ObjectFinalNumberInt::ObjectFinalNumberInt::n" name="n">
       <type builtin="yes" name="long" />
@@ -19,6 +19,12 @@
     <return>
       <type builtin="yes" name="long" />
     </return>
+  </method>
+  <method id="json::ObjectFinalNumberInt::getType" name="getType" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="unsigned short" />
+    </return>
+    <override name="AbstractObject::getType" ref="json::AbstractObject#json::AbstractObject::getType" />
   </method>
   <method abstract="yes" id="json::ObjectFinalNumberInt::replaceValue" name="replaceValue" override="yes" virtual="yes">
     <return>

@@ -12,7 +12,7 @@ carefuly (For most situations there is a non-raw secure method for wathever you 
 
 The acessing / manipulation methods are clasified like this
 
-- is*. Checks if the element at the path given is of certain type.
+ - is*. Checks if the element at the given path is of certain type.
  - isNumber
  - isBool
  - isVector
@@ -24,7 +24,7 @@ The acessing / manipulation methods are clasified like this
 - get. Copies information of the tree to a variable given a path
 - add. Adds information from a variable to the tree if **the given path doesn't previously exist**
 - replace. Adds information from a variable to the tree if **the given path previously exist**
-- set. Adds information from a variable to the tree **both if previously exist or not the path given**
+- set. Adds information from a variable to the tree **both if previously exist or not the given path**
 - erase. Deletes information from the tree if the given path previously exist
 - remove. Deletes information from the tree both if the given path previously exist or not
 
@@ -35,7 +35,7 @@ bool METHOD_NAME (&lt;optional variable&gt;, &lt;path&gt;)
 ```
 Where optional variable exist o not depending of the method and can be of several types (int, float, vector&amp;lt;int&amp;gt;, etc.) so the methods are heavily overloaded for supporting each type.
 
-There is also a method for get the information as a string in json format. <ref ref="json::JsonTree#json::JsonTree::toText">toText</ref>
+There is also a method to get the information as a string in json format. <ref ref="json::JsonTree#json::JsonTree::toText">toText</ref>
 
 </doc>
   <constructor abstract="yes" id="json::JsonTree::JsonTree" name="JsonTree">
@@ -368,13 +368,13 @@ Note that this method has many overloads for supporting many 'to' variable types
 which want to retrieve from 'path' in order to call this method with a 'to' variable of the appropiate type. To check the type of 'path' use
 one of these methods:
 
--  <ref ref="json::JsonTree#json::JsonTree::isNumber">json::JsonTree::isNumber</ref>
--  <ref ref="json::JsonTree#json::JsonTree::isFloat">json::JsonTree::isFloat</ref>
--  <ref ref="json::JsonTree#json::JsonTree::isInt">json::JsonTree::isInt</ref>
--  <ref ref="json::JsonTree#json::JsonTree::isBool">json::JsonTree::isBool</ref>
--  <ref ref="json::JsonTree#json::JsonTree::isString">json::JsonTree::isString</ref>
--  <ref ref="json::JsonTree#json::JsonTree::isVector">json::JsonTree::isVector</ref>
--  <ref ref="json::JsonTree#json::JsonTree::isMap">json::JsonTree::isMap</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isNumber">json::JsonTree::isNumber</ref> and <ref ref="json::JsonTree#json::JsonTree::isNumber">json::JsonTree::isNumber</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isFloat">json::JsonTree::isFloat</ref> and <ref ref="json::JsonTree#json::JsonTree::isFloat">json::JsonTree::isFloat</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isInt">json::JsonTree::isInt</ref> and <ref ref="json::JsonTree#json::JsonTree::isInt">json::JsonTree::isInt</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isBool">json::JsonTree::isBool</ref> and <ref ref="json::JsonTree#json::JsonTree::isBool">json::JsonTree::isBool</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isString">json::JsonTree::isString</ref> and <ref ref="json::JsonTree#json::JsonTree::isString">json::JsonTree::isString</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isVector">json::JsonTree::isVector</ref> and <ref ref="json::JsonTree#json::JsonTree::isVector">json::JsonTree::isVector</ref>
+-  <ref ref="json::JsonTree#json::JsonTree::isMap">json::JsonTree::isMap</ref> and <ref ref="json::JsonTree#json::JsonTree::isMap">json::JsonTree::isMap</ref>
 
 ## Usage Example
 #### Initial hirarchy

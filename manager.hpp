@@ -25,7 +25,7 @@ namespace json {
  *
  * The acessing / manipulation methods are clasified like this
  *
- * - is*. Checks if the element at the path given is of certain type.
+ *  - is*. Checks if the element at the given path is of certain type.
  *  - isNumber
  *  - isBool
  *  - isVector
@@ -37,7 +37,7 @@ namespace json {
  * - get. Copies information of the tree to a variable given a path
  * - add. Adds information from a variable to the tree if **the given path doesn't previously exist**
  * - replace. Adds information from a variable to the tree if **the given path previously exist**
- * - set. Adds information from a variable to the tree **both if previously exist or not the path given**
+ * - set. Adds information from a variable to the tree **both if previously exist or not the given path**
  * - erase. Deletes information from the tree if the given path previously exist
  * - remove. Deletes information from the tree both if the given path previously exist or not
  *
@@ -48,18 +48,17 @@ namespace json {
  * ```
  * Where optional variable exist o not depending of the method and can be of several types (int, float, vector<int>, etc.) so the methods are heavily overloaded for supporting each type.
  *
- * There is also a method for get the information as a string in json format. <toText>
+ * There is also a method to get the information as a string in json format. <toText>
  *
  * */
 class JsonTree {
-private:
-  static string const objectsTypesReverse [7];
+private:  
   static regex lastTokenRgx;
 
   ObjectMap* top;
 
   bool isType (AbstractObject* obj, int type);
-  void getterError (const string path, AbstractObject* obj, int type);
+  void getterError (const string path, AbstractObject* obj, const char* expectedType);
 
   bool replace (AbstractObject* newObj, const string path);
   bool set (AbstractObject* newObj,     const string path);

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<class abstract="true" id="json::ObjectFinal" name="ObjectFinal" xmlns="http://jessevdk.github.com/cldoc/1.0">
+<class id="json::ObjectFinal" interface="true" name="ObjectFinal" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <base access="public">
     <type name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
   </base>
@@ -36,10 +36,5 @@
       <type name="std::__cxx11::string" />
     </argument>
   </method>
-  <constructor access="protected" id="json::ObjectFinal::ObjectFinal" name="ObjectFinal">
-    <argument id="json::ObjectFinal::ObjectFinal::type" name="type">
-      <type builtin="yes" name="int" />
-    </argument>
-  </constructor>
   <destructor abstract="yes" access="protected" id="json::ObjectFinal::~ObjectFinal" name="~ObjectFinal" virtual="yes" />
 </class>

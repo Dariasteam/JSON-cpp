@@ -32,10 +32,6 @@
       <type name="std::__cxx11::string" />
     </argument>
   </method>
-  <constructor access="protected" id="json::ObjectContainer::ObjectContainer" name="ObjectContainer">
-    <argument id="json::ObjectContainer::ObjectContainer::type" name="type">
-      <type builtin="yes" name="int" />
-    </argument>
-  </constructor>
+  <constructor access="protected" id="json::ObjectContainer::ObjectContainer" name="ObjectContainer" />
   <destructor abstract="yes" access="protected" id="json::ObjectContainer::~ObjectContainer" name="~ObjectContainer" virtual="yes" />
 </class>

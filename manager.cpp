@@ -2,14 +2,6 @@
 
 using namespace json;
 
-string const JsonTree::objectsTypesReverse[7] = { "Vector",
-                                                  "Map",
-                                                  "Final",
-                                                  "Number_Float",
-                                                  "Number_Int",
-                                                  "String",
-                                                  "Bool" };
-
 regex JsonTree::lastTokenRgx = regex ("^(.*)(?:\\.)(.+)$");
 
 JsonTree::JsonTree () :
@@ -49,15 +41,15 @@ bool JsonTree::set_union(JsonTree &tree) {
   return add(tree);
 }
 
-void JsonTree::getterError (const string path, AbstractObject* obj, int type) {
+void JsonTree::getterError (const string path, AbstractObject* obj, const char* expectedType) {
   cerr << "ERROR : ";
   if (obj == nullptr) {
-    cerr << "Attempting to load the element " << path
-         << " which does not exist." << endl;
+    cerr << "Attempting to load the element '" << path
+         << "' which does not exist." << endl;
   } else {
-    cerr << "Attempting to load the element " << path
-         << " as a "<< objectsTypesReverse[type] << " when is of type "
-         << objectsTypesReverse[obj->getType()] << "." << endl;
+    cerr << "Attempting to load the element '" << path
+         << "' as a " << expectedType << " when is of type "
+         << obj->getName() << "." << endl;
   }
 }
 
@@ -107,7 +99,7 @@ int JsonTree::getSizeAt (const string path) {
   if (obj != nullptr && isVector(obj)) {
     return ((ObjectVector*)obj)->size();
   } else {
-    getterError(path, obj, VECTOR);
+    getterError(path, obj, ObjectVector::name);
     return -1;
   }
 }
@@ -173,7 +165,7 @@ bool JsonTree::isVector (const string path) {
   return isVector (top->get(path));
 }
 
-bool JsonTree::isVector (AbstractObject* obj) {
+bool JsonTree::isVector (AbstractObject* const obj) {
   return dynamic_cast<ObjectVector*> (obj);
 }
 
@@ -189,7 +181,7 @@ bool JsonTree::get (bool &to, const string path) {
     to = ((ObjectFinalBool*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, BOOL);
+  getterError(path, obj, ObjectFinalBool::name);
   return false;
 }
 
@@ -199,7 +191,7 @@ bool JsonTree::get (string &to, const string path) {
     to = ((ObjectFinalString*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, STRING);
+  getterError(path, obj, ObjectFinalString::name);
   return false;
 }
 
@@ -213,7 +205,7 @@ bool JsonTree::get (double &to, const string path) {
     to = ((ObjectFinalNumberFloat*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, NUMBER_FLOAT);
+  getterError(path, obj, ObjectFinalNumberFloat::name);
   return false;
 }
 
@@ -227,7 +219,7 @@ bool JsonTree::get (long long &to, const string path) {
     to = ((ObjectFinalNumberFloat*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, NUMBER_INT);
+  getterError(path, obj, ObjectFinalNumberInt::name);
   return false;
 }
 
@@ -255,7 +247,7 @@ bool JsonTree::get (char &to, const string path) {
     to = ((ObjectFinalString*)obj)->getContent()[0];
     return true;
   }
-  getterError(path, obj, STRING);
+  getterError(path, obj, ObjectFinalString::name);
   return false;
 }
 
@@ -273,13 +265,13 @@ bool JsonTree::get (vector<double>& array, const string path) {
       else if (isInt((ObjectFinalNumberInt*)vect->operator[](i)))
         array[i] = int(((ObjectFinalNumberInt*)vect->operator[](i))->getContent());
       else {
-        getterError(path, obj, VECTOR);
+        getterError(path, obj, ObjectVector::name);
         return false;
       }
     }
     return true;
   }
-  getterError(path, obj, VECTOR);
+  getterError(path, obj, ObjectVector::name);
   return false;
 }
 
@@ -295,13 +287,13 @@ bool JsonTree::get (vector<int>& array, const string path) {
       else if (isInt((ObjectFinalNumberInt*)vect->operator[](i)))
         array[i] = int(((ObjectFinalNumberInt*)vect->operator[](i))->getContent());
       else {
-        getterError(path, obj, VECTOR);
+        getterError(path, obj, ObjectVector::name);
         return false;
       }
     }
     return true;
   }
-  getterError(path, obj, VECTOR);
+  getterError(path, obj, ObjectVector::name);
   return false;
 }
 
@@ -315,13 +307,13 @@ bool JsonTree::get (vector<string>& array, const string path) {
       if (isString((ObjectFinalString*)vect->operator[](i)))
         array[i] = ((ObjectFinalString*)vect->operator[](i))->getContent();
       else {
-        getterError(path, obj, VECTOR);
+        getterError(path, obj, ObjectVector::name);
         return false;
       }
     }
     return true;
   }
-  getterError(path, obj, VECTOR);
+  getterError(path, obj, ObjectVector::name);
   return false;
 }
 
@@ -335,13 +327,13 @@ bool JsonTree::get (vector<bool>& array, const string path) {
       if (isBool((ObjectFinalBool*)vect->operator[](i)))
         array[i] = ((ObjectFinalBool*)vect->operator[](i))->getContent();
       else {
-        getterError(path, obj, VECTOR);
+        getterError(path, obj, ObjectVector::name);
         return false;
       }
     }
     return true;
   }
-  getterError(path, obj, VECTOR);
+  getterError(path, obj, ObjectVector::name);
   return false;
 }
 

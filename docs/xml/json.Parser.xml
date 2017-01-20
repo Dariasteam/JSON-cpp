@@ -93,7 +93,7 @@ Saving
   </method>
   <method abstract="yes" id="json::Parser::parseFile" name="parseFile">
     <brief> Reads a json file</brief>
-    <doc>## Explanation
+    <doc>## Description
 
 Tries to parse the file and to create the hierarchy of it in `tree`.
 The method checks if the file exists, can be opened and is not empty before
@@ -178,7 +178,7 @@ if (parser.parseFile ("example.json", tree) &amp; json::JSON_PARSE_OUTPUT::OK) {
   </method>
   <method abstract="yes" id="json::Parser::saveFile" name="saveFile" static="yes">
     <brief> Creates a json file</brief>
-    <doc>## Explanation
+    <doc>## Description
 
 Tries to create the file `fileName` and to write the tree's content in it.
 As <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> objects are incoherence free, the only errors

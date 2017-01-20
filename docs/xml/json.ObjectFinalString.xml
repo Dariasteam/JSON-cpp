@@ -3,12 +3,12 @@
   <base access="public">
     <type name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
   </base>
+  <constructor id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString" />
   <constructor abstract="yes" id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString">
     <argument id="json::ObjectFinalString::ObjectFinalString::obj" name="obj">
       <type name="ObjectFinalString" qualifier=" const &amp;" ref="json::ObjectFinalString#json::ObjectFinalString" />
     </argument>
   </constructor>
-  <constructor id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString" />
   <constructor id="json::ObjectFinalString::ObjectFinalString" name="ObjectFinalString">
     <argument id="json::ObjectFinalString::ObjectFinalString::s" name="s">
       <type name="std::__cxx11::string" />
@@ -19,6 +19,12 @@
     <return>
       <type name="std::__cxx11::string" />
     </return>
+  </method>
+  <method id="json::ObjectFinalString::getType" name="getType" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="unsigned short" />
+    </return>
+    <override name="AbstractObject::getType" ref="json::AbstractObject#json::AbstractObject::getType" />
   </method>
   <method abstract="yes" id="json::ObjectFinalString::replaceValue" name="replaceValue" override="yes" virtual="yes">
     <return>
