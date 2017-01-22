@@ -3,6 +3,9 @@
   <base access="public">
     <type name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
   </base>
+  <variable id="json::ObjectMap::name" name="name">
+    <type builtin="yes" name="char" qualifier=" const const *" />
+  </variable>
   <constructor id="json::ObjectMap::ObjectMap" name="ObjectMap" />
   <constructor abstract="yes" id="json::ObjectMap::ObjectMap" name="ObjectMap">
     <argument id="json::ObjectMap::ObjectMap::obj" name="obj">
@@ -49,11 +52,11 @@
       <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" const &amp;" />
     </return>
   </method>
-  <method id="json::ObjectMap::getType" name="getType" override="yes" virtual="yes">
+  <method id="json::ObjectMap::getName" name="getName" override="yes" virtual="yes">
     <return>
-      <type builtin="yes" name="unsigned short" />
+      <type builtin="yes" name="char" qualifier=" const *" />
     </return>
-    <override name="AbstractObject::getType" ref="json::AbstractObject#json::AbstractObject::getType" />
+    <override name="AbstractObject::getName" ref="json::AbstractObject#json::AbstractObject::getName" />
   </method>
   <method abstract="yes" id="json::ObjectMap::insert" name="insert" override="yes" virtual="yes">
     <return>

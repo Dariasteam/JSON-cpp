@@ -18,7 +18,9 @@
   <class name="Parser" ref="json::Parser#json::Parser">
     <brief>Manage I/O of .json files</brief>
   </class>
-  <class name="Serializable" ref="json::Serializable#json::Serializable" />
+  <class name="Serializable" ref="json::Serializable#json::Serializable">
+    <brief> Base class for serializable custom classes</brief>
+  </class>
   <enum anonymous="yes" id="json::JSON_PARSE_OUTPUT" name="JSON_PARSE_OUTPUT">
     <brief>Binary flags used as output for <ref ref="json::Parser#json::Parser::parseFile">json::Parser::parseFile</ref> and <ref ref="json::Parser#json::Parser::saveFile">json::Parser::saveFile</ref> functions.</brief>
     <enumvalue id="json::OK" name="OK" value="1">
@@ -60,13 +62,5 @@
     <enumvalue id="json::EMPTY" name="EMPTY" value="6">
       <brief>[WARNING] the collection is empty</brief>
     </enumvalue>
-  </enum>
-  <enum anonymous="yes" id="json::ObjetsTypes" name="ObjetsTypes">
-    <enumvalue id="json::VECTOR" name="VECTOR" value="0" />
-    <enumvalue id="json::MAP" name="MAP" value="1" />
-    <enumvalue id="json::NUMBER_FLOAT" name="NUMBER_FLOAT" value="2" />
-    <enumvalue id="json::NUMBER_INT" name="NUMBER_INT" value="3" />
-    <enumvalue id="json::STRING" name="STRING" value="4" />
-    <enumvalue id="json::BOOL" name="BOOL" value="5" />
   </enum>
 </namespace>

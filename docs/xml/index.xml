@@ -1,5 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <index xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <category name="Examples" ref="Examples#Examples">
+    <category name="File Manipulation" ref="Examples::File Manipulation#Examples::File Manipulation" />
+    <category name="Serialization" ref="Examples::Serialization#Examples::Serialization">
+      <category name="Getting started" ref="Examples::Serialization::Getting started#Examples::Serialization::Getting started">
+        <brief>The easiest case. Vector-like aproximation</brief>
+      </category>
+      <category name="Using multiple parameters" ref="Examples::Serialization::Using multiple parameters#Examples::Serialization::Using multiple parameters">
+        <brief>Using multiple parameters. Vector-like aproximation</brief>
+      </category>
+      <category name="Hash aproximation" ref="Examples::Serialization::Hash aproximation#Examples::Serialization::Hash aproximation">
+        <brief>Unordered name dependent serialization</brief>
+      </category>
+    </category>
+  </category>
   <namespace name="json" ref="json#json">
     <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
     <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
@@ -19,8 +33,10 @@
     <class name="Parser" ref="json::Parser#json::Parser">
       <brief>Manage I/O of .json files</brief>
     </class>
-    <class name="Serializable" ref="json::Serializable#json::Serializable" />
+    <class name="Serializable" ref="json::Serializable#json::Serializable">
+      <brief> Base class for serializable custom classes</brief>
+      <struct name="InheritanceIndex" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
+    </class>
   </namespace>
-  <struct name="InheritanceIndex" ref="InheritanceIndex#InheritanceIndex" />
   <report name="Documentation generator" ref="report" />
 </index>

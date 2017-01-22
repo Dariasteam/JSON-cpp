@@ -2,8 +2,8 @@
 
 using namespace json;
 
-regex ObjectVector::tokenRgx = regex ("^(?:\\.)?(?:\\[)?(\\d+)(?:\\])?(?:\\.)?");
-regex ObjectMap::tokenRgx = regex    ("^(?:\\.)?(?:\\[')?(\\w+)(?:'\\])?(?:\\.)?");
+regex ObjectVector::tokenRgx = regex ("^(?:\\.)?(?:\\[)?(\\d+)(?:\\])?(?:\\.|$)");
+regex ObjectMap::tokenRgx = regex    ("^(?:\\.)?(?:\\[')?(.+?)(?:'\\])?(?:\\.|$)");
 
 const char* const ObjectVector::name = "VECTOR";
 const char* const ObjectMap::name = "MAP";

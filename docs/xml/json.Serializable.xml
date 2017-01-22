@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::Serializable" name="Serializable" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> Base class for serializable custom classes</brief>
+  <doc>## Description
+
+
+
+
+</doc>
   <method id="json::Serializable::serializeIn" name="serializeIn">
     <return>
       <type builtin="yes" name="void" />
@@ -915,7 +922,7 @@
       <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
     </argument>
     <argument id="json::Serializable::serialize::in" name="in">
-      <type name="InheritanceIndex" qualifier=" &amp;" ref="InheritanceIndex#InheritanceIndex" />
+      <type name="InheritanceIndex" qualifier=" &amp;" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
     </argument>
     <argument id="json::Serializable::serialize::args" name="args">
       <type name="Args &amp;..." />
@@ -936,7 +943,7 @@
       <type name="JsonTree" qualifier=" &amp;" ref="json::JsonTree#json::JsonTree" />
     </argument>
     <argument id="json::Serializable::serialize::in" name="in">
-      <type name="InheritanceIndex" qualifier=" &amp;" ref="InheritanceIndex#InheritanceIndex" />
+      <type name="InheritanceIndex" qualifier=" &amp;" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
     </argument>
     <argument id="json::Serializable::serialize::path" name="path">
       <type name="const str" qualifier=" const" />
@@ -947,6 +954,7 @@
     <templatetypeparameter id="json::Serializable::serialize::str" name="str" />
     <templatetypeparameter id="json::Serializable::serialize::Args" name="Args" />
   </methodtemplate>
+  <struct name="InheritanceIndex" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
   <method access="protected" id="json::Serializable::addSon" name="addSon" static="yes">
     <return>
       <type builtin="yes" name="void" />
@@ -973,7 +981,7 @@
       <type builtin="yes" name="bool" />
     </argument>
     <argument id="json::Serializable::callFatherSerializer::from" name="from">
-      <type name="InheritanceIndex" qualifier=" &amp;" ref="InheritanceIndex#InheritanceIndex" />
+      <type name="InheritanceIndex" qualifier=" &amp;" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
     </argument>
   </method>
   <method access="protected" id="json::Serializable::demangle" name="demangle" static="yes">
@@ -1005,7 +1013,7 @@
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::Serializable::serializer::from" name="from">
-      <type name="InheritanceIndex" qualifier=" &amp;" ref="InheritanceIndex#InheritanceIndex" />
+      <type name="InheritanceIndex" qualifier=" &amp;" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
     </argument>
   </method>
 </class>

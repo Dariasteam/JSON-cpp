@@ -42,15 +42,25 @@
                                                                                                                                \
                             bool isTopClass() { return false; }
 
-struct InheritanceIndex {
-  int index;
-  string path;
-};
-
 namespace json {
 
+
+
+/* Base class for serializable custom classes
+ * ## Description
+ *
+ *
+ *
+ *
+ * */
 class Serializable {
 protected:
+
+  struct InheritanceIndex {
+    int index;
+    string path;
+  };
+
   static map<string, function<Serializable*()> > dictionary;
   static void addSon (string name, function<Serializable*()> lambda) { dictionary[name] = lambda; }
 
@@ -162,8 +172,8 @@ protected:
          return in.path;
        },
      args...);
-   }
- }
+    }
+  }
 
   //- With HASH
   template <class str, class... Args>

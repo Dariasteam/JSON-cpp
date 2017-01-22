@@ -19,6 +19,12 @@ using namespace std;
 
 namespace json {
 
+/*
+ *
+ *
+ *
+ *
+ * */
 class AbstractObject {
 protected:
   AbstractObject () {}  

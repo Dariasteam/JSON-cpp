@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Examples" name="Examples" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <category name="File Manipulation" ref="Examples::File Manipulation#Examples::File Manipulation" />
+  <category name="Serialization" ref="Examples::Serialization#Examples::Serialization" />
+</category>

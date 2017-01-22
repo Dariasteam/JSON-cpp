@@ -3,6 +3,9 @@
   <base access="public">
     <type name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
   </base>
+  <variable id="json::ObjectFinalBool::name" name="name">
+    <type builtin="yes" name="char" qualifier=" const const *" />
+  </variable>
   <constructor abstract="yes" id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
     <argument id="json::ObjectFinalBool::ObjectFinalBool::obj" name="obj">
       <type name="ObjectFinalBool" qualifier=" const &amp;" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
@@ -25,11 +28,11 @@
       <type builtin="yes" name="bool" />
     </return>
   </method>
-  <method id="json::ObjectFinalBool::getType" name="getType" override="yes" virtual="yes">
+  <method id="json::ObjectFinalBool::getName" name="getName" override="yes" virtual="yes">
     <return>
-      <type builtin="yes" name="unsigned short" />
+      <type builtin="yes" name="char" qualifier=" const *" />
     </return>
-    <override name="AbstractObject::getType" ref="json::AbstractObject#json::AbstractObject::getType" />
+    <override name="AbstractObject::getName" ref="json::AbstractObject#json::AbstractObject::getName" />
   </method>
   <method abstract="yes" id="json::ObjectFinalBool::replaceValue" name="replaceValue" override="yes" virtual="yes">
     <return>

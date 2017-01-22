@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Examples::Serialization::Using multiple parameters" name="Using multiple parameters" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>Using multiple parameters. Vector-like aproximation</brief>
+  <doc>How to serialize multiple heterogeneous parameters of one non-abstract class using a file called "file.json" to store / retrieve the information.
+
+As we are using the vector-like aproximation, we must know exactly the order of the parameters both in json file and code.
+
+#### json file, "file.json"
+```json
+{
+  "some_path" : [
+    10,
+    true,
+    0.5661,
+    "And though your dead and gone, believe me, your memory will carry on"
+  ]
+}
+```
+#### code
+```c++
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include "serializable.hpp"
+
+class A : public json::Serializable {         // derivate from 'Serializable'
+private:
+  int    number;
+  bool   boolean;
+  double precision;
+  string blckprde;
+
+  SERIAL_START                                // the parameters must be in the same order than in file
+    number,                                   // note the comma after every element except last. Just like in json
+    boolean,
+    precision,
+    blckprde
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout &lt;&lt; number    &lt;&lt; std::endl
+              &lt;&lt; boolean   &lt;&lt; std::endl
+              &lt;&lt; precision  &lt;&lt; std::endl
+              &lt;&lt; blckprde  &lt;&lt; std::endl;
+  }
+  void changeContent () {
+    number   = 78;
+    boolean  = false;
+    precision = 10.1;
+    blckprde = "We'll carry on";
+  }
+};
+
+int main (void) {
+  A obj;
+  obj.serializeIn("file.json", "some_path");   // reads "file.json" file
+  obj.printContent();
+  obj.changeContent();
+  obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
+}
+```
+#### ouput
+```
+10
+true
+0.5661
+And though your dead and gone, believe me, your memory will carry on
+```
+
+#### json file, "file.json"
+```json
+{
+  "other_path" : [
+    78,
+    false,
+    10.09999999999999964,
+    "We'll carry on"
+  ]
+}
+```</doc>
+</category>

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Examples::Serialization" name="Serialization" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <category name="Getting started" ref="Examples::Serialization::Getting started#Examples::Serialization::Getting started">
+    <brief>The easiest case. Vector-like aproximation</brief>
+  </category>
+  <category name="Using multiple parameters" ref="Examples::Serialization::Using multiple parameters#Examples::Serialization::Using multiple parameters">
+    <brief>Using multiple parameters. Vector-like aproximation</brief>
+  </category>
+  <category name="Hash aproximation" ref="Examples::Serialization::Hash aproximation#Examples::Serialization::Hash aproximation">
+    <brief>Unordered name dependent serialization</brief>
+  </category>
+</category>

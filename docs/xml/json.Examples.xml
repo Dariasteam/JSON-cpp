@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="json::Examples" name="Examples" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <category name="File Manipulation" ref="json::Examples::File Manipulation#json::Examples::File Manipulation" />
+  <category name="Serialization" ref="json::Examples::Serialization#json::Examples::Serialization" />
+</category>

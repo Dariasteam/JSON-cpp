@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::AbstractObject" name="AbstractObject" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <doc>
+
+
+
+
+</doc>
   <subclass access="public" name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
   <subclass access="public" name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
   <destructor abstract="yes" id="json::AbstractObject::~AbstractObject" name="~AbstractObject" virtual="yes" />
@@ -30,9 +36,9 @@
       <type name="std::__cxx11::string" />
     </argument>
   </method>
-  <method abstract="yes" id="json::AbstractObject::getType" name="getType" virtual="yes">
+  <method abstract="yes" id="json::AbstractObject::getName" name="getName" virtual="yes">
     <return>
-      <type builtin="yes" name="unsigned short" />
+      <type builtin="yes" name="char" qualifier=" const *" />
     </return>
   </method>
   <method abstract="yes" id="json::AbstractObject::toTxt" name="toTxt" virtual="yes">

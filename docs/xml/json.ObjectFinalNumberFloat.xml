@@ -3,6 +3,9 @@
   <base access="public">
     <type name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
   </base>
+  <variable id="json::ObjectFinalNumberFloat::name" name="name">
+    <type builtin="yes" name="char" qualifier=" const const *" />
+  </variable>
   <constructor abstract="yes" id="json::ObjectFinalNumberFloat::ObjectFinalNumberFloat" name="ObjectFinalNumberFloat">
     <argument id="json::ObjectFinalNumberFloat::ObjectFinalNumberFloat::obj" name="obj">
       <type name="ObjectFinalNumberFloat" qualifier=" const &amp;" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
@@ -20,11 +23,11 @@
       <type builtin="yes" name="double" />
     </return>
   </method>
-  <method id="json::ObjectFinalNumberFloat::getType" name="getType" override="yes" virtual="yes">
+  <method id="json::ObjectFinalNumberFloat::getName" name="getName" override="yes" virtual="yes">
     <return>
-      <type builtin="yes" name="unsigned short" />
+      <type builtin="yes" name="char" qualifier=" const *" />
     </return>
-    <override name="AbstractObject::getType" ref="json::AbstractObject#json::AbstractObject::getType" />
+    <override name="AbstractObject::getName" ref="json::AbstractObject#json::AbstractObject::getName" />
   </method>
   <method abstract="yes" id="json::ObjectFinalNumberFloat::replaceValue" name="replaceValue" override="yes" virtual="yes">
     <return>
