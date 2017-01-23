@@ -104,7 +104,7 @@ public:
     JsonTree tree;
     InheritanceIndex from = {0, p};
     callFatherSerializer (tree, p, true, from);
-    serializer(tree, true, p, from);
+    //serializer(tree, true, p, from);
     Parser::saveFile(file, tree);
   }
 
@@ -113,7 +113,10 @@ protected:
   virtual bool serializer (JsonTree& tree, bool b, string path, InheritanceIndex& from) = 0;
 
   // If we are in the top class, serialize from the first element
-  virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) { if (!isTopClass()) return serializer(tree, op, path, from); }
+  virtual bool callFatherSerializer (JsonTree& tree, string path, bool op, InheritanceIndex& from) {
+    //if (!isTopClass())
+      return serializer(tree, op, path, from);
+  }
 
   // checks if is the top class
   virtual bool isTopClass () {return true;}

@@ -614,6 +614,110 @@ Falcon 9
   "temperature" : 0
 }
 ```
+#<cldoc:Examples::Serialization::Inheriting serializable ability>
+No multiple inheritance supported yet
+
+There is a new macro for this case (see <Examples::Serialization::Using pointers as parameters> to know why):
+
+  `SERIAL_START_INHERITED (this_derived_class, base_class)`
+
+To reminding it, think the order is the same than the c++ inheritance declaration
+```c++
+class derived_class : public base_class {
+  SERIAL_START_INHERITED (derived_class, base_class)
+  ...
+  SERIAL_END
+};
+
+```
+
+You must have in mind you **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
+
+#### json file, "file.json"
+```
+{
+  "content" : [
+    12, "Run"
+  ]
+}
+```
+#### code
+```
+#include <iostream>
+#include <vector>
+#include <string>
+#include "serializable.hpp"
+
+class A : public json::Serializable {
+protected:                              // because we want this to be accessible by B class
+  int number;
+
+  SERIAL_START
+    number
+  SERIAL_END
+public:
+  virtual void printContent () { std::cout << number << std::endl; }
+  virtual void changeContent () { number = 90; }
+};
+
+class B : public A {
+private:
+  std::string word;
+
+  SERIAL_START_INHERITED (B, A)
+    word
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout << number << " " << word << std::endl;
+  }
+  void changeContent () {
+    number = 10;
+    word = "to the hills";
+  }
+};
+
+int main (void) {
+  B obj;
+  obj.serializeIn("pruebas/file.json", "content");
+  obj.printContent();
+  obj.changeContent();
+  obj.serializeOut("pruebas/file.json", "content");
+}
+```
+#### modified json file, "file.json"
+```json
+{
+  "personal" : {
+    "engineers" : 100,
+    "security" : 200,
+    "enough-people" : true
+  },
+  "rockets" : [
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ]
+  ],
+  "temperature" : 0
+}
+```
+
+
+
+
+
 #<cldoc:Examples::Serialization::Using pointers as parameters>
 The pointers will be initialized for you
 

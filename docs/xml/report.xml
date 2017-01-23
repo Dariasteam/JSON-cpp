@@ -12,7 +12,7 @@ return values.
 3. [References](#report/references): Unresolved cross references.
 </doc>
   <coverage>
-    <type documented="7" name="category" undocumented="3">
+    <type documented="8" name="category" undocumented="3">
       <undocumented id="Examples" name="Examples" />
       <undocumented id="Examples::File Manipulation" name="File Manipulation" />
       <undocumented id="Examples::Serialization" name="Serialization" />

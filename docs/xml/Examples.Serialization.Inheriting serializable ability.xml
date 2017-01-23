@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Examples::Serialization::Inheriting serializable ability" name="Inheriting serializable ability" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>No multiple inheritance supported yet</brief>
+  <doc>There is a new macro for this case (see <ref ref="Examples::Serialization::Using pointers as parameters#Examples::Serialization::Using pointers as parameters">Using pointers as parameters</ref> to know why):
+
+  `SERIAL_START_INHERITED (this_derived_class, base_class)`
+
+To reminding it, think the order is the same than the c++ inheritance declaration
+```c++
+class derived_class : public base_class {
+  SERIAL_START_INHERITED (derived_class, base_class)
+  ...
+  SERIAL_END
+};
+
+```
+
+You must have in mind you **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
+
+#### json file, "file.json"
+```
+{
+  "content" : [
+    12, "Run"
+  ]
+}
+```
+#### code
+```
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include "serializable.hpp"
+
+class A : public json::Serializable {
+protected:                              // because we want this to be accessible by B class
+  int number;
+
+  SERIAL_START
+    number
+  SERIAL_END
+public:
+  virtual void printContent () { std::cout &lt;&lt; number &lt;&lt; std::endl; }
+  virtual void changeContent () { number = 90; }
+};
+
+class B : public A {
+private:
+  std::string word;
+
+  SERIAL_START_INHERITED (B, A)
+    word
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout &lt;&lt; number &lt;&lt; " " &lt;&lt; word &lt;&lt; std::endl;
+  }
+  void changeContent () {
+    number = 10;
+    word = "to the hills";
+  }
+};
+
+int main (void) {
+  B obj;
+  obj.serializeIn("pruebas/file.json", "content");
+  obj.printContent();
+  obj.changeContent();
+  obj.serializeOut("pruebas/file.json", "content");
+}
+```
+
+
+
+
+
+</doc>
+</category>

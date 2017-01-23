@@ -18,7 +18,10 @@
   <category name="Using serializable classes as parameters" ref="Examples::Serialization::Using serializable classes as parameters#Examples::Serialization::Using serializable classes as parameters">
     <brief>Also mixing hash-like and vector-like serialization</brief>
   </category>
-  <category name="Inheriting serialization ability" ref="Examples::Serialization::Inheriting serialization ability#Examples::Serialization::Inheriting serialization ability">
-    <brief>Not only possible but actually easy</brief>
+  <category name="Inheriting serializable ability" ref="Examples::Serialization::Inheriting serializable ability#Examples::Serialization::Inheriting serializable ability">
+    <brief>No multiple inheritance supported yet</brief>
+  </category>
+  <category name="Using pointers as parameters" ref="Examples::Serialization::Using pointers as parameters#Examples::Serialization::Using pointers as parameters">
+    <brief>The pointers will be initialized for you</brief>
   </category>
 </category>

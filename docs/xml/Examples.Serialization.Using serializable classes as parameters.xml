@@ -1,8 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <category id="Examples::Serialization::Using serializable classes as parameters" name="Using serializable classes as parameters" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>Also mixing hash-like and vector-like serialization</brief>
-  <doc>For this example we are going to create a class 'Hangar' which has a serialized vector that stores many instances of class 'Rocket'.
-The first class uses the hash method while second uses the vector one
+  <doc>The following example shows you how to use other serializable classes as parameters
+mixing vector-like and hash-like modes.
+
+class 'Hangar' has a vector that stores many instances of class 'Rocket'.
+The first class uses the hash method while second uses the vector one.
 
 Hangar also has an instance of a 'Personal' which is hash-like serialized
 
