@@ -9,4 +9,16 @@
   <category name="Hash aproximation" ref="Examples::Serialization::Hash aproximation#Examples::Serialization::Hash aproximation">
     <brief>Unordered name dependent serialization</brief>
   </category>
+  <category name="Using complex parameters, Vector-like" ref="Examples::Serialization::Using complex parameters, Vector-like#Examples::Serialization::Using complex parameters, Vector-like">
+    <brief>Serializaing n dimensional vectors</brief>
+  </category>
+  <category name="Using complex parameters, Hash-like" ref="Examples::Serialization::Using complex parameters, Hash-like#Examples::Serialization::Using complex parameters, Hash-like">
+    <brief>Serializaing n dimensional vectors</brief>
+  </category>
+  <category name="Using serializable classes as parameters" ref="Examples::Serialization::Using serializable classes as parameters#Examples::Serialization::Using serializable classes as parameters">
+    <brief>Also mixing hash-like and vector-like serialization</brief>
+  </category>
+  <category name="Inheriting serialization ability" ref="Examples::Serialization::Inheriting serialization ability#Examples::Serialization::Inheriting serialization ability">
+    <brief>Not only possible but actually easy</brief>
+  </category>
 </category>

@@ -44,7 +44,7 @@ int main (void) {
 ```
 10
 ```
-#### json file, "file.json"
+#### modified json file, "file.json"
 ```json
 {
   "other_path" : [

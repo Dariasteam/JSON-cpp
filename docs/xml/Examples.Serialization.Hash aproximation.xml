@@ -21,15 +21,15 @@ Note that in this case we can put the elements directly on the root
 
 class A : public json::Serializable {               // derivate from 'Serializable'
 private:
-  int    number;
-  bool   boolean;
-  double precision;
-  string blckprde;
+  int         number;
+  bool        boolean;
+  double      precision;
+  std::string blckprde;
 
   SERIAL_START                                      // asociate each parameter with its name (which must be the same as in 'file.json')
     "likeThis",   boolean,                          // note the comma in between the name and its parameter.
     "accurancy",  precision,                        // parameters are order independent
-    "songLyrics", blckprde,
+    "songLyrics", blckprde,                         // the macro is the same
     "integer",    number                            // last element has no comma
   SERIAL_END
 public:
@@ -64,7 +64,7 @@ true
 And though your dead and gone, believe me, your memory will carry on
 ```
 
-#### json file, "file.json"
+#### modified json file, "file.json"
 ```json
 {
   "likeThis" : false,
@@ -73,7 +73,7 @@ And though your dead and gone, believe me, your memory will carry on
   "integer" : 78
 }
 ```
-
-Note the order of the elements has changed and now is the same than used in SERIALIE_START macro. Obviously that is not a problem
-if we wanted to run the program again.</doc>
+Note the order of the elements has changed and now is the same than used in **SERIALI_START** macro. Obviously that is not a problem
+if we wanted to run the program again.
+</doc>
 </category>

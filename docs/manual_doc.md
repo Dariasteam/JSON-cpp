@@ -168,10 +168,10 @@ As we are using the vector-like aproximation, we must know exactly the order of 
 
 class A : public json::Serializable {         // derivate from 'Serializable'
 private:
-  int    number;
-  bool   boolean;
-  double precision;
-  string blckprde;
+  int         number;
+  bool        boolean;
+  double      precision;
+  std::string blckprde;
 
   SERIAL_START                                // the parameters must be in the same order than in file
     number,                                   // note the comma after every element except last. Just like in json
@@ -244,15 +244,15 @@ Note that in this case we can put the elements directly on the root
 
 class A : public json::Serializable {               // derivate from 'Serializable'
 private:
-  int    number;
-  bool   boolean;
-  double precision;
-  string blckprde;
+  int         number;
+  bool        boolean;
+  double      precision;
+  std::string blckprde;
 
   SERIAL_START                                      // asociate each parameter with its name (which must be the same as in 'file.json')
     "likeThis",   boolean,                          // note the comma in between the name and its parameter.
     "accurancy",  precision,                        // parameters are order independent
-    "songLyrics", blckprde,
+    "songLyrics", blckprde,                         // the macro is the same
     "integer",    number                            // last element has no comma
   SERIAL_END
 public:
@@ -299,8 +299,94 @@ And though your dead and gone, believe me, your memory will carry on
 Note the order of the elements has changed and now is the same than used in **SERIALI_START** macro. Obviously that is not a problem
 if we wanted to run the program again.
 
-#<cldoc:Examples::Serialization::Using complex parameters>
+#<cldoc:Examples::Serialization::Using complex parameters, Vector-like>
 Serializaing n dimensional vectors
+
+You can use n dimensional vectors of vectors, the library can handle it for you!
+
+#### json file, "file.json"
+```json
+{
+  "content" : [
+    [
+      [1, 3, 4],
+      [6, 4, 1],
+      [4, 0, 0]
+    ]
+  ]
+}
+```
+
+Note this is a 2 dimensional vector **inside a vector of serializable parameters** (content)
+
+#### code
+```c++
+#include <iostream>
+#include <vector>
+#include "serializable.hpp"
+
+class A : public json::Serializable {               // derivate from 'Serializable'
+private:
+  std::vector <std::vector <int> > matrix;          // you can use the depth you want
+
+  SERIAL_START
+    matrix
+  SERIAL_END
+public:
+  void printContent () {
+    for (std::vector <int> rows : matrix) {
+      for (int element : rows) {
+        std::cout << element << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
+  void changeContent () {
+    for (int i = 0; i < matrix.size(); i++) {
+      for (int j = 0; j < matrix[i].size(); j++) {
+        matrix[i][j] = i * matrix.size() + j;
+      }
+    }
+  }
+};
+
+int main (void) {
+  A obj;
+  obj.serializeIn("file.json", "content");
+  obj.printContent();
+  obj.changeContent();
+  obj.serializeOut("file.json", "content");
+}
+```
+#### ouput
+```
+1 3 4
+6 4 1
+4 0 0
+```
+#### modified json file, "file.json"
+```json
+{
+  "content" : [
+    [
+      [
+        0, 1, 2
+      ],
+      [
+        3, 4, 5
+      ],
+      [
+        6, 7, 8
+      ]
+    ]
+  ]
+}
+```
+
+#<cldoc:Examples::Serialization::Using complex parameters, Hash-like>
+Serializaing n dimensional vectors
+
+You can use n dimensional vectors of vectors, the library can handle it for you!
 
 #### json file, "file.json"
 ```json
@@ -321,7 +407,7 @@ Serializaing n dimensional vectors
 
 class A : public json::Serializable {               // derivate from 'Serializable'
 private:
-  std::vector <std::vector <int> > matrix;
+  std::vector <std::vector <int> > matrix;          // you can use the depth you want
 
   SERIAL_START
     "two-dimensional-matrix", matrix
@@ -338,7 +424,7 @@ public:
   void changeContent () {
     for (int i = 0; i < matrix.size(); i++) {
       for (int j = 0; j < matrix[i].size(); j++) {
-        matrix[i][j] = i * j;
+        matrix[i][j] = i * matrix.size() + j;
       }
     }
   }
@@ -363,14 +449,192 @@ int main (void) {
 {
   "two-dimensional-matrix" : [
     [
-      0, 0, 0
-    ],
-    [
       0, 1, 2
     ],
     [
-      0, 2, 4
+      3, 4, 5
+    ],
+    [
+      6, 7, 8
     ]
   ]
 }
 ```
+
+#<cldoc:Examples::Serialization::Using serializable classes as parameters>
+Also mixing hash-like and vector-like serialization
+
+The following example shows you how to use other serializable classes as parameters
+mixing vector-like and hash-like modes.
+
+class 'Hangar' has a vector that stores many instances of class 'Rocket'.
+The first class uses the hash method while second uses the vector one.
+
+Hangar also has an instance of a 'Personal' which is hash-like serialized
+
+#### json file, "file.json"
+```
+{
+  "temperature" : 15.6,
+  "rockets" : [
+    [ "Saturn V" ],
+    [ "Soyuz"    ],
+    [ "Proton"   ],
+    [ "R7"       ],
+    [ "Falcon 9" ]
+  ],
+  "personal" : {
+    "engineers"     : 12,
+    "security"      : 4,
+    "enough-people" : false
+  }
+}
+```
+The 'rockets' vector has many vectors in it because the 'Rocket' class is serialized vector-like, the code show this clearly
+#### code
+```
+#include <iostream>
+#include <vector>
+#include <string>
+#include "serializable.hpp"
+
+class Rocket : public json::Serializable {               // vector serialization
+private:
+  string name;
+
+  SERIAL_START
+    name
+  SERIAL_END
+public:
+  void printContent () { std::cout << name << std::endl; }
+  void changeContent () { name = "myNewName"; }
+};
+
+
+class Personal : public json::Serializable {              // hash serialization
+private:
+  int engi;
+  int sec;
+  bool enough;
+
+  SERIAL_START
+    "engineers", engi,
+    "security", sec,
+    "enough-people", enough
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout << engi   << std::endl
+              << sec    << std::endl
+              << enough << std::endl;
+  }
+  void changeContent () {
+    engi   = 100;
+    sec    = 200;
+    enough = true;
+  }
+};
+
+class Hangar : public json::Serializable {                // hash serialization
+private:
+  vector <Rocket> elements;
+  Personal people;
+  float temp;
+
+  SERIAL_START
+    "personal", people,
+    "rockets", elements,
+    "temperature", temp
+  SERIAL_END
+
+public:
+  void printContent () {
+    std::cout << "Temperature: " << temp
+              << ", content:"    << std::endl;
+    people.printContent();
+    for (Rocket r : elements) {
+      r.printContent();
+    }
+  }
+  void changeContent () {
+    temp = 0;
+    for (Rocket& r : elements) {
+      r.changeContent();
+    }
+    people.changeContent();
+  }
+};
+
+int main (void) {
+  Hangar obj;
+  obj.serializeIn("file.json");
+  obj.printContent();
+  obj.changeContent();
+  obj.serializeOut("file.json");
+}
+```
+#### ouput
+```
+Temperature: 15.6, content:
+12
+4
+0
+Saturn V
+Soyuz
+Proton
+R7
+Falcon 9
+
+```
+#### modified json file, "file.json"
+```json
+{
+  "personal" : {
+    "engineers" : 100,
+    "security" : 200,
+    "enough-people" : true
+  },
+  "rockets" : [
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ],
+    [
+      "myNewName"
+    ]
+  ],
+  "temperature" : 0
+}
+```
+#<cldoc:Examples::Serialization::Using pointers as parameters>
+The pointers will be initialized for you
+
+You can use pointers to any type used in the previous examples including other serializable classes.
+
+Note that pointers **can not be used for arrays** of elements **yet** due the methods can not know the lenght of that array,
+so only the first element is serialized.
+
+
+#### json file, "file.json"
+```
+{
+  "vector-pointer" : [
+      1, 2, 3, 4, 5, 6, 7, 8
+  ],
+  "vector-string" : "If it doen't show, give it time",
+  "normal-string" : "to read between the lines"
+}
+```
+
+
+
+
+

@@ -24,10 +24,10 @@ As we are using the vector-like aproximation, we must know exactly the order of 
 
 class A : public json::Serializable {         // derivate from 'Serializable'
 private:
-  int    number;
-  bool   boolean;
-  double precision;
-  string blckprde;
+  int         number;
+  bool        boolean;
+  double      precision;
+  std::string blckprde;
 
   SERIAL_START                                // the parameters must be in the same order than in file
     number,                                   // note the comma after every element except last. Just like in json
@@ -66,7 +66,7 @@ true
 And though your dead and gone, believe me, your memory will carry on
 ```
 
-#### json file, "file.json"
+#### modified json file, "file.json"
 ```json
 {
   "other_path" : [
