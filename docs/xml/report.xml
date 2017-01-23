@@ -19,136 +19,136 @@ return values.
     </type>
     <type documented="2" name="methodtemplate" undocumented="44">
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="382" />
+        <location column="3" file="serializable.hpp" line="385" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="388" />
+        <location column="3" file="serializable.hpp" line="391" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="396" />
+        <location column="3" file="serializable.hpp" line="399" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="402" />
+        <location column="3" file="serializable.hpp" line="405" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="410" />
+        <location column="3" file="serializable.hpp" line="413" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="417" />
+        <location column="3" file="serializable.hpp" line="420" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="426" />
+        <location column="3" file="serializable.hpp" line="429" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="432" />
+        <location column="3" file="serializable.hpp" line="435" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="441" />
+        <location column="3" file="serializable.hpp" line="444" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="457" />
+        <location column="3" file="serializable.hpp" line="460" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="465" />
+        <location column="3" file="serializable.hpp" line="468" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="481" />
+        <location column="3" file="serializable.hpp" line="484" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="490" />
+        <location column="3" file="serializable.hpp" line="493" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="508" />
+        <location column="3" file="serializable.hpp" line="511" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="517" />
+        <location column="3" file="serializable.hpp" line="520" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="535" />
+        <location column="3" file="serializable.hpp" line="538" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="544" />
+        <location column="3" file="serializable.hpp" line="547" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="551" />
+        <location column="3" file="serializable.hpp" line="554" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="560" />
+        <location column="3" file="serializable.hpp" line="563" />
       </undocumented>
       <undocumented id="json::Serializable::initialize" name="initialize">
-        <location column="3" file="serializable.hpp" line="567" />
+        <location column="3" file="serializable.hpp" line="570" />
       </undocumented>
       <undocumented id="json::Serializable::initializePointer" name="initializePointer">
-        <location column="3" file="serializable.hpp" line="128" />
+        <location column="3" file="serializable.hpp" line="131" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="196" />
+        <location column="3" file="serializable.hpp" line="199" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="203" />
+        <location column="3" file="serializable.hpp" line="206" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="211" />
+        <location column="3" file="serializable.hpp" line="214" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="217" />
+        <location column="3" file="serializable.hpp" line="220" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="225" />
+        <location column="3" file="serializable.hpp" line="228" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="234" />
+        <location column="3" file="serializable.hpp" line="237" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="243" />
+        <location column="3" file="serializable.hpp" line="246" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="251" />
+        <location column="3" file="serializable.hpp" line="254" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="260" />
+        <location column="3" file="serializable.hpp" line="263" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="272" />
+        <location column="3" file="serializable.hpp" line="275" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="280" />
+        <location column="3" file="serializable.hpp" line="283" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="292" />
+        <location column="3" file="serializable.hpp" line="295" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="300" />
+        <location column="3" file="serializable.hpp" line="303" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="318" />
+        <location column="3" file="serializable.hpp" line="321" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="327" />
+        <location column="3" file="serializable.hpp" line="330" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="343" />
+        <location column="3" file="serializable.hpp" line="346" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="351" />
+        <location column="3" file="serializable.hpp" line="354" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="358" />
+        <location column="3" file="serializable.hpp" line="361" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="366" />
+        <location column="3" file="serializable.hpp" line="369" />
       </undocumented>
       <undocumented id="json::Serializable::retribution" name="retribution">
-        <location column="3" file="serializable.hpp" line="372" />
+        <location column="3" file="serializable.hpp" line="375" />
       </undocumented>
       <undocumented id="json::Serializable::retributionPointer" name="retributionPointer">
-        <location column="3" file="serializable.hpp" line="141" />
+        <location column="3" file="serializable.hpp" line="144" />
       </undocumented>
       <undocumented id="json::Serializable::serialize" name="serialize">
-        <location column="2" file="serializable.hpp" line="158" />
+        <location column="2" file="serializable.hpp" line="161" />
       </undocumented>
       <undocumented id="json::Serializable::serialize" name="serialize">
-        <location column="3" file="serializable.hpp" line="179" />
+        <location column="3" file="serializable.hpp" line="182" />
       </undocumented>
     </type>
     <type documented="1" name="struct" undocumented="1">
@@ -158,325 +158,325 @@ return values.
     </type>
     <type documented="0" name="templatetypeparameter" undocumented="107">
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="34" file="serializable.hpp" line="388" />
+        <location column="34" file="serializable.hpp" line="391" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="45" file="serializable.hpp" line="402" />
+        <location column="45" file="serializable.hpp" line="405" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="34" file="serializable.hpp" line="417" />
+        <location column="34" file="serializable.hpp" line="420" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="45" file="serializable.hpp" line="432" />
+        <location column="45" file="serializable.hpp" line="435" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="34" file="serializable.hpp" line="457" />
+        <location column="34" file="serializable.hpp" line="460" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="45" file="serializable.hpp" line="481" />
+        <location column="45" file="serializable.hpp" line="484" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="34" file="serializable.hpp" line="508" />
+        <location column="34" file="serializable.hpp" line="511" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="45" file="serializable.hpp" line="535" />
+        <location column="45" file="serializable.hpp" line="538" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="34" file="serializable.hpp" line="551" />
+        <location column="34" file="serializable.hpp" line="554" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::Args" name="Args">
-        <location column="45" file="serializable.hpp" line="567" />
+        <location column="45" file="serializable.hpp" line="570" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="25" file="serializable.hpp" line="382" />
+        <location column="25" file="serializable.hpp" line="385" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="388" />
+        <location column="22" file="serializable.hpp" line="391" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="33" file="serializable.hpp" line="396" />
+        <location column="33" file="serializable.hpp" line="399" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="402" />
+        <location column="22" file="serializable.hpp" line="405" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="25" file="serializable.hpp" line="410" />
+        <location column="25" file="serializable.hpp" line="413" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="417" />
+        <location column="22" file="serializable.hpp" line="420" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="36" file="serializable.hpp" line="426" />
+        <location column="36" file="serializable.hpp" line="429" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="432" />
+        <location column="22" file="serializable.hpp" line="435" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="441" />
+        <location column="22" file="serializable.hpp" line="444" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="457" />
+        <location column="22" file="serializable.hpp" line="460" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="33" file="serializable.hpp" line="465" />
+        <location column="33" file="serializable.hpp" line="468" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="481" />
+        <location column="22" file="serializable.hpp" line="484" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="490" />
+        <location column="22" file="serializable.hpp" line="493" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="508" />
+        <location column="22" file="serializable.hpp" line="511" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="33" file="serializable.hpp" line="517" />
+        <location column="33" file="serializable.hpp" line="520" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="535" />
+        <location column="22" file="serializable.hpp" line="538" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="544" />
+        <location column="22" file="serializable.hpp" line="547" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="551" />
+        <location column="22" file="serializable.hpp" line="554" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="33" file="serializable.hpp" line="560" />
+        <location column="33" file="serializable.hpp" line="563" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::func" name="func">
-        <location column="22" file="serializable.hpp" line="567" />
+        <location column="22" file="serializable.hpp" line="570" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="22" file="serializable.hpp" line="396" />
+        <location column="22" file="serializable.hpp" line="399" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="34" file="serializable.hpp" line="402" />
+        <location column="34" file="serializable.hpp" line="405" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="25" file="serializable.hpp" line="426" />
+        <location column="25" file="serializable.hpp" line="429" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="34" file="serializable.hpp" line="432" />
+        <location column="34" file="serializable.hpp" line="435" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="22" file="serializable.hpp" line="465" />
+        <location column="22" file="serializable.hpp" line="468" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="34" file="serializable.hpp" line="481" />
+        <location column="34" file="serializable.hpp" line="484" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="22" file="serializable.hpp" line="517" />
+        <location column="22" file="serializable.hpp" line="520" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="34" file="serializable.hpp" line="535" />
+        <location column="34" file="serializable.hpp" line="538" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="22" file="serializable.hpp" line="560" />
+        <location column="22" file="serializable.hpp" line="563" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::str" name="str">
-        <location column="34" file="serializable.hpp" line="567" />
+        <location column="34" file="serializable.hpp" line="570" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="382" />
+        <location column="13" file="serializable.hpp" line="385" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="388" />
+        <location column="13" file="serializable.hpp" line="391" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="396" />
+        <location column="13" file="serializable.hpp" line="399" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="402" />
+        <location column="13" file="serializable.hpp" line="405" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="410" />
+        <location column="13" file="serializable.hpp" line="413" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="417" />
+        <location column="13" file="serializable.hpp" line="420" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="426" />
+        <location column="13" file="serializable.hpp" line="429" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="432" />
+        <location column="13" file="serializable.hpp" line="435" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="441" />
+        <location column="13" file="serializable.hpp" line="444" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="457" />
+        <location column="13" file="serializable.hpp" line="460" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="465" />
+        <location column="13" file="serializable.hpp" line="468" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="481" />
+        <location column="13" file="serializable.hpp" line="484" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="490" />
+        <location column="13" file="serializable.hpp" line="493" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="508" />
+        <location column="13" file="serializable.hpp" line="511" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="517" />
+        <location column="13" file="serializable.hpp" line="520" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="535" />
+        <location column="13" file="serializable.hpp" line="538" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="544" />
+        <location column="13" file="serializable.hpp" line="547" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="551" />
+        <location column="13" file="serializable.hpp" line="554" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="560" />
+        <location column="13" file="serializable.hpp" line="563" />
       </undocumented>
       <undocumented id="json::Serializable::initialize::t" name="t">
-        <location column="13" file="serializable.hpp" line="567" />
+        <location column="13" file="serializable.hpp" line="570" />
       </undocumented>
       <undocumented id="json::Serializable::initializePointer::t" name="t">
-        <location column="13" file="serializable.hpp" line="122" />
+        <location column="13" file="serializable.hpp" line="125" />
       </undocumented>
       <undocumented id="json::Serializable::initializePointer::t" name="t">
-        <location column="13" file="serializable.hpp" line="128" />
+        <location column="13" file="serializable.hpp" line="131" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="22" file="serializable.hpp" line="203" />
+        <location column="22" file="serializable.hpp" line="206" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="33" file="serializable.hpp" line="217" />
+        <location column="33" file="serializable.hpp" line="220" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="22" file="serializable.hpp" line="234" />
+        <location column="22" file="serializable.hpp" line="237" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="33" file="serializable.hpp" line="251" />
+        <location column="33" file="serializable.hpp" line="254" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="22" file="serializable.hpp" line="272" />
+        <location column="22" file="serializable.hpp" line="275" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="33" file="serializable.hpp" line="292" />
+        <location column="33" file="serializable.hpp" line="295" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="22" file="serializable.hpp" line="318" />
+        <location column="22" file="serializable.hpp" line="321" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="33" file="serializable.hpp" line="343" />
+        <location column="33" file="serializable.hpp" line="346" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="22" file="serializable.hpp" line="358" />
+        <location column="22" file="serializable.hpp" line="361" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::Args" name="Args">
-        <location column="33" file="serializable.hpp" line="372" />
+        <location column="33" file="serializable.hpp" line="375" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="211" />
+        <location column="22" file="serializable.hpp" line="214" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="217" />
+        <location column="22" file="serializable.hpp" line="220" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="243" />
+        <location column="22" file="serializable.hpp" line="246" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="251" />
+        <location column="22" file="serializable.hpp" line="254" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="280" />
+        <location column="22" file="serializable.hpp" line="283" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="292" />
+        <location column="22" file="serializable.hpp" line="295" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="25" file="serializable.hpp" line="327" />
+        <location column="25" file="serializable.hpp" line="330" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="343" />
+        <location column="22" file="serializable.hpp" line="346" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="25" file="serializable.hpp" line="366" />
+        <location column="25" file="serializable.hpp" line="369" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::str" name="str">
-        <location column="22" file="serializable.hpp" line="372" />
+        <location column="22" file="serializable.hpp" line="375" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="196" />
+        <location column="13" file="serializable.hpp" line="199" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="203" />
+        <location column="13" file="serializable.hpp" line="206" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="211" />
+        <location column="13" file="serializable.hpp" line="214" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="217" />
+        <location column="13" file="serializable.hpp" line="220" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="225" />
+        <location column="13" file="serializable.hpp" line="228" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="234" />
+        <location column="13" file="serializable.hpp" line="237" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="243" />
+        <location column="13" file="serializable.hpp" line="246" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="251" />
+        <location column="13" file="serializable.hpp" line="254" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="260" />
+        <location column="13" file="serializable.hpp" line="263" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="272" />
+        <location column="13" file="serializable.hpp" line="275" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="280" />
+        <location column="13" file="serializable.hpp" line="283" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="292" />
+        <location column="13" file="serializable.hpp" line="295" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="300" />
+        <location column="13" file="serializable.hpp" line="303" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="318" />
+        <location column="13" file="serializable.hpp" line="321" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="327" />
+        <location column="13" file="serializable.hpp" line="330" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="343" />
+        <location column="13" file="serializable.hpp" line="346" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="351" />
+        <location column="13" file="serializable.hpp" line="354" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="358" />
+        <location column="13" file="serializable.hpp" line="361" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="366" />
+        <location column="13" file="serializable.hpp" line="369" />
       </undocumented>
       <undocumented id="json::Serializable::retribution::t" name="t">
-        <location column="13" file="serializable.hpp" line="372" />
+        <location column="13" file="serializable.hpp" line="375" />
       </undocumented>
       <undocumented id="json::Serializable::retributionPointer::t" name="t">
-        <location column="13" file="serializable.hpp" line="135" />
+        <location column="13" file="serializable.hpp" line="138" />
       </undocumented>
       <undocumented id="json::Serializable::retributionPointer::t" name="t">
-        <location column="13" file="serializable.hpp" line="141" />
+        <location column="13" file="serializable.hpp" line="144" />
       </undocumented>
       <undocumented id="json::Serializable::serialize::Args" name="Args">
-        <location column="12" file="serializable.hpp" line="158" />
+        <location column="12" file="serializable.hpp" line="161" />
       </undocumented>
       <undocumented id="json::Serializable::serialize::Args" name="Args">
-        <location column="24" file="serializable.hpp" line="179" />
+        <location column="24" file="serializable.hpp" line="182" />
       </undocumented>
       <undocumented id="json::Serializable::serialize::str" name="str">
-        <location column="13" file="serializable.hpp" line="179" />
+        <location column="13" file="serializable.hpp" line="182" />
       </undocumented>
     </type>
     <type documented="2" name="enum" undocumented="0" />
@@ -988,22 +988,22 @@ return values.
       <undocumented name="op" />
     </function>
     <function id="json::Serializable::isTopClass" name="isTopClass">
-      <location column="3" file="serializable.hpp" line="119" />
+      <location column="3" file="serializable.hpp" line="122" />
       <undocumented-return />
     </function>
     <function id="json::Serializable::initializePointer" name="initializePointer">
-      <location column="3" file="serializable.hpp" line="122" />
+      <location column="3" file="serializable.hpp" line="125" />
       <undocumented-return />
       <undocumented name="element" />
     </function>
     <function id="json::Serializable::retributionPointer" name="retributionPointer">
-      <location column="3" file="serializable.hpp" line="135" />
+      <location column="3" file="serializable.hpp" line="138" />
       <undocumented-return />
       <undocumented name="tree" />
       <undocumented name="element" />
     </function>
     <function id="json::Serializable::demangle" name="demangle">
-      <location column="3" file="serializable.hpp" line="149" />
+      <location column="3" file="serializable.hpp" line="152" />
       <undocumented-return />
       <undocumented name="mangled" />
     </function>

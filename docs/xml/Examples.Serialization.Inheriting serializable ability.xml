@@ -14,8 +14,9 @@ class derived_class : public base_class {
 };
 
 ```
+Serialization occurs starting from the base class to derived
 
-You must have in mind you **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
+You **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
 
 #### json file, "file.json"
 ```
@@ -56,23 +57,26 @@ public:
     std::cout &lt;&lt; number &lt;&lt; " " &lt;&lt; word &lt;&lt; std::endl;
   }
   void changeContent () {
-    number = 10;
+    number = 90;
     word = "to the hills";
   }
 };
 
 int main (void) {
   B obj;
-  obj.serializeIn("pruebas/file.json", "content");
+  obj.serializeIn("file.json", "content");
   obj.printContent();
   obj.changeContent();
-  obj.serializeOut("pruebas/file.json", "content");
+  obj.serializeOut("file.json", "content");
 }
 ```
-
-
-
-
-
+#### modified json file, "file.json"
+```json
+{
+  "content" : [
+    12, "to the hills"
+  ]
+}
+```
 </doc>
 </category>
