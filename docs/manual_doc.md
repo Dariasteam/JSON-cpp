@@ -630,8 +630,9 @@ class derived_class : public base_class {
 };
 
 ```
+Serialization occurs starting from the base class to derived
 
-You must have in mind you **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
+You **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
 
 #### json file, "file.json"
 ```
@@ -672,51 +673,27 @@ public:
     std::cout << number << " " << word << std::endl;
   }
   void changeContent () {
-    number = 10;
+    number = 90;
     word = "to the hills";
   }
 };
 
 int main (void) {
   B obj;
-  obj.serializeIn("pruebas/file.json", "content");
+  obj.serializeIn("file.json", "content");
   obj.printContent();
   obj.changeContent();
-  obj.serializeOut("pruebas/file.json", "content");
+  obj.serializeOut("file.json", "content");
 }
 ```
 #### modified json file, "file.json"
 ```json
 {
-  "personal" : {
-    "engineers" : 100,
-    "security" : 200,
-    "enough-people" : true
-  },
-  "rockets" : [
-    [
-      "myNewName"
-    ],
-    [
-      "myNewName"
-    ],
-    [
-      "myNewName"
-    ],
-    [
-      "myNewName"
-    ],
-    [
-      "myNewName"
-    ]
-  ],
-  "temperature" : 0
+  "content" : [
+    12, "to the hills"
+  ]
 }
 ```
-
-
-
-
 
 #<cldoc:Examples::Serialization::Using pointers as parameters>
 The pointers will be initialized for you
