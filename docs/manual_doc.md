@@ -686,11 +686,15 @@ int main (void) {
   obj.serializeOut("file.json", "content");
 }
 ```
+#### output
+```
+10 run
+```
 #### modified json file, "file.json"
 ```json
 {
   "content" : [
-    12, "to the hills"
+    90, "to the hills"
   ]
 }
 ```
