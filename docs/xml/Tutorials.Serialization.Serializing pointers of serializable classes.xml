@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Tutorials::Serialization::Serializing pointers of serializable classes" name="Serializing pointers of serializable classes" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>The polymorphic problem</brief>
+  <doc>## Explanation
+
+Imagine we have this program:
+```
+class A : public json::Serializable;
+class B : public A;
+class C : public A;
+
+class M : public json::Serializable {
+  A* a;
+  SERIAL_START;
+    a                     // this could be an A, a B or a C
+  SERIAL_END;
+```
+
+How do we know if we are serializing an A, B or C?
+At execution time we can't ask for a list of derived classes for correctly trait this situation.
+
+The solution adopted consist in explicitily specificate when inheritance occurs (and that is why the
+SERIAL_START_INHERITED macro exist). This allow the serialization methods to manage the serializable inheritance
+as seen in <ref ref="Tutorials::Serialization::Inheriting serializable ability#Tutorials::Serialization::Inheriting serializable ability">Inheriting serializable ability</ref>, however, this isn't enough, and we
+must use one last macro (promise, this is last) in order to tell the 'Seralizable' methods how
+to create a new 'B' or 'C' once they know if is a B or a C what is required. (Thats because serialization methods
+use templates and tries to do `new t` when the parameter is a pointer). The new macro is:
+
+```
+INHERITS (this_class)
+
+```
+And must be declared as first element in .cpp file of every class or inmediately after the class declaration.
+For example, the previous program now would be
+```
+class A : public json::Serializable;
+
+class B : public A;
+INHERITS (A)              // tells serializable static method there is a B class
+
+class C : public A;       // tells serializable static method there is a C class
+INHERITS (C)
+
+class M : public json::Serializable {
+  A* a;
+  SERIAL_START;
+    a                     // this could be an A, a B or a C
+  SERIAL_END;
+
+```
+The purpose of this is to create a 'dictionary' of derived pointer-used classes so when the serialization reach
+the situation of having to manage an A*, but knows it really contains a B*, can truly create a B. And how
+will know that? Well, json will say. Serializable pointers are stored as:
+```
+{
+  "$classType" : "B",
+  "$classContent" : [/{
+
+  ]/}
+}
+```
+So, they are **always** hash serialized, but its content could be vector or hash, so all we learned still works here,
+the difference is it will not be aplied at the root of the serialized element but in it's '$classContent' path.
+
+## Example
+
+#### json file, "file.json"
+```
+{
+  "content" : [
+    {
+      "$classType" : "Rover",
+      "$classContent" : [
+        "Opportunity",
+        "Mars"
+      ]
+    },
+    {
+      "$classType" : "Rocket",
+      "$classContent" : [
+        "Zenit",
+        0,
+        2
+      ]
+    },
+    {
+      "$classType" : "SpaceShip",
+      "$classContent" : [
+        "Shenzou",
+        1,
+      ]
+    }
+  ]
+}
+```
+#### code
+```c++
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include "serializable.hpp"
+
+class AwesomeVehicle : public json::Serializable {
+protected:
+  string name;
+
+  SERIAL_START
+    name
+  SERIAL_END
+};
+
+class Rocket : public AwesomeVehicle {
+private:
+  int boosters;
+  int stages;
+
+  SERIAL_START_INHERITED (Rocket, AwesomeVehicle)
+    boosters,
+    stages
+  SERIAL_END
+};
+
+INHERITS (Rocket)                                     // Do not forget
+
+class SpaceShip : public AwesomeVehicle {
+private:
+  int crew;
+
+  SERIAL_START_INHERITED (SpaceShip, AwesomeVehicle)
+    crew
+  SERIAL_END
+};
+
+INHERITS (SpaceShip)                                 // Do not forget
+
+class Rover : public AwesomeVehicle {
+private:
+  std::string celestial_body;
+
+  SERIAL_START_INHERITED (Rover, AwesomeVehicle)
+    celestial_body
+  SERIAL_END
+};
+
+INHERITS (Rover)                                    // Do not forget
+
+class ProudOfScience : public json::Serializable{
+private:
+  std::vector &lt;AwesomeVehicle*&gt; spaceStuff;
+
+  SERIAL_START
+    "content", spaceStuff
+  SERIAL_END
+};
+
+int main (void) {
+  ProudOfScience obj;
+  obj.serializeIn("file.json");
+  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;
+  //obj.serializeOut("file.json", "content");
+}
+```
+#### ouput
+```
+{
+  "content" : [
+    {
+      "$classType" : "Rover",
+      "$classContent" : [
+        "Opportunity",
+        "Mars"
+      ]
+    },
+    {
+      "$classType" : "Rocket",
+      "$classContent" : [
+        "Zenit",
+        0, 2
+      ]
+    },
+    {
+      "$classType" : "SpaceShip",
+      "$classContent" : [
+        "Shenzou",
+        1
+      ]
+    }
+  ]
+}
+```
+
+
+
+</doc>
+</category>

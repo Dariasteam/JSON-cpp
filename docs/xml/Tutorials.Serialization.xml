@@ -4,7 +4,7 @@
     <brief>First read the entire tutorial</brief>
   </category>
   <category name="Getting started" ref="Tutorials::Serialization::Getting started#Tutorials::Serialization::Getting started">
-    <brief>How the info is stored and how can You do it</brief>
+    <brief>How the info is stored and basics about process</brief>
   </category>
   <category name="Show me the code!" ref="Tutorials::Serialization::Show me the code!#Tutorials::Serialization::Show me the code!">
     <brief>Simple serialization, vector-like</brief>
@@ -30,10 +30,10 @@
   <category name="Inheriting serializable ability" ref="Tutorials::Serialization::Inheriting serializable ability#Tutorials::Serialization::Inheriting serializable ability">
     <brief>No multiple inheritance supported yet</brief>
   </category>
-  <category name="Serializing pointers" ref="Tutorials::Serialization::Serializing pointers#Tutorials::Serialization::Serializing pointers">
+  <category name="Serializing pointers of basic types" ref="Tutorials::Serialization::Serializing pointers of basic types#Tutorials::Serialization::Serializing pointers of basic types">
     <brief>Non serializable class pointer case</brief>
   </category>
-  <category name="Serializing pointers serializable classes" ref="Tutorials::Serialization::Serializing pointers serializable classes#Tutorials::Serialization::Serializing pointers serializable classes">
+  <category name="Serializing pointers of serializable classes" ref="Tutorials::Serialization::Serializing pointers of serializable classes#Tutorials::Serialization::Serializing pointers of serializable classes">
     <brief>The polymorphic problem</brief>
   </category>
 </category>

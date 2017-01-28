@@ -8,8 +8,8 @@
 #include "manager.hpp"
 #include "parser.hpp"
 
-#define CLASS_TYPE "classType"
-#define CLASS_CONTENT "classContent"
+#define CLASS_TYPE "$classType"
+#define CLASS_CONTENT "$classContent"
 
 #define SERIAL_START_INHERITED(y, x) INHERITS_FROM (y, x)                                                                                                 \
                                       virtual bool serializer (json::JsonTree& _json_tree_, bool _json_op_, string _json_path_, InheritanceIndex& _json_from_) { \

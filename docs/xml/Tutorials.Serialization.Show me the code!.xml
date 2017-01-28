@@ -33,7 +33,7 @@ public:
 int main (void) {
   A obj;
   obj.serializeIn("file.json", "some_path");   // reads "file.json", generate an inner 'JsonTree' and use it to initialize the parameters of 'obj'
-  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;      // prints the objects content
+  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;      // prints object's content
   obj.changeContent();                         // changes the value of 'parameter' to 14
   obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }

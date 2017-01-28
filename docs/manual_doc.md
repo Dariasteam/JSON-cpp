@@ -108,7 +108,7 @@ First read the entire tutorial
 
 
 #<cldoc:Tutorials::Serialization::Getting started>
-How the info is stored and how can You do it
+How the info is stored and basics about process
 
 #### Serialization modes
 
@@ -209,7 +209,7 @@ public:
 int main (void) {
   A obj;
   obj.serializeIn("file.json", "some_path");   // reads "file.json", generate an inner 'JsonTree' and use it to initialize the parameters of 'obj'
-  std::cout << obj.toText() << std::endl;      // prints the objects content
+  std::cout << obj.toText() << std::endl;      // prints object's content
   obj.changeContent();                         // changes the value of 'parameter' to 14
   obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
@@ -934,7 +934,7 @@ int main (void) {
 }
 ```
 
-#<cldoc:Tutorials::Serialization::Serializing pointers>
+#<cldoc:Tutorials::Serialization::Serializing pointers of basic types>
 Non serializable class pointer case
 
 You can use pointers of any type seen in previous examples excepting vectors:
@@ -949,7 +949,19 @@ The serialization process checks types of the pointers and tries to do `new` for
 Note that pointers **cannot be used for arrays** of elements **yet** due the methods cannot know the lenght of that array,
 so only the first element is serialized.
 
-This class:
+#### json file, "file.json"
+```
+{
+  "content" : [
+    10, "oh by the way, which one is pink?",
+    false,
+    [
+      1, 2, 3, 4
+    ]
+  ]
+}
+```
+#### code
 ```c++
 #include <iostream>
 #include <vector>
@@ -971,41 +983,214 @@ private:
     vec1,
   SERIAL_END
 };
-```
-Would be serialized as
-```
-{
-  "content" : [
-    10, "oh by the way, which one is pink?",
-    false,
-    [
-      1, 2, 3, 4
-    ]
-  ]
+
+int main (void) {
+  A obj;
+  obj.serializeIn("file.json", "content");
+  std::cout << obj.toText() << std::endl;
 }
 ```
+#### output
+```
+[
+  10, "oh by the way, which one is pink?",
+  false,
+  [
+    1, 2, 3, 4
+  ]
+]
+```
 
-#<cldoc:Tutorials::Serialization::Serializing pointers serializable classes>
+#<cldoc:Tutorials::Serialization::Serializing pointers of serializable classes>
 The polymorphic problem
 
+## Explanation
 
+Imagine we have this program:
+```
+class A : public json::Serializable;
+class B : public A;
+class C : public A;
 
+class M : public json::Serializable {
+  A* a;
+  SERIAL_START;
+    a                     // this could be an A, a B or a C
+  SERIAL_END;
+```
 
+How do we know if we are serializing an A, B or C?
+At execution time we can't ask for a list of derived classes for correctly trait this situation.
 
+The solution adopted consist in explicitily specificate when inheritance occurs (and that is why the
+SERIAL_START_INHERITED macro exist). This allow the serialization methods to manage the serializable inheritance
+as seen in <Tutorials::Serialization::Inheriting serializable ability>, however, this isn't enough, and we
+must use one last macro (promise, this is last) in order to tell the 'Seralizable' methods how
+to create a new 'B' or 'C' once they know if is a B or a C what is required. (Thats because serialization methods
+use templates and tries to do `new t` when the parameter is a pointer). The new macro is:
 
+```
+INHERITS (this_class)
 
+```
+And must be declared as first element in .cpp file of every class or inmediately after the class declaration.
+For example, the previous program now would be
+```
+class A : public json::Serializable;
+
+class B : public A;
+INHERITS (A)              // tells serializable static method there is a B class
+
+class C : public A;       // tells serializable static method there is a C class
+INHERITS (C)
+
+class M : public json::Serializable {
+  A* a;
+  SERIAL_START;
+    a                     // this could be an A, a B or a C
+  SERIAL_END;
+
+```
+The purpose of this is to create a 'dictionary' of derived pointer-used classes so when the serialization reach
+the situation of having to manage an A*, but knows it really contains a B*, can truly create a B. And how
+will know that? Well, json will say. Serializable pointers are stored as:
+```
+{
+  "$classType" : "B",
+  "$classContent" : [/{
+
+  ]/}
+}
+```
+So, they are **always** hash serialized, but its content could be vector or hash, so all we learned still works here,
+the difference is it will not be aplied at the root of the serialized element but in it's '$classContent' path.
+
+## Example
 
 #### json file, "file.json"
 ```
 {
-  "vector-pointer" : [
-      1, 2, 3, 4, 5, 6, 7, 8
-  ],
-  "vector-string" : "If it doen't show, give it time",
-  "normal-string" : "to read between the lines"
+  "content" : [
+    {
+      "$classType" : "Rover",
+      "$classContent" : [
+        "Opportunity",
+        "Mars"
+      ]
+    },
+    {
+      "$classType" : "Rocket",
+      "$classContent" : [
+        "Zenit",
+        0,
+        2
+      ]
+    },
+    {
+      "$classType" : "SpaceShip",
+      "$classContent" : [
+        "Shenzou",
+        1,
+      ]
+    }
+  ]
 }
 ```
+#### code
+```c++
+#include <iostream>
+#include <vector>
+#include <string>
+#include "serializable.hpp"
 
+class AwesomeVehicle : public json::Serializable {
+protected:
+  string name;
+
+  SERIAL_START
+    name
+  SERIAL_END
+};
+
+class Rocket : public AwesomeVehicle {
+private:
+  int boosters;
+  int stages;
+
+  SERIAL_START_INHERITED (Rocket, AwesomeVehicle)
+    boosters,
+    stages
+  SERIAL_END
+};
+
+INHERITS (Rocket)                                     // Do not forget
+
+class SpaceShip : public AwesomeVehicle {
+private:
+  int crew;
+
+  SERIAL_START_INHERITED (SpaceShip, AwesomeVehicle)
+    crew
+  SERIAL_END
+};
+
+INHERITS (SpaceShip)                                 // Do not forget
+
+class Rover : public AwesomeVehicle {
+private:
+  std::string celestial_body;
+
+  SERIAL_START_INHERITED (Rover, AwesomeVehicle)
+    celestial_body
+  SERIAL_END
+};
+
+INHERITS (Rover)                                    // Do not forget
+
+class ProudOfScience : public json::Serializable{
+private:
+  std::vector <AwesomeVehicle*> spaceStuff;
+
+  SERIAL_START
+    "content", spaceStuff
+  SERIAL_END
+};
+
+int main (void) {
+  ProudOfScience obj;
+  obj.serializeIn("file.json");
+  std::cout << obj.toText() << std::endl;
+  //obj.serializeOut("file.json", "content");
+}
+```
+#### ouput
+```
+{
+  "content" : [
+    {
+      "$classType" : "Rover",
+      "$classContent" : [
+        "Opportunity",
+        "Mars"
+      ]
+    },
+    {
+      "$classType" : "Rocket",
+      "$classContent" : [
+        "Zenit",
+        0, 2
+      ]
+    },
+    {
+      "$classType" : "SpaceShip",
+      "$classContent" : [
+        "Shenzou",
+        1
+      ]
+    }
+  ]
+}
+```
 
 
 
