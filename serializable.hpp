@@ -111,7 +111,7 @@ public:
   inline string toText (const bool uglify = false) {
     JsonTree tree;
     InheritanceIndex from = {0, ""};
-    callFatherSerializer (tree, "", true, from);
+    callFatherSerializer (tree, "path", true, from);
     return tree.toText (uglify);
   }
 
