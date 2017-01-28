@@ -541,7 +541,7 @@ return values.
         <location column="5" file="serializable.hpp" line="61" />
       </undocumented>
     </type>
-    <type documented="30" name="method" undocumented="108">
+    <type documented="31" name="method" undocumented="108">
       <undocumented id="json::AbstractObject::add" name="add">
         <location column="3" file="object.hpp" line="34" />
       </undocumented>
@@ -983,6 +983,11 @@ return values.
       <undocumented-return />
       <undocumented name="tree" />
     </function>
+    <function id="json::Parser::parseString" name="parseString">
+      <location column="3" file="parser.hpp" line="203" />
+      <undocumented name="content" />
+      <misspelled name="fileName" />
+    </function>
     <function id="json::Serializable::callFatherSerializer" name="callFatherSerializer">
       <location column="3" file="serializable.hpp" line="123" />
       <undocumented-return />
@@ -1036,6 +1041,12 @@ return values.
       <doctype name="doc">
         <ref name="any_of_the_above" />
         <ref name="any_of_the_above*" />
+      </doctype>
+    </category>
+    <category id="Tutorials::Serialization::Getting started" name="Getting started">
+      <doctype name="doc">
+        <ref name="json::JsonTree.toText" />
+        <ref name="json::JsonTree::parseString" />
       </doctype>
     </category>
     <category id="Tutorials::Serialization::Show me the code!" name="Show me the code!">

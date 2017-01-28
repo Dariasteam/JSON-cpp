@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<struct id="InheritanceIndex" name="InheritanceIndex" xmlns="http://jessevdk.github.com/cldoc/1.0">
-  <field id="InheritanceIndex::index" name="index">
-    <type builtin="yes" name="int" />
-  </field>
-  <field id="InheritanceIndex::path" name="path">
-    <type name="std::__cxx11::string" />
-  </field>
-</struct>

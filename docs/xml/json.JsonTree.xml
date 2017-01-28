@@ -1032,6 +1032,8 @@ tree.replace("this is a string", "O");   // returns true, the path O didn't exis
   <method abstract="yes" id="json::JsonTree::toText" name="toText">
     <brief> Formats content for output as json</brief>
     <doc>Creates a string which content is the hierarchy of this object formatted as json
+If the path indicated by 'from', all tree is formated
+
 
 #### Uglified
 ```json
@@ -1059,6 +1061,10 @@ tree.replace("this is a string", "O");   // returns true, the path O didn't exis
     <argument id="json::JsonTree::toText::uglify" name="uglify">
       <doc>compacts or not the json information, by default =false (not compact, human readable)</doc>
       <type builtin="yes" name="bool" qualifier=" const" />
+    </argument>
+    <argument id="json::JsonTree::toText::from" name="from">
+      <doc>path to the elements involved, by default = "" (all the tree)</doc>
+      <type name="std::__cxx11::string" qualifier=" const" />
     </argument>
   </method>
 </class>
