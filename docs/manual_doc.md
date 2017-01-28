@@ -203,21 +203,24 @@ private:
     parameter
   SERIAL_END                                  // we close without declaring 'noSerializableParameter', so its not serialized
 public:
-  void printContent () { std::cout << parameter << std::endl; }
   void changeContent () { parameter = 14; }
 };
 
 int main (void) {
   A obj;
   obj.serializeIn("file.json", "some_path");   // reads "file.json", generate an inner 'JsonTree' and use it to initialize the parameters of 'obj'
-  obj.printContent();                          // prints 10
+  std::cout << obj.toText() << std::endl;      // prints the objects content
   obj.changeContent();                         // changes the value of 'parameter' to 14
   obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
 ```
 #### output
+The object is vector serialized and contains one element
 ```
-10
+[
+  10
+]
+
 ```
 #### modified json file, "file.json"
 ```json
@@ -282,29 +285,24 @@ public:
               << boolean   << std::endl
               << precision  << std::endl
               << blckprde  << std::endl;
-  }
-  void changeContent () {
-    number   = 78;
-    boolean  = false;
-    precision = 10.1;
-    blckprde = "We'll carry on";
-  }
+  }  
 };
 
 int main (void) {
   A obj;
   obj.serializeIn("file.json", "some_path");   // reads "file.json" file
-  obj.printContent();
+  std::cout << obj.toText() << std::endl;
   obj.changeContent();
   obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
 ```
 #### output
 ```
-10
-true
-0.5661
-And though your dead and gone, believe me, your memory will carry on
+[
+  10, true,
+  0.5661000000000000476,
+  "And though your dead and gone, believe me, your memory will carry on"
+]
 ```
 
 #### modified json file, "file.json"
@@ -353,12 +351,6 @@ private:
     "integer",    number                            // last element has no comma
   SERIAL_END
 public:
-  void printContent () {
-    std::cout << number    << std::endl
-              << boolean   << std::endl
-              << precision << std::endl
-              << blckprde  << std::endl;
-  }
   void changeContent () {
     number    = 78;
     boolean   = false;
@@ -370,18 +362,22 @@ public:
 int main (void) {
   A obj;
   obj.serializeIn("file.json");  // as the elements are at root, we don't need to specify the path
-  obj.printContent();
+  std::cout << obj.toText() << std::endl;
   obj.changeContent();
   obj.serializeOut("file.json"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
 ```
 
 #### output
+Note the order of the elements has changed and now is the same than used in **SERIAL_START** macro. Obviously that is not a problem
+if we wanted to run the program again as it would be if we used _vector-like_ mode.
 ```
-10
-true
-0.5661
-And though your dead and gone, believe me, your memory will carry on
+{
+  "likeThis" : true,
+  "accurancy" : 0.5661000000000000476,
+  "songLyrics" : "And though your dead and gone, believe me, your memory will carry on",
+  "integer" : 10
+}
 ```
 
 #### modified json file, "file.json"
@@ -393,8 +389,6 @@ And though your dead and gone, believe me, your memory will carry on
   "integer" : 78
 }
 ```
-Note the order of the elements has changed and now is the same than used in **SERIAL_START** macro. Obviously that is not a problem
-if we wanted to run the program again as it would be if we used _vector-like_ mode.
 
 #<cldoc:Tutorials::Serialization::File management>
 Reusing files for multiple purposes
@@ -459,15 +453,12 @@ private:
     numberB
   SERIAL_END
 public:
-  void printContent () {
-    std::cout << numberA << " "
-              << numberB << std::endl;
-  }
   void changeContent () {
     numberA = 1;
     numberB = 2;
   }
 };
+
 
 class B : public json::Serializable {
 private:
@@ -479,10 +470,6 @@ private:
     "verse", verse
   SERIAL_END
 public:
-  void printContent () {
-    std::cout << key << " "
-              << verse << std::endl;
-  }
   void changeContent () {
     key = "D minor";
     verse = "Uncovering things that wer sacred, manifest on this earth";
@@ -503,8 +490,8 @@ int main (void) {
 
   // At this point both objects are initialized with their respective values
 
-  objA.printContent();
-  objB.printContent();
+  std::cout << objA.toText() << std::endl;
+  std::cout << objB.toText() << std::endl;
 
   objA.changeContent();
   objB.changeContent();
@@ -519,10 +506,15 @@ int main (void) {
 }
 ```
 #### output
-
-`10 20`
-
-`A minor I cry out for magic, I feel it dancing in the light`
+```
+[
+  1, 2
+]
+{
+  "key" : "D minor",
+  "verse" : "Uncovering things that wer sacred, manifest on this earth"
+}
+```
 #### modified json file, "file.json"
 ```
 {
@@ -570,14 +562,6 @@ private:
     matrix
   SERIAL_END
 public:
-  void printContent () {
-    for (std::vector <int> rows : matrix) {
-      for (int element : rows) {
-        std::cout << element << " ";
-      }
-      std::cout << std::endl;
-    }
-  }
   void changeContent () {
     for (int i = 0; i < matrix.size(); i++) {
       for (int j = 0; j < matrix[i].size(); j++) {
@@ -590,16 +574,26 @@ public:
 int main (void) {
   A obj;
   obj.serializeIn("file.json", "content");
-  obj.printContent();
+  std::cout << obj.toText() << std::endl;
   obj.changeContent();
   obj.serializeOut("file.json", "content");
 }
 ```
 #### output
 ```
-1 3 4
-6 4 1
-4 0 0
+[
+  [
+    [
+      1, 3, 4
+    ],
+    [
+      6, 4, 1
+    ],
+    [
+      4, 0, 0
+    ]
+  ]
+]
 ```
 #### modified json file, "file.json"
 ```json
@@ -650,14 +644,6 @@ private:
     "two-dimensional-matrix", matrix
   SERIAL_END
 public:
-  void printContent () {
-    for (std::vector <int> rows : matrix) {
-      for (int element : rows) {
-        std::cout << element << " ";
-      }
-      std::cout << std::endl;
-    }
-  }
   void changeContent () {
     for (int i = 0; i < matrix.size(); i++) {
       for (int j = 0; j < matrix[i].size(); j++) {
@@ -670,16 +656,26 @@ public:
 int main (void) {
   A obj;
   obj.serializeIn("file.json");
-  obj.printContent();
+  std::cout << obj.toText() << std::endl;
   obj.changeContent();
   obj.serializeOut("file.json");
 }
 ```
 #### output
 ```
-1 3 4
-6 4 1
-4 0 0
+{
+  "two-dimensional-matrix" : [
+    [
+      1, 3, 4
+    ],
+    [
+      6, 4, 1
+    ],
+    [
+      4, 0, 0
+    ]
+  ]
+}
 ```
 #### modified json file, "file.json"
 ```json
@@ -743,10 +739,8 @@ private:
     name
   SERIAL_END
 public:
-  void printContent () { std::cout << name << std::endl; }
   void changeContent () { name = "myNewName"; }
 };
-
 
 class Personal : public json::Serializable {              // hash serialization
 private:
@@ -760,11 +754,6 @@ private:
     "enough-people", enough
   SERIAL_END
 public:
-  void printContent () {
-    std::cout << engi   << std::endl
-              << sec    << std::endl
-              << enough << std::endl;
-  }
   void changeContent () {
     engi   = 100;
     sec    = 200;
@@ -785,14 +774,6 @@ private:
   SERIAL_END
 
 public:
-  void printContent () {
-    std::cout << "Temperature: " << temp
-              << ", content:"    << std::endl;
-    people.printContent();
-    for (Rocket r : elements) {
-      r.printContent();
-    }
-  }
   void changeContent () {
     temp = 0;
     for (Rocket& r : elements) {
@@ -805,23 +786,38 @@ public:
 int main (void) {
   Hangar obj;
   obj.serializeIn("file.json");
-  obj.printContent();
+  std::cout << obj.toText() << std::endl;
   obj.changeContent();
   obj.serializeOut("file.json");
 }
 ```
 #### output
 ```
-Temperature: 15.6, content:
-12
-4
-0
-Saturn V
-Soyuz
-Proton
-R7
-Falcon 9
-
+{
+  "personal" : {
+    "engineers" : 12,
+    "security" : 4,
+    "enough-people" : false
+  },
+  "rockets" : [
+    [
+      "Saturn V"
+    ],
+    [
+      "Soyuz"
+    ],
+    [
+      "Proton"
+    ],
+    [
+      "R7"
+    ],
+    [
+      "Falcon 9"
+    ]
+  ],
+  "temperature" : 15.60000038146972656
+}
 ```
 #### modified json file, "file.json"
 ```json
@@ -899,7 +895,6 @@ protected:                              // because we want parameters and macro 
     number
   SERIAL_END
 public:
-  virtual void printContent () { std::cout << number << std::endl; }
   virtual void changeContent () { number = 90; }
 };
 
@@ -911,9 +906,6 @@ private:
     word
   SERIAL_END
 public:
-  void printContent () {
-    std::cout << number << " " << word << std::endl;
-  }
   void changeContent () {
     number = 90;
     word = "to the hills";
@@ -923,14 +915,16 @@ public:
 int main (void) {
   B obj;
   obj.serializeIn("file.json", "content");
-  obj.printContent();
+  std::cout << obj.toText() << std::endl;
   obj.changeContent();
   obj.serializeOut("file.json", "content");
 }
 ```
 #### output
 ```
-10 Run
+[
+  12, "Run"
+]
 ```
 #### modified json file, "file.json"
 ```json
