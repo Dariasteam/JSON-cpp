@@ -104,12 +104,16 @@ int JsonTree::getSizeAt (const string path) {
   }
 }
 
-string JsonTree::toText (const bool uglify) {
+string JsonTree::toText (const bool uglify, const string from) {
   string txt;
+  AbstractObject* obj = top->get(from);
+  if (obj == nullptr)
+    obj = top;
+
   if (uglify)
-    top->toTxtUgly(txt);
+    obj->toTxtUgly(txt);
   else
-    top->toTxt(txt, 0);
+    obj->toTxt(txt, 0);
   return txt;
 }
 

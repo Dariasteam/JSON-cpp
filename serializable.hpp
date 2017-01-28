@@ -112,7 +112,7 @@ public:
     JsonTree tree;
     InheritanceIndex from = {0, ""};
     callFatherSerializer (tree, "path", true, from);
-    return tree.toText (uglify);
+    return tree.toText (uglify, "path");
   }
 
 protected:

@@ -505,8 +505,12 @@ public:
 
   /* Formats content for output as json
    * @uglify compacts or not the json information, by default =false (not compact, human readable)
+   * @from path to the elements involved, by default = "" (all the tree)
+   *
    *
    * Creates a string which content is the hierarchy of this object formatted as json
+   * If the path indicated by 'from', all tree is formated
+   *
    *
    * #### Uglified
    * ```json
@@ -528,7 +532,7 @@ public:
    *
    * @return json formatted content
    * */
-  string toText (const bool uglify = false);
+  string toText (const bool uglify = false, const string from = "");
 
 };
 
