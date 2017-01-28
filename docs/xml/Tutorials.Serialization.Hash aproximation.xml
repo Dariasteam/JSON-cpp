@@ -33,12 +33,6 @@ private:
     "integer",    number                            // last element has no comma
   SERIAL_END
 public:
-  void printContent () {
-    std::cout &lt;&lt; number    &lt;&lt; std::endl
-              &lt;&lt; boolean   &lt;&lt; std::endl
-              &lt;&lt; precision &lt;&lt; std::endl
-              &lt;&lt; blckprde  &lt;&lt; std::endl;
-  }
   void changeContent () {
     number    = 78;
     boolean   = false;
@@ -50,18 +44,22 @@ public:
 int main (void) {
   A obj;
   obj.serializeIn("file.json");  // as the elements are at root, we don't need to specify the path
-  obj.printContent();
+  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;
   obj.changeContent();
   obj.serializeOut("file.json"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
 ```
 
 #### output
+Note the order of the elements has changed and now is the same than used in **SERIAL_START** macro. Obviously that is not a problem
+if we wanted to run the program again as it would be if we used _vector-like_ mode.
 ```
-10
-true
-0.5661
-And though your dead and gone, believe me, your memory will carry on
+{
+  "likeThis" : true,
+  "accurancy" : 0.5661000000000000476,
+  "songLyrics" : "And though your dead and gone, believe me, your memory will carry on",
+  "integer" : 10
+}
 ```
 
 #### modified json file, "file.json"
@@ -73,7 +71,5 @@ And though your dead and gone, believe me, your memory will carry on
   "integer" : 78
 }
 ```
-Note the order of the elements has changed and now is the same than used in **SERIAL_START** macro. Obviously that is not a problem
-if we wanted to run the program again as it would be if we used _vector-like_ mode.
 </doc>
 </category>

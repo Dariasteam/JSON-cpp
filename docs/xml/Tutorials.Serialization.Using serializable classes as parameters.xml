@@ -43,10 +43,8 @@ private:
     name
   SERIAL_END
 public:
-  void printContent () { std::cout &lt;&lt; name &lt;&lt; std::endl; }
   void changeContent () { name = "myNewName"; }
 };
-
 
 class Personal : public json::Serializable {              // hash serialization
 private:
@@ -60,11 +58,6 @@ private:
     "enough-people", enough
   SERIAL_END
 public:
-  void printContent () {
-    std::cout &lt;&lt; engi   &lt;&lt; std::endl
-              &lt;&lt; sec    &lt;&lt; std::endl
-              &lt;&lt; enough &lt;&lt; std::endl;
-  }
   void changeContent () {
     engi   = 100;
     sec    = 200;
@@ -85,14 +78,6 @@ private:
   SERIAL_END
 
 public:
-  void printContent () {
-    std::cout &lt;&lt; "Temperature: " &lt;&lt; temp
-              &lt;&lt; ", content:"    &lt;&lt; std::endl;
-    people.printContent();
-    for (Rocket r : elements) {
-      r.printContent();
-    }
-  }
   void changeContent () {
     temp = 0;
     for (Rocket&amp; r : elements) {
@@ -105,23 +90,38 @@ public:
 int main (void) {
   Hangar obj;
   obj.serializeIn("file.json");
-  obj.printContent();
+  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;
   obj.changeContent();
   obj.serializeOut("file.json");
 }
 ```
 #### output
 ```
-Temperature: 15.6, content:
-12
-4
-0
-Saturn V
-Soyuz
-Proton
-R7
-Falcon 9
-
+{
+  "personal" : {
+    "engineers" : 12,
+    "security" : 4,
+    "enough-people" : false
+  },
+  "rockets" : [
+    [
+      "Saturn V"
+    ],
+    [
+      "Soyuz"
+    ],
+    [
+      "Proton"
+    ],
+    [
+      "R7"
+    ],
+    [
+      "Falcon 9"
+    ]
+  ],
+  "temperature" : 15.60000038146972656
+}
 ```
 #### modified json file, "file.json"
 ```json

@@ -41,29 +41,24 @@ public:
               &lt;&lt; boolean   &lt;&lt; std::endl
               &lt;&lt; precision  &lt;&lt; std::endl
               &lt;&lt; blckprde  &lt;&lt; std::endl;
-  }
-  void changeContent () {
-    number   = 78;
-    boolean  = false;
-    precision = 10.1;
-    blckprde = "We'll carry on";
-  }
+  }  
 };
 
 int main (void) {
   A obj;
   obj.serializeIn("file.json", "some_path");   // reads "file.json" file
-  obj.printContent();
+  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;
   obj.changeContent();
   obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
 ```
 #### output
 ```
-10
-true
-0.5661
-And though your dead and gone, believe me, your memory will carry on
+[
+  10, true,
+  0.5661000000000000476,
+  "And though your dead and gone, believe me, your memory will carry on"
+]
 ```
 
 #### modified json file, "file.json"

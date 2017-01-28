@@ -46,7 +46,6 @@ protected:                              // because we want parameters and macro 
     number
   SERIAL_END
 public:
-  virtual void printContent () { std::cout &lt;&lt; number &lt;&lt; std::endl; }
   virtual void changeContent () { number = 90; }
 };
 
@@ -58,9 +57,6 @@ private:
     word
   SERIAL_END
 public:
-  void printContent () {
-    std::cout &lt;&lt; number &lt;&lt; " " &lt;&lt; word &lt;&lt; std::endl;
-  }
   void changeContent () {
     number = 90;
     word = "to the hills";
@@ -70,14 +66,16 @@ public:
 int main (void) {
   B obj;
   obj.serializeIn("file.json", "content");
-  obj.printContent();
+  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;
   obj.changeContent();
   obj.serializeOut("file.json", "content");
 }
 ```
 #### output
 ```
-10 Run
+[
+  12, "Run"
+]
 ```
 #### modified json file, "file.json"
 ```json

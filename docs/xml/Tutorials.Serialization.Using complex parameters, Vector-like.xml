@@ -32,14 +32,6 @@ private:
     matrix
   SERIAL_END
 public:
-  void printContent () {
-    for (std::vector &lt;int&gt; rows : matrix) {
-      for (int element : rows) {
-        std::cout &lt;&lt; element &lt;&lt; " ";
-      }
-      std::cout &lt;&lt; std::endl;
-    }
-  }
   void changeContent () {
     for (int i = 0; i &lt; matrix.size(); i++) {
       for (int j = 0; j &lt; matrix[i].size(); j++) {
@@ -52,16 +44,26 @@ public:
 int main (void) {
   A obj;
   obj.serializeIn("file.json", "content");
-  obj.printContent();
+  std::cout &lt;&lt; obj.toText() &lt;&lt; std::endl;
   obj.changeContent();
   obj.serializeOut("file.json", "content");
 }
 ```
 #### output
 ```
-1 3 4
-6 4 1
-4 0 0
+[
+  [
+    [
+      1, 3, 4
+    ],
+    [
+      6, 4, 1
+    ],
+    [
+      4, 0, 0
+    ]
+  ]
+]
 ```
 #### modified json file, "file.json"
 ```json

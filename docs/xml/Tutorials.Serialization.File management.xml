@@ -61,15 +61,12 @@ private:
     numberB
   SERIAL_END
 public:
-  void printContent () {
-    std::cout &lt;&lt; numberA &lt;&lt; " "
-              &lt;&lt; numberB &lt;&lt; std::endl;
-  }
   void changeContent () {
     numberA = 1;
     numberB = 2;
   }
 };
+
 
 class B : public json::Serializable {
 private:
@@ -81,10 +78,6 @@ private:
     "verse", verse
   SERIAL_END
 public:
-  void printContent () {
-    std::cout &lt;&lt; key &lt;&lt; " "
-              &lt;&lt; verse &lt;&lt; std::endl;
-  }
   void changeContent () {
     key = "D minor";
     verse = "Uncovering things that wer sacred, manifest on this earth";
@@ -105,8 +98,8 @@ int main (void) {
 
   // At this point both objects are initialized with their respective values
 
-  objA.printContent();
-  objB.printContent();
+  std::cout &lt;&lt; objA.toText() &lt;&lt; std::endl;
+  std::cout &lt;&lt; objB.toText() &lt;&lt; std::endl;
 
   objA.changeContent();
   objB.changeContent();
@@ -121,10 +114,15 @@ int main (void) {
 }
 ```
 #### output
-
-`10 20`
-
-`A minor I cry out for magic, I feel it dancing in the light`
+```
+[
+  1, 2
+]
+{
+  "key" : "D minor",
+  "verse" : "Uncovering things that wer sacred, manifest on this earth"
+}
+```
 #### modified json file, "file.json"
 ```
 {
