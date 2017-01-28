@@ -108,6 +108,13 @@ public:
     Parser::saveFile(file, tree);
   }
 
+  inline string toText (const bool uglify = false) {
+    JsonTree tree;
+    InheritanceIndex from = {0, ""};
+    callFatherSerializer (tree, "", true, from);
+    return tree.toText (uglify);
+  }
+
 protected:
 
   virtual bool serializer (JsonTree& tree, bool b, string path, InheritanceIndex& from) = 0;
