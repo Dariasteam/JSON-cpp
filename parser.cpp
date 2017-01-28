@@ -38,6 +38,24 @@ int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
   return returnValue;
 }
 
+int Parser::parseString (string content, JsonTree& tree, bool verbs ) {
+  verbose = verbs;
+  errors.resize (0);
+  warnings.resize (0);
+  int returnValue = OK;
+    ObjectNameFlag result = parse (content, "");
+    tree.setTop (result.element);
+    if (result.flag == EMPTY)
+      return EMPTY_FILE;
+    if (hasWarnings())
+      returnValue += WARNINGS;
+    if (hasErrors()) {
+      returnValue += ERRORS;
+      return returnValue & (INT_MAX - 1); // removes the OK flag
+    }
+  return returnValue;
+}
+
 Parser::Parser () :
   errors (0),
   warnings (0)

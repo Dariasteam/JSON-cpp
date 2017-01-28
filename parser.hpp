@@ -191,6 +191,17 @@ public:
   */
   int parseFile (string fileName, JsonTree& tree, bool verbs = true);
 
+  /* Overloaded function
+   * @fileName path of the input file to be parsed
+   * @tree object wich will store the hierarchy specificated in the file
+   * @verbs use or not verbose mode, by default =true
+   *
+   * Same as previous but giving a string with the information
+   *
+   * @return combination of flags <JSON_PARSE_OUTPUT> with the result of the operation
+   * */
+  int parseString (string content, JsonTree& tree, bool verbs = true);
+
   /* Creates a json file
    * @fileName input file to be parsed
    * @tree hierarchy that wil be stored in the file
