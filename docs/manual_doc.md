@@ -215,7 +215,6 @@ int main (void) {
 }
 ```
 #### output
-The object is vector serialized and contains one element
 ```
 [
   10
