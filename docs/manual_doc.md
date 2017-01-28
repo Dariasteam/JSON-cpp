@@ -149,10 +149,10 @@ always handle one path (at least).
 Serialization process is divided in two sections
 
 - a) To translate information between serializable objects and <json::JsonTree>
-- b) To translate the information between <json::JsonTree> and the files
+- b) To translate the information between <json::JsonTree> and a file / string
 
-Depending if you are `Serializing In` (from file to c++ objects) or `Serializing Out`
-(from c++ object to file) the steps order is **b, a** or **a, b**.
+Depending if you are `Serializing In` (from file / string to c++ objects) or `Serializing Out`
+(from c++ object to file / string) the steps order is **b, a** or **a, b**.
 Lets explain more precissely each one:
 
 **Serialization** is archived due to the combination of the inheritance from json::serializable and
@@ -165,10 +165,13 @@ of the situation can
 
 So when the method execution has finished, also has done it the Serialization process.
 
+**String management** is made by <json::JsonTree.toText> and <OTHER> functions. It is auto included in the file handling process
+so you don't need to worry about this phase unless you explicitly need a string. (For example for debugging reasons)
+
 **File handling** is done entirely by a <json::Parser> and can do nothing more (or less) than it.
 That means you can do things like putting serializable objects data and other stuff or many not own relationed classes in the same file.
 
-A dedicated section to what can be done at this ambit can be found at <SECTION>
+A dedicated section to what can be done at this ambit can be found at <Tutorials::Serialization::File management>
 
 #<cldoc:Tutorials::Serialization::Show me the code!>
 Simple serialization, vector-like
@@ -234,7 +237,7 @@ Note that information **is not** appended to the file, the path "some_path" is l
   ]
 }
 ```
-Check <Tutorials::Serialization::Files management> to archive that.
+Check <Tutorials::Serialization::Files management> to know how to archive that.
 
 #<cldoc:Tutorials::Serialization::Using multiple parameters>
 Using multiple parameters. Vector-like
@@ -392,7 +395,7 @@ And though your dead and gone, believe me, your memory will carry on
 Note the order of the elements has changed and now is the same than used in **SERIAL_START** macro. Obviously that is not a problem
 if we wanted to run the program again as it would be if we used _vector-like_ mode.
 
-#<cldoc:Tutorials::Serialization::Files management>
+#<cldoc:Tutorials::Serialization::File management>
 Reusing files for multiple purposes
 
 In the previous example we used <json::Serializable::serializeIn> and <json::Serializable::serializeOut> for file handling.

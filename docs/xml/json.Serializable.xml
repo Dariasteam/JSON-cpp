@@ -51,6 +51,14 @@
       <type name="std::__cxx11::string" />
     </argument>
   </method>
+  <method id="json::Serializable::toText" name="toText">
+    <return>
+      <type name="std::__cxx11::string" />
+    </return>
+    <argument id="json::Serializable::toText::uglify" name="uglify">
+      <type builtin="yes" name="bool" qualifier=" const" />
+    </argument>
+  </method>
   <variable access="protected" id="json::Serializable::dictionary" name="dictionary">
     <type name="std::map&lt;std::__cxx11::basic_string&lt;char&gt;, std::function&lt;json::Serializable *()&gt;, std::less&lt;std::__cxx11::basic_string&lt;char&gt; &gt;, std::allocator&lt;std::pair&lt;const std::__cxx11::basic_string&lt;char&gt;, std::function&lt;json::Serializable *()&gt; &gt; &gt; &gt;" />
   </variable>

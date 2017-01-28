@@ -19,7 +19,7 @@
       <category name="Hash aproximation" ref="Tutorials::Serialization::Hash aproximation#Tutorials::Serialization::Hash aproximation">
         <brief>Unordered name dependent serialization</brief>
       </category>
-      <category name="Files management" ref="Tutorials::Serialization::Files management#Tutorials::Serialization::Files management">
+      <category name="File management" ref="Tutorials::Serialization::File management#Tutorials::Serialization::File management">
         <brief>Reusing files for multiple purposes</brief>
       </category>
       <category name="Using complex parameters, Vector-like" ref="Tutorials::Serialization::Using complex parameters, Vector-like#Tutorials::Serialization::Using complex parameters, Vector-like">

@@ -59,6 +59,6 @@ So when the method execution has finished, also has done it the Serialization pr
 **File handling** is done entirely by a <ref ref="json::Parser#json::Parser">json::Parser</ref> and can do nothing more (or less) than it.
 That means you can do things like putting serializable objects data and other stuff or many not own relationed classes in the same file.
 
-A dedicated section to what can be done at this ambit can be found at &amp;lt;SECTION&amp;gt;
+A dedicated section to what can be done at this ambit can be found at <ref ref="Tutorials::Serialization::File management#Tutorials::Serialization::File management">File management</ref>
 </doc>
 </category>
