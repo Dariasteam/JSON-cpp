@@ -1,19 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
-<category id="Examples::Serialization::Using complex parameters, Hash-like" name="Using complex parameters, Hash-like" xmlns="http://jessevdk.github.com/cldoc/1.0">
+<category id="Tutorials::Serialization::Using complex parameters, Vector-like" name="Using complex parameters, Vector-like" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>Serializaing n dimensional vectors</brief>
   <doc>You can use n dimensional vectors of vectors, the library can handle it for you!
 
 #### json file, "file.json"
 ```json
 {
-  "two-dimensional-matrix" : [
-    [1, 3, 4],
-    [6, 4, 1],
-    [4, 0, 0]
+  "content" : [
+    [
+      [1, 3, 4],
+      [6, 4, 1],
+      [4, 0, 0]
+    ]
   ]
 }
-
 ```
+
+Note this is a 2 dimensional vector **inside a vector of serializable parameters** (content)
+
 #### code
 ```c++
 #include &lt;iostream&gt;
@@ -25,7 +29,7 @@ private:
   std::vector &lt;std::vector &lt;int&gt; &gt; matrix;          // you can use the depth you want
 
   SERIAL_START
-    "two-dimensional-matrix", matrix
+    matrix
   SERIAL_END
 public:
   void printContent () {
@@ -47,10 +51,10 @@ public:
 
 int main (void) {
   A obj;
-  obj.serializeIn("file.json");
+  obj.serializeIn("file.json", "content");
   obj.printContent();
   obj.changeContent();
-  obj.serializeOut("file.json");
+  obj.serializeOut("file.json", "content");
 }
 ```
 #### output
@@ -62,15 +66,17 @@ int main (void) {
 #### modified json file, "file.json"
 ```json
 {
-  "two-dimensional-matrix" : [
+  "content" : [
     [
-      0, 1, 2
-    ],
-    [
-      3, 4, 5
-    ],
-    [
-      6, 7, 8
+      [
+        0, 1, 2
+      ],
+      [
+        3, 4, 5
+      ],
+      [
+        6, 7, 8
+      ]
     ]
   ]
 }

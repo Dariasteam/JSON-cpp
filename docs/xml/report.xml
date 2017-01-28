@@ -12,10 +12,11 @@ return values.
 3. [References](#report/references): Unresolved cross references.
 </doc>
   <coverage>
-    <type documented="8" name="category" undocumented="3">
+    <type documented="12" name="category" undocumented="4">
       <undocumented id="Examples" name="Examples" />
-      <undocumented id="Examples::File Manipulation" name="File Manipulation" />
-      <undocumented id="Examples::Serialization" name="Serialization" />
+      <undocumented id="Tutorials" name="Tutorials" />
+      <undocumented id="Tutorials::File Manipulation" name="File Manipulation" />
+      <undocumented id="Tutorials::Serialization" name="Serialization" />
     </type>
     <type documented="2" name="methodtemplate" undocumented="44">
       <undocumented id="json::Serializable::initialize" name="initialize">
@@ -1028,5 +1029,21 @@ return values.
         <ref name="NO_CLOSED|EXPECTED_MORE|INVALID_KEY" />
       </doctype>
     </method>
+    <category id="Tutorials::Serialization::Quick Reference" name="Quick Reference">
+      <doctype name="doc">
+        <ref name="any_of_the_above" />
+        <ref name="any_of_the_above*" />
+      </doctype>
+    </category>
+    <category id="Tutorials::Serialization::Getting started" name="Getting started">
+      <doctype name="doc">
+        <ref name="SECTION" />
+      </doctype>
+    </category>
+    <category id="Tutorials::Serialization::Inheriting serializable ability" name="Inheriting serializable ability">
+      <doctype name="doc">
+        <ref name="Examples::Serialization::Using pointers as parameters" />
+      </doctype>
+    </category>
   </references>
 </report>

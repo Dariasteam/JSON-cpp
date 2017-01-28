@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Tutorials::Serialization::Quick Reference" name="Quick Reference" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>First read the entire tutorial</brief>
+  <doc>#### Serializable types
+
+- Both value &amp; pointer
+  - int
+  - long int
+  - long long
+  - float
+  - double
+  - bool
+  - string
+  - char
+  - custom serializable classes
+
+
+- Only value
+  - vector &amp;lt;any\_of\_the\_above&amp;gt;
+  - vector &amp;lt;any\_of\_the\_above\*&amp;gt;
+
+
+- Magical features
+  - inheritance of custom serializable classes (any depth)
+  - polymorphism of custom serializable classes
+
+</doc>
+</category>

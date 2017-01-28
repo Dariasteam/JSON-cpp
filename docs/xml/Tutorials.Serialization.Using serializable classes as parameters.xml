@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<category id="Examples::Serialization::Using serializable classes as parameters" name="Using serializable classes as parameters" xmlns="http://jessevdk.github.com/cldoc/1.0">
+<category id="Tutorials::Serialization::Using serializable classes as parameters" name="Using serializable classes as parameters" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>Also mixing hash-like and vector-like serialization</brief>
   <doc>The following example shows you how to use serializable classes as parameters
 mixing vector-like and hash-like modes.

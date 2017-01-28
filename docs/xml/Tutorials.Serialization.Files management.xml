@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Tutorials::Serialization::Files management" name="Files management" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>Reusing files for multiple purposes</brief>
+  <doc>In the previous example we used <ref ref="json::Serializable#json::Serializable::serializeIn">json::Serializable::serializeIn</ref> and <ref ref="json::Serializable#json::Serializable::serializeIn">json::Serializable::serializeIn</ref> and <ref ref="json::Serializable#json::Serializable::serializeOut">json::Serializable::serializeOut</ref> and <ref ref="json::Serializable#json::Serializable::serializeOut">json::Serializable::serializeOut</ref> for file handling.
+Those functions are overload (click on them to have more info) and are thinked to use them in two ways
+
+- Fast single object serialization, the one used in previous code:
+  ```c++
+  A obj; // consider A as a serializable class
+
+  obj.serializeIn ("file_to_open", "path_for_using_as_root")
+  obj.serializeOut ("file_to_open", "path_for_using_as_root")
+  ```
+  This mode opens the file and read / overwrite it with the info of the class 'obj'
+
+
+- Raw <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> serialization
+  ```c++
+  A obj; // consider A as a serializable class
+
+  json::Parser parser;
+  json::JsonTree tree;
+  ...
+  //Raw
+  ...
+  obj.serializeIn (tree, "path_for_using_as_root")
+  obj.serializeOut (tree, "path_for_using_as_root")
+  ```
+  This mode allows you to use one single <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> for several objects serialization.
+  (If you don't know how to use <ref ref="json::Parser#json::Parser">json::Parser</ref> and <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref>, check <ref ref="Tutorials::File Manipulation#Tutorials::File Manipulation">File Manipulation</ref>)
+
+Here is an example of how to serialize two non related classes in the same file
+
+---
+
+#### json file, "file.json"
+```json
+{
+  "first_path" : [
+    10, 20
+  ],
+  "second_path" : {
+    "key" : "A minor",
+    "verse" : "I cry out for magic, I feel it dancing in the light"
+  }
+}
+```
+#### code
+```c++
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include "serializable.hpp"
+
+class A : public json::Serializable {
+private:
+  int numberA;
+  int numberB;
+
+  SERIAL_START
+    numberA,
+    numberB
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout &lt;&lt; numberA &lt;&lt; " "
+              &lt;&lt; numberB &lt;&lt; std::endl;
+  }
+  void changeContent () {
+    numberA = 1;
+    numberB = 2;
+  }
+};
+
+class B : public json::Serializable {
+private:
+  std::string key;
+  std::string verse;
+
+  SERIAL_START
+    "key", key,
+    "verse", verse
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout &lt;&lt; key &lt;&lt; " "
+              &lt;&lt; verse &lt;&lt; std::endl;
+  }
+  void changeContent () {
+    key = "D minor";
+    verse = "Uncovering things that wer sacred, manifest on this earth";
+  }
+};
+
+int main (void) {
+  A objA;
+  B objB;
+
+  json::Parser parser;
+  json::JsonTree tree;
+
+  parser.parseFile("pruebas/file.json", tree);  // reads file and generates the hierarchy
+
+  objA.serializeIn (tree, "first_path");        // initialize objA using only the info at 'first_path'
+  objB.serializeIn (tree, "second_path");       // initialize objB using only the info at 'first_path'
+
+  // At this point both objects are initialized with their respective values
+
+  objA.printContent();
+  objB.printContent();
+
+  objA.changeContent();
+  objB.changeContent();
+
+  // Now the values have changed, we must create the hierarchy again
+
+  objA.serializeOut(tree, "first_path");
+  objB.serializeOut(tree, "second_path");
+
+  parser.saveFile("pruebas/file.json", tree);
+  // alternatively json::Parser::saveFile("pruebas/file.json", tree);
+}
+```
+#### output
+
+`10 20`
+
+`A minor I cry out for magic, I feel it dancing in the light`
+#### modified json file, "file.json"
+```
+{
+  "first_path" : [
+    1, 2
+  ],
+  "second_path" : {
+    "key" : "D minor",
+    "verse" : "Uncovering things that wer sacred, manifest on this earth"
+  }
+}
+```
+</doc>
+</category>

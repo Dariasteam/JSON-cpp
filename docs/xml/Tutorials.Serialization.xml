@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Tutorials::Serialization" name="Serialization" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <category name="Quick Reference" ref="Tutorials::Serialization::Quick Reference#Tutorials::Serialization::Quick Reference">
+    <brief>First read the entire tutorial</brief>
+  </category>
+  <category name="Getting started" ref="Tutorials::Serialization::Getting started#Tutorials::Serialization::Getting started">
+    <brief>How the info is stored and how can You do it</brief>
+  </category>
+  <category name="Show me the code!" ref="Tutorials::Serialization::Show me the code!#Tutorials::Serialization::Show me the code!">
+    <brief>Simple serialization, vector-like</brief>
+  </category>
+  <category name="Using multiple parameters" ref="Tutorials::Serialization::Using multiple parameters#Tutorials::Serialization::Using multiple parameters">
+    <brief>Using multiple parameters. Vector-like</brief>
+  </category>
+  <category name="Hash aproximation" ref="Tutorials::Serialization::Hash aproximation#Tutorials::Serialization::Hash aproximation">
+    <brief>Unordered name dependent serialization</brief>
+  </category>
+  <category name="Files management" ref="Tutorials::Serialization::Files management#Tutorials::Serialization::Files management">
+    <brief>Reusing files for multiple purposes</brief>
+  </category>
+  <category name="Using complex parameters, Vector-like" ref="Tutorials::Serialization::Using complex parameters, Vector-like#Tutorials::Serialization::Using complex parameters, Vector-like">
+    <brief>Serializaing n dimensional vectors</brief>
+  </category>
+  <category name="Using complex parameters, Hash-like" ref="Tutorials::Serialization::Using complex parameters, Hash-like#Tutorials::Serialization::Using complex parameters, Hash-like">
+    <brief>Serializaing n dimensional vectors</brief>
+  </category>
+  <category name="Using serializable classes as parameters" ref="Tutorials::Serialization::Using serializable classes as parameters#Tutorials::Serialization::Using serializable classes as parameters">
+    <brief>Also mixing hash-like and vector-like serialization</brief>
+  </category>
+  <category name="Inheriting serializable ability" ref="Tutorials::Serialization::Inheriting serializable ability#Tutorials::Serialization::Inheriting serializable ability">
+    <brief>No multiple inheritance supported yet</brief>
+  </category>
+  <category name="Serializing pointers" ref="Tutorials::Serialization::Serializing pointers#Tutorials::Serialization::Serializing pointers">
+    <brief>Non serializable class pointer case</brief>
+  </category>
+  <category name="Serializing pointers serializable classes" ref="Tutorials::Serialization::Serializing pointers serializable classes#Tutorials::Serialization::Serializing pointers serializable classes">
+    <brief>The polymorphic problem</brief>
+  </category>
+</category>

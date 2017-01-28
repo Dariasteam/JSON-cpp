@@ -75,18 +75,109 @@ Saving
 
 #<cldoc:Examples>
 
-#<cldoc:Examples::File Manipulation>
+#<cldoc:Tutorials::File Manipulation>
 
-#<cldoc:Examples::Serialization>
+#<cldoc:Tutorials::Serialization>
 
-#<cldoc:Examples::Serialization::Getting started>
-The easiest case. Vector-like aproximation
-How to serialize one parameter of one non-abstract class using a file called "file.json" to store / retrieve the information.
 
-By default the parameters are serialized in a subpathed vector due to json format restrictions that
-does not allow to use vectors as root of the hierarchy.
+#<cldoc:Tutorials::Serialization::Quick Reference>
+First read the entire tutorial
+
+#### Serializable types
+
+- Both value & pointer
+  - int
+  - long int
+  - long long
+  - float
+  - double
+  - bool
+  - string
+  - char
+  - custom serializable classes
+
+
+- Only value
+  - vector <any_of_the_above>
+  - vector <any_of_the_above*>
+
+
+- Magical features
+  - inheritance of custom serializable classes (any depth)
+  - polymorphism of custom serializable classes
+
+
+#<cldoc:Tutorials::Serialization::Getting started>
+How the info is stored and how can You do it
+
+#### Serialization modes
+
+Taking advantages of the json hash and vector support, serialization is implemented in two different ways,
+giving flexibility to the programmer to choose the best in each case.
+
+- _Vector-like_ : The information is put in a vector, so it position dependent
+
+  ```
+  [5, false, "We're no strangers to love"]
+  ```
+
+
+- _Hash-like_ : The information has a key for each element so it can be handle by its "name" no matter order
+
+  ```
+  {
+    "hours" : 5,
+    "arrived-yet" : false,
+    "rckrll" : "We're no strangers to love"
+  }
+  ```
+
+Note that in json the root of a file must be always a hash, so if you want to serialize in vector way you must
+always handle one path (at least).
+
+```json
+{
+  "path-to-elements-serialized-as-vectors" : [
+    5,
+    false,
+    "We're no strangers to love"
+  ]
+}
+```
+#### Understanding the process
+
+Serialization process is divided in two sections
+
+- a) To translate information between serializable objects and <json::JsonTree>
+- b) To translate the information between <json::JsonTree> and the files
+
+Depending if you are `Serializing In` (from file to c++ objects) or `Serializing Out`
+(from c++ object to file) the steps order is **b, a** or **a, b**.
+Lets explain more precissely each one:
+
+**Serialization** is archived due to the combination of the inheritance from json::serializable and
+the explicit declaration of the involved parameters of your custom class in between two special macros.
+One of the macros adds to your class the method `serialize` which receives a <json::JsonTree> and depending
+of the situation can
+
+  - copy the values of the attributes of the serializable object in it. Also respecting the inner existing hierarchy.
+  - initialize the parameters of the object with the data of the JsonTree
+
+So when the method execution has finished, also has done it the Serialization process.
+
+**File handling** is done entirely by a <json::Parser> and can do nothing more (or less) than it.
+That means you can do things like putting serializable objects data and other stuff or many not own relationed classes in the same file.
+
+A dedicated section to what can be done at this ambit can be found at <SECTION>
+
+#<cldoc:Tutorials::Serialization::Show me the code!>
+Simple serialization, vector-like
+
+This example shows how to serialize a class with one parameter in the vector way using a
+file called "file.json" to store / retrieve the information.
 
 #### json file, "file.json"
+As we previously said, the root can't be a vector.
 ```json
 {
   "some_path" : [
@@ -97,15 +188,15 @@ does not allow to use vectors as root of the hierarchy.
 #### code
 ```c++
 #include <iostream>
-#include "./serializable.hpp"
+#include "./serializable.hpp"                 // include this file
 
 class A : public json::Serializable {         // derivate from 'Serializable'
 private:
-  int parameter;
-  int nonSerializableParameter;
+  int parameter;                              // this parameter will be serialized
+  int nonSerializableParameter;               // this will not
 
-  SERIAL_START
-    parameter                                 // we must declare the variables to be serialized
+  SERIAL_START                                // declare the parameters to be serialized in between the macros
+    parameter
   SERIAL_END                                  // we close without declaring 'noSerializableParameter', so its not serialized
 public:
   void printContent () { std::cout << parameter << std::endl; }
@@ -114,13 +205,13 @@ public:
 
 int main (void) {
   A obj;
-  obj.serializeIn("file.json", "some_path");   // reads "file.json" file and updates the value of 'parameter'
+  obj.serializeIn("file.json", "some_path");   // reads "file.json", generate an inner 'JsonTree' and use it to initialize the parameters of 'obj'
   obj.printContent();                          // prints 10
   obj.changeContent();                         // changes the value of 'parameter' to 14
   obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
 ```
-#### ouput
+#### output
 ```
 10
 ```
@@ -143,11 +234,13 @@ Note that information **is not** appended to the file, the path "some_path" is l
   ]
 }
 ```
-#<cldoc:Examples::Serialization::Using multiple parameters>
-Using multiple parameters. Vector-like aproximation
+Check <Tutorials::Serialization::Files management> to archive that.
+
+#<cldoc:Tutorials::Serialization::Using multiple parameters>
+Using multiple parameters. Vector-like
 How to serialize multiple heterogeneous parameters of one non-abstract class using a file called "file.json" to store / retrieve the information.
 
-As we are using the vector-like aproximation, we must know exactly the order of the parameters both in json file and code.
+As we are using the _vector-like_ aproximation, we must know exactly the order of the parameters both in json file and code.
 
 #### json file, "file.json"
 ```json
@@ -174,7 +267,7 @@ private:
   std::string blckprde;
 
   SERIAL_START                                // the parameters must be in the same order than in file
-    number,                                   // note the comma after every element except last. Just like in json
+    number,                                   // note the comma after every element except last. Just like json
     boolean,
     precision,
     blckprde
@@ -202,7 +295,7 @@ int main (void) {
   obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
 }
 ```
-#### ouput
+#### output
 ```
 10
 true
@@ -221,7 +314,7 @@ And though your dead and gone, believe me, your memory will carry on
   ]
 }
 ```
-#<cldoc:Examples::Serialization::Hash aproximation>
+#<cldoc:Tutorials::Serialization::Hash aproximation>
 Unordered name dependent serialization
 
 Same as previous example but using hash-like serialization
@@ -279,7 +372,7 @@ int main (void) {
 }
 ```
 
-#### ouput
+#### output
 ```
 10
 true
@@ -296,10 +389,150 @@ And though your dead and gone, believe me, your memory will carry on
   "integer" : 78
 }
 ```
-Note the order of the elements has changed and now is the same than used in **SERIALI_START** macro. Obviously that is not a problem
-if we wanted to run the program again.
+Note the order of the elements has changed and now is the same than used in **SERIAL_START** macro. Obviously that is not a problem
+if we wanted to run the program again as it would be if we used _vector-like_ mode.
 
-#<cldoc:Examples::Serialization::Using complex parameters, Vector-like>
+#<cldoc:Tutorials::Serialization::Files management>
+Reusing files for multiple purposes
+
+In the previous example we used <json::Serializable::serializeIn> and <json::Serializable::serializeOut> for file handling.
+Those functions are overload (click on them to have more info) and are thinked to use them in two ways
+
+- Fast single object serialization, the one used in previous code:
+  ```c++
+  A obj; // consider A as a serializable class
+
+  obj.serializeIn ("file_to_open", "path_for_using_as_root")
+  obj.serializeOut ("file_to_open", "path_for_using_as_root")
+  ```
+  This mode opens the file and read / overwrite it with the info of the class 'obj'
+
+
+- Raw <json::JsonTree> serialization
+  ```c++
+  A obj; // consider A as a serializable class
+
+  json::Parser parser;
+  json::JsonTree tree;
+  ...
+  //Raw
+  ...
+  obj.serializeIn (tree, "path_for_using_as_root")
+  obj.serializeOut (tree, "path_for_using_as_root")
+  ```
+  This mode allows you to use one single <json::JsonTree> for several objects serialization.
+  (If you don't know how to use <json::Parser> and <json::JsonTree>, check <Tutorials::File Manipulation>)
+
+Here is an example of how to serialize two non related classes in the same file
+
+---
+
+#### json file, "file.json"
+```json
+{
+  "first_path" : [
+    10, 20
+  ],
+  "second_path" : {
+    "key" : "A minor",
+    "verse" : "I cry out for magic, I feel it dancing in the light"
+  }
+}
+```
+#### code
+```c++
+#include <iostream>
+#include <string>
+#include "serializable.hpp"
+
+class A : public json::Serializable {
+private:
+  int numberA;
+  int numberB;
+
+  SERIAL_START
+    numberA,
+    numberB
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout << numberA << " "
+              << numberB << std::endl;
+  }
+  void changeContent () {
+    numberA = 1;
+    numberB = 2;
+  }
+};
+
+class B : public json::Serializable {
+private:
+  std::string key;
+  std::string verse;
+
+  SERIAL_START
+    "key", key,
+    "verse", verse
+  SERIAL_END
+public:
+  void printContent () {
+    std::cout << key << " "
+              << verse << std::endl;
+  }
+  void changeContent () {
+    key = "D minor";
+    verse = "Uncovering things that wer sacred, manifest on this earth";
+  }
+};
+
+int main (void) {
+  A objA;
+  B objB;
+
+  json::Parser parser;
+  json::JsonTree tree;
+
+  parser.parseFile("pruebas/file.json", tree);  // reads file and generates the hierarchy
+
+  objA.serializeIn (tree, "first_path");        // initialize objA using only the info at 'first_path'
+  objB.serializeIn (tree, "second_path");       // initialize objB using only the info at 'first_path'
+
+  // At this point both objects are initialized with their respective values
+
+  objA.printContent();
+  objB.printContent();
+
+  objA.changeContent();
+  objB.changeContent();
+
+  // Now the values have changed, we must create the hierarchy again
+
+  objA.serializeOut(tree, "first_path");
+  objB.serializeOut(tree, "second_path");
+
+  parser.saveFile("pruebas/file.json", tree);
+  // alternatively json::Parser::saveFile("pruebas/file.json", tree);
+}
+```
+#### output
+
+`10 20`
+
+`A minor I cry out for magic, I feel it dancing in the light`
+#### modified json file, "file.json"
+```
+{
+  "first_path" : [
+    1, 2
+  ],
+  "second_path" : {
+    "key" : "D minor",
+    "verse" : "Uncovering things that were sacred, manifest on this earth"
+  }
+}
+```
+
+#<cldoc:Tutorials::Serialization::Using complex parameters, Vector-like>
 Serializaing n dimensional vectors
 
 You can use n dimensional vectors of vectors, the library can handle it for you!
@@ -358,7 +591,7 @@ int main (void) {
   obj.serializeOut("file.json", "content");
 }
 ```
-#### ouput
+#### output
 ```
 1 3 4
 6 4 1
@@ -383,7 +616,7 @@ int main (void) {
 }
 ```
 
-#<cldoc:Examples::Serialization::Using complex parameters, Hash-like>
+#<cldoc:Tutorials::Serialization::Using complex parameters, Hash-like>
 Serializaing n dimensional vectors
 
 You can use n dimensional vectors of vectors, the library can handle it for you!
@@ -438,7 +671,7 @@ int main (void) {
   obj.serializeOut("file.json");
 }
 ```
-#### ouput
+#### output
 ```
 1 3 4
 6 4 1
@@ -461,13 +694,13 @@ int main (void) {
 }
 ```
 
-#<cldoc:Examples::Serialization::Using serializable classes as parameters>
+#<cldoc:Tutorials::Serialization::Using serializable classes as parameters>
 Also mixing hash-like and vector-like serialization
 
-The following example shows you how to use other serializable classes as parameters
+The following example shows you how to use serializable classes as parameters
 mixing vector-like and hash-like modes.
 
-class 'Hangar' has a vector that stores many instances of class 'Rocket'.
+Class 'Hangar' has a vector that stores many instances of 'Rocket'.
 The first class uses the hash method while second uses the vector one.
 
 Hangar also has an instance of a 'Personal' which is hash-like serialized
@@ -573,7 +806,7 @@ int main (void) {
   obj.serializeOut("file.json");
 }
 ```
-#### ouput
+#### output
 ```
 Temperature: 15.6, content:
 12
@@ -614,7 +847,7 @@ Falcon 9
   "temperature" : 0
 }
 ```
-#<cldoc:Examples::Serialization::Inheriting serializable ability>
+#<cldoc:Tutorials::Serialization::Inheriting serializable ability>
 No multiple inheritance supported yet
 
 There is a new macro for this case (see <Examples::Serialization::Using pointers as parameters> to know why):
@@ -630,9 +863,12 @@ class derived_class : public base_class {
 };
 
 ```
-Serialization occurs starting from the base class to derived
+- Serialization occurs starting from the base class to derived
+- You **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
 
-You **cannot** mix vector-like and hash-like modes. The used in base class must be used for derived ones.
+For this example, we have a base serializable class 'A' which has an integer as parameter and a derived class 'B'
+which has a string parameter. As the 'A' parameters **and the serializable macros** are declared protected,
+to serialize 'B' implies to serialize its 'A' parameters
 
 #### json file, "file.json"
 ```
@@ -642,6 +878,8 @@ You **cannot** mix vector-like and hash-like modes. The used in base class must 
   ]
 }
 ```
+where 12 is the integer parameter of 'A' and "Run" the string parameter of 'B'
+
 #### code
 ```
 #include <iostream>
@@ -650,7 +888,7 @@ You **cannot** mix vector-like and hash-like modes. The used in base class must 
 #include "serializable.hpp"
 
 class A : public json::Serializable {
-protected:                              // because we want this to be accessible by B class
+protected:                              // because we want parameters and macro functions to be accessible by B class
   int number;
 
   SERIAL_START
@@ -665,7 +903,7 @@ class B : public A {
 private:
   std::string word;
 
-  SERIAL_START_INHERITED (B, A)
+  SERIAL_START_INHERITED (B, A)          // new macro for inheritance cases
     word
   SERIAL_END
 public:
@@ -688,7 +926,7 @@ int main (void) {
 ```
 #### output
 ```
-10 run
+10 Run
 ```
 #### modified json file, "file.json"
 ```json
@@ -699,13 +937,65 @@ int main (void) {
 }
 ```
 
-#<cldoc:Examples::Serialization::Using pointers as parameters>
-The pointers will be initialized for you
+#<cldoc:Tutorials::Serialization::Serializing pointers>
+Non serializable class pointer case
 
-You can use pointers to any type used in the previous examples including other serializable classes.
+You can use pointers of any type seen in previous examples excepting vectors:
 
-Note that pointers **can not be used for arrays** of elements **yet** due the methods can not know the lenght of that array,
+```
+  vector <x*> allowed
+  vector <x>* not allowed
+```
+
+The serialization process checks types of the pointers and tries to do `new` for each one.
+
+Note that pointers **cannot be used for arrays** of elements **yet** due the methods cannot know the lenght of that array,
 so only the first element is serialized.
+
+This class:
+```c++
+#include <iostream>
+#include <vector>
+#include <string>
+#include "serializable.hpp"
+
+class B : public json::Serializable {
+private:
+  int* number;
+  std::string* word;
+  bool* boolean;
+  A* element;
+  vector<int*> vec1;
+
+  SERIAL_START
+    number,
+    word,
+    boolean,
+    vec1,
+  SERIAL_END
+};
+```
+Would be serialized as
+```
+{
+  "content" : [
+    10, "oh by the way, which one is pink?",
+    false,
+    [
+      1, 2, 3, 4
+    ]
+  ]
+}
+```
+
+#<cldoc:Tutorials::Serialization::Serializing pointers serializable classes>
+The polymorphic problem
+
+
+
+
+
+
 
 
 #### json file, "file.json"

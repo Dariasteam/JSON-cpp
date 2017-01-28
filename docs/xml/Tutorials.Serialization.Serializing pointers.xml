@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Tutorials::Serialization::Serializing pointers" name="Serializing pointers" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>Non serializable class pointer case</brief>
+  <doc>You can use pointers of any type seen in previous examples excepting vectors:
+
+```
+  vector &lt;x*&gt; allowed
+  vector &lt;x&gt;* not allowed
+```
+
+The serialization process checks types of the pointers and tries to do `new` for each one.
+
+Note that pointers **cannot be used for arrays** of elements **yet** due the methods cannot know the lenght of that array,
+so only the first element is serialized.
+
+This class:
+```c++
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include "serializable.hpp"
+
+class B : public json::Serializable {
+private:
+  int* number;
+  std::string* word;
+  bool* boolean;
+  A* element;
+  vector&lt;int*&gt; vec1;
+
+  SERIAL_START
+    number,
+    word,
+    boolean,
+    vec1,
+  SERIAL_END
+};
+```
+Would be serialized as
+```
+{
+  "content" : [
+    10, "oh by the way, which one is pink?",
+    false,
+    [
+      1, 2, 3, 4
+    ]
+  ]
+}
+```
+</doc>
+</category>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Examples::Serialization::Show me the code!" name="Show me the code!" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>Simple serialization, vector-like</brief>
+  <doc>This example shows how to serialize a class with one parameter in the vector way using a
+file called "file.json" to store / retrieve the information.
+
+#### json file, "file.json"
+As we previously said, the root can't be a vector.
+```json
+{
+  "some_path" : [
+    10
+  ]
+}
+```
+#### code
+```c++
+#include &lt;iostream&gt;
+#include "./serializable.hpp"                 // include this file
+
+class A : public json::Serializable {         // derivate from 'Serializable'
+private:
+  int parameter;                              // this parameter will be serialized
+  int nonSerializableParameter;               // this will not
+
+  SERIAL_START                                // declare the parameters to be serialized in between the macros
+    parameter
+  SERIAL_END                                  // we close without declaring 'noSerializableParameter', so its not serialized
+public:
+  void printContent () { std::cout &lt;&lt; parameter &lt;&lt; std::endl; }
+  void changeContent () { parameter = 14; }
+};
+
+int main (void) {
+  A obj;
+  obj.serializeIn("file.json", "some_path");   // reads "file.json" file and updates the value of 'parameter'
+  obj.printContent();                          // prints 10
+  obj.changeContent();                         // changes the value of 'parameter' to 14
+  obj.serializeOut("file.json", "other_path"); // rewrites "file.json" with the information of the object 'obj', at path 'some_path'
+}
+```
+#### output
+```
+10
+```
+#### modified json file, "file.json"
+```json
+{
+  "other_path" : [
+    14
+  ]
+}
+```
+Note that information **is not** appended to the file, the path "some_path" is lost and the new file isn't like this:
+```json
+{
+  "some_path" : [
+    10
+  ]
+  "other_path" : [
+    14
+  ]
+}
+```</doc>
+</category>

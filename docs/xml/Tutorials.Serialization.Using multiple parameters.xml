@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<category id="Examples::Serialization::Using multiple parameters" name="Using multiple parameters" xmlns="http://jessevdk.github.com/cldoc/1.0">
+<category id="Tutorials::Serialization::Using multiple parameters" name="Using multiple parameters" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>Using multiple parameters. Vector-like</brief>
   <doc>How to serialize multiple heterogeneous parameters of one non-abstract class using a file called "file.json" to store / retrieve the information.
 

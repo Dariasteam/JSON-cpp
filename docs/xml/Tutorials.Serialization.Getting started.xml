@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<category id="Examples::Serialization::Getting started" name="Getting started" xmlns="http://jessevdk.github.com/cldoc/1.0">
+<category id="Tutorials::Serialization::Getting started" name="Getting started" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>How the info is stored and how can You do it</brief>
   <doc>#### Serialization modes
 

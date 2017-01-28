@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<category id="Examples::Serialization::Using complex parameters, Hash-like" name="Using complex parameters, Hash-like" xmlns="http://jessevdk.github.com/cldoc/1.0">
+<category id="Tutorials::Serialization::Using complex parameters, Hash-like" name="Using complex parameters, Hash-like" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>Serializaing n dimensional vectors</brief>
   <doc>You can use n dimensional vectors of vectors, the library can handle it for you!
 

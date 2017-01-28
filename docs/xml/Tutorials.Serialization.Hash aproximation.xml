@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<category id="Examples::Serialization::Hash aproximation" name="Hash aproximation" xmlns="http://jessevdk.github.com/cldoc/1.0">
+<category id="Tutorials::Serialization::Hash aproximation" name="Hash aproximation" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>Unordered name dependent serialization</brief>
   <doc>Same as previous example but using hash-like serialization
 Note that in this case we can put the elements directly on the root

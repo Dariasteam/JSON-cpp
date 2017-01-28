@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<category id="Examples::Serialization::Serializing pointers serializable classes" name="Serializing pointers serializable classes" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>The polymorphic problem</brief>
+  <doc>#### json file, "file.json"
+```
+{
+  "vector-pointer" : [
+      1, 2, 3, 4, 5, 6, 7, 8
+  ],
+  "vector-string" : "If it doen't show, give it time",
+  "normal-string" : "to read between the lines"
+}
+```
+
+
+
+
+</doc>
+</category>
