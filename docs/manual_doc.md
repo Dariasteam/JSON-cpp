@@ -165,8 +165,9 @@ of the situation can
 
 So when the method execution has finished, also has done it the Serialization process.
 
-**String management** is made by <json::JsonTree.toText> and <OTHER> functions. It is auto included in the file handling process
-so you don't need to worry about this phase unless you explicitly need a string. (For example for debugging reasons)
+**String management** is made by <json::JsonTree.toText> and <json::JsonTree::parseString> functions.
+It is auto included in the file handling process so you don't need to worry about this phase unless you
+explicitly need a string. (For example for debugging reasons)
 
 **File handling** is done entirely by a <json::Parser> and can do nothing more (or less) than it.
 That means you can do things like putting serializable objects data and other stuff or many not own relationed classes in the same file.
