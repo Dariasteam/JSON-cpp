@@ -91,12 +91,17 @@ public:
 
   /* Get node tye name
    *
+   * Reimplementations of this method return each type name
    * Used for console debugging of <json::JsonTree> management errors
    *
    * @return class name
    * */
   virtual const char* getName () = 0;
 
+  /* Get a copy of the node
+   *
+   * @return a new node with same content than this
+   * */
   virtual AbstractObject* getCopy () = 0;
 };
 
