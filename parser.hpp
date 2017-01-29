@@ -59,7 +59,7 @@ enum JSON_PARSER_FLAG {
 struct JsonLog {
   //json path of the problematic elment
   string path;
-  //<JSON_PARSER_FLAG> indicating the problem
+  // contains a <JSON_PARSER_FLAG> indicating the problem
   int flag;
   friend bool operator== (const JsonLog& j1, const JsonLog& j2) {
     return (j1.path == j2.path) && (j1.flag == j2.flag);
@@ -235,13 +235,13 @@ public:
 
   /* Gets error vector
    *
-   * @return errors detected wile parsing
+   * @return errors detected while parsing
   */
   inline const vector<JsonLog>& getErrors () { return errors; }
 
   /* Gets warning vector
    *
-   * @return warnings detected wile parsing
+   * @return warnings detected while parsing
   */
   inline const vector<JsonLog>& getWarnings () { return warnings; }
 };

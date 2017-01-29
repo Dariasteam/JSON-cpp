@@ -13,8 +13,7 @@ They can be retrieved after with
     <type name="std::__cxx11::string" />
   </field>
   <field id="json::JsonLog::flag" name="flag">
-    <brief>
-      <ref ref="json#json::JSON_PARSER_FLAG">json::JSON_PARSER_FLAG</ref> indicating the problem</brief>
+    <brief>contains a <ref ref="json#json::JSON_PARSER_FLAG">json::JSON_PARSER_FLAG</ref> indicating the problem</brief>
     <type builtin="yes" name="int" />
   </field>
 </struct>

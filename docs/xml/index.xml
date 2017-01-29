@@ -43,7 +43,9 @@
     </category>
   </category>
   <namespace name="json" ref="json#json">
-    <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
+    <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject">
+      <brief> node ins the tree structure</brief>
+    </class>
     <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
       <brief> Contains information about errors</brief>
     </struct>

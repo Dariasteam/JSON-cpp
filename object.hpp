@@ -19,8 +19,10 @@ using namespace std;
 
 namespace json {
 
-/*
+
+/* node ins the tree structure
  *
+ * ![vérsiole](./pics/AbstractObjectHierarchy.gif)
  *
  *
  *
@@ -28,14 +30,71 @@ namespace json {
 class AbstractObject {
 protected:
   AbstractObject () {}  
-public:
-  virtual ~AbstractObject () = 0;  
+public:  
+  virtual ~AbstractObject () = 0;
+
+  /* Accessor method
+   * @path route to the element
+   *
+   * Reimplementations of this method try to reach the node at 'path'.
+   * (<ObjectContainer> derived classes have a working reimplementation
+   * while <ObjectFinal> have not; a final can not be father of other node)
+   *
+   * @return nullptr if node does not exist, the pointer to the node otherwise
+   * */
   virtual AbstractObject* get (string path) = 0;
+
+  /* Add method
+   * @path route to the node to be father of 'obj'
+   * @obj node to be added
+   *
+   * Reimplementations of this method try to add 'obj' as a son of the
+   * node at 'path'. (<ObjectContainer> derived classes have a working
+   * method while <ObjectFinal> have not; a final can not be father of other node)
+   *
+   * @return the operation is successfuly finished or not
+   * */
   virtual bool add (string path, AbstractObject* obj) = 0;
+
+  /* Generates pretty json text
+   * @txt string to append this node info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Reimplementations of this method recursively generate the text version in
+   * json format of the content both node and sons, appending it to 'txt' parameter.
+   * The string respects the indentation and is human readable
+   * */
   virtual void toTxt (string &txt, int indentLvl) = 0;
+
+  /* Generates ugly json text
+   * @txt string to append this node info
+   *
+   * Reimplementations of this method recursively generate the text version in
+   * json format of the content both node and sons, appending it to 'txt' parameter.
+   * The string is compressed and uglified
+   * */
   virtual void toTxtUgly (string &txt) = 0;
+
+  /* Appends whitespaces to string
+   * @txt string to append the spaces
+   * @indentLvl number of indentations
+   *
+   * Simply appends _INDENT_ content 'indentLvl' times to 'txt'.
+   * (two spaces is an indentation as defined in the macro)
+   *
+   * #### Macro
+   * ```c++
+   * #define INDENT "  "
+   * ```
+   * */
   void txtIndent (string& txt, int indentLvl);
 
+  /* Get node tye name
+   *
+   * Used for console debugging of <json::JsonTree> management errors
+   *
+   * @return class name
+   * */
   virtual const char* getName () = 0;
 
   static AbstractObject* copy (AbstractObject* obj);

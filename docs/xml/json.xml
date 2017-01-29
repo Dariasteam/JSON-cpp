@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <namespace id="json" name="json" xmlns="http://jessevdk.github.com/cldoc/1.0">
-  <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
+  <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject">
+    <brief> node ins the tree structure</brief>
+  </class>
   <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
     <brief> Contains information about errors</brief>
   </struct>

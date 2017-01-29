@@ -2,6 +2,7 @@
 <class id="json::ObjectFinal" interface="true" name="ObjectFinal" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <base access="public">
     <type name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
+    <brief> node ins the tree structure</brief>
   </base>
   <subclass access="public" name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
   <subclass access="public" name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString" />
