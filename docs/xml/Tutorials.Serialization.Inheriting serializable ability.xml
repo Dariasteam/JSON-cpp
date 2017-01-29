@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <category id="Tutorials::Serialization::Inheriting serializable ability" name="Inheriting serializable ability" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief>No multiple inheritance supported yet</brief>
-  <doc>There is a new macro for this case (see &amp;lt;Examples::Serialization::Using pointers as parameters&amp;gt; to know why):
+  <doc>There is a new macro for this case (see <ref ref="Tutorials::Serialization::Serializing pointers of serializable classes#Tutorials::Serialization::Serializing pointers of serializable classes">Serializing pointers of serializable classes</ref>&gt; to know why):
 
   `SERIAL_START_INHERITED (this_derived_class, base_class)`
 

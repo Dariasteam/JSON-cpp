@@ -1054,10 +1054,5 @@ return values.
         <ref name="Tutorials::Serialization::Files management" />
       </doctype>
     </category>
-    <category id="Tutorials::Serialization::Inheriting serializable ability" name="Inheriting serializable ability">
-      <doctype name="doc">
-        <ref name="Examples::Serialization::Using pointers as parameters" />
-      </doctype>
-    </category>
   </references>
 </report>

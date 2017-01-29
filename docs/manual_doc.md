@@ -412,7 +412,7 @@ Those functions are overload (click on them to have more info) and are thinked t
   json::Parser parser;
   json::JsonTree tree;
   ...
-  //Raw
+  // Raw traitment
   ...
   obj.serializeIn (tree, "path_for_using_as_root")
   obj.serializeOut (tree, "path_for_using_as_root")
@@ -849,7 +849,7 @@ int main (void) {
 #<cldoc:Tutorials::Serialization::Inheriting serializable ability>
 No multiple inheritance supported yet
 
-There is a new macro for this case (see <Examples::Serialization::Using pointers as parameters> to know why):
+There is a new macro for this case (see <Tutorials::Serialization::Serializing pointers of serializable classes>> to know why):
 
   `SERIAL_START_INHERITED (this_derived_class, base_class)`
 

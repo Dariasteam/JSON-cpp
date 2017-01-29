@@ -21,7 +21,7 @@ Those functions are overload (click on them to have more info) and are thinked t
   json::Parser parser;
   json::JsonTree tree;
   ...
-  //Raw
+  // Raw traitment
   ...
   obj.serializeIn (tree, "path_for_using_as_root")
   obj.serializeOut (tree, "path_for_using_as_root")
