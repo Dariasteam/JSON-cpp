@@ -23,6 +23,7 @@ namespace json {
 /* Represents a node in the tree structure
  *
  * # Do not directly use this class or its derivatives, use <json::JsonTree> instead
+ * ## Description
  *
  * Json format represents a tree hierarchy, so in order to manage it we must replicate
  * that structure in memory. This pure abstract class represent a node of that memory tree, and its derivatives
@@ -33,7 +34,7 @@ namespace json {
  * <json::ObjectContainer> and <json::ObjectFinal> are pure abstract as well, so the trees are
  * truly composed by third level class objects
  * 
- * ### Example
+ * ## Example
  * ```json
  * {
  *   "components" : {
@@ -44,7 +45,6 @@ namespace json {
  *   "factors" : [0.566, true]
  * }
  * ```
- * ### Inner hierarchy
  * ![](pics/tree_diagram_example.md.png)
  *
  * */
@@ -126,13 +126,13 @@ public:
   virtual AbstractObject* getCopy () = 0;
 };
 
+/* Base class for Vectors & Hashes
+ * */
 class ObjectContainer : public AbstractObject {
 protected:
   ObjectContainer () : AbstractObject () {}
   ~ObjectContainer () = 0;
-public:
-  virtual const AbstractObject* operator[](unsigned index) { return nullptr; }
-  virtual const AbstractObject* operator[](string key) { return nullptr; }
+public:   
   virtual bool insert (string key, AbstractObject* obj) = 0;
   virtual AbstractObject* getCopy () = 0;
 };

@@ -2,6 +2,7 @@
 <class abstract="true" id="json::AbstractObject" name="AbstractObject" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief> Represents a node in the tree structure</brief>
   <doc># Do not directly use this class or its derivatives, use <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> instead
+## Description
 
 Json format represents a tree hierarchy, so in order to manage it we must replicate
 that structure in memory. This pure abstract class represent a node of that memory tree, and its derivatives
@@ -12,7 +13,7 @@ adds spport for each representable type in json. The following schema shows the 
 <ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref> and <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> are pure abstract as well, so the trees are
 truly composed by third level class objects
 
-### Example
+## Example
 ```json
 {
   "components" : {
@@ -23,7 +24,6 @@ truly composed by third level class objects
   "factors" : [0.566, true]
 }
 ```
-### Inner hierarchy
 ![](pics/tree_diagram_example.md.png)
 
 </doc>
