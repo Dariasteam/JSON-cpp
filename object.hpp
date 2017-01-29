@@ -132,9 +132,8 @@ class ObjectContainer : public AbstractObject {
 protected:
   ObjectContainer () : AbstractObject () {}
   ~ObjectContainer () = 0;
-public:   
+public:
   virtual bool insert (string key, AbstractObject* obj) = 0;
-  virtual AbstractObject* getCopy () = 0;
 };
 
 class ObjectVector : public ObjectContainer{
@@ -203,8 +202,6 @@ public:
   virtual void replaceValue (string value) = 0;
   AbstractObject* get (string path);
   bool add (string path,  AbstractObject* obj);
-
-  virtual AbstractObject* getCopy () = 0;
 };
 
 class ObjectFinalNumberFloat : public ObjectFinal {
