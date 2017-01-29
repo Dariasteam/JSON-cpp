@@ -1,130 +1,216 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::ObjectMap" name="ObjectMap" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> Representation of {}</brief>
+  <doc>Internally contains a `std::map &amp;lt;std::string, AbstractObject\*&amp;gt;`
+which stores the pairs key / sons nodes and a std::vector &amp;lt;std::strings&amp;gt;
+for <ref ref="json::ObjectMap#json::ObjectMap::getKeys">getKeys</ref> method
+</doc>
   <base access="public">
     <type name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
     <brief> Base class for Vectors &amp; Hashes</brief>
   </base>
   <variable id="json::ObjectMap::name" name="name">
+    <brief>This class's name, for debugging purposes</brief>
     <type builtin="yes" name="char" qualifier=" const const *" />
   </variable>
   <constructor id="json::ObjectMap::ObjectMap" name="ObjectMap" />
   <constructor abstract="yes" id="json::ObjectMap::ObjectMap" name="ObjectMap">
+    <brief> Copy constructor</brief>
+    <doc>Initialize object with a copy of obj's content
+(Recursively calling <ref ref="json::AbstractObject#json::AbstractObject::getCopy">json::AbstractObject::getCopy</ref> for every son)
+</doc>
     <argument id="json::ObjectMap::ObjectMap::obj" name="obj">
+      <doc>node to copy</doc>
       <type name="ObjectMap" qualifier=" const &amp;" ref="json::ObjectMap#json::ObjectMap" />
     </argument>
   </constructor>
   <destructor abstract="yes" id="json::ObjectMap::~ObjectMap" name="~ObjectMap" virtual="yes" />
   <method abstract="yes" id="json::ObjectMap::add" name="add" override="yes" virtual="yes">
+    <brief> Adds a node to tree</brief>
     <return>
+      <doc>the operation is successfuly finished or not</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectMap::add::path" name="path">
+      <doc>route to the node which will be father of 'obj'</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::ObjectMap::add::obj" name="obj">
+      <doc>node to be added</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
     <override name="AbstractObject::add" ref="json::AbstractObject#json::AbstractObject::add" />
   </method>
   <method abstract="yes" id="json::ObjectMap::erase" name="erase">
+    <brief> Erases a node</brief>
+    <doc>Erase the node at 'key' if exist and returns true.
+If there wasn't returns false
+
+For more information about erases's meaning see <ref ref="json::JsonTree#json::JsonTree::erase">json::JsonTree::erase</ref>
+
+</doc>
     <return>
+      <doc>the operation is successfuly finished or not</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectMap::erase::key" name="key">
+      <doc>key (**not** path) of the node to be erased</doc>
       <type name="std::__cxx11::string" />
     </argument>
   </method>
   <method abstract="yes" id="json::ObjectMap::get" name="get" override="yes" virtual="yes">
+    <brief> Search for a certain node</brief>
     <return>
+      <doc>object found or nullptr if doesn't exist</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::ObjectMap::get::path" name="path">
+      <doc>route to the element</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <override name="AbstractObject::get" ref="json::AbstractObject#json::AbstractObject::get" />
   </method>
   <method id="json::ObjectMap::getContent" name="getContent">
+    <brief> Get inner map</brief>
+    <doc>Used by copy constructor
+
+</doc>
     <return>
+      <doc>inner map</doc>
       <type name="std::map&lt;std::__cxx11::basic_string&lt;char&gt;, json::AbstractObject *, std::less&lt;std::__cxx11::basic_string&lt;char&gt; &gt;, std::allocator&lt;std::pair&lt;const std::__cxx11::basic_string&lt;char&gt;, json::AbstractObject *&gt; &gt; &gt;" qualifier=" const &amp;" />
     </return>
   </method>
   <method abstract="yes" id="json::ObjectMap::getCopy" name="getCopy" override="yes" virtual="yes">
+    <brief> Clone object</brief>
+    <doc>Creates a copy of this object and its content
+(Recursively doing the same operation for every son)
+
+</doc>
     <return>
+      <doc>a copy of this object</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
   </method>
   <method id="json::ObjectMap::getKeys" name="getKeys">
+    <brief> Get all keys</brief>
     <return>
+      <doc>inner keys vector</doc>
       <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" const &amp;" />
     </return>
   </method>
   <method id="json::ObjectMap::getName" name="getName" override="yes" virtual="yes">
+    <brief> Get method for <ref ref="json::ObjectMap#json::ObjectMap::name">json::ObjectMap::name</ref>
+    </brief>
     <return>
+      <doc><ref ref="json::ObjectMap#json::ObjectMap::name">json::ObjectMap::name</ref></doc>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
     <override name="AbstractObject::getName" ref="json::AbstractObject#json::AbstractObject::getName" />
   </method>
   <method abstract="yes" id="json::ObjectMap::insert" name="insert" override="yes" virtual="yes">
+    <brief> Inserts a son node in this object</brief>
+    <doc>If 'path' is not "" and does not previously exist,
+it adds the pair key / obj in inner map, returning true.
+Otherwise 'obj' is deleted and method returns false
+
+</doc>
     <return>
+      <doc>'obj' is succesfully inserted</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectMap::insert::key" name="key">
+      <doc>Key of the element</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::ObjectMap::insert::obj" name="obj">
+      <doc>Node to add</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
     <override name="ObjectContainer::insert" ref="json::ObjectContainer#json::ObjectContainer::insert" />
   </method>
   <method abstract="yes" id="json::ObjectMap::operator[]" name="operator[]">
+    <brief> Access a son</brief>
     <return>
+      <doc>node at 'key' if exist, nullptr otherwise</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::ObjectMap::operator[]::key" name="key">
+      <doc>key of the element in inner map</doc>
       <type name="std::__cxx11::string" />
     </argument>
   </method>
   <method abstract="yes" id="json::ObjectMap::remove" name="remove">
+    <brief> Removes a node</brief>
+    <doc>Deletes the node at 'key' if exist or does nothing otherwise.
+
+For more information about remove's meaning see <ref ref="json::JsonTree#json::JsonTree::remove">json::JsonTree::remove</ref>
+</doc>
     <return>
+      <doc>the operation is successfuly finished or not</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectMap::remove::key" name="key">
+      <doc>key (**not** path) of the node to be removed</doc>
       <type name="std::__cxx11::string" />
     </argument>
   </method>
   <method abstract="yes" id="json::ObjectMap::replace" name="replace">
+    <brief> Replace one node by another</brief>
+    <doc>If node at 'key' exist, changes it by 'obj', deletes the
+original one and returns true. Otherwise returns false
+
+For more information about replace's meaning see <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>, <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref> and <ref ref="json::JsonTree#json::JsonTree::replace">json::JsonTree::replace</ref>
+
+</doc>
     <return>
+      <doc>the operation is successfuly finished or not</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectMap::replace::key" name="key">
+      <doc>key (**not** path) of the node to be replaced</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::ObjectMap::replace::obj" name="obj">
+      <doc>new node</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
   </method>
   <method abstract="yes" id="json::ObjectMap::set" name="set">
+    <brief> Replace one node by another</brief>
+    <doc>Both exist or not a node at 'key', changes it by / insert 'obj'
+(deletes the original one if there was) and returns true. Otherwise returns false
+
+For more information about set's meaning see <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>, <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref> and <ref ref="json::JsonTree#json::JsonTree::set">json::JsonTree::set</ref>
+
+</doc>
     <return>
+      <doc>the operation is successfuly finished or not</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectMap::set::key" name="key">
+      <doc>key (**not** path) were 'obj' will be setted</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::ObjectMap::set::obj" name="obj">
+      <doc>new node</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
   </method>
   <method id="json::ObjectMap::size" name="size">
+    <brief> Get size</brief>
     <return>
+      <doc>size of inner vector (Quantity of sons nodes)</doc>
       <type builtin="yes" name="int" />
     </return>
   </method>
   <method abstract="yes" id="json::ObjectMap::toTxt" name="toTxt" override="yes" virtual="yes">
+    <brief> Generates json text</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="json::ObjectMap::toTxt::txt" name="txt">
+      <doc>string to append this node's info</doc>
       <type name="std::__cxx11::string" qualifier=" &amp;" />
     </argument>
     <argument id="json::ObjectMap::toTxt::indentLvl" name="indentLvl">
@@ -133,10 +219,12 @@
     <override name="AbstractObject::toTxt" ref="json::AbstractObject#json::AbstractObject::toTxt" />
   </method>
   <method abstract="yes" id="json::ObjectMap::toTxtUgly" name="toTxtUgly" override="yes" virtual="yes">
+    <brief> Generates ugly json text</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="json::ObjectMap::toTxtUgly::txt" name="txt">
+      <doc>string to append this node's info</doc>
       <type name="std::__cxx11::string" qualifier=" &amp;" />
     </argument>
     <override name="AbstractObject::toTxtUgly" ref="json::AbstractObject#json::AbstractObject::toTxtUgly" />

@@ -36,9 +36,24 @@ truly composed by third level class objects
   <destructor abstract="yes" id="json::AbstractObject::~AbstractObject" name="~AbstractObject" virtual="yes" />
   <method abstract="yes" id="json::AbstractObject::add" name="add" virtual="yes">
     <brief> Adds a node to tree</brief>
-    <doc>Reimplementations of this method try to add 'obj' as a son of the
+    <doc>Overrides of this method try to add 'obj' as a son of the
 node at 'path'. (<ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref> derived classes have a working
-method while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> have not; a final can not be father of other node)
+method while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> have not; a final node cannot be father of other node)
+
+The basic policy is to select the first token in 'path' (all elements before the first '.')
+and splits 'path' deleting that token. Then check if already exist a son with the same key / index associated.
+
+- Already exist: checks if node is final or not
+  - is <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref>: 'obj' is deleted, returns false
+
+  - is <ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref>: recursively calls this method for matching son (sending the splitted 'path') and returns its result
+
+
+- Not exist:
+  - path is empty: inserts 'obj' as node of this object with token's content as key / index, returns true
+
+  - path is not empty: creates a new <ref ref="json::ObjectMap#json::ObjectMap">json::ObjectMap</ref>, inserts it as son of this (at token's key / index).
+    Recursively calls this method for that new object (sending the splitted 'path'), and returns its result
 
 </doc>
     <return>
@@ -55,14 +70,24 @@ method while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</r
     </argument>
   </method>
   <method abstract="yes" id="json::AbstractObject::get" name="get" virtual="yes">
-    <brief> Access a certain node</brief>
-    <doc>Reimplementations of this method try to reach the node at 'path'.
-(<ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref> derived classes have a working reimplementation
-while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> have not; a final can not be father of other node)
+    <brief> Search for a certain node</brief>
+    <doc>Overrides of this method try to reach the node at 'path'.
+(<ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref> derived classes have a full working reimplementation
+while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> have not; a final node cannot be father of other node)
+
+The basic policy is to select the first token in 'path' (all elements before the first '.')
+and check if any son node's key/ index matches with token's content
+
+- Matches: splits 'path' deleting the first token and
+recursively calls this method for matching son (sending the splitted 'path') and returns its result
+
+- Not maches: returns nullptr
+
+If 'path' is empty, _this_ (whatever be the AbsctractObject derived object pointed by _this_) is returned
 
 </doc>
     <return>
-      <doc>nullptr if node does not exist, the pointer to the node otherwise</doc>
+      <doc>nullptr if node does not exist, node's pointer otherwise</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::AbstractObject::get::path" name="path">
@@ -79,7 +104,7 @@ while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> hav
   </method>
   <method abstract="yes" id="json::AbstractObject::getName" name="getName" virtual="yes">
     <brief> Get node tye name</brief>
-    <doc>Reimplementations of this method return each type name
+    <doc>Overrides of this method return each type name
 Used for console debugging of <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> management errors
 
 </doc>
@@ -90,15 +115,15 @@ Used for console debugging of <ref ref="json::JsonTree#json::JsonTree">json::Jso
   </method>
   <method abstract="yes" id="json::AbstractObject::toTxt" name="toTxt" virtual="yes">
     <brief> Generates pretty json text</brief>
-    <doc>Reimplementations of this method recursively generate the text version in
+    <doc>Overrides of this method recursively generate the text version in
 json format of the content both node and sons, appending it to 'txt' parameter.
-The string respects the indentation and is human readable
+The string respects the indentation and is human readable (See <ref ref="json::JsonTree#json::JsonTree::toText">json::JsonTree::toText</ref>)
 </doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="json::AbstractObject::toTxt::txt" name="txt">
-      <doc>string to append this node info</doc>
+      <doc>string to append this node's info</doc>
       <type name="std::__cxx11::string" qualifier=" &amp;" />
     </argument>
     <argument id="json::AbstractObject::toTxt::indentLvl" name="indentLvl">
@@ -108,15 +133,15 @@ The string respects the indentation and is human readable
   </method>
   <method abstract="yes" id="json::AbstractObject::toTxtUgly" name="toTxtUgly" virtual="yes">
     <brief> Generates ugly json text</brief>
-    <doc>Reimplementations of this method recursively generate the text version in
+    <doc>Overrides of this method recursively generate the text version in
 json format of the content both node and sons, appending it to 'txt' parameter.
-The string is compressed and uglified
+The string is compressed and uglified (See <ref ref="json::JsonTree#json::JsonTree::toText">json::JsonTree::toText</ref>)
 </doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="json::AbstractObject::toTxtUgly::txt" name="txt">
-      <doc>string to append this node info</doc>
+      <doc>string to append this node's info</doc>
       <type name="std::__cxx11::string" qualifier=" &amp;" />
     </argument>
   </method>

@@ -1,95 +1,138 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::ObjectVector" name="ObjectVector" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> Representation of []</brief>
+  <doc>Internally contains a `std::vector &amp;lt;AbstractObject\*&amp;gt;`
+which stores the sons nodes
+
+Vectors can **only** push back elements, that means no deletetions or substitutions.
+In order to archive that, you must replace all object with a new one wich contains
+the desired data
+</doc>
   <base access="public">
     <type name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
     <brief> Base class for Vectors &amp; Hashes</brief>
   </base>
   <variable id="json::ObjectVector::name" name="name">
+    <brief>This class's name, for debugging purposes</brief>
     <type builtin="yes" name="char" qualifier=" const const *" />
   </variable>
   <constructor id="json::ObjectVector::ObjectVector" name="ObjectVector" />
   <constructor abstract="yes" id="json::ObjectVector::ObjectVector" name="ObjectVector">
+    <brief> Copy constructor</brief>
+    <doc>Initialize object with a copy of obj's content
+(Recursively calling <ref ref="json::AbstractObject#json::AbstractObject::getCopy">json::AbstractObject::getCopy</ref> for every son)
+</doc>
     <argument id="json::ObjectVector::ObjectVector::obj" name="obj">
+      <doc>node to copy</doc>
       <type name="ObjectVector" qualifier=" const &amp;" ref="json::ObjectVector#json::ObjectVector" />
     </argument>
   </constructor>
   <destructor abstract="yes" id="json::ObjectVector::~ObjectVector" name="~ObjectVector" virtual="yes" />
   <method abstract="yes" id="json::ObjectVector::add" name="add" override="yes" virtual="yes">
+    <brief> Adds a node to tree</brief>
     <return>
+      <doc>the operation is successfuly finished or not</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectVector::add::path" name="path">
+      <doc>route to the node which will be father of 'obj'</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::ObjectVector::add::obj" name="obj">
+      <doc>node to be added</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
     <override name="AbstractObject::add" ref="json::AbstractObject#json::AbstractObject::add" />
   </method>
   <method abstract="yes" id="json::ObjectVector::get" name="get" override="yes" virtual="yes">
+    <brief> Search for a certain node</brief>
     <return>
+      <doc>object found or nullptr if doesn't exist</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::ObjectVector::get::path" name="path">
+      <doc>route to the element</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <override name="AbstractObject::get" ref="json::AbstractObject#json::AbstractObject::get" />
   </method>
   <method id="json::ObjectVector::getContent" name="getContent">
+    <brief> Get inner vector</brief>
+    <doc>Used by copy constructor
+
+</doc>
     <return>
+      <doc>inner vector</doc>
       <type name="std::vector&lt;json::AbstractObject *, std::allocator&lt;json::AbstractObject *&gt; &gt;" qualifier=" const &amp;" />
     </return>
   </method>
-  <method abstract="yes" id="json::ObjectVector::getContentAt" name="getContentAt">
-    <return>
-      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
-    </return>
-    <argument id="json::ObjectVector::getContentAt::indeox" name="indeox">
-      <type builtin="yes" name="int" />
-    </argument>
-  </method>
   <method abstract="yes" id="json::ObjectVector::getCopy" name="getCopy" override="yes" virtual="yes">
+    <brief> Clone object</brief>
+    <doc>Creates a copy of this object and its content
+(Recursively doing the same operation for every son)
+
+</doc>
     <return>
+      <doc>a copy of this object</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
   </method>
   <method id="json::ObjectVector::getName" name="getName" override="yes" virtual="yes">
+    <brief> Get method for <ref ref="json::ObjectVector#json::ObjectVector::name">json::ObjectVector::name</ref>
+    </brief>
     <return>
+      <doc><ref ref="json::ObjectVector#json::ObjectVector::name">json::ObjectVector::name</ref></doc>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
     <override name="AbstractObject::getName" ref="json::AbstractObject#json::AbstractObject::getName" />
   </method>
   <method abstract="yes" id="json::ObjectVector::insert" name="insert" override="yes" virtual="yes">
+    <brief> Inserts a son node in this object</brief>
+    <doc>If 'path' is "" (vectors don't use keys but indexes),
+it pushs back 'obj' in inner vector, returning true.
+Otherwise 'obj' is deleted and method returns false
+
+</doc>
     <return>
+      <doc>'obj' is succesfully inserted</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectVector::insert::key" name="key">
+      <doc>Key of the element (must be "")</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::ObjectVector::insert::obj" name="obj">
+      <doc>Node to add</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
     <override name="ObjectContainer::insert" ref="json::ObjectContainer#json::ObjectContainer::insert" />
   </method>
   <method abstract="yes" id="json::ObjectVector::operator[]" name="operator[]">
+    <brief> Access a son</brief>
     <return>
+      <doc>node at 'index' if exist, nullptr otherwise</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::ObjectVector::operator[]::index" name="index">
+      <doc>position of the element in inner vector</doc>
       <type builtin="yes" name="unsigned int" />
     </argument>
   </method>
   <method id="json::ObjectVector::size" name="size">
+    <brief> Get size</brief>
     <return>
+      <doc>size of inner vector (Quantity of sons nodes)</doc>
       <type builtin="yes" name="int" />
     </return>
   </method>
   <method abstract="yes" id="json::ObjectVector::toTxt" name="toTxt" override="yes" virtual="yes">
+    <brief> Generates json text</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="json::ObjectVector::toTxt::txt" name="txt">
+      <doc>string to append this node's info</doc>
       <type name="std::__cxx11::string" qualifier=" &amp;" />
     </argument>
     <argument id="json::ObjectVector::toTxt::indentLvl" name="indentLvl">
@@ -98,10 +141,12 @@
     <override name="AbstractObject::toTxt" ref="json::AbstractObject#json::AbstractObject::toTxt" />
   </method>
   <method abstract="yes" id="json::ObjectVector::toTxtUgly" name="toTxtUgly" override="yes" virtual="yes">
+    <brief> Generates ugly json text</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="json::ObjectVector::toTxtUgly::txt" name="txt">
+      <doc>string to append this node's info</doc>
       <type name="std::__cxx11::string" qualifier=" &amp;" />
     </argument>
     <override name="AbstractObject::toTxtUgly" ref="json::AbstractObject#json::AbstractObject::toTxtUgly" />

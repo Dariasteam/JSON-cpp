@@ -5,11 +5,15 @@
     <type name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
     <brief> Represents a node in the tree structure</brief>
   </base>
-  <subclass access="public" name="ObjectMap" ref="json::ObjectMap#json::ObjectMap" />
-  <subclass access="public" name="ObjectVector" ref="json::ObjectVector#json::ObjectVector" />
+  <subclass access="public" name="ObjectMap" ref="json::ObjectMap#json::ObjectMap">
+    <brief> Representation of {}</brief>
+  </subclass>
+  <subclass access="public" name="ObjectVector" ref="json::ObjectVector#json::ObjectVector">
+    <brief> Representation of []</brief>
+  </subclass>
   <method abstract="yes" id="json::ObjectContainer::insert" name="insert" virtual="yes">
     <brief> Inserts a son node in this object</brief>
-    <doc>Reimplementations of this method are used when
+    <doc>Overrides of this method are used when
 creating the tree or adding information to it
 
 </doc>

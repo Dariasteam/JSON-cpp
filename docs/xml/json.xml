@@ -19,8 +19,12 @@
   <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
   <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt" />
   <class name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString" />
-  <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap" />
-  <class name="ObjectVector" ref="json::ObjectVector#json::ObjectVector" />
+  <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap">
+    <brief> Representation of {}</brief>
+  </class>
+  <class name="ObjectVector" ref="json::ObjectVector#json::ObjectVector">
+    <brief> Representation of []</brief>
+  </class>
   <class name="Parser" ref="json::Parser#json::Parser">
     <brief>Translate between <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> and json files / strings</brief>
   </class>

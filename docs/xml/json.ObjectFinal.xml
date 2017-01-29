@@ -11,13 +11,12 @@
   <subclass access="public" name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
   <method abstract="yes" id="json::ObjectFinal::add" name="add" override="yes" virtual="yes">
     <brief> Adds a node to tree</brief>
-    <doc>Implementation of <ref ref="json::AbstractObject#json::AbstractObject::add">json::AbstractObject::add</ref>.
-As a final node cannot have childs, this method
+    <doc>As a final node node cannot have sons, this method
 always deletes 'obj' and returns false
 
 </doc>
     <return>
-      <doc>false</doc>
+      <doc>false **always**</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectFinal::add::path" name="path">
@@ -31,9 +30,8 @@ always deletes 'obj' and returns false
     <override name="AbstractObject::add" ref="json::AbstractObject#json::AbstractObject::add" />
   </method>
   <method abstract="yes" id="json::ObjectFinal::get" name="get" override="yes" virtual="yes">
-    <brief> Access a certain node</brief>
-    <doc>Implementation of <ref ref="json::AbstractObject#json::AbstractObject::get">json::AbstractObject::get</ref>.
-As a final node cannot have childs, this is only useful
+    <brief> Search for a certain node</brief>
+    <doc>As a final node node cannot have sons, this is only useful
 when 'path' is "", (which means this is the required node)
 
 </doc>
@@ -49,7 +47,7 @@ when 'path' is "", (which means this is the required node)
   </method>
   <method abstract="yes" id="json::ObjectFinal::replaceValue" name="replaceValue" virtual="yes">
     <brief> Changes this object's content</brief>
-    <doc>Reimplementations of this method transforms string data
+    <doc>Overrides of this method transforms string data
 (string 'true', string '0.2', string 'text') to its
 proper value for each type (bool = true, double = 0.2, string = text)
 
