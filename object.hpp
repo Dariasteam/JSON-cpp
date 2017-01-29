@@ -97,7 +97,7 @@ public:
    * */
   virtual const char* getName () = 0;
 
-  static AbstractObject* copy (AbstractObject* obj);
+  virtual AbstractObject* getCopy () = 0;
 };
 
 class ObjectContainer : public AbstractObject {
@@ -108,6 +108,7 @@ public:
   virtual const AbstractObject* operator[](unsigned index) { return nullptr; }
   virtual const AbstractObject* operator[](string key) { return nullptr; }
   virtual bool insert (string key, AbstractObject* obj) = 0;
+  virtual AbstractObject* getCopy () = 0;
 };
 
 class ObjectVector : public ObjectContainer{
@@ -133,6 +134,8 @@ public:
   bool add (string path, AbstractObject* obj);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
+
+  AbstractObject* getCopy ();
 };
 
 class ObjectMap : public ObjectContainer {
@@ -163,6 +166,8 @@ public:
   bool set (string key, AbstractObject* obj);
   bool remove (string key);
   bool erase (string key);
+
+  AbstractObject* getCopy ();
 };
 
 class ObjectFinal : public AbstractObject {
@@ -172,6 +177,8 @@ public:
   virtual void replaceValue (string value) = 0;
   AbstractObject* get (string path);
   bool add (string path,  AbstractObject* obj);
+
+  virtual AbstractObject* getCopy () = 0;
 };
 
 class ObjectFinalNumberFloat : public ObjectFinal {
@@ -189,6 +196,8 @@ public:
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
+
+  AbstractObject* getCopy ();
 };
 
 class ObjectFinalNumberInt : public ObjectFinal {
@@ -206,6 +215,8 @@ public:
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
+
+  AbstractObject* getCopy ();
 };
 
 class ObjectFinalString : public ObjectFinal {
@@ -223,6 +234,8 @@ public:
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
+
+  AbstractObject* getCopy ();
 };
 
 class ObjectFinalBool : public ObjectFinal {
@@ -241,6 +254,8 @@ public:
   void replaceValue (string value);
   void toTxt (string &txt, int indentLvl);
   void toTxtUgly (string &txt);
+
+  AbstractObject* getCopy ();
 };
 
 }

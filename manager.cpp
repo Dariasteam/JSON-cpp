@@ -32,7 +32,7 @@ bool JsonTree::copyFrom(AbstractObject*& obj, const string path) const {
   } else {
     if (obj != nullptr)
       delete obj;
-    obj = AbstractObject::copy (from);
+    obj = from->getCopy();
     return true;
   }
 }

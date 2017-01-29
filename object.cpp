@@ -17,21 +17,28 @@ void AbstractObject::txtIndent(string &txt, int indentLvl) {
     txt.append(INDENT);
 }
 
-AbstractObject* AbstractObject::copy (AbstractObject* obj) {
-  if (dynamic_cast <ObjectFinalBool*> (obj))
-    return new ObjectFinalBool (*((ObjectFinalBool*)obj));
-  else if (dynamic_cast <ObjectFinalNumberFloat*> (obj))
-    return new ObjectFinalNumberFloat (*((ObjectFinalNumberFloat*)obj));
-  else if (dynamic_cast <ObjectFinalNumberInt*> (obj))
-    return new ObjectFinalNumberInt (*((ObjectFinalNumberInt*)obj));
-  else if (dynamic_cast <ObjectFinalString*> (obj))
-    return new ObjectFinalString (*((ObjectFinalString*)obj));
-  else if (dynamic_cast <ObjectMap*> (obj))
-    return new ObjectMap (*((ObjectMap*)obj));
-  else if (dynamic_cast <ObjectVector*> (obj))
-    return new ObjectVector (*((ObjectVector*)obj));
-  else
-    return nullptr;
+AbstractObject* ObjectMap::getCopy () {
+  return new ObjectMap (*this);
+}
+
+AbstractObject* ObjectVector::getCopy () {
+  return new ObjectVector (*this);
+}
+
+AbstractObject* ObjectFinalBool::getCopy () {
+  return new ObjectFinalBool (*this);
+}
+
+AbstractObject* ObjectFinalNumberFloat::getCopy () {
+  return new ObjectFinalNumberFloat (*this);
+}
+
+AbstractObject* ObjectFinalNumberInt::getCopy () {
+  return new ObjectFinalNumberInt (*this);
+}
+
+AbstractObject* ObjectFinalString::getCopy () {
+  return new ObjectFinalString (*this);
 }
 
 ObjectFinalBool::ObjectFinalBool (const ObjectFinalBool &obj) :  
@@ -54,7 +61,7 @@ ObjectMap::ObjectMap (const ObjectMap &obj) :
   keys(obj.getKeys())
   {
     for (string key : keys) {
-      hash[key] = copy (obj.getContent().at(key));
+      hash[key] = obj.getContent().at(key)->getCopy ();
     }
   }
 
@@ -62,7 +69,7 @@ ObjectVector::ObjectVector (const ObjectVector &obj) :
   array(obj.size())
   {
     for (int i = 0; i < obj.size(); i++){
-      array[i] = copy (obj.getContent()[i]);
+      array[i] = obj.getContent()[i]->getCopy ();
     }
   }
 
