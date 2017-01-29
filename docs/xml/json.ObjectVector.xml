@@ -2,6 +2,7 @@
 <class abstract="true" id="json::ObjectVector" name="ObjectVector" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <base access="public">
     <type name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
+    <brief> Base class for Vectors &amp; Hashes</brief>
   </base>
   <variable id="json::ObjectVector::name" name="name">
     <type builtin="yes" name="char" qualifier=" const const *" />
@@ -51,7 +52,7 @@
     <return>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
-    <override name="ObjectContainer::getCopy" ref="json::ObjectContainer#json::ObjectContainer::getCopy" />
+    <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
   </method>
   <method id="json::ObjectVector::getName" name="getName" override="yes" virtual="yes">
     <return>
@@ -71,14 +72,13 @@
     </argument>
     <override name="ObjectContainer::insert" ref="json::ObjectContainer#json::ObjectContainer::insert" />
   </method>
-  <method abstract="yes" id="json::ObjectVector::operator[]" name="operator[]" override="yes" virtual="yes">
+  <method abstract="yes" id="json::ObjectVector::operator[]" name="operator[]">
     <return>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::ObjectVector::operator[]::index" name="index">
       <type builtin="yes" name="unsigned int" />
     </argument>
-    <override name="ObjectContainer::operator[]" ref="json::ObjectContainer#json::ObjectContainer::operator[]" />
   </method>
   <method id="json::ObjectVector::size" name="size">
     <return>

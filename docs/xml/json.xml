@@ -9,8 +9,12 @@
   <class name="JsonTree" ref="json::JsonTree#json::JsonTree">
     <brief> Contains a json hirarchy and allows its manipulation</brief>
   </class>
-  <class name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
-  <class name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+  <class name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer">
+    <brief> Base class for Vectors &amp; Hashes</brief>
+  </class>
+  <class name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal">
+    <brief> Base class for final nodes</brief>
+  </class>
   <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
   <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
   <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt" />

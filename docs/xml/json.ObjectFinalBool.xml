@@ -2,6 +2,7 @@
 <class abstract="true" id="json::ObjectFinalBool" name="ObjectFinalBool" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <base access="public">
     <type name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+    <brief> Base class for final nodes</brief>
   </base>
   <variable id="json::ObjectFinalBool::name" name="name">
     <type builtin="yes" name="char" qualifier=" const const *" />
@@ -32,7 +33,7 @@
     <return>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
-    <override name="ObjectFinal::getCopy" ref="json::ObjectFinal#json::ObjectFinal::getCopy" />
+    <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
   </method>
   <method id="json::ObjectFinalBool::getName" name="getName" override="yes" virtual="yes">
     <return>

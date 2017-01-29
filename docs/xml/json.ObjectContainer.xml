@@ -1,42 +1,29 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::ObjectContainer" name="ObjectContainer" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> Base class for Vectors &amp; Hashes</brief>
   <base access="public">
     <type name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
     <brief> Represents a node in the tree structure</brief>
   </base>
   <subclass access="public" name="ObjectMap" ref="json::ObjectMap#json::ObjectMap" />
   <subclass access="public" name="ObjectVector" ref="json::ObjectVector#json::ObjectVector" />
-  <method abstract="yes" id="json::ObjectContainer::getCopy" name="getCopy" override="yes" virtual="yes">
-    <return>
-      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
-    </return>
-    <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
-  </method>
   <method abstract="yes" id="json::ObjectContainer::insert" name="insert" virtual="yes">
+    <brief> Inserts a son node in this object</brief>
+    <doc>Reimplementations of this method are used when
+creating the tree or adding information to it
+
+</doc>
     <return>
+      <doc>the operation is successfuly finished or not</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectContainer::insert::key" name="key">
+      <doc>Key of the element ("" in vector case)</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::ObjectContainer::insert::obj" name="obj">
+      <doc>Node to add</doc>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
-    </argument>
-  </method>
-  <method id="json::ObjectContainer::operator[]" name="operator[]" virtual="yes">
-    <return>
-      <type name="AbstractObject" qualifier=" const *" ref="json::AbstractObject#json::AbstractObject" />
-    </return>
-    <argument id="json::ObjectContainer::operator[]::index" name="index">
-      <type builtin="yes" name="unsigned int" />
-    </argument>
-  </method>
-  <method id="json::ObjectContainer::operator[]" name="operator[]" virtual="yes">
-    <return>
-      <type name="AbstractObject" qualifier=" const *" ref="json::AbstractObject#json::AbstractObject" />
-    </return>
-    <argument id="json::ObjectContainer::operator[]::key" name="key">
-      <type name="std::__cxx11::string" />
     </argument>
   </method>
   <constructor access="protected" id="json::ObjectContainer::ObjectContainer" name="ObjectContainer" />

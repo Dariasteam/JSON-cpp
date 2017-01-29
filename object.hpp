@@ -30,7 +30,7 @@ namespace json {
  * adds spport for each representable type in json. The following schema shows the complete inheritance  hierarchy
  *
  * ![](./pics/abstract_object_diagram.md.png)
- *
+ * 
  * <json::ObjectContainer> and <json::ObjectFinal> are pure abstract as well, so the trees are
  * truly composed by third level class objects
  * 
@@ -68,7 +68,7 @@ protected:
 public:  
   virtual ~AbstractObject () = 0;
 
-  /* Accessor method
+  /* Access a certain node
    * @path route to the element
    *
    * Reimplementations of this method try to reach the node at 'path'.
@@ -79,8 +79,8 @@ public:
    * */
   virtual AbstractObject* get (string path) = 0;
 
-  /* Add method
-   * @path route to the node to be father of 'obj'
+  /* Adds a node to tree
+   * @path route to the node which will be father of 'obj'
    * @obj node to be added
    *
    * Reimplementations of this method try to add 'obj' as a son of the
@@ -204,12 +204,44 @@ public:
   AbstractObject* getCopy ();
 };
 
+/* Base class for final nodes
+ * */
 class ObjectFinal : public AbstractObject {
 protected:
   virtual ~ObjectFinal () = 0;
 public:
+  /* Changes this object's content
+   * @value value expresed in json
+   *
+   * Reimplementations of this method transforms string data
+   * (string 'true', string '0.2', string 'text') to its
+   * proper value for each type (bool = true, double = 0.2, string = text)
+   *
+   * The method is used by <json::Parser> when creating the tree
+   * */
   virtual void replaceValue (string value) = 0;
+
+  /* Access a certain node
+   * @path route to the element
+   *
+   * Implementation of <json::AbstractObject::get>.
+   * As a final node cannot have childs, this is only useful
+   * when 'path' is "", (which means this is the required node)
+   *
+   * @return this node when 'path' is empty, nullptr otherwise
+   * */
   AbstractObject* get (string path);
+
+  /* Adds a node to tree
+   * @path route to the node which will be father of 'obj'
+   * @obj node to be added
+   *
+   * Implementation of <json::AbstractObject::add>.
+   * As a final node cannot have childs, this method
+   * always deletes 'obj' and returns false
+   *
+   * @return false
+   * */
   bool add (string path,  AbstractObject* obj);
 };
 

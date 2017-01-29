@@ -27,11 +27,15 @@ truly composed by third level class objects
 ![](pics/tree_diagram_example.md.png)
 
 </doc>
-  <subclass access="public" name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
-  <subclass access="public" name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+  <subclass access="public" name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer">
+    <brief> Base class for Vectors &amp; Hashes</brief>
+  </subclass>
+  <subclass access="public" name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal">
+    <brief> Base class for final nodes</brief>
+  </subclass>
   <destructor abstract="yes" id="json::AbstractObject::~AbstractObject" name="~AbstractObject" virtual="yes" />
   <method abstract="yes" id="json::AbstractObject::add" name="add" virtual="yes">
-    <brief> Add method</brief>
+    <brief> Adds a node to tree</brief>
     <doc>Reimplementations of this method try to add 'obj' as a son of the
 node at 'path'. (<ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref> derived classes have a working
 method while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> have not; a final can not be father of other node)
@@ -42,7 +46,7 @@ method while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</r
       <type builtin="yes" name="bool" />
     </return>
     <argument id="json::AbstractObject::add::path" name="path">
-      <doc>route to the node to be father of 'obj'</doc>
+      <doc>route to the node which will be father of 'obj'</doc>
       <type name="std::__cxx11::string" />
     </argument>
     <argument id="json::AbstractObject::add::obj" name="obj">
@@ -51,7 +55,7 @@ method while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</r
     </argument>
   </method>
   <method abstract="yes" id="json::AbstractObject::get" name="get" virtual="yes">
-    <brief> Accessor method</brief>
+    <brief> Access a certain node</brief>
     <doc>Reimplementations of this method try to reach the node at 'path'.
 (<ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref> derived classes have a working reimplementation
 while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> have not; a final can not be father of other node)

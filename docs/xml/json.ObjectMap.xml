@@ -2,6 +2,7 @@
 <class abstract="true" id="json::ObjectMap" name="ObjectMap" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <base access="public">
     <type name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
+    <brief> Base class for Vectors &amp; Hashes</brief>
   </base>
   <variable id="json::ObjectMap::name" name="name">
     <type builtin="yes" name="char" qualifier=" const const *" />
@@ -51,7 +52,7 @@
     <return>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
-    <override name="ObjectContainer::getCopy" ref="json::ObjectContainer#json::ObjectContainer::getCopy" />
+    <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
   </method>
   <method id="json::ObjectMap::getKeys" name="getKeys">
     <return>
@@ -76,14 +77,13 @@
     </argument>
     <override name="ObjectContainer::insert" ref="json::ObjectContainer#json::ObjectContainer::insert" />
   </method>
-  <method abstract="yes" id="json::ObjectMap::operator[]" name="operator[]" override="yes" virtual="yes">
+  <method abstract="yes" id="json::ObjectMap::operator[]" name="operator[]">
     <return>
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </return>
     <argument id="json::ObjectMap::operator[]::key" name="key">
       <type name="std::__cxx11::string" />
     </argument>
-    <override name="ObjectContainer::operator[]" ref="json::ObjectContainer#json::ObjectContainer::operator[]" />
   </method>
   <method abstract="yes" id="json::ObjectMap::remove" name="remove">
     <return>
