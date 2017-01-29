@@ -30,6 +30,20 @@ namespace json {
 class AbstractObject {
 protected:
   AbstractObject () {}  
+
+  /* Appends whitespaces to string
+   * @txt string to append the spaces
+   * @indentLvl number of indentations
+   *
+   * Simply appends _INDENT_ content 'indentLvl' times to 'txt'.
+   * (two spaces is an indentation as defined in the macro)
+   *
+   * #### Macro
+   * ```c++
+   * #define INDENT "  "
+   * ```
+   * */
+  void txtIndent (string& txt, int indentLvl);
 public:  
   virtual ~AbstractObject () = 0;
 
@@ -74,20 +88,6 @@ public:
    * The string is compressed and uglified
    * */
   virtual void toTxtUgly (string &txt) = 0;
-
-  /* Appends whitespaces to string
-   * @txt string to append the spaces
-   * @indentLvl number of indentations
-   *
-   * Simply appends _INDENT_ content 'indentLvl' times to 'txt'.
-   * (two spaces is an indentation as defined in the macro)
-   *
-   * #### Macro
-   * ```c++
-   * #define INDENT "  "
-   * ```
-   * */
-  void txtIndent (string& txt, int indentLvl);
 
   /* Get node tye name
    *
