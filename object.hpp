@@ -133,6 +133,15 @@ protected:
   ObjectContainer () : AbstractObject () {}
   ~ObjectContainer () = 0;
 public:
+  /* Inserts a son node in this object
+   * @key Key of the element ("" in vector case)
+   * @obj Node to add
+   *
+   * Reimplementations of this method are used when
+   * creating the tree or adding information to it
+   *
+   * @return the operation is successfuly finished or not
+   * */
   virtual bool insert (string key, AbstractObject* obj) = 0;
 };
 
