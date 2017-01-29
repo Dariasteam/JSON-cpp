@@ -47,6 +47,12 @@
       <type builtin="yes" name="int" />
     </argument>
   </method>
+  <method abstract="yes" id="json::ObjectVector::getCopy" name="getCopy" override="yes" virtual="yes">
+    <return>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <override name="ObjectContainer::getCopy" ref="json::ObjectContainer#json::ObjectContainer::getCopy" />
+  </method>
   <method id="json::ObjectVector::getName" name="getName" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />

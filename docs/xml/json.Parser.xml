@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::Parser" name="Parser" xmlns="http://jessevdk.github.com/cldoc/1.0">
-  <brief>Manage I/O of .json files</brief>
+  <brief>Translate between <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> and json files / strings</brief>
   <doc>## Description
 Provides functionalities for generating a <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> with the information retrieved from  a `.json` file  and vice versa.
 If errors are detected in the file manipulation process, the methods involved returns a flag from <ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref>

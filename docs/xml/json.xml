@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <namespace id="json" name="json" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject">
-    <brief> node ins the tree structure</brief>
+    <brief> Represents a node in the tree structure</brief>
   </class>
   <struct name="JsonLog" ref="json::JsonLog#json::JsonLog">
     <brief> Contains information about errors</brief>
@@ -18,7 +18,7 @@
   <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap" />
   <class name="ObjectVector" ref="json::ObjectVector#json::ObjectVector" />
   <class name="Parser" ref="json::Parser#json::Parser">
-    <brief>Manage I/O of .json files</brief>
+    <brief>Translate between <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> and json files / strings</brief>
   </class>
   <class name="Serializable" ref="json::Serializable#json::Serializable">
     <brief> Base class for serializable custom classes</brief>

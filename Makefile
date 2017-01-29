@@ -12,7 +12,9 @@ tests: ${TESTS}
 	${CC} ${CXXFLAGS} -o jsonTests ${TESTS}
 
 doc:
+	mermaid docs/abstract_object_diagram.md -o docs/pics
 	cldoc generate -std=c++11 -- --merge docs/manual_doc.md --output docs --report *.hpp
+	
 
 clean:
 	rm -rf *.o jsonParser

@@ -23,6 +23,12 @@
       <type builtin="yes" name="double" />
     </return>
   </method>
+  <method abstract="yes" id="json::ObjectFinalNumberFloat::getCopy" name="getCopy" override="yes" virtual="yes">
+    <return>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <override name="ObjectFinal::getCopy" ref="json::ObjectFinal#json::ObjectFinal::getCopy" />
+  </method>
   <method id="json::ObjectFinalNumberFloat::getName" name="getName" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />

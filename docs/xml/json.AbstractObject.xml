@@ -1,9 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::AbstractObject" name="AbstractObject" xmlns="http://jessevdk.github.com/cldoc/1.0">
-  <brief> node ins the tree structure</brief>
-  <doc>![vérsiole](./pics/AbstractObjectHierarchy.gif)
+  <brief> Represents a node in the tree structure</brief>
+  <doc># Do not directly use this class or its derivatives, use <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> instead
 
+Json format represents a tree hierarchy, so in order to manage it we must replicate
+that structure in memory. This pure abstract class represent a node of that memory tree, and its derivatives
+adds spport for each representable type in json. This schema show the complete class hierarchy:
 
+![](./pics/abstract_object_diagram.md.png)
+
+<ref ref="json::ObjectContainer#json::ObjectContainer">json::ObjectContainer</ref> and <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> are pure abstract as well, so the trees are
+truly composed by third level class objects
 
 </doc>
   <subclass access="public" name="ObjectContainer" ref="json::ObjectContainer#json::ObjectContainer" />
@@ -29,14 +36,6 @@ method while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</r
       <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
     </argument>
   </method>
-  <method abstract="yes" id="json::AbstractObject::copy" name="copy" static="yes">
-    <return>
-      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
-    </return>
-    <argument id="json::AbstractObject::copy::obj" name="obj">
-      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
-    </argument>
-  </method>
   <method abstract="yes" id="json::AbstractObject::get" name="get" virtual="yes">
     <brief> Accessor method</brief>
     <doc>Reimplementations of this method try to reach the node at 'path'.
@@ -53,9 +52,17 @@ while <ref ref="json::ObjectFinal#json::ObjectFinal">json::ObjectFinal</ref> hav
       <type name="std::__cxx11::string" />
     </argument>
   </method>
+  <method abstract="yes" id="json::AbstractObject::getCopy" name="getCopy" virtual="yes">
+    <brief> Get a copy of the node</brief>
+    <return>
+      <doc>a new node with same content than this</doc>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+  </method>
   <method abstract="yes" id="json::AbstractObject::getName" name="getName" virtual="yes">
     <brief> Get node tye name</brief>
-    <doc>Used for console debugging of <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> management errors
+    <doc>Reimplementations of this method return each type name
+Used for console debugging of <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> management errors
 
 </doc>
     <return>
@@ -95,7 +102,8 @@ The string is compressed and uglified
       <type name="std::__cxx11::string" qualifier=" &amp;" />
     </argument>
   </method>
-  <method abstract="yes" id="json::AbstractObject::txtIndent" name="txtIndent">
+  <constructor access="protected" id="json::AbstractObject::AbstractObject" name="AbstractObject" />
+  <method abstract="yes" access="protected" id="json::AbstractObject::txtIndent" name="txtIndent">
     <brief> Appends whitespaces to string</brief>
     <doc>Simply appends _INDENT_ content 'indentLvl' times to 'txt'.
 (two spaces is an indentation as defined in the macro)
@@ -117,5 +125,4 @@ The string is compressed and uglified
       <type builtin="yes" name="int" />
     </argument>
   </method>
-  <constructor access="protected" id="json::AbstractObject::AbstractObject" name="AbstractObject" />
 </class>

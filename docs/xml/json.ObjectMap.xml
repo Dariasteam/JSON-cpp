@@ -47,6 +47,12 @@
       <type name="std::map&lt;std::__cxx11::basic_string&lt;char&gt;, json::AbstractObject *, std::less&lt;std::__cxx11::basic_string&lt;char&gt; &gt;, std::allocator&lt;std::pair&lt;const std::__cxx11::basic_string&lt;char&gt;, json::AbstractObject *&gt; &gt; &gt;" qualifier=" const &amp;" />
     </return>
   </method>
+  <method abstract="yes" id="json::ObjectMap::getCopy" name="getCopy" override="yes" virtual="yes">
+    <return>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <override name="ObjectContainer::getCopy" ref="json::ObjectContainer#json::ObjectContainer::getCopy" />
+  </method>
   <method id="json::ObjectMap::getKeys" name="getKeys">
     <return>
       <type name="std::vector&lt;std::__cxx11::basic_string&lt;char&gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char&gt; &gt; &gt;" qualifier=" const &amp;" />

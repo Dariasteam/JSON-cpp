@@ -1,5 +1,5 @@
 #<cldoc:json::Parser>
-Manage I/O of .json files
+Translate between <json::JsonTree> and json files / strings
 
 ## Description
 Provides functionalities for generating a <JsonTree> with the information retrieved from  a `.json` file  and vice versa.

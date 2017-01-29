@@ -2,7 +2,7 @@
 <class id="json::ObjectFinal" interface="true" name="ObjectFinal" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <base access="public">
     <type name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
-    <brief> node ins the tree structure</brief>
+    <brief> Represents a node in the tree structure</brief>
   </base>
   <subclass access="public" name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
   <subclass access="public" name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString" />
@@ -28,6 +28,12 @@
       <type name="std::__cxx11::string" />
     </argument>
     <override name="AbstractObject::get" ref="json::AbstractObject#json::AbstractObject::get" />
+  </method>
+  <method abstract="yes" id="json::ObjectFinal::getCopy" name="getCopy" override="yes" virtual="yes">
+    <return>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
   </method>
   <method abstract="yes" id="json::ObjectFinal::replaceValue" name="replaceValue" virtual="yes">
     <return>

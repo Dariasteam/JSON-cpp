@@ -69,7 +69,7 @@ struct JsonLog {
 class Parser {
   private:
 
-  struct ObjectNameFlag {
+  struct ObjectNameFlag {    
     AbstractObject* element;
     string key;
     int flag;

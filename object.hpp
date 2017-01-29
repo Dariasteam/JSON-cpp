@@ -20,12 +20,19 @@ using namespace std;
 namespace json {
 
 
-/* node ins the tree structure
+/* Represents a node in the tree structure
  *
- * ![vérsiole](./pics/AbstractObjectHierarchy.gif)
+ * # Do not directly use this class or its derivatives, use <json::JsonTree> instead
  *
+ * Json format represents a tree hierarchy, so in order to manage it we must replicate
+ * that structure in memory. This pure abstract class represent a node of that memory tree, and its derivatives
+ * adds spport for each representable type in json. This schema show the complete class hierarchy:
  *
+ * ![](./pics/abstract_object_diagram.md.png)
  *
+ * <json::ObjectContainer> and <json::ObjectFinal> are pure abstract as well, so the trees are
+ * truly composed by third level class objects
+ * 
  * */
 class AbstractObject {
 protected:

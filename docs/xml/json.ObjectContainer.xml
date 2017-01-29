@@ -2,10 +2,16 @@
 <class abstract="true" id="json::ObjectContainer" name="ObjectContainer" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <base access="public">
     <type name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
-    <brief> node ins the tree structure</brief>
+    <brief> Represents a node in the tree structure</brief>
   </base>
   <subclass access="public" name="ObjectMap" ref="json::ObjectMap#json::ObjectMap" />
   <subclass access="public" name="ObjectVector" ref="json::ObjectVector#json::ObjectVector" />
+  <method abstract="yes" id="json::ObjectContainer::getCopy" name="getCopy" override="yes" virtual="yes">
+    <return>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
+  </method>
   <method abstract="yes" id="json::ObjectContainer::insert" name="insert" virtual="yes">
     <return>
       <type builtin="yes" name="bool" />
