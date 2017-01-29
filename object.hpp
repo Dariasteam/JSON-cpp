@@ -26,13 +26,27 @@ namespace json {
  *
  * Json format represents a tree hierarchy, so in order to manage it we must replicate
  * that structure in memory. This pure abstract class represent a node of that memory tree, and its derivatives
- * adds spport for each representable type in json. This schema show the complete class hierarchy:
+ * adds spport for each representable type in json. The following schema shows the complete inheritance  hierarchy
  *
  * ![](./pics/abstract_object_diagram.md.png)
  *
  * <json::ObjectContainer> and <json::ObjectFinal> are pure abstract as well, so the trees are
  * truly composed by third level class objects
  * 
+ * ### Example
+ * ```json
+ * {
+ *   "components" : {
+ *     "first" : 12,
+ *     "second" : true,
+ *     "third" : "this_is_a_string"
+ *   },
+ *   "factors" : [0.566, true]
+ * }
+ * ```
+ * ### Inner hierarchy
+ * ![](pics/tree_diagram_example.md.png)
+ *
  * */
 class AbstractObject {
 protected:
