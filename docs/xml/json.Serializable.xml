@@ -962,7 +962,9 @@
     <templatetypeparameter id="json::Serializable::serialize::str" name="str" />
     <templatetypeparameter id="json::Serializable::serialize::Args" name="Args" />
   </methodtemplate>
-  <struct name="InheritanceIndex" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
+  <struct name="InheritanceIndex" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex">
+    <brief>Used to manage the parameters order in serialization inheritance</brief>
+  </struct>
   <method access="protected" id="json::Serializable::addSon" name="addSon" static="yes">
     <return>
       <type builtin="yes" name="void" />

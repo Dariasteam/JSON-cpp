@@ -49,19 +49,17 @@ enum JSON_PARSER_FLAG {
 
 /* Contains information about errors
  *
- * - path:  json path of the problematic elment
- * - flag:  <JSON_PARSER_FLAG> indicating the problem
- *
  * Instances of this are created by <Parser::parseFile>
  * when a syntax error or interesting situation is detected
  * in a json file.
  *
  * They can be retrieved after with
  * <Parser::getWarnings> and <Parser::getErrors>
- *
  */
 struct JsonLog {
+  //json path of the problematic elment
   string path;
+  //<JSON_PARSER_FLAG> indicating the problem
   int flag;
   friend bool operator== (const JsonLog& j1, const JsonLog& j2) {
     return (j1.path == j2.path) && (j1.flag == j2.flag);

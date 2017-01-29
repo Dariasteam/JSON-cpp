@@ -63,7 +63,9 @@
     </class>
     <class name="Serializable" ref="json::Serializable#json::Serializable">
       <brief> Base class for serializable custom classes</brief>
-      <struct name="InheritanceIndex" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex" />
+      <struct name="InheritanceIndex" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex">
+        <brief>Used to manage the parameters order in serialization inheritance</brief>
+      </struct>
     </class>
   </namespace>
   <report name="Documentation generator" ref="report" />

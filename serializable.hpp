@@ -56,8 +56,11 @@ namespace json {
 class Serializable {
 protected:
 
+  // Used to manage the parameters order in serialization inheritance
   struct InheritanceIndex {
+    // what is next element in the vector
     int index;
+    // path in the hierarchy
     string path;
   };
 

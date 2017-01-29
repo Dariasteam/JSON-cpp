@@ -1,9 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <struct access="protected" id="json::Serializable::InheritanceIndex" name="InheritanceIndex" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief>Used to manage the parameters order in serialization inheritance</brief>
   <field id="json::Serializable::InheritanceIndex::index" name="index">
+    <brief>what is next element in the vector</brief>
     <type builtin="yes" name="int" />
   </field>
   <field id="json::Serializable::InheritanceIndex::path" name="path">
+    <brief>path in the hierarchy</brief>
     <type name="std::__cxx11::string" />
   </field>
 </struct>
