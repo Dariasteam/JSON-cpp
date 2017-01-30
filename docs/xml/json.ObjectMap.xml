@@ -1,8 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::ObjectMap" name="ObjectMap" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief> Representation of {}</brief>
-  <doc>Internally contains a `std::map &amp;lt;std::string, AbstractObject\*&amp;gt;`
-which stores the pairs key / sons nodes and a std::vector &amp;lt;std::strings&amp;gt;
+  <doc>Internally contains a
+```c++
+std::map&lt;std::string, AbstractObject*&gt;
+```
+which stores the pairs key / sons nodes and a
+```c++
+std::vector &lt;std::string&gt;
+```
 for <ref ref="json::ObjectMap#json::ObjectMap::getKeys">getKeys</ref> method
 </doc>
   <base access="public">

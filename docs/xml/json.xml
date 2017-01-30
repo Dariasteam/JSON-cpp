@@ -15,10 +15,18 @@
   <class name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal">
     <brief> Base class for final nodes</brief>
   </class>
-  <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
-  <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
-  <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt" />
-  <class name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString" />
+  <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool">
+    <brief> Represents an integer</brief>
+  </class>
+  <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat">
+    <brief> Represents a float</brief>
+  </class>
+  <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt">
+    <brief> Represents an integer</brief>
+  </class>
+  <class name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString">
+    <brief> Represents an integer</brief>
+  </class>
   <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap">
     <brief> Representation of {}</brief>
   </class>

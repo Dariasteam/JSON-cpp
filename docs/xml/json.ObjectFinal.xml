@@ -5,10 +5,18 @@
     <type name="AbstractObject" ref="json::AbstractObject#json::AbstractObject" />
     <brief> Represents a node in the tree structure</brief>
   </base>
-  <subclass access="public" name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool" />
-  <subclass access="public" name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString" />
-  <subclass access="public" name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt" />
-  <subclass access="public" name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat" />
+  <subclass access="public" name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool">
+    <brief> Represents an integer</brief>
+  </subclass>
+  <subclass access="public" name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString">
+    <brief> Represents an integer</brief>
+  </subclass>
+  <subclass access="public" name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt">
+    <brief> Represents an integer</brief>
+  </subclass>
+  <subclass access="public" name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat">
+    <brief> Represents a float</brief>
+  </subclass>
   <method abstract="yes" id="json::ObjectFinal::add" name="add" override="yes" virtual="yes">
     <brief> Adds a node to tree</brief>
     <doc>As a final node node cannot have sons, this method

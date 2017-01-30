@@ -114,7 +114,7 @@ Used for console debugging of <ref ref="json::JsonTree#json::JsonTree">json::Jso
     </return>
   </method>
   <method abstract="yes" id="json::AbstractObject::toTxt" name="toTxt" virtual="yes">
-    <brief> Generates pretty json text</brief>
+    <brief> Generates and appends json text</brief>
     <doc>Overrides of this method recursively generate the text version in
 json format of the content both node and sons, appending it to 'txt' parameter.
 The string respects the indentation and is human readable (See <ref ref="json::JsonTree#json::JsonTree::toText">json::JsonTree::toText</ref>)

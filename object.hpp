@@ -116,7 +116,7 @@ public:
    * */
   virtual bool add (string path, AbstractObject* obj) = 0;
 
-  /* Generates pretty json text
+  /* Generates and appends json text
    * @txt string to append this node's info
    * @indentLvl number of indentations to generate a consistent string
    *
@@ -172,7 +172,10 @@ public:
 
 /* Representation of []
  *
- * Internally contains a `std::vector <AbstractObject*>`
+ * Internally contains a
+ * ```c++
+ * std::vector <AbstractObject*>
+ * ```
  * which stores the sons nodes
  *
  * Vectors can **only** push back elements, that means no deletetions or substitutions.
@@ -274,8 +277,14 @@ public:
 
 /* Representation of {}
  *
- * Internally contains a `std::map <std::string, AbstractObject*>`
- * which stores the pairs key / sons nodes and a std::vector <std::strings>
+ * Internally contains a
+ * ```c++
+ * std::map<std::string, AbstractObject*>
+ * ```
+ * which stores the pairs key / sons nodes and a
+ * ```c++
+ * std::vector <std::string>
+ * ```
  * for <getKeys> method
  * */
 class ObjectMap : public ObjectContainer {
@@ -465,80 +474,264 @@ public:
   bool add (string path,  AbstractObject* obj);
 };
 
+/* Represents a float
+ *
+ * Internally uses a double for better precision
+ * */
 class ObjectFinalNumberFloat : public ObjectFinal {
 private:
   double number;
 public:
-  const static char* const name;
-   inline const char* getName () { return name; }
-
   ~ObjectFinalNumberFloat ();
-  ObjectFinalNumberFloat (const ObjectFinalNumberFloat& obj);
   ObjectFinalNumberFloat () : ObjectFinal () {}
   ObjectFinalNumberFloat (double n) : number (n) {}
+  /* Copy constructor
+   * @obj node to copy
+   *
+   * calls <getCopy>
+   * */
+  ObjectFinalNumberFloat (const ObjectFinalNumberFloat& obj);
+
+  /* This class's name, for debugging purposes */
+  const static char* const name;
+
+  /* Get method for <name>
+   *
+   * @return <name>
+   * */
+  inline const char* getName () { return name; }
+
+  /* Get inner data
+   *
+   * @return inner data
+   * */
   inline double getContent () const { return number; }  
+
+  /* Replaces data
+   * @value new data
+   *
+   * Updates the content with the data of 'value'
+   * */
   void replaceValue (string value);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends json content to 'txt' respecting the indentation
+   * */
   void toTxt (string &txt, int indentLvl);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends uglified json content to 'txt'
+   * */
   void toTxtUgly (string &txt);
 
+  /* Clone object
+   *
+   * Creates a copy of this object and its content
+   *
+   * @return a copy of this object
+   * */
   AbstractObject* getCopy ();
 };
 
+/* Represents an integer
+ *
+ * Internally uses a long long for better precision
+ * */
 class ObjectFinalNumberInt : public ObjectFinal {
 private:
   long long number;
 public:
-  const static char* const name;
-  inline const char* getName () { return name; }
-
   ~ObjectFinalNumberInt ();
   ObjectFinalNumberInt () {}
-  ObjectFinalNumberInt (const ObjectFinalNumberInt& obj);  
   ObjectFinalNumberInt (long int n) : number (n) {}
-  inline long int getContent () const { return number; }  
+  /* Copy constructor
+   * @obj node to copy
+   *
+   * calls <getCopy>
+   * */
+  ObjectFinalNumberInt (const ObjectFinalNumberInt& obj);
+
+  /* This class's name, for debugging purposes */
+  const static char* const name;
+
+  /* Get method for <name>
+   *
+   * @return <name>
+   * */
+  inline const char* getName () { return name; }
+
+  /* Get inner data
+   *
+   * @return inner data
+   * */
+  inline long int getContent () const { return number; }
+
+  /* Replaces data
+   * @value new data
+   *
+   * Updates the content with the data of 'value'
+   * */
   void replaceValue (string value);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends json content to 'txt' respecting the indentation
+   * */
   void toTxt (string &txt, int indentLvl);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends uglified json content to 'txt'
+   * */
   void toTxtUgly (string &txt);
 
+  /* Clone object
+   *
+   * Creates a copy of this object and its content
+   *
+   * @return a copy of this object
+   * */
   AbstractObject* getCopy ();
 };
 
+/* Represents an integer
+ *
+ * Internally uses std::string
+ * */
 class ObjectFinalString : public ObjectFinal {
 private:
   string text;
 public:
-  const static char* const name;
-  inline const char* getName () { return name; }
-
   ~ObjectFinalString ();
   ObjectFinalString () {}
-  ObjectFinalString (const ObjectFinalString& obj);
   ObjectFinalString (string s) : text (s) {}
+  /* Copy constructor
+   * @obj node to copy
+   *
+   * calls <getCopy>
+   * */
+  ObjectFinalString (const ObjectFinalString& obj);
+
+  /* This class's name, for debugging purposes */
+  const static char* const name;
+
+  /* Get method for <name>
+   *
+   * @return <name>
+   * */
+  inline const char* getName () { return name; }
+
+  /* Get inner data
+   *
+   * @return inner data
+   * */
   inline string getContent () const { return text; }  
+
+  /* Replaces data
+   * @value new data
+   *
+   * Updates the content with the data of 'value'
+   * */
   void replaceValue (string value);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends json content to 'txt' respecting the indentation
+   * */
   void toTxt (string &txt, int indentLvl);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends uglified json content to 'txt'
+   * */
   void toTxtUgly (string &txt);
 
+  /* Clone object
+   *
+   * Creates a copy of this object and its content
+   *
+   * @return a copy of this object
+   * */
   AbstractObject* getCopy ();
 };
 
+/* Represents an integer
+ *
+ * Internally uses a bool
+ * */
 class ObjectFinalBool : public ObjectFinal {
 private:
   bool boolean;
 public:
-  const static char* const name;
-  inline const char* getName () { return name; }
-
-  ~ObjectFinalBool ();  
-  ObjectFinalBool (const ObjectFinalBool& obj);
+  ~ObjectFinalBool ();
   ObjectFinalBool() : boolean (false) {}
   ObjectFinalBool(string s) { replaceValue(s); }
   ObjectFinalBool(bool s) : boolean (s) {}
+  /* Copy constructor
+   * @obj node to copy
+   *
+   * calls <getCopy>
+   * */
+  ObjectFinalBool (const ObjectFinalBool& obj);
+
+  /* This class's name, for debugging purposes */
+  const static char* const name;
+
+  /* Get method for <name>
+   *
+   * @return <name>
+   * */
+  inline const char* getName () { return name; }
+
+  /* Get inner data
+   *
+   * @return inner data
+   * */
   inline bool getContent () const { return boolean; }  
+
+  /* Replaces data
+   * @value new data
+   *
+   * Updates the content with the data of 'value'
+   * */
   void replaceValue (string value);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends json content to 'txt' respecting the indentation
+   * */
   void toTxt (string &txt, int indentLvl);
+
+  /* Generates and appends json text
+   * @txt string to append this node's info
+   * @indentLvl number of indentations to generate a consistent string
+   *
+   * Appends uglified json content to 'txt'
+   * */
   void toTxtUgly (string &txt);
 
+  /* Clone object
+   *
+   * Creates a copy of this object and its content
+   *
+   * @return a copy of this object
+   * */
   AbstractObject* getCopy ();
 };
 

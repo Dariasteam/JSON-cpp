@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::ObjectVector" name="ObjectVector" xmlns="http://jessevdk.github.com/cldoc/1.0">
   <brief> Representation of []</brief>
-  <doc>Internally contains a `std::vector &amp;lt;AbstractObject\*&amp;gt;`
+  <doc>Internally contains a
+```c++
+std::vector &lt;AbstractObject*&gt;
+```
 which stores the sons nodes
 
 Vectors can **only** push back elements, that means no deletetions or substitutions.
