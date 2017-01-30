@@ -34,7 +34,7 @@
     <brief> Representation of []</brief>
   </class>
   <class name="Parser" ref="json::Parser#json::Parser">
-    <brief>Translate between <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> and json files / strings</brief>
+    <brief> Translates between <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> and json files / strings</brief>
   </class>
   <class name="Serializable" ref="json::Serializable#json::Serializable">
     <brief> Base class for serializable custom classes</brief>

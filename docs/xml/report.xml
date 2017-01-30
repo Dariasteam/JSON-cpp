@@ -12,8 +12,7 @@ return values.
 3. [References](#report/references): Unresolved cross references.
 </doc>
   <coverage>
-    <type documented="12" name="category" undocumented="4">
-      <undocumented id="Examples" name="Examples" />
+    <type documented="12" name="category" undocumented="3">
       <undocumented id="Tutorials" name="Tutorials" />
       <undocumented id="Tutorials::File Manipulation" name="File Manipulation" />
       <undocumented id="Tutorials::Serialization" name="Serialization" />
@@ -516,13 +515,13 @@ return values.
     </type>
     <type documented="4" name="field" undocumented="3">
       <undocumented id="json::Parser::ObjectNameFlag::element" name="element">
-        <location column="5" file="parser.hpp" line="73" />
+        <location column="5" file="parser.hpp" line="147" />
       </undocumented>
       <undocumented id="json::Parser::ObjectNameFlag::flag" name="flag">
-        <location column="5" file="parser.hpp" line="75" />
+        <location column="5" file="parser.hpp" line="149" />
       </undocumented>
       <undocumented id="json::Parser::ObjectNameFlag::key" name="key">
-        <location column="5" file="parser.hpp" line="74" />
+        <location column="5" file="parser.hpp" line="148" />
       </undocumented>
     </type>
     <type documented="91" name="method" undocumented="51">
@@ -760,7 +759,7 @@ return values.
       <undocumented name="tree" />
     </function>
     <function id="json::Parser::parseString" name="parseString">
-      <location column="3" file="parser.hpp" line="201" />
+      <location column="3" file="parser.hpp" line="275" />
       <undocumented name="content" />
       <misspelled name="fileName" />
     </function>
@@ -807,7 +806,7 @@ return values.
       </doctype>
     </method>
     <method id="json::Parser::parseFile" name="parseFile">
-      <location column="3" file="parser.hpp" line="190" />
+      <location column="3" file="parser.hpp" line="264" />
       <doctype name="doc">
         <ref name="JSON_PARSER_FLAGS" />
         <ref name="NO_CLOSED|EXPECTED_MORE|INVALID_KEY" />

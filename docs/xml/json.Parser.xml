@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <class abstract="true" id="json::Parser" name="Parser" xmlns="http://jessevdk.github.com/cldoc/1.0">
-  <brief>Translate between <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> and json files / strings</brief>
+  <brief> Translates between <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> and json files / strings</brief>
   <doc>## Description
 Provides functionalities for generating a <ref ref="json::JsonTree#json::JsonTree">json::JsonTree</ref> with the information retrieved from  a `.json` file  and vice versa.
 If errors are detected in the file manipulation process, the methods involved returns a flag from <ref ref="json#json::JSON_PARSE_OUTPUT">json::JSON_PARSE_OUTPUT</ref>
@@ -8,8 +8,8 @@ If errors are detected in the file manipulation process, the methods involved re
 If errors or extraneous situations are detected in the json syntax, they are reflected as a <ref ref="json::JsonLog#json::JsonLog">json::JsonLog</ref> objects.
 Those situations are clasified in two groups:
 
-  - Warnings: empty container (hash or array)
-  - Errors:   everything else
+ - Warnings: empty container (hash or array)
+ - Errors:   everything else
 
 As described in <ref ref="json#json::JSON_PARSER_FLAG">json::JSON_PARSER_FLAG</ref>
 
@@ -19,31 +19,31 @@ include "parser.hpp"
 
 int main (void) {
 
-  json::Parser parser;
-  json::JsonTree tree;
+ json::Parser parser;
+ json::JsonTree tree;
 
-  std::cout &lt;&lt; "Parsing" &lt;&lt; std::endl;
+ std::cout &lt;&lt; "Parsing" &lt;&lt; std::endl;
 
-  // Parsing
-  std::cout &lt;&lt; parser.parseFile("no_file.json", tree)                       &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::CANT_OPEN_FILE&gt;
-  std::cout &lt;&lt; parser.parseFile("file_empty.json", tree)                    &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::EMPTY_FILE&gt;
-  std::cout &lt;&lt; parser.parseFile("file_with_errors.json", tree)              &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::ERRORS&gt;
-  std::cout &lt;&lt; parser.parseFile("file_with_warnings.json", tree)            &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::WARNINGS&gt; + 1
-  std::cout &lt;&lt; parser.parseFile("file_with_warnings_and_errors.json", tree) &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::WARNINGS&gt; + &lt;JSON_PARSE_OUTPUT::ERRORS&gt;
-  std::cout &lt;&lt; parser.parseFile("file_ok.json", tree)                       &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::OK&gt;
+ // Parsing
+ std::cout &lt;&lt; parser.parseFile("no_file.json", tree)                       &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::CANT_OPEN_FILE&gt;
+ std::cout &lt;&lt; parser.parseFile("file_empty.json", tree)                    &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::EMPTY_FILE&gt;
+ std::cout &lt;&lt; parser.parseFile("file_with_errors.json", tree)              &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::ERRORS&gt;
+ std::cout &lt;&lt; parser.parseFile("file_with_warnings.json", tree)            &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::WARNINGS&gt; + 1
+ std::cout &lt;&lt; parser.parseFile("file_with_warnings_and_errors.json", tree) &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::WARNINGS&gt; + &lt;JSON_PARSE_OUTPUT::ERRORS&gt;
+ std::cout &lt;&lt; parser.parseFile("file_ok.json", tree)                       &lt;&lt; std::endl; // returns &lt;JSON_PARSE_OUTPUT::OK&gt;
 
-  std::cout &lt;&lt; parser.parseFile("some_file.json", tree, true)               &lt;&lt; std::endl; // shows information about parsing while doing it
+ std::cout &lt;&lt; parser.parseFile("some_file.json", tree, true)               &lt;&lt; std::endl; // shows information about parsing while doing it
 
-  // Error handling
-  parser.getErrors();                                                                     // returns vector &lt;JsonLog&gt; of errors
-  parser.getWarnings();                                                                   // returns vector &lt;JsonLog&gt; of warnings
+ // Error handling
+ parser.getErrors();                                                                     // returns vector &lt;JsonLog&gt; of errors
+ parser.getWarnings();                                                                   // returns vector &lt;JsonLog&gt; of warnings
 
-  std::cout &lt;&lt; "Saving" &lt;&lt; std::endl;
+ std::cout &lt;&lt; "Saving" &lt;&lt; std::endl;
 
-  // Saving
-  std::cout &lt;&lt; parser.saveFile("/path/with/no/permissions/new_file", tree) &lt;&lt; std::endl;  // returns &lt;JSON_PARSE_OUTPUT::CANT_OPEN_FILE&gt;
-  std::cout &lt;&lt; parser.saveFile("new_file.json", tree) &lt;&lt; std::endl;                       // creates human readable file, returns &lt;JSON_PARSE_OUTPUT::OK&gt;
-  std::cout &lt;&lt; parser.saveFile("new_file_ugly.json", tree, true) &lt;&lt; std::endl;            // creates non human readable file, returns &lt;JSON_PARSE_OUTPUT::OK&gt;
+ // Saving
+ std::cout &lt;&lt; parser.saveFile("/path/with/no/permissions/new_file", tree) &lt;&lt; std::endl;  // returns &lt;JSON_PARSE_OUTPUT::CANT_OPEN_FILE&gt;
+ std::cout &lt;&lt; parser.saveFile("new_file.json", tree) &lt;&lt; std::endl;                       // creates human readable file, returns &lt;JSON_PARSE_OUTPUT::OK&gt;
+ std::cout &lt;&lt; parser.saveFile("new_file_ugly.json", tree, true) &lt;&lt; std::endl;            // creates non human readable file, returns &lt;JSON_PARSE_OUTPUT::OK&gt;
 
 }
 ```
@@ -64,8 +64,8 @@ Saving
 #### new_file
 ```json
 {
-  "element" : 12,
-  "boolean" : true
+ "element" : 12,
+ "boolean" : true
 }
 ```
 #### new_file_ugly

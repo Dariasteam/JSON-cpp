@@ -9,7 +9,7 @@ They can be retrieved after with
 <ref ref="json::Parser#json::Parser::getWarnings">json::Parser::getWarnings</ref> and <ref ref="json::Parser#json::Parser::getErrors">json::Parser::getErrors</ref>
 </doc>
   <field id="json::JsonLog::path" name="path">
-    <brief>json path of the problematic elment</brief>
+    <brief>route of the problematic element</brief>
     <type name="std::__cxx11::string" />
   </field>
   <field id="json::JsonLog::flag" name="flag">
