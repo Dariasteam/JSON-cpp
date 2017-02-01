@@ -53,7 +53,7 @@ int main (void) {
   int a;
   tree.get(a, "a");
   std::cout << a << std::endl;
-  tree.get(a, "b");             // data won't change due to invalid types 
+  tree.get(a, "b");             // data won't change due to invalid types
   std::cout << a << std::endl;
 }     
 ```
@@ -64,7 +64,7 @@ ERROR : Attempting to load the element 'b' as a NUMBER_INT when is of type STRIN
 12
 ```
 ## Usage
-Just copy the /src content into your project and include the convenient headers
+Just copy the [src/](https://github.com/Dariasteam/JSON-cpp/tree/master/src) content into your project and include the convenient headers
 ```c++
 #include "..../parser.h"         // for reading json files
 #include "..../manager.h"        // for managing json trees one parsed / created
