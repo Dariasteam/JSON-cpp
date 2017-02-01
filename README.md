@@ -1,6 +1,6 @@
 # JSON-cpp [![Build Status](https://travis-ci.org/Dariasteam/JSON-cpp.svg?branch=master)](https://travis-ci.org/Dariasteam/JSON-cpp)
 
-#### [Documentation](http://dariasteam.github.io/JSON-cpp/)
+### [Documentation](http://dariasteam.github.io/JSON-cpp/)
 
 Simple _serialization_ and json file manipulation in C++11 on the fly!
 
@@ -26,7 +26,7 @@ class A : public json::Serializable {
 int main (void) {
   A obj;
   // some values initializations
-  A.serializeOut ("file.json");
+  A.serializeOut ("file.json");  // obviously there is a serializeIn method
 }
 ```
 #### file.json
@@ -63,8 +63,25 @@ int main (void) {
 ERROR : Attempting to load the element 'b' as a NUMBER_INT when is of type STRING.
 12
 ```
+## Ok, but what can I serialize?
+- Both value & pointer
+  - `int`, `long int`, `long long`
+  - `float`, `double`  
+  - `bool`
+  - `string`, `char`  
+  - custom serializable classes
+
+- Only value
+  - `std::vector <any_of_the_above>`
+  - `std::vector <any_of_the_above*>`  
+
+- Magical features
+  - inheritance of custom serializable classes (any depth)
+  - polymorphism of custom serializable classes
+  - n-dimensional matrixes: `std::vector < std::vector <std::vector <.....> > >`
+
 ## Usage
-Just copy the [src/](https://github.com/Dariasteam/JSON-cpp/tree/master/src) content into your project and include the convenient headers
+Just copy the [/src](https://github.com/Dariasteam/JSON-cpp/tree/master/src) content into your project and include the convenient headers
 ```c++
 #include "..../parser.h"         // for reading json files
 #include "..../manager.h"        // for managing json trees one parsed / created
