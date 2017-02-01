@@ -50,7 +50,15 @@ namespace json {
  * ## Description
  *
  *
+ * ## Macros
  *
+ * - SERIAL_START
+ *
+ * - SERIAL_END
+ *
+ * - SERIAL_INHERITED_START (x, y)
+ *
+ * - INHERITED (x)
  *
  * */
 class Serializable {

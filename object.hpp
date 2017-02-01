@@ -505,7 +505,7 @@ public:
    *
    * @return inner data
    * */
-  inline double getContent () const { return number; }  
+  inline double getContent () const { return number; }
 
   /* Replaces data
    * @value new data

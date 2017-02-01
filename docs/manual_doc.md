@@ -1045,7 +1045,7 @@ private:
   SERIAL_END
 };
 
-INHERITS (Rocket)                                     // Do not forget
+INHERITS (Rocket)                                    // Do not forget
 
 class SpaceShip : public AwesomeVehicle {
 private:
@@ -1067,7 +1067,7 @@ private:
   SERIAL_END
 };
 
-INHERITS (Rover)                                    // Do not forget
+INHERITS (Rover)                                     // Do not forget
 
 class ProudOfScience : public json::Serializable{
 private:
