@@ -1,8 +1,8 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
 
-#include "../parser.hpp"
-#include "../manager.hpp"
+#include "../src/parser.hpp"
+#include "../src/manager.hpp"
 
 #include <string>
 #include <vector>

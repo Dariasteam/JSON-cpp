@@ -1,9 +1,10 @@
 # JSON-cpp [![Build Status](https://travis-ci.org/Dariasteam/JSON-cpp.svg?branch=master)](https://travis-ci.org/Dariasteam/JSON-cpp)
 
-Simple _serialization_ and json file manipulation in C++11 on the fly!
-
 #### [Documentation](http://dariasteam.github.io/JSON-cpp/)
 
+Simple _serialization_ and json file manipulation in C++11 on the fly!
+
+This library allows you to do some fancy stuff like these:
 ## Serialization
 ```c++
 #include "..../serializable.hpp"
@@ -52,11 +53,13 @@ int main (void) {
   int a;
   tree.get(a, "a");
   std::cout << a << std::endl;
+  tree.get(a, "b");
 }     
 ```
 #### ouput
 ```
 12
+ERROR : Attempting to load the element 'b' as a NUMBER_INT when is of type STRING.
 ```
 ## Usage
 Just copy the /src content into your project and include the convenient headers
@@ -67,7 +70,7 @@ Just copy the /src content into your project and include the convenient headers
 ```
 
 ## Third party libraries
-  - Docuemntation generation : [cldoc](https://jessevdk.github.io/cldoc/)              
+  - Documentation generation : [cldoc](https://jessevdk.github.io/cldoc/)              
   - Diagram generation : [mermaid](https://github.com/knsv/mermaid/blob/master/README.md)  
   - Unit testing : [Catch](https://github.com/philsquared/Catch)
 
