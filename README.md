@@ -53,13 +53,15 @@ int main (void) {
   int a;
   tree.get(a, "a");
   std::cout << a << std::endl;
-  tree.get(a, "b");
+  tree.get(a, "b");             // data won't change due to invalid types 
+  std::cout << a << std::endl;
 }     
 ```
 #### ouput
 ```
 12
 ERROR : Attempting to load the element 'b' as a NUMBER_INT when is of type STRING.
+12
 ```
 ## Usage
 Just copy the /src content into your project and include the convenient headers

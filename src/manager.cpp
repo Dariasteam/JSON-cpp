@@ -229,20 +229,32 @@ bool JsonTree::get (long long &to, const string path) {
 
 bool JsonTree::get (long &to, const string path) {
   long long aux;
-  get (aux, path);
-  to = aux;
+  if (get (aux, path)) {
+    to = aux;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool JsonTree::get (int &to, const string path) {
   long long aux;
-  get (aux, path);
-  to = aux;
+  if (get (aux, path)) {
+    to = aux;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool JsonTree::get (float &to, const string path) {
   double aux;
-  get (aux, path);
-  to = aux;
+  if (get (aux, path)) {
+    to = aux;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 bool JsonTree::get (char &to, const string path) {
