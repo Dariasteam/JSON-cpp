@@ -4,7 +4,15 @@
   <doc>## Description
 
 
+## Macros
 
+- SERIAL_START
+
+- SERIAL_END
+
+- SERIAL_INHERITED_START (x, y)
+
+- INHERITED (x)
 
 </doc>
   <method id="json::Serializable::serializeIn" name="serializeIn">
