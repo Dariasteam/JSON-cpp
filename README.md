@@ -2,7 +2,7 @@
 
 ### [Documentation](http://dariasteam.github.io/JSON-cpp/)
 
-Simple _serialization_ and json file manipulation in C++11 on the fly!
+Simple _serialization_ and json file manipulation for C++11 on the fly!
 
 This library allows you to do some fancy stuff like these:
 ## Serialization
@@ -26,7 +26,7 @@ class A : public json::Serializable {
 int main (void) {
   A obj;
   // some values initializations
-  A.serializeOut ("file.json");  // obviously there is a serializeIn method
+  A.serializeOut ("file.json"); // obviously there is the serializeIn equivalent
 }
 ```
 #### file.json
@@ -76,21 +76,22 @@ ERROR : Attempting to load the element 'b' as a NUMBER_INT when is of type STRIN
   - `std::vector <any_of_the_above*>`  
 
 - Magical features
-  - inheritance of custom serializable classes (any depth)
-  - polymorphism of custom serializable classes
+  - Inheritance of custom serializable classes (any depth)
+  - Polymorphism of custom serializable classes
   - n-dimensional matrixes: `std::vector < std::vector <std::vector <.....> > >`
 
+Note: pointers arrays currently not work, use std::vector <t> instead
 ## Usage
 Just copy the [/src](https://github.com/Dariasteam/JSON-cpp/tree/master/src) content into your project and include the convenient headers
 ```c++
 #include "..../parser.h"         // for reading json files
-#include "..../manager.h"        // for managing json trees one parsed / created
+#include "..../manager.h"        // for managing json data
 #include "..../serializable.h"   // for creating custom serializable classes
 ```
 
 ## Third party libraries
-  - Documentation generation : [cldoc](https://jessevdk.github.io/cldoc/)              
-  - Diagram generation : [mermaid](https://github.com/knsv/mermaid/blob/master/README.md)  
+  - Documentation generator : [cldoc](https://jessevdk.github.io/cldoc/)              
+  - Diagrams generator : [mermaid](https://github.com/knsv/mermaid/blob/master/README.md)  
   - Unit testing : [Catch](https://github.com/philsquared/Catch)
 
 
