@@ -75,6 +75,7 @@ private:
   static ObjectVector* createVec (const vector<int>& array);
   static ObjectVector* createVec (const vector<bool>& array);
   static ObjectVector* createVec (const vector<string>& array);
+  static ObjectVector* createVec (const vector<char>& array);
 
   static AbstractObject* insertObject (const string path, AbstractObject* obj);
 
@@ -211,7 +212,7 @@ public:
   bool get (vector<double>& array, const string path);
   bool get (vector<int>& array,    const string path);
   bool get (vector<bool>& array,   const string path);
-  bool get (vector<string>& array, const string path);
+  bool get (vector<string>& array, const string path); 
 
   /* Checks type Numeric
    * @path Path of the element to be checked
@@ -323,12 +324,19 @@ public:
   bool add (const long long value,   const string path);
   bool add (const bool value,        const string path);
   bool add (const string value,      const string path);
+  bool add (const char& value,        const string path);
   bool add (const char* value,       const string path);
-
+/*
   bool add (const vector<double>& array, const string path);
   bool add (const vector<int>& array,    const string path);
   bool add (const vector<bool>& array,   const string path);
   bool add (const vector<string>& array, const string path);
+*/
+  template <class t>
+  bool add (const vector<t>& array, const string path) {
+    std::cout << "aaa" << std::endl;
+    return top->add (path, createVec(array));
+  }
 
   /* Adds a vector
    * @path Where the vector should be added
@@ -421,6 +429,7 @@ public:
   bool replace (const bool from,        const string path);
   bool replace (const string from,      const string path);
   bool replace (const char* from,       const string path);
+  bool replace (const char  from,       const string path);
 
   bool replace (const vector<double>& array, const string path);
   bool replace (const vector<int>& array,    const string path);
@@ -477,11 +486,19 @@ public:
   bool set (const bool value,        const string path);
   bool set (const string value,      const string path);
   bool set (const char* value,       const string path);
-
+  bool set (const char  value,       const string path);
+/*
   bool set (const vector<double>& array, const string path);
   bool set (const vector<int>& array,    const string path);
   bool set (const vector<bool>& array,   const string path);
   bool set (const vector<string>& array, const string path);
+*/
+  template <class t>
+  bool set (const vector<t>& array, const string path) {
+    std::cout << "aaa" << std::endl;
+    AbstractObject* object = createVec (array);
+    return set (object, path);
+  }
 
   /* Delete existing elements
    * @path Path to the elements to be deleted

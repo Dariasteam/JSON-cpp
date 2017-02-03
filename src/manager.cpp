@@ -85,6 +85,14 @@ ObjectVector* JsonTree::createVec (const vector<string> &array) {
   return object;
 }
 
+ObjectVector* JsonTree::createVec (const vector<char> &array) {
+  ObjectVector* object = new ObjectVector ();
+  for (char word : array) {
+    object->insert("", new ObjectFinalString (word));
+  }
+  return object;
+}
+
 vector <string> JsonTree::getKeys (const string path) {
   AbstractObject* obj = top->get(path);
   if (obj != nullptr && isMap(obj)) {
@@ -397,6 +405,11 @@ bool JsonTree::add (const char* value, const string path) {
   return add (string(value), path);
 };
 
+bool JsonTree::add (const char& value, const string path) {
+  AbstractObject* object = new ObjectFinalString (value);
+  return top->add (path, object);
+};
+/*
 bool JsonTree::add (const vector<double> &array, const string path) {
   return top->add (path, createVec(array));
 }
@@ -412,7 +425,7 @@ bool JsonTree::add (const vector<bool> &array, const string path) {
 bool JsonTree::add (const vector<string> &array, const string path) {
   return top->add (path, createVec(array));
 }
-
+*/
 bool JsonTree::addMap (const string path) {
   return top->add (path, new ObjectMap ());
 }
@@ -501,6 +514,11 @@ bool JsonTree::replace (const char* from, const string path) {
   return replace (string(from), path);
 }
 
+bool JsonTree::replace (char from, const string path) {
+  AbstractObject* object = new ObjectFinalString (from);
+  return replace (object, path);
+}
+
 bool JsonTree::replace (const vector<double>& array, const string path) {
   return replace (createVec (array), path);
 }
@@ -564,6 +582,11 @@ bool JsonTree::set(const char *value, const string path) {
   return set (string(value), path);
 }
 
+bool JsonTree::set(char value, const string path) {
+  AbstractObject* object = new ObjectFinalString (value);
+  return set (object, path);
+}
+/*
 bool JsonTree::set (const vector<double>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
@@ -583,7 +606,7 @@ bool JsonTree::set (const vector<string>& array, const string path) {
   AbstractObject* object = createVec (array);
   return set (object, path);
 }
-
+*/
 // ERASE
 
 // Can't send empty string for security

@@ -615,6 +615,7 @@ public:
   ~ObjectFinalString ();
   ObjectFinalString () {}
   ObjectFinalString (string s) : text (s) {}
+  ObjectFinalString (char s) { text = s; }
   /* Copy constructor
    * @obj node to copy
    *

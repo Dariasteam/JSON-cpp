@@ -19,7 +19,7 @@
                        return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
 
 
-#define SERIAL_END ); }
+#define SERIAL_END ,__dummy__); }
 #define INHERITS(x) bool x::trigger = x::init ();
 
 #define DISAMBIGUATOR_START Serializable* dissambiguator (string s) {
@@ -71,6 +71,11 @@ protected:
     // path in the hierarchy
     string path;
   };
+
+  struct __end_dummy__ {
+
+  };
+  __end_dummy__ __dummy__;
 
   static map<string, function<Serializable*()> > dictionary;
   static void addSon (string name, function<Serializable*()> lambda) { dictionary[name] = lambda; }
@@ -213,14 +218,11 @@ protected:
 
   //- Write
 
-  //- NON SERIALIZABLE classes
-  template <typename t>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-   const retribution (JsonTree& tree, int& index, string path, t& element) {
-    tree.add(element, path);
-    index++;
-  }
+  // DUMMY
+  void retribution (JsonTree& tree, string path, __end_dummy__& dummy) {}
+  void retribution (JsonTree& tree, int& index, string path, __end_dummy__& dummy) {}
 
+  //- NON SERIALIZABLE classes
   template <class t, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
    const retribution (JsonTree& tree, int& index, string path, t& element, Args&... args) {
@@ -229,12 +231,6 @@ protected:
   }
 
   //- NON SERIALIZABLE classes WITH HASH KEY
-  template <class t, class str>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const retribution (JsonTree& tree, string path, const str key, t& element) {
-    tree.add (element, path + "." + key);
-  }
-
   template <class t, class str, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const retribution (JsonTree& tree, string path, const str key, t& element, Args&... args) {
@@ -243,43 +239,28 @@ protected:
   }
 
   //- SERIALIZABLE classes
-  template <typename t>
+  template <class t, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-   const retribution (JsonTree& tree, int& index, const string path, t& element) {
+   const retribution (JsonTree& tree, int& index, const string path, t& element, Args&... args) {
     JsonTree auxTree;
     element.serializeOut (auxTree, "p");
     tree.add(auxTree, "p", path);
     index++;
-  }
-
-  template <class t, class... Args>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-   const retribution (JsonTree& tree, int& index, const string path, t& element, Args&... args) {
-    retribution (tree, index, path, element); // Base case
-
     retribution (tree,index, path, args...);
   }
 
   //- SERIALIZABLE classes WITH HASH KEY
-  template <class t, class str>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const retribution (JsonTree& tree, string path, const str key, t& element) {
-    JsonTree auxTree;
-    element.serializeOut (auxTree, "p");
-    tree.add(auxTree, "p", path + "." + key);
-  }
-
   template <class t, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const retribution (JsonTree& tree, string path, const str key, t& element, Args&... args) {
-    retribution (tree, path, key, element); // Base case
-
+    JsonTree auxTree;
+    element.serializeOut (auxTree, "p");
     retribution (tree, path, args...);
   }
 
   //- Vector
-  template <class t>
-  void  const retribution (JsonTree& tree, int& index, const string path, vector <t>& vect) {
+  template <class t, class... Args>
+  void  const retribution (JsonTree& tree, int& index, const string path, vector<t>& vect, Args&... args) {
     tree.addVector(path);
 
     string newPath = path + "." + to_string(index);
@@ -288,19 +269,12 @@ protected:
       retribution (tree, index, newPath, vect[j]);
     }
     ++index;
-  }
-
-  template <class t, class... Args>
-  void  const retribution (JsonTree& tree, int& index, const string path, vector<t>& vect, Args&... args) {
-    retribution (tree, index, path, vect);
-
     retribution (tree,index, path, args...);
   }
 
   //- Vector WITH HASH KEY
-  template <class t, class str>
-  void  const retribution (JsonTree& tree, string path, const str key, vector <t>& vect) {
-
+  template <class t, class str, class... Args>
+  void  const retribution (JsonTree& tree, string path, const str key, vector<t>& vect, Args&... args) {
     string newPath = path + "." + key;
     tree.addVector(newPath);
 
@@ -308,19 +282,13 @@ protected:
       int index = j;
       retribution (tree, index, newPath, vect[j]);
     }
-  }
-
-  template <class t, class str, class... Args>
-  void  const retribution (JsonTree& tree, string path, const str key, vector<t>& vect, Args&... args) {
-    retribution (tree, path, key, vect);
-
     retribution (tree, path, args...);
   }
 
   //- Pointers of SERIALIZABLE classes
-  template <typename t>
+  template <class t, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-   const retribution (JsonTree& tree, int& index, string path, t*& element) {
+   const retribution (JsonTree& tree, int& index, string path, t*& element, Args&... args) {
     JsonTree auxTree;
 
     if (element == nullptr)
@@ -334,20 +302,14 @@ protected:
     tree.add(auxTree, "p", path + "." + to_string(index) + "." + CLASS_CONTENT);
 
     index++;
-  }
-
-  template <class t, class... Args>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-   const retribution (JsonTree& tree, int& index, string path, t*& element, Args&... args) {
-    retribution (tree, index, path, element);
 
     retribution (tree,index, path, args...);
   }
 
   //- Pointers of SERIALIZABLE classes WITH HASH KEY
-  template <typename t, class str>
+  template <class t, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const retribution (JsonTree& tree, string path, const str key, t*& element) {
+   const retribution (JsonTree& tree, string path, const str key, t*& element, Args&... args) {
     JsonTree auxTree;
 
     if (element == nullptr)
@@ -359,37 +321,19 @@ protected:
 
     tree.add(className, path + "." + key + "." + CLASS_TYPE);
     tree.add(auxTree, "p", path + "." + key + "." + CLASS_CONTENT);
-  }
-
-  template <class t, class str, class... Args>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const retribution (JsonTree& tree, string path, const str key, t*& element, Args&... args) {
-    retribution (tree, path, key, element);
     retribution (tree, path, args...);
   }
 
-  //- Pointers of NON SERIALIZABLE classes
-  template <typename t>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-   const retribution (JsonTree& tree, int& index, string path, t*& element) {
-    tree.add(*element, path);
-    index++;
-  }
-
+  //- Pointers of NON SERIALIZABLE classes  
   template <class t, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
    const retribution (JsonTree& tree, int& index, string path, t*& element, Args&... args) {
-    retribution (tree, index, path, element);
+    tree.add(*element, path);
+    index++;
     retribution (tree,index, path, args...);
   }
 
   //- Pointers of NON SERIALIZABLE classes WITH HASH KEY
-  template <typename t, class str>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const retribution (JsonTree& tree, string path, const str key, t*& element) {
-    tree.add(*element, path + "." + key);
-  }
-
   template <class t, class str, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const retribution (JsonTree& tree, string path, const str key, t*& element, Args&... args) {
@@ -399,13 +343,11 @@ protected:
 
   //- Read ----------------------------------------------------------------------------
 
-  //- NON SERIALIZABLE classes
-  template <typename t, class func>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-   const initialize (JsonTree& tree, func functor, t& element) {
-    tree.get(element, functor());
-  }
+  // DUMMY
+  template <class func>
+  void const initialize (JsonTree& tree, func functor, __end_dummy__& dummy) {}
 
+  //- NON SERIALIZABLE classes
   template <class t, class func, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
    const initialize (JsonTree& tree, func functor, t& element, Args&... args) {
@@ -414,12 +356,6 @@ protected:
   }
 
   //- NON SERIALIZABLE classes WITH HASH KEY
-  template <class t, class str, class func>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const initialize (JsonTree& tree, func functor, const str key, t& element) {
-    tree.get(element, functor(key));
-  }
-
   template <class t, class func, class str, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const initialize (JsonTree& tree, func functor, const str key, t& element, Args&... args) {
@@ -428,39 +364,24 @@ protected:
   }
 
   //- SERIALIZABLE classes
-  template <typename t, class func>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-   const initialize (JsonTree& tree, func functor, t& element) {
-    element.serializeIn (tree, functor());
-  }
-
-
   template <class t, class func, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
    const initialize (JsonTree& tree, func functor, t& element, Args&... args) {
     element.serializeIn (tree, functor());
-
     initialize (tree, functor, args...);
   }
 
   //- SERIALIZABLE classes WITH HASH KEY
-  template <typename t, class str, class func>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const initialize (JsonTree& tree, func functor, const str key, t& element) {
-    element.serializeIn (tree, functor(key));
-  }
-
   template <class t, class func, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const initialize (JsonTree& tree, func functor, const str key, t& element, Args&... args) {
     element.serializeIn (tree, functor(key));
-
     initialize (tree, functor, args...);
   }
 
   //- Vector
-  template <class t, class func>
-  void  const initialize (JsonTree& tree, func functor, vector <t>& vect) {
+  template <class t, class func, class... Args>
+  void  const initialize (JsonTree& tree, func functor, vector <t>& vect, Args&... args) {
     string newPath = functor();
     int size = tree.getSizeAt(newPath);
     if (size > 0)
@@ -473,19 +394,14 @@ protected:
       }, vect[j]);
       i++;
     }
-  }
-
-  template <class t, class func, class... Args>
-  void  const initialize (JsonTree& tree, func functor, vector <t>& vect, Args&... args) {
-    initialize (tree, functor, vect);
 
     initialize (tree, functor, args...);
   }
 
   //- Vector WITH HASH KEY (STRING)
-  template <class t, class str, class func>
+  template <class t, class func, class str, class... Args>
   typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
-   const initialize (JsonTree& tree, func functor, const str path, vector <t>& vect) {
+   const initialize (JsonTree& tree, func functor, const str path, vector <t>& vect, Args&... args) {
     string newPath = functor(path);
     int size = tree.getSizeAt(newPath);
     if (size > 0)
@@ -497,21 +413,14 @@ protected:
       }, vect[j]);
       i++;
     }
-  }
-
-  template <class t, class func, class str, class... Args>
-  typename std::enable_if<std::is_same<string, str>::value || std::is_same<const char*, str>::value, void>::type
-   const initialize (JsonTree& tree, func functor, const str path, vector <t>& vect, Args&... args) {
-    initialize (tree, functor, path, vect);
 
     initialize (tree, functor, args...);
   }
 
   //- Pointers of SERIALIZABLE classes
-  template <class t, class func>
+  template <class t, class func, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-  const initialize (JsonTree& tree, func functor, t*& element) {
-
+   const initialize (JsonTree& tree, func functor, t*& element, Args&... args) {
     string path = functor();
     string type;
     tree.get(type, path + "." + CLASS_TYPE);
@@ -524,21 +433,14 @@ protected:
     } else {
       element = initializePointer (element) ;
     }
-  }
-
-  template <class t, class func, class... Args>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value, void>::type
-   const initialize (JsonTree& tree, func functor, t*& element, Args&... args) {
-    initialize (tree, functor, element);
 
     initialize (tree, functor, args...);
   }
 
   //- Pointers of SERIALIZABLE classes WITH HASH KEY
-  template <class t, class str, class func>
+  template <class t, class func, class str, class... Args>
   typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const initialize (JsonTree& tree, func functor, const str key, t*& element) {
-
+   const initialize (JsonTree& tree, func functor,  const str key, t*& element, Args&... args) {
     string path = functor(key);
     string type;
     tree.get(type, path + "." + CLASS_TYPE);
@@ -551,24 +453,11 @@ protected:
     } else {
       element = initializePointer (element);
     }
-  }
-
-  template <class t, class func, class str, class... Args>
-  typename std::enable_if<std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const initialize (JsonTree& tree, func functor,  const str key, t*& element, Args&... args) {
-    initialize (tree, functor, key, element);
 
     initialize (tree, functor, args...);
   }
 
   //- Pointers of NON SERIALIZABLE classes
-  template <class t, class func>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
-   const initialize (JsonTree& tree, func functor, t*& element) {
-    element = new t ();
-    tree.get(*element, functor());
-  }
-
   template <class t, class func, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
    const initialize (JsonTree& tree, func functor, t*& element, Args&... args) {
@@ -578,13 +467,6 @@ protected:
   }
 
   //- Pointers of NON SERIALIZABLE classes WITH HASH KEY
-  template <class t, class str, class func>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
-   const initialize (JsonTree& tree, func functor, const str key, t*& element) {
-    element = new t ();
-    tree.get(*element, functor(key));
-  }
-
   template <class t, class func, class str, class... Args>
   typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<string, str>::value || std::is_same<const char*, str>::value), void>::type
    const initialize (JsonTree& tree, func functor,  const str key, t*& element, Args&... args) {
