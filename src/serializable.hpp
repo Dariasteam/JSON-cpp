@@ -256,6 +256,7 @@ protected:
    const retribution (JsonTree& tree, string path, const str key, t& element, Args&... args) {
     JsonTree auxTree;
     element.serializeOut (auxTree, "p");
+    tree.add(auxTree, "p", path + "." + key);
     retribution (tree, path, args...);
   }
 
