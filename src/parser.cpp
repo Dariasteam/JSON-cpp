@@ -4,7 +4,7 @@ using namespace json;
 
 regex Parser::startBrace = regex 	 ("^(?:\\s*)(\\{)");
 regex Parser::startBracket = regex       ("^(?:\\s*)(\\[)");
-regex Parser::keyDef = regex             ("^(?:\\s*)(?:\")(.+?)(?:\")(?:\\s*)\\:");
+regex Parser::keyDef = regex             ("^(?:\\s*)(?:\")([^\,]+?)(?:\")(?:\\s*):");
 regex Parser::finalQuote = regex         ("^(?:\\s*)(?:\")(.*?)(?:\")(?:\\s*)(,)?");
 regex Parser::finalNumberInt = regex     ("^(?:\\s*)((?:\\+|\\-)?\\d+)(?:\\s*)(,)?");
 regex Parser::finalNumberFloat = regex   ("^(?:\\s*)((?:\\+|\\-)?(?:\\d+)?(?:(?:(?:\\.\\d+)?e(?:\\+|\\-)?\\d+)|(?:\\.\\d+)))(?:\\s*)(,)?");
