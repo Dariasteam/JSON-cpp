@@ -227,6 +227,7 @@ protected:
   typename std::enable_if<!std::is_base_of<Serializable, t>::value, void>::type
    const retribution (JsonTree& tree, int& index, string path, t& element, Args&... args) {
     tree.add(element, path);
+    index++;
     retribution (tree, index, path, args...);
   }
 

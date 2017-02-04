@@ -342,24 +342,19 @@ void ObjectMap::toTxtUgly (string& txt) {
 }
 
 void ObjectFinalBool::toTxtUgly (string& txt) {
-  if (getContent())
-    txt.append("true");
-  else
-    txt.append("false");
+  toTxt(txt, 0);
 }
 
 void ObjectFinalNumberFloat::toTxtUgly (string& txt) {
-  std::ostringstream strs;
-  strs << setprecision(dbl::max_digits10) << getContent() << flush;
-  txt.append(strs.str());
+  toTxt(txt, 0);
 }
 
 void ObjectFinalNumberInt::toTxtUgly (string& txt) {
-  txt.append(to_string(getContent()));
+  toTxt(txt, 0);
 }
 
 void ObjectFinalString::toTxtUgly (string& txt) {
-  txt.append(QUOTE).append(getContent()).append(QUOTE);
+  toTxt(txt, 0);
 }
 
 
