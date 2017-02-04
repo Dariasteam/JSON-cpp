@@ -300,8 +300,9 @@ void ObjectFinalBool::toTxt (string& txt, int indentLvl) {
 }
 
 void ObjectFinalNumberFloat::toTxt (string& txt, int indentLvl) {
+  typedef std::numeric_limits< double > dbl;
   std::ostringstream strs;
-  strs << setprecision(19) << getContent() << flush;
+  strs << setprecision(dbl::max_digits10) << getContent() << flush;
   txt.append(strs.str());
 }
 
