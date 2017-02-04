@@ -69,13 +69,24 @@ private:
   static bool isBool (AbstractObject* const obj);
   static bool isString (AbstractObject* const obj);
   static bool isMap (AbstractObject* const obj);
-  static bool isVector (AbstractObject* const obj);
+  static bool isVector (AbstractObject* const obj);  
 
-  static ObjectVector* createVec (const vector<double>& array);
-  static ObjectVector* createVec (const vector<int>& array);
-  static ObjectVector* createVec (const vector<bool>& array);
-  static ObjectVector* createVec (const vector<string>& array);
-  static ObjectVector* createVec (const vector<char>& array);
+  static AbstractObject* fabricate (const long long value);
+  static AbstractObject* fabricate (const int value);
+  static AbstractObject* fabricate (const double value);
+  static AbstractObject* fabricate (const string value);
+  static AbstractObject* fabricate (const char* value);
+  static AbstractObject* fabricate (const char value);
+  static AbstractObject* fabricate (const bool value);
+
+  template <class t>
+  static ObjectVector* createVec (const vector<t>& array) {
+    ObjectVector* aux = new ObjectVector ();
+    for (t element : array) {
+      aux->insert("", fabricate(element));
+    }
+    return aux;
+  }
 
   static AbstractObject* insertObject (const string path, AbstractObject* obj);
 
@@ -324,18 +335,13 @@ public:
   bool add (const long long value,   const string path);
   bool add (const bool value,        const string path);
   bool add (const string value,      const string path);
-  bool add (const char& value,        const string path);
+  bool add (const char& value,       const string path);
   bool add (const char* value,       const string path);
-/*
-  bool add (const vector<double>& array, const string path);
-  bool add (const vector<int>& array,    const string path);
-  bool add (const vector<bool>& array,   const string path);
-  bool add (const vector<string>& array, const string path);
-*/
+
+  // Supports any vector
   template <class t>
-  bool add (const vector<t>& array, const string path) {
-    std::cout << "aaa" << std::endl;
-    return top->add (path, createVec(array));
+  bool add (const std::vector<t>& array, const string path) {
+    return top->add (path, createVec (array));
   }
 
   /* Adds a vector
@@ -431,10 +437,10 @@ public:
   bool replace (const char* from,       const string path);
   bool replace (const char  from,       const string path);
 
-  bool replace (const vector<double>& array, const string path);
-  bool replace (const vector<int>& array,    const string path);
-  bool replace (const vector<bool>& array,   const string path);
-  bool replace (const vector<string>& array, const string path);
+  template <class t>
+  bool replace (const std::vector<t>& array, const string path) {
+    return replace (createVec (array), path);
+  }
 
   //- returns
 
@@ -487,17 +493,10 @@ public:
   bool set (const string value,      const string path);
   bool set (const char* value,       const string path);
   bool set (const char  value,       const string path);
-/*
-  bool set (const vector<double>& array, const string path);
-  bool set (const vector<int>& array,    const string path);
-  bool set (const vector<bool>& array,   const string path);
-  bool set (const vector<string>& array, const string path);
-*/
+
   template <class t>
-  bool set (const vector<t>& array, const string path) {
-    std::cout << "aaa" << std::endl;
-    AbstractObject* object = createVec (array);
-    return set (object, path);
+  bool set (const std::vector<t>& array, const string path) {
+    return set (createVec (array), path);
   }
 
   /* Delete existing elements
@@ -556,3 +555,4 @@ public:
 }
 
 #endif
+
