@@ -299,8 +299,8 @@ void ObjectFinalBool::toTxt (string& txt, int indentLvl) {
     txt.append("false");
 }
 
-void ObjectFinalNumberFloat::toTxt (string& txt, int indentLvl) {
-  typedef std::numeric_limits< double > dbl;
+typedef std::numeric_limits< double > dbl;
+void ObjectFinalNumberFloat::toTxt (string& txt, int indentLvl) {  
   std::ostringstream strs;
   strs << setprecision(dbl::max_digits10) << getContent() << flush;
   txt.append(strs.str());
@@ -349,7 +349,9 @@ void ObjectFinalBool::toTxtUgly (string& txt) {
 }
 
 void ObjectFinalNumberFloat::toTxtUgly (string& txt) {
-  txt.append(to_string(getContent()));
+  std::ostringstream strs;
+  strs << setprecision(dbl::max_digits10) << getContent() << flush;
+  txt.append(strs.str());
 }
 
 void ObjectFinalNumberInt::toTxtUgly (string& txt) {
