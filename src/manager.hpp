@@ -8,9 +8,6 @@
 
 #include "object.hpp"
 
-
-using namespace std;
-
 namespace json {
 
 /* Contains a json hirarchy and allows its manipulation
@@ -53,15 +50,15 @@ namespace json {
  * */
 class JsonTree {
 private:  
-  static regex lastTokenRgx;
+  static std::regex lastTokenRgx;
 
   ObjectMap* top;
 
   bool isType (AbstractObject* obj, int type);
-  void getterError (const string path, AbstractObject* obj, const char* expectedType);
+  void getterError (const std::string path, AbstractObject* obj, const char* expectedType);
 
-  bool replace (AbstractObject* newObj, const string path);
-  bool set (AbstractObject* newObj,     const string path);
+  bool replace (AbstractObject* newObj, const std::string path);
+  bool set (AbstractObject* newObj,     const std::string path);
 
   static bool isNumber (AbstractObject* const obj);
   static bool isFloat (AbstractObject* const obj);
@@ -74,13 +71,13 @@ private:
   static AbstractObject* fabricate (const long long value);
   static AbstractObject* fabricate (const int value);
   static AbstractObject* fabricate (const double value);
-  static AbstractObject* fabricate (const string value);
+  static AbstractObject* fabricate (const std::string value);
   static AbstractObject* fabricate (const char* value);
   static AbstractObject* fabricate (const char value);
   static AbstractObject* fabricate (const bool value);
 
   template <class t>
-  static ObjectVector* createVec (const vector<t>& array) {
+  static ObjectVector* createVec (const std::vector<t>& array) {
     ObjectVector* aux = new ObjectVector ();
     for (t element : array) {
       aux->insert("", fabricate(element));
@@ -88,7 +85,7 @@ private:
     return aux;
   }
 
-  static AbstractObject* insertObject (const string path, AbstractObject* obj);
+  static AbstractObject* insertObject (const std::string path, AbstractObject* obj);
 
 public:
   /* Default constructor
@@ -103,7 +100,7 @@ public:
    * Copies the element at `path` in the object `tree` and its possible derived nodes to this object.
    * The path's element copy is the root of this object
    * */
-  JsonTree (const JsonTree& tree, const string path = "");
+  JsonTree (const JsonTree& tree, const std::string path = "");
 
   /* Default destroyer
    *
@@ -121,13 +118,13 @@ public:
    *
    * @return keys of the map
    * */
-  vector <string> getKeys (const string path);
+  std::vector <std::string> getKeys (const std::string path);
   /* Gets the size of a vector in the nierarchy
    * @path Path of the vector
    *
    * @return size of the vector, if the element indicated by path is not a vector, returns -1
    * */
-  int getSizeAt (const string path);
+  int getSizeAt (const std::string path);
 
   /* Copy raw elements
    * @obj top of the subtree in which the elements of this will be replicated
@@ -138,7 +135,7 @@ public:
    *
    * @return the operation successfuly finish
    * */
-  bool copyFrom (AbstractObject*& obj, const string path) const;
+  bool copyFrom (AbstractObject*& obj, const std::string path) const;
 
   // returns if this object is successfuly transformed to the union between tree and itself
   bool set_union (JsonTree& tree);
@@ -211,19 +208,19 @@ public:
    *
    * @return true if the path exist, has the appropiate type and the value is succesfully copied
    * */
-  bool get (double& to,       const string path);
-  bool get (float& to,        const string path);
-  bool get (int& to,          const string path);
-  bool get (long& to,         const string path);
-  bool get (long long& to,    const string path);
-  bool get (bool& to,         const string path);
-  bool get (string& to,       const string path);
-  bool get (char& to,         const string path);
+  bool get (double& to,       const std::string path);
+  bool get (float& to,        const std::string path);
+  bool get (int& to,          const std::string path);
+  bool get (long& to,         const std::string path);
+  bool get (long long& to,    const std::string path);
+  bool get (bool& to,         const std::string path);
+  bool get (std::string& to,  const std::string path);
+  bool get (char& to,         const std::string path);
 
-  bool get (vector<double>& array, const string path);
-  bool get (vector<int>& array,    const string path);
-  bool get (vector<bool>& array,   const string path);
-  bool get (vector<string>& array, const string path); 
+  bool get (std::vector<double>& array,      const std::string path);
+  bool get (std::vector<int>& array,         const std::string path);
+  bool get (std::vector<bool>& array,        const std::string path);
+  bool get (std::vector<std::string>& array, const std::string path);
 
   /* Checks type Numeric
    * @path Path of the element to be checked
@@ -233,7 +230,7 @@ public:
    * @return the element specifacated by path is numeric
    * */
   //- returns if the element on the path exist and is of the type
-  bool isNumber (const string path);
+  bool isNumber (const std::string path);
   /* Checks type Float
    * @path Path of the element to be checked
    *
@@ -241,7 +238,7 @@ public:
    *
    * @return the element specifacated by path is a floating point number
    * */
-  bool isFloat  (const string path);
+  bool isFloat  (const std::string path);
   /* Checks type Int
    * @path Path of the element to be checked
    *
@@ -249,37 +246,37 @@ public:
    *
    * @return the element specifacated by path is an integer
    * */
-  bool isInt    (const string path);
+  bool isInt    (const std::string path);
   /* Checks type Bool
    * @path Path of the element to be checked
    *
    * @return the element specifacated by path is a bool
    * */
-  bool isBool   (const string path);
+  bool isBool   (const std::string path);
   /* Checks type String
    * @path Path of the element to be checked
    *
    * @return the element specifacated by path is a string
    * */
-  bool isString (const string path);
+  bool isString (const std::string path);
   /* Checks type Map
    * @path Path of the element to be checked
    *
    * @return the element specifacated by path is a map (hash)
    * */
-  bool isMap    (const string path);
+  bool isMap    (const std::string path);
   /* Checks type Vector
    * @path Path of the element to be checked
    *
    * @return the element specifacated by path is a vector
    * */
-  bool isVector (const string path);
+  bool isVector (const std::string path);
   /* Checks exists
    * @path Path of the element to be checked
    *
    * @return the element exists
    * */
-  bool exist    (const string path);
+  bool exist    (const std::string path);
 
   /* Adds information
    * @value Variable with the information to be added
@@ -328,19 +325,19 @@ public:
    *
    * @return true if `path` doesn't exist and its sucessfully created
    * */
-  bool add (const double value,      const string path);
-  bool add (const float value,       const string path);
-  bool add (const int value,         const string path);
-  bool add (const long value,        const string path);
-  bool add (const long long value,   const string path);
-  bool add (const bool value,        const string path);
-  bool add (const string value,      const string path);
-  bool add (const char& value,       const string path);
-  bool add (const char* value,       const string path);
+  bool add (const double value,      const std::string path);
+  bool add (const float value,       const std::string path);
+  bool add (const int value,         const std::string path);
+  bool add (const long value,        const std::string path);
+  bool add (const long long value,   const std::string path);
+  bool add (const bool value,        const std::string path);
+  bool add (const std::string value,      const std::string path);
+  bool add (const char& value,       const std::string path);
+  bool add (const char* value,       const std::string path);
 
   // Supports any vector
   template <class t>
-  bool add (const std::vector<t>& array, const string path) {
+  bool add (const std::vector<t>& array, const std::string path) {
     return top->add (path, createVec (array));
   }
 
@@ -353,7 +350,7 @@ public:
    *
    * @return true if the vector is created at `path`
    * */
-  bool addVector (const string path);
+  bool addVector (const std::string path);
 
   /* Adds a map
    * @path Where the map should be added
@@ -364,7 +361,7 @@ public:
    *
    * @return true if the map is created at `path`
    * */
-  bool addMap (const string path);
+  bool addMap (const std::string path);
 
   //- returns true if successfully copied the elements indicated in 'from' in the path.
   //- The path mustn't exist previously
@@ -379,7 +376,7 @@ public:
    *
    * @return true if `path` didn't exist, is successfuly created and the elemets of `tree` indicated in from are copied into it
    * */
-  bool add (const JsonTree& tree, const string from = "", const string path = "");
+  bool add (const JsonTree& tree, const std::string from = "", const std::string path = "");
 
   /* Replace information
    * @from Contains the information to be used
@@ -427,18 +424,18 @@ public:
    *
    * @return true if `path` exists and is sucessfully replaced
    * */
-  bool replace (const double from,      const string path);
-  bool replace (const float from,       const string path);
-  bool replace (const int from,         const string path);
-  bool replace (const long from,        const string path);
-  bool replace (const long long from,   const string path);
-  bool replace (const bool from,        const string path);
-  bool replace (const string from,      const string path);
-  bool replace (const char* from,       const string path);
-  bool replace (const char  from,       const string path);
+  bool replace (const double from,      const std::string path);
+  bool replace (const float from,       const std::string path);
+  bool replace (const int from,         const std::string path);
+  bool replace (const long from,        const std::string path);
+  bool replace (const long long from,   const std::string path);
+  bool replace (const bool from,        const std::string path);
+  bool replace (const std::string from,      const std::string path);
+  bool replace (const char* from,       const std::string path);
+  bool replace (const char  from,       const std::string path);
 
   template <class t>
-  bool replace (const std::vector<t>& array, const string path) {
+  bool replace (const std::vector<t>& array, const std::string path) {
     return replace (createVec (array), path);
   }
 
@@ -484,18 +481,18 @@ public:
    *
    * @return true if `path` its sucessfully created or replaced if previously exist
    * */
-  bool set (const double value,      const string path);
-  bool set (const float value,       const string path);
-  bool set (const int value,         const string path);
-  bool set (const long value,        const string path);
-  bool set (const long long value,   const string path);
-  bool set (const bool value,        const string path);
-  bool set (const string value,      const string path);
-  bool set (const char* value,       const string path);
-  bool set (const char  value,       const string path);
+  bool set (const double value,      const std::string path);
+  bool set (const float value,       const std::string path);
+  bool set (const int value,         const std::string path);
+  bool set (const long value,        const std::string path);
+  bool set (const long long value,   const std::string path);
+  bool set (const bool value,        const std::string path);
+  bool set (const std::string value,      const std::string path);
+  bool set (const char* value,       const std::string path);
+  bool set (const char  value,       const std::string path);
 
   template <class t>
-  bool set (const std::vector<t>& array, const string path) {
+  bool set (const std::vector<t>& array, const std::string path) {
     return set (createVec (array), path);
   }
 
@@ -507,7 +504,7 @@ public:
    *
    * @return true if `path` exist and is successfully removed, false if doesn't exist
    * */
-  bool erase (const string path);
+  bool erase (const std::string path);
 
   /* Delete possible elements
    * @path Path to the elements to be deleted
@@ -517,7 +514,7 @@ public:
    *
    * @return true if `path` is successfully removed or doesn't previously exist
    * */
-  bool remove (const string path);
+  bool remove (const std::string path);
 
   /* Formats content for output as json
    * @uglify compacts or not the json information, by default =false (not compact, human readable)
@@ -548,7 +545,7 @@ public:
    *
    * @return json formatted content
    * */
-  string toText (const bool uglify = false, const string from = "");
+  std::string toText (const bool uglify = false, const std::string from = "");
 
 };
 

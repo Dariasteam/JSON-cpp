@@ -2,8 +2,8 @@
 
 using namespace json;
 
-regex ObjectVector::tokenRgx = regex ("^(?:\\.)?(?:\\[)?(\\d+)(?:\\])?(?:\\.|$)");
-regex ObjectMap::tokenRgx = regex    ("^(?:\\.)?(?:\\[')?(.+?)(?:'\\])?(?:\\.|$)");
+std::regex ObjectVector::tokenRgx = std::regex ("^(?:\\.)?(?:\\[)?(\\d+)(?:\\])?(?:\\.|$)");
+std::regex ObjectMap::tokenRgx = std::regex    ("^(?:\\.)?(?:\\[')?(.+?)(?:'\\])?(?:\\.|$)");
 
 const char* const ObjectVector::name = "VECTOR";
 const char* const ObjectMap::name = "MAP";
@@ -12,7 +12,7 @@ const char* const ObjectFinalString::name = "STRING";
 const char* const ObjectFinalNumberFloat::name = "NUMBER_FLOAT";
 const char* const ObjectFinalNumberInt::name = "NUMBER_INT";
 
-void AbstractObject::txtIndent(string &txt, int indentLvl) {
+void AbstractObject::txtIndent(std::string &txt, int indentLvl) {
   for (int i = 0; i < indentLvl; i++)
     txt.append(INDENT);
 }
@@ -60,7 +60,7 @@ ObjectFinalString::ObjectFinalString (const ObjectFinalString &obj) :
 ObjectMap::ObjectMap (const ObjectMap &obj) :  
   keys(obj.getKeys())
   {
-    for (string key : keys) {
+    for (std::string key : keys) {
       hash[key] = obj.getContent().at(key)->getCopy ();
     }
   }
@@ -73,22 +73,22 @@ ObjectVector::ObjectVector (const ObjectVector &obj) :
     }
   }
 
-void ObjectFinalBool::replaceValue (string value) {
+void ObjectFinalBool::replaceValue (std::string value) {
   if (value == "true")
     boolean = true;
   else
     boolean = false;
 }
 
-void ObjectFinalNumberFloat::replaceValue (string value) {
+void ObjectFinalNumberFloat::replaceValue (std::string value) {
   number = stod (value);
 }
 
-void ObjectFinalNumberInt::replaceValue (string value) {
+void ObjectFinalNumberInt::replaceValue (std::string value) {
   number = atol (value.c_str());
 }
 
-void ObjectFinalString::replaceValue (string value) {
+void ObjectFinalString::replaceValue (std::string value) {
   text = value;
 }
 
@@ -99,14 +99,14 @@ AbstractObject* ObjectVector::operator[] (unsigned index) {
     return array [index];
 }
 
-AbstractObject* ObjectMap::operator[](string key) {
+AbstractObject* ObjectMap::operator[](std::string key) {
   if (hash.count (key))
     return hash[key];
   else
     return nullptr;
 }
 
-bool ObjectVector::insert (string key, AbstractObject* obj) {
+bool ObjectVector::insert (std::string key, AbstractObject* obj) {
   if (key == "") {
     array.push_back (obj);
     return true;
@@ -116,10 +116,10 @@ bool ObjectVector::insert (string key, AbstractObject* obj) {
   }
 }
 
-bool ObjectMap::insert (string key, AbstractObject* obj) {
+bool ObjectMap::insert (std::string key, AbstractObject* obj) {
   if (key != "" && !hash.count (key)) {
     keys.push_back (key);
-    hash.insert(pair <string, AbstractObject*> (key, obj));
+    hash.insert(std::pair <std::string, AbstractObject*> (key, obj));
     return true;
   } else {
     delete obj;
@@ -127,7 +127,7 @@ bool ObjectMap::insert (string key, AbstractObject* obj) {
   }
 }
 
-bool ObjectMap::replace (string key, AbstractObject* obj) {
+bool ObjectMap::replace (std::string key, AbstractObject* obj) {
   if (!hash.count (key))
     return false;
   keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
@@ -135,18 +135,18 @@ bool ObjectMap::replace (string key, AbstractObject* obj) {
   return insert (key, obj);
 }
 
-bool ObjectMap::set (string key, AbstractObject* obj) {
+bool ObjectMap::set (std::string key, AbstractObject* obj) {
   if (!hash.count (key))
     return insert (key, obj);
   else
     return replace (key, obj);
 }
 
-AbstractObject* ObjectVector::get (string path) {
-  smatch matcher;
+AbstractObject* ObjectVector::get (std::string path) {
+  std::smatch matcher;
   if (path.size() == 0)
     return this;
-  if (regex_search (path, matcher, tokenRgx)) {
+  if (std::regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](stoi (matcher[1]));
     path = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
@@ -156,11 +156,11 @@ AbstractObject* ObjectVector::get (string path) {
   return nullptr;
 }
 
-AbstractObject* ObjectMap::get (string path) {
-  smatch matcher;
+AbstractObject* ObjectMap::get (std::string path) {
+  std::smatch matcher;
   if (path.empty() || path == ".")
     return this;
-  if (regex_search (path, matcher, tokenRgx)) {
+  if (std::regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
     path = path.substr(matcher[0].length(), path.size());
     if (son != nullptr)
@@ -169,14 +169,14 @@ AbstractObject* ObjectMap::get (string path) {
   return nullptr;
 }
 
-AbstractObject* ObjectFinal::get (string path) {
+AbstractObject* ObjectFinal::get (std::string path) {
   if (path.size () == 0)
     return this;
   else
     return nullptr;
 }
 
-bool ObjectMap::remove (string key) {
+bool ObjectMap::remove (std::string key) {
   AbstractObject* aux = operator[](key);
   if (aux == nullptr)
     return true;
@@ -186,18 +186,18 @@ bool ObjectMap::remove (string key) {
   return true;
 }
 
-bool ObjectMap::erase (string key) {
+bool ObjectMap::erase (std::string key) {
   if (!hash.count (key))
     return false;
   else
     return remove (key);
 }
 
-bool ObjectMap::add (string path, AbstractObject* obj) {
-  smatch matcher;
+bool ObjectMap::add (std::string path, AbstractObject* obj) {
+  std::smatch matcher;
   if (regex_search (path, matcher, tokenRgx)) {
     AbstractObject* son = operator[](matcher[1]);
-    string newPath = path.substr(matcher[0].length(), path.size());
+    std::string newPath = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
       if (!newPath.empty() || dynamic_cast<ObjectVector*>(son)) {
         return son->add (newPath, obj);
@@ -221,12 +221,12 @@ bool ObjectMap::add (string path, AbstractObject* obj) {
   return false;
 }
 
-bool ObjectVector::add (string path, AbstractObject* obj) {
-  smatch matcher;
+bool ObjectVector::add (std::string path, AbstractObject* obj) {
+  std::smatch matcher;
   AbstractObject* son;
   if (regex_search (path, matcher, tokenRgx)) {
     son = operator[](stoi (matcher[1]));
-    string newPath = path.substr(matcher[0].length(), path.size());
+    std::string newPath = path.substr(matcher[0].length(), path.size());
     if (son != nullptr) {
       return son->add (newPath, obj);
     } else {
@@ -246,12 +246,12 @@ bool ObjectVector::add (string path, AbstractObject* obj) {
   return false;
 }
 
-bool ObjectFinal::add (string path, AbstractObject* obj) {
+bool ObjectFinal::add (std::string path, AbstractObject* obj) {
   delete obj;
   return false;
 }
 
-void ObjectVector::toTxt (string& txt, int indentLvl) {
+void ObjectVector::toTxt (std::string& txt, int indentLvl) {
   txt.append("[");
   indentLvl++;
   AbstractObject* obj = this;
@@ -274,10 +274,10 @@ void ObjectVector::toTxt (string& txt, int indentLvl) {
   txt.append("]");
 }
 
-void ObjectMap::toTxt (string& txt, int indentLvl) {
+void ObjectMap::toTxt (std::string& txt, int indentLvl) {
   txt.append("{");
   indentLvl++;
-  for (string key : getKeys()) {
+  for (std::string key : getKeys()) {
     txt.append(END_LINE);
     txtIndent (txt, indentLvl);
     txt.append(QUOTE).append(key).append(QUOTE).append(SPACE).append(POINTS).append(SPACE);
@@ -292,7 +292,7 @@ void ObjectMap::toTxt (string& txt, int indentLvl) {
   txt.append("}");
 }
 
-void ObjectFinalBool::toTxt (string& txt, int indentLvl) {
+void ObjectFinalBool::toTxt (std::string& txt, int indentLvl) {
   if (getContent())
     txt.append("true");
   else
@@ -300,23 +300,23 @@ void ObjectFinalBool::toTxt (string& txt, int indentLvl) {
 }
 
 typedef std::numeric_limits< double > dbl;
-void ObjectFinalNumberFloat::toTxt (string& txt, int indentLvl) {  
+void ObjectFinalNumberFloat::toTxt (std::string& txt, int indentLvl) {
   std::ostringstream strs;
-  strs << setprecision(dbl::max_digits10) << getContent() << flush;
+  strs << std::setprecision(dbl::max_digits10) << getContent() << std::flush;
   txt.append(strs.str());
 }
 
-void ObjectFinalNumberInt::toTxt (string& txt, int indentLvl) {
-  txt.append(to_string(getContent()));
+void ObjectFinalNumberInt::toTxt (std::string& txt, int indentLvl) {
+  txt.append(std::to_string(getContent()));
 }
 
-void ObjectFinalString::toTxt (string& txt, int indentLvl) {
+void ObjectFinalString::toTxt (std::string& txt, int indentLvl) {
   txt.append(QUOTE).append(getContent()).append(QUOTE);
 }
 
 //* Ugly
 
-void ObjectVector::toTxtUgly (string& txt) {
+void ObjectVector::toTxtUgly (std::string& txt) {
   txt.append("[");
   AbstractObject* obj;
   for (int i = 0; i < size(); i++) {
@@ -329,7 +329,7 @@ void ObjectVector::toTxtUgly (string& txt) {
   txt.append("]");
 }
 
-void ObjectMap::toTxtUgly (string& txt) {
+void ObjectMap::toTxtUgly (std::string& txt) {
   txt.append("{");
   for (int i = 0; i < getKeys().size(); i++) {
     txt.append(QUOTE).append(getKeys()[i]).append(QUOTE).append(POINTS);
@@ -341,19 +341,19 @@ void ObjectMap::toTxtUgly (string& txt) {
   txt.append("}");
 }
 
-void ObjectFinalBool::toTxtUgly (string& txt) {
+void ObjectFinalBool::toTxtUgly (std::string& txt) {
   toTxt(txt, 0);
 }
 
-void ObjectFinalNumberFloat::toTxtUgly (string& txt) {
+void ObjectFinalNumberFloat::toTxtUgly (std::string& txt) {
   toTxt(txt, 0);
 }
 
-void ObjectFinalNumberInt::toTxtUgly (string& txt) {
+void ObjectFinalNumberInt::toTxtUgly (std::string& txt) {
   toTxt(txt, 0);
 }
 
-void ObjectFinalString::toTxtUgly (string& txt) {
+void ObjectFinalString::toTxtUgly (std::string& txt) {
   toTxt(txt, 0);
 }
 

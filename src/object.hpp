@@ -9,8 +9,6 @@
 #include <iostream>
 #include <limits>
 
-using namespace std;
-
 #define END_LINE "\n"
 #define INDENT "  "
 #define QUOTE "\""
@@ -65,7 +63,7 @@ protected:
    * #define INDENT "  "
    * ```
    * */
-  void txtIndent (string& txt, int indentLvl);
+  void txtIndent (std::string& txt, int indentLvl);
 public:  
   virtual ~AbstractObject () = 0;
 
@@ -88,7 +86,7 @@ public:
    *
    * @return nullptr if node does not exist, node's pointer otherwise
    * */
-  virtual AbstractObject* get (string path) = 0;
+  virtual AbstractObject* get (std::string path) = 0;
 
   /* Adds a node to tree
    * @path route to the node which will be father of 'obj'
@@ -115,7 +113,7 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  virtual bool add (string path, AbstractObject* obj) = 0;
+  virtual bool add (std::string path, AbstractObject* obj) = 0;
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -125,7 +123,7 @@ public:
    * json format of the content both node and sons, appending it to 'txt' parameter.
    * The string respects the indentation and is human readable (See <JsonTree::toText>)
    * */
-  virtual void toTxt (string &txt, int indentLvl) = 0;
+  virtual void toTxt (std::string &txt, int indentLvl) = 0;
 
   /* Generates ugly json text
    * @txt string to append this node's info
@@ -134,7 +132,7 @@ public:
    * json format of the content both node and sons, appending it to 'txt' parameter.
    * The string is compressed and uglified (See <JsonTree::toText>)
    * */
-  virtual void toTxtUgly (string &txt) = 0;
+  virtual void toTxtUgly (std::string &txt) = 0;
 
   /* Get node tye name
    *
@@ -168,7 +166,7 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  virtual bool insert (string key, AbstractObject* obj) = 0;
+  virtual bool insert (std::string key, AbstractObject* obj) = 0;
 };
 
 /* Representation of []
@@ -185,8 +183,8 @@ public:
  * */
 class ObjectVector : public ObjectContainer{
 private:
-  vector <AbstractObject*> array;
-  static regex tokenRgx;
+  std::vector <AbstractObject*> array;
+  static std::regex tokenRgx;
 public:
   ObjectVector () {}
   ~ObjectVector ();
@@ -218,7 +216,7 @@ public:
    *
    * @return 'obj' is succesfully inserted
    * */
-  bool insert (string key, AbstractObject* obj);  
+  bool insert (std::string key, AbstractObject* obj);
 
   /* Get size
    *
@@ -232,7 +230,7 @@ public:
    *
    * @return inner vector
    * */
-  inline const vector<AbstractObject*>& getContent () const { return array; }
+  inline const std::vector<AbstractObject*>& getContent () const { return array; }
 
   /* Access a son
    * @index position of the element in inner vector
@@ -246,7 +244,7 @@ public:
    *
    * @return object found or nullptr if doesn't exist
    * */
-  AbstractObject* get (string path);
+  AbstractObject* get (std::string path);
 
   /* Adds a node to tree
    * @path route to the node which will be father of 'obj'
@@ -254,17 +252,17 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  bool add (string path, AbstractObject* obj);
+  bool add (std::string path, AbstractObject* obj);
 
   /* Generates json text
    * @txt string to append this node's info
    * */
-  void toTxt (string &txt, int indentLvl);
+  void toTxt (std::string &txt, int indentLvl);
 
   /* Generates ugly json text
    * @txt string to append this node's info
    * */
-  void toTxtUgly (string &txt);
+  void toTxtUgly (std::string &txt);
 
   /* Clone object
    *
@@ -290,9 +288,9 @@ public:
  * */
 class ObjectMap : public ObjectContainer {
 private:
-  vector <string> keys;
-  map <string, AbstractObject*> hash;
-  static regex tokenRgx;
+  std::vector <std::string> keys;
+  std::map <std::string, AbstractObject*> hash;
+  static std::regex tokenRgx;
 public:
   ~ObjectMap ();
   ObjectMap () {}
@@ -324,7 +322,7 @@ public:
    *
    * @return inner keys vector
    * */
-  inline const vector <string>& getKeys () const { return keys; }
+  inline const std::vector <std::string>& getKeys () const { return keys; }
 
   /* Get inner map
    *
@@ -332,21 +330,21 @@ public:
    *
    * @return inner map
    * */
-  inline const map<string, AbstractObject*>& getContent () const { return hash; }
+  inline const std::map<std::string, AbstractObject*>& getContent () const { return hash; }
 
   /* Access a son
    * @key key of the element in inner map
    *
    * @return node at 'key' if exist, nullptr otherwise
    * */
-  AbstractObject* operator[](string key);
+  AbstractObject* operator[](std::string key);
 
   /* Search for a certain node
    * @path route to the element
    *
    * @return object found or nullptr if doesn't exist
    * */
-  AbstractObject* get (string path);
+  AbstractObject* get (std::string path);
 
   /* Inserts a son node in this object
    * @key Key of the element
@@ -358,7 +356,7 @@ public:
    *
    * @return 'obj' is succesfully inserted
    * */
-  bool insert (string key, AbstractObject* obj);
+  bool insert (std::string key, AbstractObject* obj);
 
   /* Adds a node to tree
    * @path route to the node which will be father of 'obj'
@@ -366,17 +364,17 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  bool add (string path, AbstractObject* obj);
+  bool add (std::string path, AbstractObject* obj);
 
   /* Generates json text
    * @txt string to append this node's info
    * */
-  void toTxt (string &txt, int indentLvl);
+  void toTxt (std::string &txt, int indentLvl);
 
   /* Generates ugly json text
    * @txt string to append this node's info
    * */
-  void toTxtUgly (string &txt);
+  void toTxtUgly (std::string &txt);
 
   /* Replace one node by another
    * @key key (**not** path) of the node to be replaced
@@ -389,7 +387,7 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  bool replace (string key, AbstractObject* obj);
+  bool replace (std::string key, AbstractObject* obj);
 
   /* Replace one node by another
    * @key key (**not** path) were 'obj' will be setted
@@ -402,7 +400,7 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  bool set (string key, AbstractObject* obj);
+  bool set (std::string key, AbstractObject* obj);
 
   /* Removes a node
    * @key key (**not** path) of the node to be removed
@@ -412,7 +410,7 @@ public:
    * For more information about remove's meaning see <json::JsonTree::remove>
    * @return the operation is successfuly finished or not
    * */
-  bool remove (string key);
+  bool remove (std::string key);
 
   /* Erases a node
    * @key key (**not** path) of the node to be erased
@@ -424,7 +422,7 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  bool erase (string key);
+  bool erase (std::string key);
 
   /* Clone object
    *
@@ -451,7 +449,7 @@ public:
    *
    * The method is used by <json::Parser> when creating the tree
    * */
-  virtual void replaceValue (string value) = 0;
+  virtual void replaceValue (std::string value) = 0;
 
   /* Search for a certain node
    * @path route to the element
@@ -461,7 +459,7 @@ public:
    *
    * @return this node when 'path' is empty, nullptr otherwise
    * */
-  AbstractObject* get (string path);
+  AbstractObject* get (std::string path);
 
   /* Adds a node to tree
    * @path route to the node which will be father of 'obj'
@@ -472,7 +470,7 @@ public:
    *
    * @return false **always**
    * */
-  bool add (string path,  AbstractObject* obj);
+  bool add (std::string path,  AbstractObject* obj);
 };
 
 /* Represents a float
@@ -513,7 +511,7 @@ public:
    *
    * Updates the content with the data of 'value'
    * */
-  void replaceValue (string value);
+  void replaceValue (std::string value);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -521,7 +519,7 @@ public:
    *
    * Appends json content to 'txt' respecting the indentation
    * */
-  void toTxt (string &txt, int indentLvl);
+  void toTxt (std::string &txt, int indentLvl);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -529,7 +527,7 @@ public:
    *
    * Appends uglified json content to 'txt'
    * */
-  void toTxtUgly (string &txt);
+  void toTxtUgly (std::string &txt);
 
   /* Clone object
    *
@@ -578,7 +576,7 @@ public:
    *
    * Updates the content with the data of 'value'
    * */
-  void replaceValue (string value);
+  void replaceValue (std::string value);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -586,7 +584,7 @@ public:
    *
    * Appends json content to 'txt' respecting the indentation
    * */
-  void toTxt (string &txt, int indentLvl);
+  void toTxt (std::string &txt, int indentLvl);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -594,7 +592,7 @@ public:
    *
    * Appends uglified json content to 'txt'
    * */
-  void toTxtUgly (string &txt);
+  void toTxtUgly (std::string &txt);
 
   /* Clone object
    *
@@ -611,11 +609,11 @@ public:
  * */
 class ObjectFinalString : public ObjectFinal {
 private:
-  string text;
+  std::string text;
 public:
   ~ObjectFinalString ();
   ObjectFinalString () {}
-  ObjectFinalString (string s) : text (s) {}
+  ObjectFinalString (std::string s) : text (s) {}
   ObjectFinalString (char s) { text = s; }
   /* Copy constructor
    * @obj node to copy
@@ -637,14 +635,14 @@ public:
    *
    * @return inner data
    * */
-  inline string getContent () const { return text; }  
+  inline std::string getContent () const { return text; }
 
   /* Replaces data
    * @value new data
    *
    * Updates the content with the data of 'value'
    * */
-  void replaceValue (string value);
+  void replaceValue (std::string value);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -652,7 +650,7 @@ public:
    *
    * Appends json content to 'txt' respecting the indentation
    * */
-  void toTxt (string &txt, int indentLvl);
+  void toTxt (std::string &txt, int indentLvl);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -660,7 +658,7 @@ public:
    *
    * Appends uglified json content to 'txt'
    * */
-  void toTxtUgly (string &txt);
+  void toTxtUgly (std::string &txt);
 
   /* Clone object
    *
@@ -681,7 +679,7 @@ private:
 public:
   ~ObjectFinalBool ();
   ObjectFinalBool() : boolean (false) {}
-  ObjectFinalBool(string s) { replaceValue(s); }
+  ObjectFinalBool(std::string s) { replaceValue(s); }
   ObjectFinalBool(bool s) : boolean (s) {}
   /* Copy constructor
    * @obj node to copy
@@ -710,7 +708,7 @@ public:
    *
    * Updates the content with the data of 'value'
    * */
-  void replaceValue (string value);
+  void replaceValue (std::string value);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -718,7 +716,7 @@ public:
    *
    * Appends json content to 'txt' respecting the indentation
    * */
-  void toTxt (string &txt, int indentLvl);
+  void toTxt (std::string &txt, int indentLvl);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -726,7 +724,7 @@ public:
    *
    * Appends uglified json content to 'txt'
    * */
-  void toTxtUgly (string &txt);
+  void toTxtUgly (std::string &txt);
 
   /* Clone object
    *

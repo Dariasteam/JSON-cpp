@@ -2,25 +2,25 @@
 
 using namespace json;
 
-regex Parser::startBrace = regex 	 ("^(?:\\s*)(\\{)");
-regex Parser::startBracket = regex       ("^(?:\\s*)(\\[)");
-regex Parser::keyDef = regex             ("^(?:\\s*)(?:\")([^\,]+?)(?:\")(?:\\s*):");
-regex Parser::finalQuote = regex         ("^(?:\\s*)(?:\")(.*?)(?:\")(?:\\s*)(,)?");
-regex Parser::finalNumberInt = regex     ("^(?:\\s*)((?:\\+|\\-)?\\d+)(?:\\s*)(,)?");
-regex Parser::finalNumberFloat = regex   ("^(?:\\s*)((?:\\+|\\-)?(?:\\d+)?(?:(?:(?:\\.\\d+)?e(?:\\+|\\-)?\\d+)|(?:\\.\\d+)))(?:\\s*)(,)?");
-regex Parser::finalBoolean = regex       ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
-regex Parser::nextBrace = regex 	 ("^(?:\\s*)(\\})(?:\\s*)(,)?");
-regex Parser::nextBracket = regex        ("^(?:\\s*)(\\])(?:\\s*)(,)?");
+std::regex Parser::startBrace = std::regex 	 ("^(?:\\s*)(\\{)");
+std::regex Parser::startBracket = std::regex     ("^(?:\\s*)(\\[)");
+std::regex Parser::keyDef = std::regex           ("^(?:\\s*)(?:\")([^,]+?)(?:\")(?:\\s*):");
+std::regex Parser::finalQuote = std::regex       ("^(?:\\s*)(?:\")(.*?)(?:\")(?:\\s*)(,)?");
+std::regex Parser::finalNumberInt = std::regex   ("^(?:\\s*)((?:\\+|\\-)?\\d+)(?:\\s*)(,)?");
+std::regex Parser::finalNumberFloat = std::regex ("^(?:\\s*)((?:\\+|\\-)?(?:\\d+)?(?:(?:(?:\\.\\d+)?e(?:\\+|\\-)?\\d+)|(?:\\.\\d+)))(?:\\s*)(,)?");
+std::regex Parser::finalBoolean = std::regex     ("^(?:\\s*)(true|false)(?:\\s*)(,)?");
+std::regex Parser::nextBrace = std::regex 	 ("^(?:\\s*)(\\})(?:\\s*)(,)?");
+std::regex Parser::nextBracket = std::regex      ("^(?:\\s*)(\\])(?:\\s*)(,)?");
 
-int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
+int Parser::parseFile (std::string fileName, JsonTree& tree, bool verbs ) {
   verbose = verbs;
   errors.resize (0);
   warnings.resize (0);
   int returnValue = OK;
   if (openFile(fileName)) {
-    stringstream buffer;
+    std::stringstream buffer;
     buffer << getFile().rdbuf();
-    string fileContent = buffer.str();
+    std::string fileContent = buffer.str();
     ObjectNameFlag result = parse (fileContent, "");
     file.close();
     tree.setTop (result.element);
@@ -38,7 +38,7 @@ int Parser::parseFile (string fileName, JsonTree& tree, bool verbs ) {
   return returnValue;
 }
 
-int Parser::parseString (string content, JsonTree& tree, bool verbs ) {
+int Parser::parseString (std::string content, JsonTree& tree, bool verbs ) {
   verbose = verbs;
   errors.resize (0);
   warnings.resize (0);
@@ -61,26 +61,26 @@ Parser::Parser () :
   warnings (0)
   {}
 
-bool Parser::openFile (string fileName) {
-  file.open(fileName, ifstream::in);
+bool Parser::openFile (std::string fileName) {
+  file.open(fileName, std::ifstream::in);
   if (file.is_open())
     return true;
   else
     return false;
 }
 
-bool Parser::hasComma (string buffer) {
+bool Parser::hasComma (std::string buffer) {
   return (buffer.size() > 0);
 }
 
-Parser::ObjectNameFlag Parser::parseFinal (string& content, smatch& matcher, ObjectFinal* obj) {
+Parser::ObjectNameFlag Parser::parseFinal (std::string& content, std::smatch& matcher, ObjectFinal* obj) {
   obj->replaceValue(matcher[1]);
   content = content.substr(matcher[0].length(), content.size());
   return {obj, "", hasComma(matcher[2])};
 }
 
-Parser::ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
-                            regex& endSymbol, ObjectContainer* obj, string path)
+Parser::ObjectNameFlag Parser::parseContainer (std::string& content, std::smatch& matcher,
+                            std::regex& endSymbol, ObjectContainer* obj, std::string path)
 {
   content = content.substr(matcher[0].length(), content.size());
   ObjectNameFlag aux;
@@ -95,8 +95,8 @@ Parser::ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
       evaluateFlag(INVALID_KEY, path, aux.key);
       break;
     }
-  } while (!regex_search (content, matcher, endSymbol) && aux.flag == REGULAR_ELEMENT);
-  regex_search (content, matcher, endSymbol);
+  } while (!std::regex_search (content, matcher, endSymbol) && aux.flag == REGULAR_ELEMENT);
+  std::regex_search (content, matcher, endSymbol);
   if (aux.flag == REGULAR_ELEMENT) {
     flag = EXPECTED_MORE;
     evaluateFlag(flag, path, aux.key);
@@ -110,51 +110,51 @@ Parser::ObjectNameFlag Parser::parseContainer (string& content, smatch& matcher,
   return {obj, "", flag};
 }
 
-void Parser::evaluateFlag (int flag, string path, string finalElement) {
+void Parser::evaluateFlag (int flag, std::string path, std::string finalElement) {
   path.append(".").append(finalElement);
   if (flag < CONTROL_WARNING) {
     errors.push_back ({path, flag});
     if (verbose)
-      cerr << "Error";
+      std::cerr << "Error";
   } else {
     warnings.push_back ({path, flag});
     if (verbose)
-      cerr << "Warning";
+      std::cerr << "Warning";
   }
   if (verbose)
-    cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << endl;
+    std::cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << std::endl;
 }
 
-Parser::ObjectNameFlag Parser::parseKeyDef (string& content, smatch& matcher, string path) {
-  string key = matcher[1];
+Parser::ObjectNameFlag Parser::parseKeyDef (std::string& content, std::smatch& matcher, std::string path) {
+  std::string key = matcher[1];
   content = content.substr(matcher[0].length(), content.size());
   path.append(".").append(key);
   ObjectNameFlag aux = parse (content, path);
   return {aux.element, key, aux.flag};
 }
 
-Parser::ObjectNameFlag Parser::parse (string& content, string path) {
-  smatch matcher;
+Parser::ObjectNameFlag Parser::parse (std::string& content, std::string path) {
+  std::smatch matcher;
   ObjectNameFlag Obj;
-  if (regex_search (content, matcher, keyDef))
+  if (std::regex_search (content, matcher, keyDef))
     return parseKeyDef (content, matcher, path);
-  else if (regex_search(content, matcher, finalQuote))
+  else if (std::regex_search(content, matcher, finalQuote))
     return parseFinal (content, matcher, new ObjectFinalString());
-  else if (regex_search(content, matcher, finalBoolean))
+  else if (std::regex_search(content, matcher, finalBoolean))
     return parseFinal (content, matcher, new ObjectFinalBool());
-  else if (regex_search(content, matcher, finalNumberFloat))
+  else if (std::regex_search(content, matcher, finalNumberFloat))
     return parseFinal (content, matcher, new ObjectFinalNumberFloat());
-  else if (regex_search(content, matcher, finalNumberInt))
+  else if (std::regex_search(content, matcher, finalNumberInt))
     return parseFinal (content, matcher, new ObjectFinalNumberInt());
-  else if (regex_search (content, matcher, startBrace))
+  else if (std::regex_search (content, matcher, startBrace))
     return parseContainer (content, matcher, nextBrace, new ObjectMap (), path);
-  else if (regex_search (content, matcher, startBracket))
+  else if (std::regex_search (content, matcher, startBracket))
     return parseContainer (content, matcher, nextBracket, new ObjectVector (), path);
   return {nullptr, "", EMPTY};
 }
 
-int Parser::saveFile (string fileName, JsonTree& tree, bool uglify) {
-  ofstream file;
+int Parser::saveFile (std::string fileName, JsonTree& tree, bool uglify) {
+  std::ofstream file;
   file.open (fileName);
   if (!file.is_open())
     return CANT_OPEN_FILE;

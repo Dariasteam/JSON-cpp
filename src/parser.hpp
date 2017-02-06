@@ -10,8 +10,6 @@
 #include "./object.hpp"
 #include "manager.hpp"
 
-using namespace std;
-
 namespace json {
 
 // Binary flags used as output for <Parser::parseFile> and <Parser::saveFile> functions.
@@ -58,7 +56,7 @@ enum JSON_PARSER_FLAG {
  */
 struct JsonLog {
   //route of the problematic element
-  string path;
+  std::string path;
   // contains a <JSON_PARSER_FLAG> indicating the problem
   int flag;
   friend bool operator== (const JsonLog& j1, const JsonLog& j2) {
@@ -145,46 +143,46 @@ class Parser {
 
   struct ObjectNameFlag {    
     AbstractObject* element;
-    string key;
+    std::string key;
     int flag;
   };
 
-  const string reverseflag [7] = {"LAST_ELEMENT",
-                                  "REGULAR_ELEMENT",
-                                  "NO_CLOSED",
-                                  "EXPECTED_MORE",
-                                  "INVALID_KEY",
-                                  "-",
-                                  "EMPTY"
-                                 };
-  vector <JsonLog> errors;
-  vector <JsonLog> warnings;
-  ifstream file;
+  const std::string reverseflag [7] = {"LAST_ELEMENT",
+                                       "REGULAR_ELEMENT",
+                                       "NO_CLOSED",
+                                       "EXPECTED_MORE",
+                                       "INVALID_KEY",
+                                       "-",
+                                       "EMPTY"
+                                      };
+  std::vector <JsonLog> errors;
+  std::vector <JsonLog> warnings;
+  std::ifstream file;
 
   bool verbose;
 
-  static regex startBrace;
-  static regex startBracket;
-  static regex keyDef;
-  static regex finalQuote;
-  static regex finalNumberFloat;
-  static regex finalNumberInt;
-  static regex finalBoolean;
-  static regex nextBrace;
-  static regex nextBracket;
+  static std::regex startBrace;
+  static std::regex startBracket;
+  static std::regex keyDef;
+  static std::regex finalQuote;
+  static std::regex finalNumberFloat;
+  static std::regex finalNumberInt;
+  static std::regex finalBoolean;
+  static std::regex nextBrace;
+  static std::regex nextBracket;
 
-  bool openFile (string fileName);
-  bool hasComma (string buffer);
-  void evaluateFlag (int flag, string path, string finalElement);
+  bool openFile (std::string fileName);
+  bool hasComma (std::string buffer);
+  void evaluateFlag (int flag, std::string path, std::string finalElement);
 
-  ObjectNameFlag parse (string& content, string path);
-  ObjectNameFlag parseKeyDef (string& content, smatch& matcher, string path);
-  ObjectNameFlag parseFinal (string& content, smatch& matcher, ObjectFinal* obj);
-  ObjectNameFlag parseContainer (string& content, smatch& matcher, regex& endSymbol, ObjectContainer* obj, string path);
+  ObjectNameFlag parse (std::string& content, std::string path);
+  ObjectNameFlag parseKeyDef (std::string& content, std::smatch& matcher, std::string path);
+  ObjectNameFlag parseFinal (std::string& content, std::smatch& matcher, ObjectFinal* obj);
+  ObjectNameFlag parseContainer (std::string& content, std::smatch& matcher, std::regex& endSymbol, ObjectContainer* obj, std::string path);
 
   inline bool hasErrors () { return errors.size() > 0; }
   inline bool hasWarnings () { return warnings.size() > 0; }
-  inline ifstream& getFile () { return file; }
+  inline std::ifstream& getFile () { return file; }
 public:
   // Default constructor
   Parser ();
@@ -261,7 +259,7 @@ public:
    *
    * @return combination of flags <JSON_PARSE_OUTPUT> with the result of the operation
   */
-  int parseFile (string fileName, JsonTree& tree, bool verbs = true);
+  int parseFile (std::string fileName, JsonTree& tree, bool verbs = true);
 
   /* Overloaded function
    * @fileName path of the input file to be parsed
@@ -272,7 +270,7 @@ public:
    *
    * @return combination of flags <JSON_PARSE_OUTPUT> with the result of the operation
    * */
-  int parseString (string content, JsonTree& tree, bool verbs = true);
+  int parseString (std::string content, JsonTree& tree, bool verbs = true);
 
   /* Creates a json file
    * @fileName input file to be parsed
@@ -305,19 +303,19 @@ public:
    * ```
    * @return <JSON_PARSE_OUTPUT> with the result of the operation
   */
-  static int saveFile (string fileName, JsonTree& tree, bool uglify = false);
+  static int saveFile (std::string fileName, JsonTree& tree, bool uglify = false);
 
   /* Gets error vector
    *
    * @return errors detected while parsing
   */
-  inline const vector<JsonLog>& getErrors () { return errors; }
+  inline const std::vector<JsonLog>& getErrors () { return errors; }
 
   /* Gets warning vector
    *
    * @return warnings detected while parsing
   */
-  inline const vector<JsonLog>& getWarnings () { return warnings; }
+  inline const std::vector<JsonLog>& getWarnings () { return warnings; }
 };
 
 }

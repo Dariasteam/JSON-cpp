@@ -1,3 +1,3 @@
 #include "./serializable.hpp"
 
-map<string, function<json::Serializable*()> > json::Serializable::dictionary;
+std::map<std::string, std::function<json::Serializable*()> > json::Serializable::dictionary;
