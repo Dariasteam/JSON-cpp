@@ -80,7 +80,7 @@ void ObjectFinalBool::replaceValue (std::string value) {
     boolean = false;
 }
 
-void ObjectFinalNumberFloat::replaceValue (std::string value) {
+void ObjectFinalNumberFloat::replaceValue (std::string value) {  
   number = stod (value);
 }
 

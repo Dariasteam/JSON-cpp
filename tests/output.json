@@ -5,7 +5,8 @@
     "element_3" : true
   },
   "second" : [
-    12, "Word",
+    12,
+    "Word",
     true
   ],
   "third" : [
@@ -15,7 +16,9 @@
       "element_3" : true
     },
     [
-      12, 13, 14
+      12,
+      13,
+      14
     ],
     [
       true,

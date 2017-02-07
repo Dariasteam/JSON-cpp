@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <climits>
+#include <exception>
 
 #include "./object.hpp"
 #include "manager.hpp"
@@ -162,27 +163,24 @@ class Parser {
   std::vector <JsonLog> warnings;
   std::ifstream file;
 
+  std::string content;
+
   bool verbose;
 
-  static std::regex startBrace;
-  static std::regex startBracket;
-  static std::regex keyDef;
-  static std::regex finalQuote;
-  static std::regex finalNumberFloat;
-  static std::regex finalNumberInt;
-  static std::regex finalBoolean;
-  static std::regex nextBrace;
-  static std::regex nextBracket;
 
   bool openFile (std::string fileName);
-  bool hasComma (std::string buffer);
+  bool hasComma ();
   void evaluateFlag (int flag, std::string path, std::string finalElement);
 
-  ObjectNameFlag parseExpectingKeyDef (std::string& content, std::string path);
-  ObjectNameFlag parseExpectingElement (std::string& content, std::string path);
-  ObjectNameFlag parseFinal (std::string& content, std::smatch& matcher, ObjectFinal* obj);
-  ObjectNameFlag parseContainer (std::string& content, std::smatch& matcher, std::regex& endSymbol,
-                                 std::function<ObjectNameFlag(std::string&, std::string)> parseFunction, ObjectContainer* obj, std::string path);
+  ObjectNameFlag parseExpectingKeyDef (std::string& path);
+  ObjectNameFlag parseExpectingElement (std::string& path);
+
+  ObjectNameFlag parseVector (std::string path);
+  ObjectNameFlag parseMap (std::string& path);
+
+  ObjectNameFlag parseBool ();
+  ObjectNameFlag parseQuote ();
+  ObjectNameFlag parseNumber ();
 
   inline bool hasErrors () { return errors.size() > 0; }
   inline bool hasWarnings () { return warnings.size() > 0; }
@@ -263,7 +261,7 @@ public:
    *
    * @return combination of flags <JSON_PARSE_OUTPUT> with the result of the operation
   */
-  int parseFile (std::string fileName, JsonTree& tree, bool verbs = true);
+  int parseFile (const std::string fileName, JsonTree& tree, bool verbs = true);
 
   /* Overloaded function
    * @fileName path of the input file to be parsed
@@ -274,7 +272,7 @@ public:
    *
    * @return combination of flags <JSON_PARSE_OUTPUT> with the result of the operation
    * */
-  int parseString (std::string content, JsonTree& tree, bool verbs = true);
+  int parseString (const std::string content, JsonTree& tree, bool verbs = true);
 
   /* Creates a json file
    * @fileName input file to be parsed
