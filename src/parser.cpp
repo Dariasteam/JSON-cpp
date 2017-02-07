@@ -21,7 +21,7 @@ int Parser::parseFile (std::string fileName, JsonTree& tree, bool verbs ) {
     std::stringstream buffer;
     buffer << getFile().rdbuf();
     std::string fileContent = buffer.str();
-    ObjectNameFlag result = parse (fileContent, "");
+    ObjectNameFlag result = parseExpectingElement (fileContent, "");
     file.close();
     tree.setTop (result.element);
     if (result.flag == EMPTY)
@@ -43,7 +43,7 @@ int Parser::parseString (std::string content, JsonTree& tree, bool verbs ) {
   errors.resize (0);
   warnings.resize (0);
   int returnValue = OK;
-    ObjectNameFlag result = parse (content, "");
+    ObjectNameFlag result = parseExpectingElement (content, "");
     tree.setTop (result.element);
     if (result.flag == EMPTY)
       return EMPTY_FILE;
@@ -80,13 +80,13 @@ Parser::ObjectNameFlag Parser::parseFinal (std::string& content, std::smatch& ma
 }
 
 Parser::ObjectNameFlag Parser::parseContainer (std::string& content, std::smatch& matcher,
-                            std::regex& endSymbol, ObjectContainer* obj, std::string path)
+                            std::regex& endSymbol, std::function<ObjectNameFlag(std::string&, std::string)> parseFunction, ObjectContainer* obj, std::string path)
 {
   content = content.substr(matcher[0].length(), content.size());
   ObjectNameFlag aux;
   int flag = REGULAR_ELEMENT;
   do {
-    aux = parse (content, path);
+    aux = parseFunction (content, path);
     if (aux.flag == EMPTY) {
       evaluateFlag(EMPTY, path, aux.key);
       break;
@@ -125,20 +125,24 @@ void Parser::evaluateFlag (int flag, std::string path, std::string finalElement)
     std::cerr << " parsing JSON: " << reverseflag[flag] << " in path: " << path << std::endl;
 }
 
-Parser::ObjectNameFlag Parser::parseKeyDef (std::string& content, std::smatch& matcher, std::string path) {
-  std::string key = matcher[1];
-  content = content.substr(matcher[0].length(), content.size());
-  path.append(".").append(key);
-  ObjectNameFlag aux = parse (content, path);
-  return {aux.element, key, aux.flag};
-}
-
-Parser::ObjectNameFlag Parser::parse (std::string& content, std::string path) {
+Parser::ObjectNameFlag Parser::parseExpectingKeyDef (std::string &content, std::string path) {
   std::smatch matcher;
   ObjectNameFlag Obj;
-  if (std::regex_search (content, matcher, keyDef))
-    return parseKeyDef (content, matcher, path);
-  else if (std::regex_search(content, matcher, finalQuote))
+  if (std::regex_search (content, matcher, keyDef)) {
+      std::string key = matcher[1];
+      content = content.substr(matcher[0].length(), content.size());
+      path.append(".").append(key);
+      ObjectNameFlag aux = parseExpectingElement (content, path);
+      return {aux.element, key, aux.flag};
+  } else {
+    return {nullptr, "", EMPTY};
+  }
+}
+
+Parser::ObjectNameFlag Parser::parseExpectingElement (std::string& content, std::string path) {
+  std::smatch matcher;
+  ObjectNameFlag Obj; 
+  if (std::regex_search(content, matcher, finalQuote))
     return parseFinal (content, matcher, new ObjectFinalString());
   else if (std::regex_search(content, matcher, finalBoolean))
     return parseFinal (content, matcher, new ObjectFinalBool());
@@ -147,9 +151,13 @@ Parser::ObjectNameFlag Parser::parse (std::string& content, std::string path) {
   else if (std::regex_search(content, matcher, finalNumberInt))
     return parseFinal (content, matcher, new ObjectFinalNumberInt());
   else if (std::regex_search (content, matcher, startBrace))
-    return parseContainer (content, matcher, nextBrace, new ObjectMap (), path);
+    return parseContainer (content, matcher, nextBrace,
+           [&](std::string& a, std::string b) { return parseExpectingKeyDef(a, b); },
+    new ObjectMap (), path);
   else if (std::regex_search (content, matcher, startBracket))
-    return parseContainer (content, matcher, nextBracket, new ObjectVector (), path);
+    return parseContainer (content, matcher, nextBracket,
+           [&](std::string& a, std::string b) { return parseExpectingElement(a, b); },
+    new ObjectVector (), path);
   return {nullptr, "", EMPTY};
 }
 

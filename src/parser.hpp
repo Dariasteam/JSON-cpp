@@ -39,6 +39,8 @@ enum JSON_PARSER_FLAG {
   EXPECTED_MORE,
   // [ERROR] the key has extraneous characters
   INVALID_KEY,
+  // [ERROR] a key was expected but not reached
+  EXPECTED_KEY,
   // used to check type. Greater values are warnings, lower errors
   CONTROL_WARNING,
   // [WARNING] the collection is empty
@@ -147,11 +149,12 @@ class Parser {
     int flag;
   };
 
-  const std::string reverseflag [7] = {"LAST_ELEMENT",
+  const std::string reverseflag [8] = {"LAST_ELEMENT",
                                        "REGULAR_ELEMENT",
                                        "NO_CLOSED",
                                        "EXPECTED_MORE",
                                        "INVALID_KEY",
+                                       "EXPECTED KEY",
                                        "-",
                                        "EMPTY"
                                       };
@@ -175,10 +178,11 @@ class Parser {
   bool hasComma (std::string buffer);
   void evaluateFlag (int flag, std::string path, std::string finalElement);
 
-  ObjectNameFlag parse (std::string& content, std::string path);
-  ObjectNameFlag parseKeyDef (std::string& content, std::smatch& matcher, std::string path);
+  ObjectNameFlag parseExpectingKeyDef (std::string& content, std::string path);
+  ObjectNameFlag parseExpectingElement (std::string& content, std::string path);
   ObjectNameFlag parseFinal (std::string& content, std::smatch& matcher, ObjectFinal* obj);
-  ObjectNameFlag parseContainer (std::string& content, std::smatch& matcher, std::regex& endSymbol, ObjectContainer* obj, std::string path);
+  ObjectNameFlag parseContainer (std::string& content, std::smatch& matcher, std::regex& endSymbol,
+                                 std::function<ObjectNameFlag(std::string&, std::string)> parseFunction, ObjectContainer* obj, std::string path);
 
   inline bool hasErrors () { return errors.size() > 0; }
   inline bool hasWarnings () { return warnings.size() > 0; }
