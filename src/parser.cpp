@@ -75,14 +75,14 @@ bool Parser::hasComma (std::string buffer) {
 
 Parser::ObjectNameFlag Parser::parseFinal (std::string& content, std::smatch& matcher, ObjectFinal* obj) {
   obj->replaceValue(matcher[1]);
-  content = content.substr(matcher[0].length(), content.size());
+  content.erase(0, matcher[0].length());
   return {obj, "", hasComma(matcher[2])};
 }
 
 Parser::ObjectNameFlag Parser::parseContainer (std::string& content, std::smatch& matcher,
                             std::regex& endSymbol, std::function<ObjectNameFlag(std::string&, std::string)> parseFunction, ObjectContainer* obj, std::string path)
 {
-  content = content.substr(matcher[0].length(), content.size());
+  content.erase(0, matcher[0].length());
   ObjectNameFlag aux;
   int flag = REGULAR_ELEMENT;
   do {
@@ -101,7 +101,7 @@ Parser::ObjectNameFlag Parser::parseContainer (std::string& content, std::smatch
     flag = EXPECTED_MORE;
     evaluateFlag(flag, path, aux.key);
   } else if (matcher[0].length() > 0) { 													// has matched
-    content = content.substr(matcher[0].length(), content.size());
+    content.erase(0, matcher[0].length());
     flag = hasComma(matcher[2]);
   } else {
     flag = NO_CLOSED;
@@ -130,7 +130,7 @@ Parser::ObjectNameFlag Parser::parseExpectingKeyDef (std::string &content, std::
   ObjectNameFlag Obj;
   if (std::regex_search (content, matcher, keyDef)) {
       std::string key = matcher[1];
-      content = content.substr(matcher[0].length(), content.size());
+      content.erase(0, matcher[0].length());
       path.append(".").append(key);
       ObjectNameFlag aux = parseExpectingElement (content, path);
       return {aux.element, key, aux.flag};
