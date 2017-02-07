@@ -172,6 +172,8 @@ class Parser {
   bool hasComma ();
   void evaluateFlag (int flag, std::string path, std::string finalElement);
 
+  void removeFirstBlanks ();
+
   ObjectNameFlag parseExpectingKeyDef (std::string& path);
   ObjectNameFlag parseExpectingElement (std::string& path);
 

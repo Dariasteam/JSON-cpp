@@ -63,7 +63,7 @@ bool Parser::openFile (std::string fileName) {
 }
 
 bool Parser::hasComma () {
-  content.erase(remove_if(content.begin(), content.end(), isspace), content.end());
+  removeFirstBlanks();
   if(content[0] == ',') {
     content.erase(0, 1);
     return true;
@@ -90,7 +90,7 @@ Parser::ObjectNameFlag Parser::parseVector (std::string path)
       break;
     }
     i++;
-    content.erase(remove_if(content.begin(), content.end(), isspace), content.end());
+    removeFirstBlanks();
   } while (content[0] != ']' && aux.flag == REGULAR_ELEMENT);
   if (aux.flag == REGULAR_ELEMENT) {
     flag = EXPECTED_MORE;
@@ -125,7 +125,7 @@ Parser::ObjectNameFlag Parser::parseMap (std::string& path)
       break;
     }
 
-    content.erase(remove_if(content.begin(), content.end(), isspace), content.end());
+    removeFirstBlanks();
   } while (content[0] != '}' && aux.flag == REGULAR_ELEMENT);
   if (aux.flag == REGULAR_ELEMENT) {
     flag = EXPECTED_MORE;
@@ -156,7 +156,7 @@ void Parser::evaluateFlag (int flag, std::string path, std::string finalElement)
 }
 
 Parser::ObjectNameFlag Parser::parseExpectingKeyDef (std::string& path) {
-  content.erase(remove_if(content.begin(), content.end(), isspace), content.end());
+  removeFirstBlanks();
   if (content[0] == '\"') {
     content.erase(0, 1);
     int i = 0;
@@ -240,16 +240,27 @@ Parser::ObjectNameFlag Parser::parseNumber() {
   }
 }
 
+void Parser::removeFirstBlanks() {
+  int max = content.size();
+  int i = 0;
+  while(1) {
+    if (!(content[i] == ' ' || content[i] == '\t' || content[i] == '\n' ))
+      break;
+    i++;
+  }
+  content.erase(0, i);
+}
+
 Parser::ObjectNameFlag Parser::parseExpectingElement (std::string& path) {
-  content.erase(remove_if(content.begin(), content.end(), isspace), content.end());
+  removeFirstBlanks();
   switch (content[0]) {
     case '{':
       content.erase(0, 1);
-      content.erase(remove_if(content.begin(), content.end(), isspace), content.end());
+      removeFirstBlanks();
       return parseMap (path);
     case '[':
       content.erase(0, 1);
-      content.erase(remove_if(content.begin(), content.end(), isspace), content.end());
+      removeFirstBlanks();
       return parseVector (path);
     case '\"':
       return parseQuote();
