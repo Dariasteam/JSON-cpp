@@ -7,12 +7,16 @@ int Parser::parseFile (const std::string fileName, JsonTree& tree, bool verbs) {
   warnings.resize (0);
   //verbose = verbs;
   int returnValue = OK;
+  parseIndex = 0;
   if (openFile(fileName)) {
     std::stringstream buffer;
     buffer << getFile().rdbuf();
     content = buffer.str();
     std::string empty ("");
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     ObjectNameFlag result = parseExpectingElement (empty);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     file.close();
     tree.setTop (result.element);
     if (result.flag == EMPTY)
@@ -51,7 +55,8 @@ int Parser::parseString (std::string cnt, JsonTree& tree, bool verbs ) {
 
 Parser::Parser () :
   errors (0),
-  warnings (0)
+  warnings (0),
+  parseIndex (0)
   {}
 
 bool Parser::openFile (std::string fileName) {
@@ -64,16 +69,15 @@ bool Parser::openFile (std::string fileName) {
 
 bool Parser::hasComma () {
   removeFirstBlanks();
-  if(content[0] == ',') {
-    content.erase(0, 1);
+  if(content[parseIndex] == ',') {
+    parseIndex++;
     return true;
   } else {
     return false;
   }
 }
 
-Parser::ObjectNameFlag Parser::parseVector (std::string path)
-{
+Parser::ObjectNameFlag Parser::parseVector (std::string path) {
   ObjectVector* obj = new ObjectVector ();
   ObjectNameFlag aux;
   int flag = REGULAR_ELEMENT;
@@ -91,12 +95,12 @@ Parser::ObjectNameFlag Parser::parseVector (std::string path)
     }
     i++;
     removeFirstBlanks();
-  } while (content[0] != ']' && aux.flag == REGULAR_ELEMENT);
+  } while (content[parseIndex] != ']' && aux.flag == REGULAR_ELEMENT);
   if (aux.flag == REGULAR_ELEMENT) {
     flag = EXPECTED_MORE;
     evaluateFlag(flag, path, aux.key);
-  } else if (content[0] == ']') { 													// has matched
-    content.erase(0, 1);
+  } else if (content[parseIndex] == ']') { 													// has matched
+    parseIndex++;
     flag = hasComma();
   } else {
     flag = NO_CLOSED;
@@ -105,8 +109,7 @@ Parser::ObjectNameFlag Parser::parseVector (std::string path)
   return {obj, "", flag};
 }
 
-Parser::ObjectNameFlag Parser::parseMap (std::string& path)
-{
+Parser::ObjectNameFlag Parser::parseMap (std::string& path) {
   ObjectMap* obj = new ObjectMap ();
   int flag = REGULAR_ELEMENT;
   ObjectNameFlag aux;
@@ -126,12 +129,12 @@ Parser::ObjectNameFlag Parser::parseMap (std::string& path)
     }
 
     removeFirstBlanks();
-  } while (content[0] != '}' && aux.flag == REGULAR_ELEMENT);
+  } while (content[parseIndex] != '}' && aux.flag == REGULAR_ELEMENT);
   if (aux.flag == REGULAR_ELEMENT) {
     flag = EXPECTED_MORE;
     evaluateFlag(flag, path, aux.key);
-  } else if (content[0] == '}') {
-    content.erase(0, 1);
+  } else if (content[parseIndex] == '}') {
+    parseIndex++;
     flag = hasComma();
   } else {
     flag = NO_CLOSED;
@@ -157,18 +160,17 @@ void Parser::evaluateFlag (int flag, std::string path, std::string finalElement)
 
 Parser::ObjectNameFlag Parser::parseExpectingKeyDef (std::string& path) {
   removeFirstBlanks();
-  if (content[0] == '\"') {
-    content.erase(0, 1);
-    int i = 0;
+  if (content[parseIndex] == '\"') {
+    parseIndex++;
     std::string key;
-    while (content[i] != '\"') {
-      key.push_back(content[i]);
-      i++;
+    while (content[parseIndex] != '\"') {
+      key.push_back(content[parseIndex]);
+      parseIndex++;
     }
-    while (content[i] != ':') {
-      i++;
+    while (content[parseIndex] != ':') {
+      parseIndex++;
     }
-    content.erase(0, i + 1);
+    parseIndex++;
     std::string newPath (path + "." + key);
     ObjectNameFlag aux = parseExpectingElement (newPath);
     return { aux.element, key, aux.flag };
@@ -178,35 +180,33 @@ Parser::ObjectNameFlag Parser::parseExpectingKeyDef (std::string& path) {
 }
 
 Parser::ObjectNameFlag Parser::parseQuote() {
-  content.erase(0, 1);
-  int i = 0;
+  parseIndex++;
   std::string buff;
-  while (content[i] != '\"') {
-    buff.push_back(content[i]);
-    i++;
+  while (content[parseIndex] != '\"') {
+    buff.push_back(content[parseIndex]);
+    parseIndex++;
   }
-  content.erase(0, i + 1);
+  parseIndex++;
   return {new ObjectFinalString (buff), "", hasComma()};
 }
 
 Parser::ObjectNameFlag Parser::parseBool() {
-  if (content.substr(0, 4) == "true") {
-    content.erase(0, 4);
+  if (content.substr(parseIndex, 4) == "true") {
+    parseIndex += 4;
     return {new ObjectFinalBool (true), "", hasComma()};
-  } else if (content.substr(0, 5) == "false") {
-    content.erase(0, 5);
+  } else if (content.substr(parseIndex, 5) == "false") {
+    parseIndex += 5;
     return {new ObjectFinalBool (false), "", hasComma()};
   } else {
     return {nullptr, "", EXPECTED_KEY};
   }
 }
 
-Parser::ObjectNameFlag Parser::parseNumber() {
-  int i = 0;
+Parser::ObjectNameFlag Parser::parseNumber() {  
   std::string buff;
   bool end = false;  
-  while (!end && i < content.size()) {
-    switch (content[i]) {
+  while (!end && parseIndex < content.size()) {
+    switch (content[parseIndex]) {
       case ' ':
         end = true;
         break;
@@ -220,20 +220,19 @@ Parser::ObjectNameFlag Parser::parseNumber() {
         end = true;
         break;
       default:
-        buff.push_back(content[i]);
-        i++;
+        buff.push_back(content[parseIndex]);
+        parseIndex++;
         break;
     }    
   }
-  if (i > 0) {
+  if (!buff.empty()) {
     double number;
     try {
       number = stod (buff);
     }
     catch (std::invalid_argument e) {
       return {nullptr, "", INVALID_KEY};
-    }
-    content.erase(0, i);
+    }    
     return {new ObjectFinalNumberFloat (number), "", hasComma()};
   } else {
     return {nullptr, "", EMPTY};
@@ -242,24 +241,22 @@ Parser::ObjectNameFlag Parser::parseNumber() {
 
 void Parser::removeFirstBlanks() {
   int max = content.size();
-  int i = 0;
-  while(1) {
-    if (!(content[i] == ' ' || content[i] == '\t' || content[i] == '\n' ))
+  while(1 && parseIndex < max) {
+    if (!(content[parseIndex] == ' ' || content[parseIndex] == '\t'|| content[parseIndex] == '\n' ))
       break;
-    i++;
+    parseIndex++;
   }
-  content.erase(0, i);
 }
 
 Parser::ObjectNameFlag Parser::parseExpectingElement (std::string& path) {
   removeFirstBlanks();
-  switch (content[0]) {
+  switch (content[parseIndex]) {
     case '{':
-      content.erase(0, 1);
+      parseIndex++;
       removeFirstBlanks();
       return parseMap (path);
     case '[':
-      content.erase(0, 1);
+      parseIndex++;
       removeFirstBlanks();
       return parseVector (path);
     case '\"':

@@ -164,6 +164,7 @@ class Parser {
   std::ifstream file;
 
   std::string content;
+  unsigned parseIndex;
 
   bool verbose;
 
