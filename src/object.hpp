@@ -2,9 +2,9 @@
 #define ABSTRACTOBJECT_H
 
 #include <vector>
+#include <regex>
 #include <string>
 #include <map>
-#include <regex>
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -156,6 +156,7 @@ class ObjectContainer : public AbstractObject {
 protected:
   ObjectContainer () : AbstractObject () {}
   ~ObjectContainer () = 0;
+  virtual std::string pathSplitter (std::string& path) = 0;
 public:
   /* Inserts a son node in this object
    * @key Key of the element ("" in vector case)
@@ -166,7 +167,7 @@ public:
    *
    * @return the operation is successfuly finished or not
    * */
-  virtual bool insert (std::string key, AbstractObject* obj) = 0;
+  virtual bool insert (std::string key, AbstractObject* obj) = 0;  
 };
 
 /* Representation of []
@@ -184,7 +185,7 @@ public:
 class ObjectVector : public ObjectContainer{
 private:
   std::vector <AbstractObject*> array;
-  static std::regex tokenRgx;
+  std::string pathSplitter (std::string& path);
 public:
   ObjectVector () {}
   ~ObjectVector ();
@@ -290,7 +291,7 @@ class ObjectMap : public ObjectContainer {
 private:
   std::vector <std::string> keys;
   std::map <std::string, AbstractObject*> hash;
-  static std::regex tokenRgx;
+  std::string pathSplitter (std::string& path);
 public:
   ~ObjectMap ();
   ObjectMap () {}

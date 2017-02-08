@@ -2,9 +2,6 @@
 
 using namespace json;
 
-std::regex ObjectVector::tokenRgx = std::regex ("^(?:\\.)?(?:\\[)?(\\d+)(?:\\])?(?:\\.|$)");
-std::regex ObjectMap::tokenRgx = std::regex    ("^(?:\\.)?(?:\\[')?(.+?)(?:'\\])?(?:\\.|$)");
-
 const char* const ObjectVector::name = "VECTOR";
 const char* const ObjectMap::name = "MAP";
 const char* const ObjectFinalBool::name = "BOOL";
@@ -107,7 +104,7 @@ AbstractObject* ObjectMap::operator[](std::string key) {
 }
 
 bool ObjectVector::insert (std::string key, AbstractObject* obj) {
-  if (key == "") {
+  if (key.empty()) {
     array.push_back (obj);
     return true;
   } else {
@@ -142,13 +139,12 @@ bool ObjectMap::set (std::string key, AbstractObject* obj) {
     return replace (key, obj);
 }
 
-AbstractObject* ObjectVector::get (std::string path) {
-  std::smatch matcher;
+AbstractObject* ObjectVector::get (std::string path) {  
   if (path.size() == 0)
     return this;
-  if (std::regex_search (path, matcher, tokenRgx)) {
-    AbstractObject* son = operator[](stoi (matcher[1]));
-    path = path.substr(matcher[0].length(), path.size());
+  std::string key = pathSplitter(path);
+  if (!key.empty()) {
+      AbstractObject* son = operator[](stoi(key));
     if (son != nullptr) {
       return son->get (path);
     }
@@ -156,13 +152,12 @@ AbstractObject* ObjectVector::get (std::string path) {
   return nullptr;
 }
 
-AbstractObject* ObjectMap::get (std::string path) {
-  std::smatch matcher;
+AbstractObject* ObjectMap::get (std::string path) {  
   if (path.empty() || path == ".")
     return this;
-  if (std::regex_search (path, matcher, tokenRgx)) {
-    AbstractObject* son = operator[](matcher[1]);
-    path = path.substr(matcher[0].length(), path.size());
+  std::string key = pathSplitter(path);
+  if (!key.empty()) {
+    AbstractObject* son = operator[](key);
     if (son != nullptr)
       return son->get (path);
   }
@@ -193,11 +188,49 @@ bool ObjectMap::erase (std::string key) {
     return remove (key);
 }
 
-bool ObjectMap::add (std::string path, AbstractObject* obj) {
-  std::smatch matcher;
-  if (regex_search (path, matcher, tokenRgx)) {
-    AbstractObject* son = operator[](matcher[1]);
-    std::string newPath = path.substr(matcher[0].length(), path.size());
+std::string ObjectVector::pathSplitter(std::string &path) {
+  int i = 0;
+  std::string key;
+  if (path[0] == '.') {
+    path.erase(0, 1);
+  }
+  if (path[0] == '[') {
+    i++;
+    while (path[i] != ']' && i < path.size()){
+      key.push_back(path[i]);
+      i++;
+    }
+  } else {
+    while (i < path.size() && !(path[i] == '.' || path[i] == '$')){
+      key.push_back(path[i]);
+      i++;
+    }
+  }
+  path.erase(0, i + 1);
+  return key;
+}
+
+std::string ObjectMap::pathSplitter(std::string &path) {
+  int i = 0;
+  std::string key;
+  if (path[0] == '.') {
+    path.erase(0, 1);
+  }
+  while (i < path.size() && !(path[i] == '.' || path[i] == '$')){
+    key.push_back(path[i]);
+    i++;
+  }
+  path.erase(0, i + 1);
+  return key;
+}
+
+bool ObjectMap::add (std::string path, AbstractObject* obj) {  
+  std::string key = pathSplitter(path);
+  std::string oldPath = path;
+  if (!key.empty()) {
+    AbstractObject* son = operator[](key);
+    std::string newPath = path;
+    path = oldPath;
     if (son != nullptr) {
       if (!newPath.empty() || dynamic_cast<ObjectVector*>(son)) {
         return son->add (newPath, obj);
@@ -208,12 +241,12 @@ bool ObjectMap::add (std::string path, AbstractObject* obj) {
     } else {
       if (!newPath.empty()) {
         son = new ObjectMap();
-        if (insert (matcher[1], son))
+        if (insert (key, son))
           return son->add (newPath, obj);
         else
           return false;
       } else {
-        return insert (matcher[1], obj);
+        return insert (key, obj);
       }
     }
   }
@@ -222,11 +255,13 @@ bool ObjectMap::add (std::string path, AbstractObject* obj) {
 }
 
 bool ObjectVector::add (std::string path, AbstractObject* obj) {
-  std::smatch matcher;
   AbstractObject* son;
-  if (regex_search (path, matcher, tokenRgx)) {
-    son = operator[](stoi (matcher[1]));
-    std::string newPath = path.substr(matcher[0].length(), path.size());
+  std::string key = pathSplitter(path);
+  std::string oldPath = path;
+  if (!key.empty()) {
+    son = operator[](stoi (key));
+    std::string newPath = path;
+    path = oldPath;
     if (son != nullptr) {
       return son->add (newPath, obj);
     } else {
@@ -364,9 +399,7 @@ ObjectVector::~ObjectVector () {
   array.clear();
 }
 
-ObjectMap::~ObjectMap () {
-  for (auto element : hash)
-    delete element.second;
+ObjectMap::~ObjectMap () {  
   hash.clear();
 }
 

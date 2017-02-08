@@ -5,7 +5,7 @@ using namespace json;
 int Parser::parseFile (const std::string fileName, JsonTree& tree, bool verbs) {
   errors.resize (0);
   warnings.resize (0);
-  //verbose = verbs;
+  verbose = verbs;
   int returnValue = OK;
   parseIndex = 0;
   if (openFile(fileName)) {

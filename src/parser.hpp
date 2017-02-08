@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <regex>
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -9,7 +8,7 @@
 #include <exception>
 
 #include "./object.hpp"
-#include "manager.hpp"
+#include "./manager.hpp"
 
 namespace json {
 
