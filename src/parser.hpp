@@ -174,11 +174,11 @@ class Parser {
 
   void removeFirstBlanks ();
 
-  ObjectNameFlag parseExpectingKeyDef (std::string& path);
-  ObjectNameFlag parseExpectingElement (std::string& path);
+  ObjectNameFlag parseExpectingKeyDef (std::string path);
+  ObjectNameFlag parseExpectingElement (std::string path);
 
   ObjectNameFlag parseVector (std::string path);
-  ObjectNameFlag parseMap (std::string& path);
+  ObjectNameFlag parseMap (std::string path);
 
   ObjectNameFlag parseBool ();
   ObjectNameFlag parseQuote ();

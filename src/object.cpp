@@ -96,9 +96,10 @@ AbstractObject* ObjectVector::operator[] (unsigned index) {
     return array [index];
 }
 
-AbstractObject* ObjectMap::operator[](std::string key) {
-  if (hash.count (key))
-    return hash[key];
+AbstractObject* ObjectMap::operator[](std::string key) {  
+  auto it = hash.find(key);
+  if (it != hash.end())
+    return it->second;
   else
     return nullptr;
 }
@@ -114,7 +115,7 @@ bool ObjectVector::insert (std::string key, AbstractObject* obj) {
 }
 
 bool ObjectMap::insert (std::string key, AbstractObject* obj) {
-  if (key != "" && !hash.count (key)) {
+  if (!key.empty() && !hash.count (key)) {
     keys.push_back (key);
     hash.insert(std::pair <std::string, AbstractObject*> (key, obj));
     return true;
@@ -153,7 +154,7 @@ AbstractObject* ObjectVector::get (std::string path) {
 }
 
 AbstractObject* ObjectMap::get (std::string path) {  
-  if (path.empty() || path == ".")
+  if (path.empty() || (path.size() == 1 &&  path[0] == '.'))
     return this;
   std::string key = pathSplitter(path);
   if (!key.empty()) {
