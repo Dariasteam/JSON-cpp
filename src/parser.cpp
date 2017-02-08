@@ -11,12 +11,8 @@ int Parser::parseFile (const std::string fileName, JsonTree& tree, bool verbs) {
   if (openFile(fileName)) {
     std::stringstream buffer;
     buffer << getFile().rdbuf();
-    content = buffer.str();
-    std::string empty ("");
-    struct timespec start, end;
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-    ObjectNameFlag result = parseExpectingElement (empty);
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    content = buffer.str();            
+    ObjectNameFlag result = parseExpectingElement ("");
     file.close();
     tree.setTop (result.element);
     if (result.flag == EMPTY)
@@ -38,9 +34,9 @@ int Parser::parseString (std::string cnt, JsonTree& tree, bool verbs ) {
   content = cnt;
   errors.resize (0);
   warnings.resize (0);
-  std::string empty ("");
+  parseIndex = 0;
   int returnValue = OK;
-  ObjectNameFlag result = parseExpectingElement (empty);
+  ObjectNameFlag result = parseExpectingElement ("");
   tree.setTop (result.element);
   if (result.flag == EMPTY)
      return EMPTY_FILE;
@@ -78,10 +74,11 @@ bool Parser::hasComma () {
 }
 
 Parser::ObjectNameFlag Parser::parseVector (std::string path) {
+  parseIndex++;
   ObjectVector* obj = new ObjectVector ();
   ObjectNameFlag aux;
   int flag = REGULAR_ELEMENT;
-  int i = 0;
+  unsigned i = 0;
   do {
     aux = parseExpectingElement (path + "." + std::to_string(i));
     if (aux.flag == EMPTY) {
@@ -109,6 +106,7 @@ Parser::ObjectNameFlag Parser::parseVector (std::string path) {
 }
 
 Parser::ObjectNameFlag Parser::parseMap (std::string path) {
+  parseIndex++;
   ObjectMap* obj = new ObjectMap ();
   int flag = REGULAR_ELEMENT;
   ObjectNameFlag aux;
@@ -200,7 +198,7 @@ Parser::ObjectNameFlag Parser::parseBool() {
 
 Parser::ObjectNameFlag Parser::parseNumber() {  
   std::string buff;
-  bool end = false;  
+  bool end = false;
   while (!end && parseIndex < content.size()) {
     switch (content[parseIndex]) {
       case ' ':
@@ -235,9 +233,9 @@ Parser::ObjectNameFlag Parser::parseNumber() {
   }
 }
 
-// Unpdate parseIndex position ignoring all blanks
+// Updates parseIndex position ignoring all blanks
 void Parser::removeFirstBlanks() {
-  int max = content.size();
+  unsigned max = content.size();
   char element = content[parseIndex];
   while((element == ' ' || element == '\t'|| element == '\n' ) && parseIndex < max) {
     element = content[++parseIndex];
@@ -248,12 +246,8 @@ Parser::ObjectNameFlag Parser::parseExpectingElement (std::string path) {
   removeFirstBlanks();
   switch (content[parseIndex]) {
     case '{':
-      parseIndex++;
-      removeFirstBlanks();
       return parseMap (path);
-    case '[':
-      parseIndex++;
-      removeFirstBlanks();
+    case '[':      
       return parseVector (path);
     case '\"':
       return parseQuote();
