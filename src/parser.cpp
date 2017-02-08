@@ -121,13 +121,10 @@ Parser::ObjectNameFlag Parser::parseMap (std::string& path) {
       evaluateFlag(EMPTY, path, aux.key);
       break;
     }
-
-
     if (!obj->insert (aux.key, aux.element)) {
       evaluateFlag(INVALID_KEY, path, aux.key);
       break;
     }
-
     removeFirstBlanks();
   } while (content[parseIndex] != '}' && aux.flag == REGULAR_ELEMENT);
   if (aux.flag == REGULAR_ELEMENT) {
@@ -162,11 +159,11 @@ Parser::ObjectNameFlag Parser::parseExpectingKeyDef (std::string& path) {
   removeFirstBlanks();
   if (content[parseIndex] == '\"') {
     parseIndex++;
-    std::string key;
+    int from = parseIndex;
     while (content[parseIndex] != '\"') {
-      key.push_back(content[parseIndex]);
       parseIndex++;
     }
+    std::string key (content.substr(from, parseIndex - from));
     while (content[parseIndex] != ':') {
       parseIndex++;
     }
