@@ -172,17 +172,18 @@ class Parser {
   bool hasComma ();
   void evaluateFlag (int flag, std::string path, std::string finalElement);
 
-  void removeFirstBlanks ();
+  void ignoreFirstBlanks ();
 
   ObjectNameFlag parseExpectingKeyDef (std::string path);
   ObjectNameFlag parseExpectingElement (std::string path);
 
-  ObjectNameFlag parseVector (std::string path);
-  ObjectNameFlag parseMap (std::string path);
+  ObjectNameFlag parseContainer (std::string path, ObjectContainer* obj, char symbol, std::function<ObjectNameFlag(std::string a, int b)> continueParsing);
 
-  ObjectNameFlag parseBool ();
+  ObjectNameFlag parseBool (bool boolean);
   ObjectNameFlag parseQuote ();
   ObjectNameFlag parseNumber ();
+
+  int parse (JsonTree& tree);
 
   inline bool hasErrors () { return errors.size() > 0; }
   inline bool hasWarnings () { return warnings.size() > 0; }

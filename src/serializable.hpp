@@ -386,6 +386,7 @@ protected:
   void  const initialize (JsonTree& tree, func functor, std::vector <t>& vect, Args&... args) {
     std::string newPath = functor();
     int size = tree.getSizeAt(newPath);
+    //- because it can return -1 to indicate non vector path
     if (size > 0)
       vect.resize (size);
 
