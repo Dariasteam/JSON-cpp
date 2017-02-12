@@ -559,6 +559,13 @@ TEST_CASE ("Can serialize all simple types, hash like") {
   REQUIRE (obj.h);
 }
 
+int wordCalc (int i, int j) {
+  if ((5 - i) + j < 5)
+    return (5 - i) + j;
+  else
+    return  j - i;
+}
+
 TEST_CASE ("Can serialize matrixes, vector like") {
   class A : public Serializable  {
   public:
@@ -574,7 +581,211 @@ TEST_CASE ("Can serialize matrixes, vector like") {
   CHECK (obj.a.size() > 0);
   for (int i = 0; i < obj.a.size(); i++) {
     for (int j = 0; j < obj.a[i].size(); j++)
-      CHECK (obj.a[i][j] == (i * obj.a.size()) + j);
+      CHECK (obj.a[i][j] == (i * obj.a.size()) + j + 1);
   }
-
+  CHECK (obj.b.size() > 0);
+  for (int i = 0; i < obj.b.size(); i++) {
+    for (int j = 0; j < obj.b[i].size(); j++)
+      CHECK (obj.b[i][j] == (double((i * obj.b.size()) + j)) / obj.b.size());
+  }
+  vector<string> words = {"hi", "this", "is", "a", "string"};
+  CHECK (obj.c.size() > 0);
+  for (int i = 0; i < obj.c.size(); i++) {
+    for (int j = 0; j < obj.c[i].size(); j++)
+      CHECK (obj.c[i][j] == words[ wordCalc(i, j) ]);
+  }
 }
+
+TEST_CASE ("Can serialize matrixes, hash like") {
+  class A : public Serializable  {
+  public:
+    vector <vector <int> > a;
+    vector <vector <double> > b;
+    vector <vector <string> > c;
+    SERIAL_START
+      "int",    a,
+      "double", b,
+      "string", c
+    SERIAL_END
+  };
+  A obj;
+  obj.serializeIn("tests/serializable.json", "sixth");
+  CHECK (obj.a.size() > 0);
+  for (int i = 0; i < obj.a.size(); i++) {
+    for (int j = 0; j < obj.a[i].size(); j++)
+      CHECK (obj.a[i][j] == (i * obj.a.size()) + j + 1);
+  }
+  CHECK (obj.b.size() > 0);
+  for (int i = 0; i < obj.b.size(); i++) {
+    for (int j = 0; j < obj.b[i].size(); j++)
+      CHECK (obj.b[i][j] == (double((i * obj.b.size()) + j)) / obj.b.size());
+  }
+  vector<string> words = {"hi", "this", "is", "a", "string"};
+  CHECK (obj.c.size() > 0);
+  for (int i = 0; i < obj.c.size(); i++) {
+    for (int j = 0; j < obj.c[i].size(); j++)
+      CHECK (obj.c[i][j] == words[ wordCalc(i, j) ]);
+  }
+}
+
+TEST_CASE ("Can serialize another serializable class, vector like in vector like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    SERIAL_START
+      a
+    SERIAL_END
+  };
+
+  class B : public Serializable  {
+  public:
+    A a;
+    int b;
+    SERIAL_START
+      b, a
+    SERIAL_END
+  };
+  B obj;
+  obj.serializeIn("tests/serializable.json", "seventh");
+  CHECK (obj.b == 9);
+  CHECK (obj.a.a == 288);
+}
+
+TEST_CASE ("Can serialize another serializable class, hash like in vector like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    SERIAL_START
+      "element", a
+    SERIAL_END
+  };
+
+  class B : public Serializable  {
+  public:
+    A a;
+    int b;
+    SERIAL_START
+      b, a
+    SERIAL_END
+  };
+  B obj;
+  obj.serializeIn("tests/serializable.json", "eigth");
+  CHECK (obj.b == 50);
+  CHECK (obj.a.a == 900);
+}
+
+TEST_CASE ("Can serialize another serializable class, vector like in hash like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    SERIAL_START
+      a
+    SERIAL_END
+  };
+
+  class B : public Serializable  {
+  public:
+    A a;
+    int b;
+    SERIAL_START
+      "number", b,
+      "class", a
+    SERIAL_END
+  };
+  B obj;
+  obj.serializeIn("tests/serializable.json", "ninth");
+  CHECK (obj.b == 44);
+  CHECK (obj.a.a == 55);
+}
+
+TEST_CASE ("Can serialize another serializable class, hash like in hash like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    SERIAL_START
+      "element", a
+    SERIAL_END
+  };
+
+  class B : public Serializable  {
+  public:
+    A a;
+    int b;
+    SERIAL_START
+      "number", b,
+      "class", a
+    SERIAL_END
+  };
+  B obj;
+  obj.serializeIn("tests/serializable.json", "tenth");
+  CHECK (obj.b == 777);
+  CHECK (obj.a.a == -5);
+}
+
+// These elements are not inside a TEST_CASE due to Catch limitations handling static methods
+class A : public Serializable  {
+public:
+  int number;
+  SERIAL_START
+   number
+  SERIAL_END
+};
+
+class B : public A  {
+public:
+  string word;
+  SERIAL_START_INHERITED (B, A)
+    word
+  SERIAL_END
+};
+INHERITS (B)
+
+TEST_CASE ("Can serialize inheritance, vector like") {
+  B obj;
+  obj.serializeIn("tests/serializable.json", "eleventh");
+  CHECK (obj.number == -50);
+  CHECK (obj.word == "fine");
+}
+
+// These elements are not inside a TEST_CASE due to Catch limitations handling static methods
+class C : public Serializable  {
+public:
+  int number;
+  SERIAL_START
+   "number", number
+  SERIAL_END
+};
+
+class D : public C  {
+public:
+  string word;
+  SERIAL_START_INHERITED (D, C)
+    "word", word
+  SERIAL_END
+};
+
+TEST_CASE ("Can serialize inheritance, hash like") {
+  D obj;
+  obj.serializeIn("tests/serializable.json", "twelfth");
+  CHECK (obj.number == -3);
+  CHECK (obj.word == "working");
+}
+
+class BB : public A  {
+public:
+  bool value;
+  SERIAL_START_INHERITED (BB, A)
+    value
+  SERIAL_END
+};
+
+INHERITS (BB)
+/*
+TEST_CASE ("Can serialize polymorphism, vector like") {
+  A obj1;
+  A obj1;
+  obj.serializeIn("tests/serializable.json", "twelfth");
+  CHECK (obj.number == -3);
+  CHECK (obj.word == "working");
+}
+*/
