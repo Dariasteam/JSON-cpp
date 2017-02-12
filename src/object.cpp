@@ -145,7 +145,14 @@ AbstractObject* ObjectVector::get (std::string path) {
     return this;
   std::string key = pathSplitter(path);
   if (!key.empty()) {
-      AbstractObject* son = operator[](stoi(key));
+    int index;
+    try {
+      index = stoi (key);
+    }
+    catch (std::invalid_argument e) {
+      return nullptr;
+    }
+    AbstractObject* son = operator[](index);
     if (son != nullptr) {
       return son->get (path);
     }
@@ -195,14 +202,14 @@ std::string ObjectVector::pathSplitter(std::string &path) {
   if (path[0] == '.') {
     path.erase(0, 1);
   }
-  if (path[0] == '[') {
+  if (!path.empty() && path[0] == '[') {
     i++;
-    while (path[i] != ']' && i < path.size()){
+    while (i < path.size() && path[i] != ']'){
       key.push_back(path[i]);
       i++;
     }
   } else {
-    while (i < path.size() && !(path[i] == '.' || path[i] == '$')){
+    while (i < path.size() && !(path[i] == '.')){
       key.push_back(path[i]);
       i++;
     }
@@ -217,7 +224,7 @@ std::string ObjectMap::pathSplitter(std::string &path) {
   if (path[0] == '.') {
     path.erase(0, 1);
   }
-  while (i < path.size() && !(path[i] == '.' || path[i] == '$')){
+  while (i < path.size() && !(path[i] == '.')){
     key.push_back(path[i]);
     i++;
   }
@@ -260,7 +267,14 @@ bool ObjectVector::add (std::string path, AbstractObject* obj) {
   std::string key = pathSplitter(path);
   std::string oldPath = path;
   if (!key.empty()) {
-    son = operator[](stoi (key));
+    int index;
+    try {
+      index = stoi (key);
+    }
+    catch (std::invalid_argument e) {
+      return false;
+    }
+    son = operator[](index);
     std::string newPath = path;
     path = oldPath;
     if (son != nullptr) {

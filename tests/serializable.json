@@ -80,6 +80,38 @@
     "twelfth" : {
         "number" : -3,
         "word" : "working"
-    }
+    },
+    "thirteenth" : [
+        {
+            "$classType" : "B",
+            "$classContent" : [
+                -80,
+                "serialization"
+            ]
+        },
+        {
+            "$classType" : "BB",
+            "$classContent" : [
+                111,
+                true
+            ]
+        }
+    ],
+    "fourteenth" : [
+        {
+            "$classType" : "D",
+            "$classContent" : {
+                "number" : 80,
+                "word" : "energya"
+            }
+        },
+        {
+            "$classType" : "DD",
+            "$classContent" : {
+                "value" : -2.009,
+                "number" : 40
+            }
+        }
+    ]
 
 }

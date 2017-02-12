@@ -738,6 +738,7 @@ public:
     word
   SERIAL_END
 };
+
 INHERITS (B)
 
 TEST_CASE ("Can serialize inheritance, vector like") {
@@ -764,6 +765,8 @@ public:
   SERIAL_END
 };
 
+INHERITS (D)
+
 TEST_CASE ("Can serialize inheritance, hash like") {
   D obj;
   obj.serializeIn("tests/serializable.json", "twelfth");
@@ -780,12 +783,50 @@ public:
 };
 
 INHERITS (BB)
-/*
+
 TEST_CASE ("Can serialize polymorphism, vector like") {
-  A obj1;
-  A obj1;
-  obj.serializeIn("tests/serializable.json", "twelfth");
-  CHECK (obj.number == -3);
-  CHECK (obj.word == "working");
+  class Container : public Serializable {
+  public:
+    A* obj1;
+    A* obj2;
+  SERIAL_START
+    obj1, obj2
+  SERIAL_END
+  };
+
+  Container container;
+  container.serializeIn("tests/serializable.json", "thirteenth");
+  CHECK (container.obj1->number == -80);
+  CHECK (container.obj2->number == 111);
+  CHECK (((B*)container.obj1)->word == "serialization");
+  CHECK (((BB*)container.obj2)->value == true);
 }
-*/
+
+class DD : public C  {
+public:
+  double value;
+  SERIAL_START_INHERITED (DD, C)
+    "value", value
+  SERIAL_END
+};
+
+INHERITS (DD)
+
+TEST_CASE ("Can serialize polymorphism, hash like") {
+  class Container : public Serializable {
+  public:
+    C* obj1;
+    C* obj2;
+  SERIAL_START
+    obj1,
+    obj2
+  SERIAL_END
+  };
+
+  Container container;
+  container.serializeIn("tests/serializable.json", "fourteenth");
+  CHECK (container.obj1->number == 80);
+  CHECK (container.obj2->number == 40);
+  CHECK (((D*)container.obj1)->word == "energya");
+  CHECK (((DD*)container.obj2)->value == -2.009);
+}
