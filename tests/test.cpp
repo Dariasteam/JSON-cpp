@@ -3,6 +3,7 @@
 
 #include "../src/parser.hpp"
 #include "../src/manager.hpp"
+#include "../src/serializable.hpp"
 
 #include <string>
 #include <vector>
@@ -431,4 +432,12 @@ TEST_CASE ("Can write files") {
 
 TEST_CASE ("The written file is consistent") {
   REQUIRE ((parser.parseFile("tests/output.json", tree) & JSON_PARSE_OUTPUT::OK));
+}
+
+// Serialization
+
+TEST_CASE ("Can serialize vector like") {
+  class A : public Serializable  {
+
+  };
 }

@@ -160,15 +160,12 @@ class Parser {
                                       };
   std::vector <JsonLog> errors;
   std::vector <JsonLog> warnings;
-  std::ifstream file;
 
   std::string content;
   unsigned parseIndex;
 
   bool verbose;
 
-
-  bool openFile (std::string fileName);
   bool hasComma ();
   void evaluateFlag (int flag, std::string path, std::string finalElement);
 
@@ -187,7 +184,7 @@ class Parser {
 
   inline bool hasErrors () { return errors.size() > 0; }
   inline bool hasWarnings () { return warnings.size() > 0; }
-  inline std::ifstream& getFile () { return file; }
+
 public:
   // Default constructor
   Parser ();

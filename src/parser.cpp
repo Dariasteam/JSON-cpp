@@ -3,11 +3,16 @@
 using namespace json;
 
 int Parser::parseFile (const std::string fileName, JsonTree& tree, bool verbs) {
+  errors.clear();
+  warnings.clear();
   verbose = verbs;
-  if (openFile(fileName)) {
+  std::ifstream file;
+  file.open(fileName, std::ifstream::in);
+  if (file.is_open()) {
     std::stringstream buffer;
-    buffer << getFile().rdbuf();
+    buffer << file.rdbuf();
     content = buffer.str();
+    file.close();
     return parse (tree);
   } else {
     return CANT_OPEN_FILE;
@@ -15,14 +20,14 @@ int Parser::parseFile (const std::string fileName, JsonTree& tree, bool verbs) {
 }
 
 int Parser::parseString (std::string cnt, JsonTree& tree, bool verbs ) {
+  errors.clear();
+  warnings.clear();
   verbose = verbs;
   content = cnt;
   return parse (tree);
 }
 
-int Parser::parse (JsonTree& tree) {
-  errors.clear();
-  warnings.clear();
+int Parser::parse (JsonTree& tree) {  
   parseIndex = 0;
   int returnValue = OK;
   ObjectNameFlag result = parseExpectingElement ("");
@@ -31,10 +36,8 @@ int Parser::parse (JsonTree& tree) {
      return EMPTY_FILE;
   if (hasWarnings())
     returnValue += WARNINGS;
-  if (hasErrors()) {
-     returnValue += ERRORS;
-    return returnValue & (INT_MAX - 1); // removes the OK flag
-  }
+  if (hasErrors())
+    returnValue = (returnValue & (INT_MAX - 1)) + ERRORS;
   return returnValue;
 }
 
@@ -43,14 +46,6 @@ Parser::Parser () :
   warnings (0),
   parseIndex (0)
   {}
-
-bool Parser::openFile (std::string fileName) {
-  file.open(fileName, std::ifstream::in);
-  if (file.is_open())
-    return true;
-  else
-    return false;
-}
 
 bool Parser::hasComma () {
   ignoreFirstBlanks();
