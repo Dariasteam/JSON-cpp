@@ -151,7 +151,7 @@ Parser::ObjectNameFlag Parser::parseNumber() {
     double number;
     try {
       number = stod (buff);
-      return {new ObjectFinalNumberFloat (number), "", hasComma()};
+      return {new ObjectFinalNumber (number), "", hasComma()};
     }
     catch (std::invalid_argument e) {
       return {nullptr, "", INVALID_KEY};

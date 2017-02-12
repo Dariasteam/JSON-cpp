@@ -20,13 +20,9 @@
 
 
 #define SERIAL_END ,__dummy__); }
-#define INHERITS(x) bool x::trigger = x::init ();
+#define INHERITS(x) bool x::trigger = x::__init__ ();
 
-#define DISAMBIGUATOR_START Serializable* dissambiguator (std::string s) {
-#define ELEMENT(x) if (s == #x) { return new x; }
-#define DISAMBIGUATOR_END return nullptr; }
-
-#define INHERITS_FROM(y, x) static bool init () {                                      \
+#define INHERITS_FROM(y, x) static bool __init__ () {                                  \
                               json::Serializable::addSon( #y , [] { return new y; });  \
                             }                                                          \
                                                                                        \
@@ -118,8 +114,7 @@ public:
   inline void serializeOut (const std::string file, std::string p = "") {
     JsonTree tree;
     InheritanceIndex from = {0, p};
-    callFatherSerializer (tree, p, true, from);
-    //serializer(tree, true, p, from);
+    callFatherSerializer (tree, p, true, from);    
     Parser::saveFile(file, tree);
   }
 
@@ -135,9 +130,8 @@ protected:
   virtual bool serializer (JsonTree& tree, bool b, std::string path, InheritanceIndex& from) = 0;
 
   // If we are in the top class, serialize from the first element
-  virtual bool callFatherSerializer (JsonTree& tree, std::string path, bool op, InheritanceIndex& from) {
-    //if (!isTopClass())
-      return serializer(tree, op, path, from);
+  virtual bool callFatherSerializer (JsonTree& tree, std::string path, bool op, InheritanceIndex& from) {    
+    return serializer(tree, op, path, from);
   }
 
   // checks if is the top class
@@ -480,4 +474,5 @@ protected:
 };
 
 }
+
 #endif // SERIALIZABLE_H

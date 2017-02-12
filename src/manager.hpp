@@ -43,7 +43,7 @@ namespace json {
  * ```
  * bool METHOD_NAME (<optional variable>, <path>)
  * ```
- * Where optional variable exist o not depending of the method and can be of several types (int, float, vector<int>, etc.) so the methods are heavily overloaded for supporting each type.
+ * Where optional variable exists o not depending of the method and can be of several types (int, float, vector<int>, etc.) so the methods are heavily overloaded for supporting each type.
  *
  * There is also a method to get the information as a string in json format. <toText>
  *
@@ -61,8 +61,6 @@ private:
   bool set (AbstractObject* newObj,     const std::string path);
 
   static bool isNumber (AbstractObject* const obj);
-  static bool isFloat (AbstractObject* const obj);
-  static bool isInt (AbstractObject* const obj);
   static bool isBool (AbstractObject* const obj);
   static bool isString (AbstractObject* const obj);
   static bool isMap (AbstractObject* const obj);
@@ -225,28 +223,12 @@ public:
   /* Checks type Numeric
    * @path Path of the element to be checked
    *
-   * Checks if the element specifacated by path is numeric (double or long long int equally)
+   * Checks if the element specifacated by path is numeric
    *
    * @return the element specifacated by path is numeric
    * */
   //- returns if the element on the path exist and is of the type
   bool isNumber (const std::string path);
-  /* Checks type Float
-   * @path Path of the element to be checked
-   *
-   * Checks if the element specifacated by path is a floating point number (inner it will be a double for better precision)
-   *
-   * @return the element specifacated by path is a floating point number
-   * */
-  bool isFloat  (const std::string path);
-  /* Checks type Int
-   * @path Path of the element to be checked
-   *
-   * Checks if the element specifacated by path is an integer (inner it will be a long long int for better precision)
-   *
-   * @return the element specifacated by path is an integer
-   * */
-  bool isInt    (const std::string path);
   /* Checks type Bool
    * @path Path of the element to be checked
    *

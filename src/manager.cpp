@@ -71,15 +71,15 @@ AbstractObject* JsonTree::fabricate (const char *value) {
 }
 
 AbstractObject* JsonTree::fabricate (const double value) {
-  return new ObjectFinalNumberFloat(value);
+  return new ObjectFinalNumber(value);
 }
 
 AbstractObject* JsonTree::fabricate (const long long value) {
-  return new ObjectFinalNumberFloat(value);
+  return new ObjectFinalNumber(value);
 }
 
 AbstractObject* JsonTree::fabricate (const int value) {
-  return new ObjectFinalNumberFloat(value);
+  return new ObjectFinalNumber(value);
 }
 
 std::vector <std::string> JsonTree::getKeys (const std::string path) {
@@ -115,27 +115,11 @@ std::string JsonTree::toText (const bool uglify, const std::string from) {
 }
 
 bool JsonTree::isNumber (const std::string path) {
-  return (isFloat(path) || isInt(path));
+  return isNumber (top->get(path));
 }
 
 bool JsonTree::isNumber (AbstractObject* const obj) {
-  return (isFloat(obj) || isInt(obj));
-}
-
-bool JsonTree::isFloat (const std::string path) {
-  return isFloat (top->get(path));
-}
-
-bool JsonTree::isFloat (AbstractObject* const obj) {
-  return dynamic_cast<ObjectFinalNumberFloat*> (obj);
-}
-
-bool JsonTree::isInt (const std::string path) {
-  return isInt (top->get(path));
-}
-
-bool JsonTree::isInt (AbstractObject* const obj) {
-  return dynamic_cast<ObjectFinalNumberFloat*> (obj);
+  return dynamic_cast<ObjectFinalNumber*> (obj);
 }
 
 bool JsonTree::isBool (const std::string path) {
@@ -198,21 +182,21 @@ bool JsonTree::get (std::string &to, const std::string path) {
 
 bool JsonTree::get (double &to, const std::string path) {
   AbstractObject* obj = top->get(path);
-  if (isFloat(obj)) {
-    to = ((ObjectFinalNumberFloat*)obj)->getContent();
+  if (isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, ObjectFinalNumberFloat::name);
+  getterError(path, obj, ObjectFinalNumber::name);
   return false;
 }
 
 bool JsonTree::get (long long &to, const std::string path) {
   AbstractObject* obj = top->get(path);
-  if (isFloat(obj)) {
-    to = ((ObjectFinalNumberFloat*)obj)->getContent();
+  if (isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
     return true;
   }
-  getterError(path, obj, ObjectFinalNumberFloat::name);
+  getterError(path, obj, ObjectFinalNumber::name);
   return false;
 }
 
@@ -265,8 +249,8 @@ bool JsonTree::get (std::vector<double>& array, const std::string path) {
     int size = vect->size();
     array.resize (size);
     for (int i = 0; i < size; i++) {
-      if (isFloat((ObjectFinalNumberFloat*)vect->operator[](i)))
-        array[i] = int(((ObjectFinalNumberFloat*)vect->operator[](i))->getContent());      
+      if (isNumber((ObjectFinalNumber*)vect->operator[](i)))
+        array[i] = int(((ObjectFinalNumber*)vect->operator[](i))->getContent());
       else {
         getterError(path, obj, ObjectVector::name);
         return false;
@@ -285,8 +269,8 @@ bool JsonTree::get (std::vector<int>& array, const std::string path) {
     int size = vect->size();
     array.resize (size);
     for (int i = 0; i < size; i++) {
-      if (isFloat((ObjectFinalNumberFloat*)vect->operator[](i)))
-        array[i] = int(((ObjectFinalNumberFloat*)vect->operator[](i))->getContent());
+      if (isNumber((ObjectFinalNumber*)vect->operator[](i)))
+        array[i] = int(((ObjectFinalNumber*)vect->operator[](i))->getContent());
       else {
         getterError(path, obj, ObjectVector::name);
         return false;
@@ -345,12 +329,12 @@ AbstractObject* JsonTree::insertObject(const std::string path, AbstractObject *o
 // ADD
 
 bool JsonTree::add (double value, const std::string path) {
-  AbstractObject* object = new ObjectFinalNumberFloat (value);
+  AbstractObject* object = new ObjectFinalNumber (value);
   return top->add (path, object);
 };
 
 bool JsonTree::add (long long value, const std::string path) {
-  AbstractObject* object = new ObjectFinalNumberFloat (value);
+  AbstractObject* object = new ObjectFinalNumber (value);
   return top->add (path, object);
 }
 
@@ -438,7 +422,7 @@ bool JsonTree::replace (AbstractObject *newObj, const std::string path) {
 }
 
 bool JsonTree::replace (double from, const std::string path) {
-  AbstractObject* object = new ObjectFinalNumberFloat (from);
+  AbstractObject* object = new ObjectFinalNumber (from);
   return replace (object, path);
 }
 
@@ -447,7 +431,7 @@ bool JsonTree::replace (float from, const std::string path) {
 }
 
 bool JsonTree::replace (long long from, const std::string path) {
-  AbstractObject* object = new ObjectFinalNumberFloat (from);
+  AbstractObject* object = new ObjectFinalNumber (from);
   return replace (object, path);
 }
 
@@ -490,7 +474,7 @@ bool JsonTree::set(AbstractObject *newObj, const std::string path) {
 }
 
 bool JsonTree::set (double from, const std::string path) {
-  AbstractObject* object = new ObjectFinalNumberFloat (from);
+  AbstractObject* object = new ObjectFinalNumber (from);
   return set (object, path);
 }
 
@@ -499,7 +483,7 @@ bool JsonTree::set (float from, const std::string path) {
 }
 
 bool JsonTree::set (long long from, const std::string path) {
-  AbstractObject* object = new ObjectFinalNumberFloat (from);
+  AbstractObject* object = new ObjectFinalNumber (from);
   return set (object, path);
 }
 

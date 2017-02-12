@@ -3,8 +3,8 @@ ObjectMap --> ObjectContainer;
 ObjectVector --> ObjectContainer;
 
 ObjectFinalBool --> ObjectFinal;
-ObjectFinalNumberInt --> ObjectFinal;
-ObjectFinalNumberFloat --> ObjectFinal;
+ObjectFinalNumber --> ObjectFinal;
+ObjectFinalNumber --> ObjectFinal;
 ObjectFinalNumberString --> ObjectFinal;
 
 ObjectContainer --> AbstractObject;

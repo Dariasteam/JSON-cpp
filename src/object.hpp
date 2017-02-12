@@ -474,23 +474,23 @@ public:
   bool add (std::string path,  AbstractObject* obj);
 };
 
-/* Represents a float
+/* Represents a number
  *
  * Internally uses a double for better precision
  * */
-class ObjectFinalNumberFloat : public ObjectFinal {
+class ObjectFinalNumber : public ObjectFinal {
 private:
   double number;
 public:
-  ~ObjectFinalNumberFloat ();
-  ObjectFinalNumberFloat () : ObjectFinal () {}
-  ObjectFinalNumberFloat (double n) : number (n) {}
+  ~ObjectFinalNumber ();
+  ObjectFinalNumber () : ObjectFinal () {}
+  ObjectFinalNumber (double n) : number (n) {}
   /* Copy constructor
    * @obj node to copy
    *
    * calls <getCopy>
    * */
-  ObjectFinalNumberFloat (const ObjectFinalNumberFloat& obj);
+  ObjectFinalNumber (const ObjectFinalNumber& obj);
 
   /* This class's name, for debugging purposes */
   const static char* const name;
@@ -539,72 +539,7 @@ public:
   AbstractObject* getCopy ();
 };
 
-/* Represents an integer
- *
- * Internally uses a long long for better precision
- * */
-class ObjectFinalNumberInt : public ObjectFinal {
-private:
-  long long number;
-public:
-  ~ObjectFinalNumberInt ();
-  ObjectFinalNumberInt () {}
-  ObjectFinalNumberInt (long int n) : number (n) {}
-  /* Copy constructor
-   * @obj node to copy
-   *
-   * calls <getCopy>
-   * */
-  ObjectFinalNumberInt (const ObjectFinalNumberInt& obj);
-
-  /* This class's name, for debugging purposes */
-  const static char* const name;
-
-  /* Get method for <name>
-   *
-   * @return <name>
-   * */
-  inline const char* getName () { return name; }
-
-  /* Get inner data
-   *
-   * @return inner data
-   * */
-  inline long int getContent () const { return number; }
-
-  /* Replaces data
-   * @value new data
-   *
-   * Updates the content with the data of 'value'
-   * */
-  void replaceValue (std::string value);
-
-  /* Generates and appends json text
-   * @txt string to append this node's info
-   * @indentLvl number of indentations to generate a consistent string
-   *
-   * Appends json content to 'txt' respecting the indentation
-   * */
-  void toTxt (std::string &txt, int indentLvl);
-
-  /* Generates and appends json text
-   * @txt string to append this node's info
-   * @indentLvl number of indentations to generate a consistent string
-   *
-   * Appends uglified json content to 'txt'
-   * */
-  void toTxtUgly (std::string &txt);
-
-  /* Clone object
-   *
-   * Creates a copy of this object and its content
-   *
-   * @return a copy of this object
-   * */
-  AbstractObject* getCopy ();
-};
-
-/* Represents an integer
+/* Represents a string
  *
  * Internally uses std::string
  * */

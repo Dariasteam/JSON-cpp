@@ -6,8 +6,7 @@ const char* const ObjectVector::name = "VECTOR";
 const char* const ObjectMap::name = "MAP";
 const char* const ObjectFinalBool::name = "BOOL";
 const char* const ObjectFinalString::name = "STRING";
-const char* const ObjectFinalNumberFloat::name = "NUMBER_FLOAT";
-const char* const ObjectFinalNumberInt::name = "NUMBER_INT";
+const char* const ObjectFinalNumber::name = "NUMBER";
 
 void AbstractObject::txtIndent(std::string &txt, int indentLvl) {
   for (int i = 0; i < indentLvl; i++)
@@ -26,12 +25,8 @@ AbstractObject* ObjectFinalBool::getCopy () {
   return new ObjectFinalBool (*this);
 }
 
-AbstractObject* ObjectFinalNumberFloat::getCopy () {
-  return new ObjectFinalNumberFloat (*this);
-}
-
-AbstractObject* ObjectFinalNumberInt::getCopy () {
-  return new ObjectFinalNumberInt (*this);
+AbstractObject* ObjectFinalNumber::getCopy () {
+  return new ObjectFinalNumber (*this);
 }
 
 AbstractObject* ObjectFinalString::getCopy () {
@@ -42,11 +37,7 @@ ObjectFinalBool::ObjectFinalBool (const ObjectFinalBool &obj) :
   boolean(obj.getContent())
 {}
 
-ObjectFinalNumberFloat::ObjectFinalNumberFloat (const ObjectFinalNumberFloat &obj) :  
-  number(obj.getContent())
-{}
-
-ObjectFinalNumberInt::ObjectFinalNumberInt (const ObjectFinalNumberInt &obj) :  
+ObjectFinalNumber::ObjectFinalNumber (const ObjectFinalNumber &obj) :
   number(obj.getContent())
 {}
 
@@ -77,12 +68,8 @@ void ObjectFinalBool::replaceValue (std::string value) {
     boolean = false;
 }
 
-void ObjectFinalNumberFloat::replaceValue (std::string value) {  
+void ObjectFinalNumber::replaceValue (std::string value) {
   number = stod (value);
-}
-
-void ObjectFinalNumberInt::replaceValue (std::string value) {
-  number = atol (value.c_str());
 }
 
 void ObjectFinalString::replaceValue (std::string value) {
@@ -305,13 +292,9 @@ void ObjectVector::toTxt (std::string& txt, int indentLvl) {
   txt.append("[");
   indentLvl++;
   AbstractObject* obj = this;
-  for (int i = 0; i < size(); i++) {
-    if (!dynamic_cast<ObjectFinalNumberInt*>(obj)) {
-      txt.append(END_LINE);
-      txtIndent (txt, indentLvl);
-    } else {
-      txt.append(SPACE);
-    }
+  for (int i = 0; i < size(); i++) {    
+    txt.append(END_LINE);
+    txtIndent (txt, indentLvl);
     obj = operator[](i);
     obj->toTxt(txt, indentLvl);
     txt.append(COMMA);
@@ -350,14 +333,10 @@ void ObjectFinalBool::toTxt (std::string& txt, int indentLvl) {
 }
 
 typedef std::numeric_limits< double > dbl;
-void ObjectFinalNumberFloat::toTxt (std::string& txt, int indentLvl) {
+void ObjectFinalNumber::toTxt (std::string& txt, int indentLvl) {
   std::ostringstream strs;
   strs << std::setprecision(dbl::max_digits10) << getContent() << std::flush;
   txt.append(strs.str());
-}
-
-void ObjectFinalNumberInt::toTxt (std::string& txt, int indentLvl) {
-  txt.append(std::to_string(getContent()));
 }
 
 void ObjectFinalString::toTxt (std::string& txt, int indentLvl) {
@@ -395,11 +374,7 @@ void ObjectFinalBool::toTxtUgly (std::string& txt) {
   toTxt(txt, 0);
 }
 
-void ObjectFinalNumberFloat::toTxtUgly (std::string& txt) {
-  toTxt(txt, 0);
-}
-
-void ObjectFinalNumberInt::toTxtUgly (std::string& txt) {
+void ObjectFinalNumber::toTxtUgly (std::string& txt) {
   toTxt(txt, 0);
 }
 
@@ -422,11 +397,7 @@ ObjectFinalBool::~ObjectFinalBool () {
 
 }
 
-ObjectFinalNumberFloat::~ObjectFinalNumberFloat () {
-
-}
-
-ObjectFinalNumberInt::~ObjectFinalNumberInt () {
+ObjectFinalNumber::~ObjectFinalNumber () {
 
 }
 

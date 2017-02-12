@@ -279,7 +279,7 @@ TEST_CASE ("add methods create entire hash hierarchy if doesn't exist") {
   // ADD ELEMENTS TO A MAP
   CHECK (tree.add(double(12.3), "a.very.long.path.for.testing"));
   // CHECK IF EXIST
-  CHECK (tree.isFloat          ("a.very.long.path.for.testing"));
+  CHECK (tree.isNumber          ("a.very.long.path.for.testing"));
   // CANT REPLACE
   CHECK (tree.add(double(12.3), "a.very.long.path.for.testing") == false);
 }
