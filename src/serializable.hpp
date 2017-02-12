@@ -276,7 +276,7 @@ protected:
 
   //- Vector WITH HASH KEY
   template <class t, class str, class... Args>
-  typename std::enable_if<!std::is_base_of<Serializable, t>::value && (std::is_same<const std::string, str>::value || std::is_same<const char*, str>::value), void>::type
+  typename std::enable_if<std::is_same<const std::string, str>::value || std::is_same<const char*, str>::value, void>::type
   const retribution (JsonTree& tree, std::string path, const str key, std::vector<t>& vect, Args&... args) {
     std::string newPath = path + "." + key;
     tree.addVector(newPath);

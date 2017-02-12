@@ -4,7 +4,7 @@
         "element" : 12
     },
     "third" : [
-        1, 2, 3, 4.50, 5.30, "e", "this is a complex string"
+        1, 2, 3, 4.50, 5.30, "e", "this is a complex string", true
     ],
     "fourth" : {
         "int" : 1,
@@ -13,6 +13,16 @@
         "float" : 4.50,
         "double" : 5.30,
         "char" : "e",
-        "string" : "this is a complex string"
-    }
+        "string" : "this is a complex string",
+        "bool" : true
+    },
+    "fifth" : [
+        [
+            [1, 2, 3, 4, 5],
+            [6, 7, 8, 9, 10],
+            [11, 12, 13, 14, 15]
+            [16, 17, 18, 19, 20],
+            [21, 22, 23, 24, 25]
+        ]
+    ]
 }

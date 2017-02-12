@@ -508,8 +508,9 @@ TEST_CASE ("Can serialize all simple types, vector like") {
     double e;
     char f;
     string g;
+    bool h;
     SERIAL_START
-      a, b, c, d, e, f, g
+      a, b, c, d, e, f, g, h
     SERIAL_END
   };
   A obj;
@@ -520,7 +521,8 @@ TEST_CASE ("Can serialize all simple types, vector like") {
   CHECK (obj.d == 4.5);
   CHECK (obj.e == 5.3);
   CHECK (obj.f == 'e');
-  //CHECK (obj.g == "this is a complex string");
+  CHECK (obj.g == "this is a complex string");
+  REQUIRE (obj.h);
 }
 
 TEST_CASE ("Can serialize all simple types, hash like") {
@@ -533,6 +535,7 @@ TEST_CASE ("Can serialize all simple types, hash like") {
     double e;
     char f;
     string g;
+    bool h;
     SERIAL_START
       "int", a,
       "long", b,
@@ -540,7 +543,8 @@ TEST_CASE ("Can serialize all simple types, hash like") {
       "float", d,
       "double", e,
       "char", f,
-      "string", g
+      "string", g,
+      "bool", h
     SERIAL_END
   };
   A obj;
@@ -552,4 +556,25 @@ TEST_CASE ("Can serialize all simple types, hash like") {
   CHECK (obj.e == 5.3);
   CHECK (obj.f == 'e');
   CHECK (obj.g == "this is a complex string");
+  REQUIRE (obj.h);
+}
+
+TEST_CASE ("Can serialize matrixes, vector like") {
+  class A : public Serializable  {
+  public:
+    vector <vector <int> > a;
+    vector <vector <double> > b;
+    vector <vector <string> > c;
+    SERIAL_START
+      a, b, c
+    SERIAL_END
+  };
+  A obj;
+  obj.serializeIn("tests/serializable.json", "fifth");
+  CHECK (obj.a.size() > 0);
+  for (int i = 0; i < obj.a.size(); i++) {
+    for (int j = 0; j < obj.a[i].size(); j++)
+      CHECK (obj.a[i][j] == (i * obj.a.size()) + j);
+  }
+
 }
