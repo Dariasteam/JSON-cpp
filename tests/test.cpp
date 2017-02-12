@@ -507,9 +507,9 @@ TEST_CASE ("Can serialize all simple types, vector like") {
     float d;
     double e;
     char f;
-    //string g;
+    string g;
     SERIAL_START
-      a, b, c, d, e, f
+      a, b, c, d, e, f, g
     SERIAL_END
   };
   A obj;
@@ -532,14 +532,15 @@ TEST_CASE ("Can serialize all simple types, hash like") {
     float d;
     double e;
     char f;
-    //string g;
+    string g;
     SERIAL_START
       "int", a,
       "long", b,
       "long long", c,
       "float", d,
       "double", e,
-      "char", f
+      "char", f,
+      "string", g
     SERIAL_END
   };
   A obj;
@@ -550,5 +551,5 @@ TEST_CASE ("Can serialize all simple types, hash like") {
   CHECK (obj.d == 4.5);
   CHECK (obj.e == 5.3);
   CHECK (obj.f == 'e');
-  //CHECK (obj.g == "this is a complex string");
+  CHECK (obj.g == "this is a complex string");
 }
