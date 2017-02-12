@@ -14,7 +14,7 @@
   <constructor id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool" />
   <constructor id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
     <argument id="json::ObjectFinalBool::ObjectFinalBool::s" name="s">
-      <type name="std::__cxx11::string" />
+      <type name="std::string" />
     </argument>
   </constructor>
   <constructor id="json::ObjectFinalBool::ObjectFinalBool" name="ObjectFinalBool">
@@ -68,7 +68,7 @@
     </return>
     <argument id="json::ObjectFinalBool::replaceValue::value" name="value">
       <doc>new data</doc>
-      <type name="std::__cxx11::string" />
+      <type name="std::string" />
     </argument>
     <override name="ObjectFinal::replaceValue" ref="json::ObjectFinal#json::ObjectFinal::replaceValue" />
   </method>
@@ -77,11 +77,11 @@
     <doc>Appends json content to 'txt' respecting the indentation
 </doc>
     <return>
-      <type builtin="yes" name="void" />
+      <type builtin="yes" name="bool" />
     </return>
     <argument id="json::ObjectFinalBool::toTxt::txt" name="txt">
       <doc>string to append this node's info</doc>
-      <type name="std::__cxx11::string" qualifier=" &amp;" />
+      <type name="std::string" qualifier=" &amp;" />
     </argument>
     <argument id="json::ObjectFinalBool::toTxt::indentLvl" name="indentLvl">
       <doc>number of indentations to generate a consistent string</doc>
@@ -98,7 +98,7 @@
     </return>
     <argument id="json::ObjectFinalBool::toTxtUgly::txt" name="txt">
       <doc>string to append this node's info</doc>
-      <type name="std::__cxx11::string" qualifier=" &amp;" />
+      <type name="std::string" qualifier=" &amp;" />
     </argument>
     <override name="AbstractObject::toTxtUgly" ref="json::AbstractObject#json::AbstractObject::toTxtUgly" />
   </method>

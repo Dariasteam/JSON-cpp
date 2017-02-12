@@ -18,14 +18,11 @@
   <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool">
     <brief> Represents an integer</brief>
   </class>
-  <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat">
-    <brief> Represents a float</brief>
-  </class>
-  <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt">
-    <brief> Represents an integer</brief>
+  <class name="ObjectFinalNumber" ref="json::ObjectFinalNumber#json::ObjectFinalNumber">
+    <brief> Represents a number</brief>
   </class>
   <class name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString">
-    <brief> Represents an integer</brief>
+    <brief> Represents a string</brief>
   </class>
   <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap">
     <brief> Representation of {}</brief>
@@ -74,10 +71,13 @@
     <enumvalue id="json::INVALID_KEY" name="INVALID_KEY" value="4">
       <brief>[ERROR] the key has extraneous characters</brief>
     </enumvalue>
-    <enumvalue id="json::CONTROL_WARNING" name="CONTROL_WARNING" value="5">
+    <enumvalue id="json::EXPECTED_KEY" name="EXPECTED_KEY" value="5">
+      <brief>[ERROR] a key was expected but not reached</brief>
+    </enumvalue>
+    <enumvalue id="json::CONTROL_WARNING" name="CONTROL_WARNING" value="6">
       <brief>used to check type. Greater values are warnings, lower errors</brief>
     </enumvalue>
-    <enumvalue id="json::EMPTY" name="EMPTY" value="6">
+    <enumvalue id="json::EMPTY" name="EMPTY" value="7">
       <brief>[WARNING] the collection is empty</brief>
     </enumvalue>
   </enum>

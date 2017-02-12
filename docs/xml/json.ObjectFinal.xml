@@ -8,14 +8,11 @@
   <subclass access="public" name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool">
     <brief> Represents an integer</brief>
   </subclass>
+  <subclass access="public" name="ObjectFinalNumber" ref="json::ObjectFinalNumber#json::ObjectFinalNumber">
+    <brief> Represents a number</brief>
+  </subclass>
   <subclass access="public" name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString">
-    <brief> Represents an integer</brief>
-  </subclass>
-  <subclass access="public" name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt">
-    <brief> Represents an integer</brief>
-  </subclass>
-  <subclass access="public" name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat">
-    <brief> Represents a float</brief>
+    <brief> Represents a string</brief>
   </subclass>
   <method abstract="yes" id="json::ObjectFinal::add" name="add" override="yes" virtual="yes">
     <brief> Adds a node to tree</brief>
@@ -29,7 +26,7 @@ always deletes 'obj' and returns false
     </return>
     <argument id="json::ObjectFinal::add::path" name="path">
       <doc>route to the node which will be father of 'obj'</doc>
-      <type name="std::__cxx11::string" />
+      <type name="std::string" />
     </argument>
     <argument id="json::ObjectFinal::add::obj" name="obj">
       <doc>node to be added</doc>
@@ -49,7 +46,7 @@ when 'path' is "", (which means this is the required node)
     </return>
     <argument id="json::ObjectFinal::get::path" name="path">
       <doc>route to the element</doc>
-      <type name="std::__cxx11::string" />
+      <type name="std::string" />
     </argument>
     <override name="AbstractObject::get" ref="json::AbstractObject#json::AbstractObject::get" />
   </method>
@@ -66,7 +63,7 @@ The method is used by <ref ref="json::Parser#json::Parser">json::Parser</ref> wh
     </return>
     <argument id="json::ObjectFinal::replaceValue::value" name="value">
       <doc>value expresed in json</doc>
-      <type name="std::__cxx11::string" />
+      <type name="std::string" />
     </argument>
   </method>
   <destructor abstract="yes" access="protected" id="json::ObjectFinal::~ObjectFinal" name="~ObjectFinal" virtual="yes" />

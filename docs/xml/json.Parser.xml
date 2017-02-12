@@ -164,7 +164,7 @@ if (parser.parseFile ("example.json", tree) &amp; json::JSON_PARSE_OUTPUT::OK) {
     </return>
     <argument id="json::Parser::parseFile::fileName" name="fileName">
       <doc>path of the input file to be parsed</doc>
-      <type name="std::__cxx11::string" />
+      <type name="std::string" qualifier=" const" />
     </argument>
     <argument id="json::Parser::parseFile::tree" name="tree">
       <doc>object wich will store the hierarchy specificated in the file</doc>
@@ -185,7 +185,7 @@ if (parser.parseFile ("example.json", tree) &amp; json::JSON_PARSE_OUTPUT::OK) {
       <type builtin="yes" name="int" />
     </return>
     <argument id="json::Parser::parseString::content" name="content">
-      <type name="std::__cxx11::string" />
+      <type name="std::string" qualifier=" const" />
     </argument>
     <argument id="json::Parser::parseString::tree" name="tree">
       <doc>object wich will store the hierarchy specificated in the file</doc>
@@ -229,7 +229,7 @@ json::Parser::saveFile ("example_2.json", tree, true );                   // ret
     </return>
     <argument id="json::Parser::saveFile::fileName" name="fileName">
       <doc>input file to be parsed</doc>
-      <type name="std::__cxx11::string" />
+      <type name="std::string" />
     </argument>
     <argument id="json::Parser::saveFile::tree" name="tree">
       <doc>hierarchy that wil be stored in the file</doc>

@@ -23,7 +23,7 @@ creating the tree or adding information to it
     </return>
     <argument id="json::ObjectContainer::insert::key" name="key">
       <doc>Key of the element ("" in vector case)</doc>
-      <type name="std::__cxx11::string" />
+      <type name="std::string" />
     </argument>
     <argument id="json::ObjectContainer::insert::obj" name="obj">
       <doc>Node to add</doc>
@@ -32,4 +32,12 @@ creating the tree or adding information to it
   </method>
   <constructor access="protected" id="json::ObjectContainer::ObjectContainer" name="ObjectContainer" />
   <destructor abstract="yes" access="protected" id="json::ObjectContainer::~ObjectContainer" name="~ObjectContainer" virtual="yes" />
+  <method abstract="yes" access="protected" id="json::ObjectContainer::pathSplitter" name="pathSplitter" virtual="yes">
+    <return>
+      <type name="std::string" />
+    </return>
+    <argument id="json::ObjectContainer::pathSplitter::path" name="path">
+      <type name="std::string" qualifier=" &amp;" />
+    </argument>
+  </method>
 </class>

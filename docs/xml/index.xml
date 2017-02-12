@@ -1,46 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <index xmlns="http://jessevdk.github.com/cldoc/1.0">
-  <category name="Tutorials" ref="Tutorials#Tutorials">
-    <category name="File Manipulation" ref="Tutorials::File Manipulation#Tutorials::File Manipulation" />
-    <category name="Serialization" ref="Tutorials::Serialization#Tutorials::Serialization">
-      <category name="Quick Reference" ref="Tutorials::Serialization::Quick Reference#Tutorials::Serialization::Quick Reference">
-        <brief>First read the entire tutorial</brief>
-      </category>
-      <category name="Getting started" ref="Tutorials::Serialization::Getting started#Tutorials::Serialization::Getting started">
-        <brief>How the info is stored and basics about process</brief>
-      </category>
-      <category name="Show me the code!" ref="Tutorials::Serialization::Show me the code!#Tutorials::Serialization::Show me the code!">
-        <brief>Simple serialization, vector-like</brief>
-      </category>
-      <category name="Using multiple parameters" ref="Tutorials::Serialization::Using multiple parameters#Tutorials::Serialization::Using multiple parameters">
-        <brief>Using multiple parameters. Vector-like</brief>
-      </category>
-      <category name="Hash aproximation" ref="Tutorials::Serialization::Hash aproximation#Tutorials::Serialization::Hash aproximation">
-        <brief>Unordered name dependent serialization</brief>
-      </category>
-      <category name="File management" ref="Tutorials::Serialization::File management#Tutorials::Serialization::File management">
-        <brief>Reusing files for multiple purposes</brief>
-      </category>
-      <category name="Using complex parameters, Vector-like" ref="Tutorials::Serialization::Using complex parameters, Vector-like#Tutorials::Serialization::Using complex parameters, Vector-like">
-        <brief>Serializaing n dimensional vectors</brief>
-      </category>
-      <category name="Using complex parameters, Hash-like" ref="Tutorials::Serialization::Using complex parameters, Hash-like#Tutorials::Serialization::Using complex parameters, Hash-like">
-        <brief>Serializaing n dimensional vectors</brief>
-      </category>
-      <category name="Using serializable classes as parameters" ref="Tutorials::Serialization::Using serializable classes as parameters#Tutorials::Serialization::Using serializable classes as parameters">
-        <brief>Also mixing hash-like and vector-like serialization</brief>
-      </category>
-      <category name="Inheriting serializable ability" ref="Tutorials::Serialization::Inheriting serializable ability#Tutorials::Serialization::Inheriting serializable ability">
-        <brief>No multiple inheritance supported yet</brief>
-      </category>
-      <category name="Serializing pointers of basic types" ref="Tutorials::Serialization::Serializing pointers of basic types#Tutorials::Serialization::Serializing pointers of basic types">
-        <brief>Non serializable class pointer case</brief>
-      </category>
-      <category name="Serializing pointers of serializable classes" ref="Tutorials::Serialization::Serializing pointers of serializable classes#Tutorials::Serialization::Serializing pointers of serializable classes">
-        <brief>The polymorphic problem</brief>
-      </category>
-    </category>
-  </category>
   <namespace name="json" ref="json#json">
     <class name="AbstractObject" ref="json::AbstractObject#json::AbstractObject">
       <brief> Represents a node in the tree structure</brief>
@@ -60,14 +19,11 @@
     <class name="ObjectFinalBool" ref="json::ObjectFinalBool#json::ObjectFinalBool">
       <brief> Represents an integer</brief>
     </class>
-    <class name="ObjectFinalNumberFloat" ref="json::ObjectFinalNumberFloat#json::ObjectFinalNumberFloat">
-      <brief> Represents a float</brief>
-    </class>
-    <class name="ObjectFinalNumberInt" ref="json::ObjectFinalNumberInt#json::ObjectFinalNumberInt">
-      <brief> Represents an integer</brief>
+    <class name="ObjectFinalNumber" ref="json::ObjectFinalNumber#json::ObjectFinalNumber">
+      <brief> Represents a number</brief>
     </class>
     <class name="ObjectFinalString" ref="json::ObjectFinalString#json::ObjectFinalString">
-      <brief> Represents an integer</brief>
+      <brief> Represents a string</brief>
     </class>
     <class name="ObjectMap" ref="json::ObjectMap#json::ObjectMap">
       <brief> Representation of {}</brief>
@@ -80,10 +36,10 @@
     </class>
     <class name="Serializable" ref="json::Serializable#json::Serializable">
       <brief> Base class for serializable custom classes</brief>
+      <struct name="__end_dummy__" ref="json::Serializable::__end_dummy__#json::Serializable::__end_dummy__" />
       <struct name="InheritanceIndex" ref="json::Serializable::InheritanceIndex#json::Serializable::InheritanceIndex">
         <brief>Used to manage the parameters order in serialization inheritance</brief>
       </struct>
     </class>
   </namespace>
-  <report name="Documentation generator" ref="report" />
 </index>

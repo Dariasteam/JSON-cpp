@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<class abstract="true" id="json::ObjectFinalNumber" name="ObjectFinalNumber" xmlns="http://jessevdk.github.com/cldoc/1.0">
+  <brief> Represents a number</brief>
+  <doc>Internally uses a double for better precision
+</doc>
+  <base access="public">
+    <type name="ObjectFinal" ref="json::ObjectFinal#json::ObjectFinal" />
+    <brief> Base class for final nodes</brief>
+  </base>
+  <variable id="json::ObjectFinalNumber::name" name="name">
+    <brief>This class's name, for debugging purposes</brief>
+    <type builtin="yes" name="char" qualifier=" const const *" />
+  </variable>
+  <constructor id="json::ObjectFinalNumber::ObjectFinalNumber" name="ObjectFinalNumber" />
+  <constructor id="json::ObjectFinalNumber::ObjectFinalNumber" name="ObjectFinalNumber">
+    <argument id="json::ObjectFinalNumber::ObjectFinalNumber::n" name="n">
+      <type builtin="yes" name="double" />
+    </argument>
+  </constructor>
+  <constructor abstract="yes" id="json::ObjectFinalNumber::ObjectFinalNumber" name="ObjectFinalNumber">
+    <brief> Copy constructor</brief>
+    <doc>calls <ref ref="json::ObjectFinalNumber#json::ObjectFinalNumber::getCopy">json::ObjectFinalNumber::getCopy</ref> and <ref ref="json::AbstractObject#json::AbstractObject::getCopy">json::AbstractObject::getCopy</ref>
+</doc>
+    <argument id="json::ObjectFinalNumber::ObjectFinalNumber::obj" name="obj">
+      <doc>node to copy</doc>
+      <type name="ObjectFinalNumber" qualifier=" const &amp;" ref="json::ObjectFinalNumber#json::ObjectFinalNumber" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="json::ObjectFinalNumber::~ObjectFinalNumber" name="~ObjectFinalNumber" virtual="yes" />
+  <method id="json::ObjectFinalNumber::getContent" name="getContent">
+    <brief> Get inner data</brief>
+    <return>
+      <doc>inner data</doc>
+      <type builtin="yes" name="double" />
+    </return>
+  </method>
+  <method abstract="yes" id="json::ObjectFinalNumber::getCopy" name="getCopy" override="yes" virtual="yes">
+    <brief> Clone object</brief>
+    <doc>Creates a copy of this object and its content
+
+</doc>
+    <return>
+      <doc>a copy of this object</doc>
+      <type name="AbstractObject" qualifier="*" ref="json::AbstractObject#json::AbstractObject" />
+    </return>
+    <override name="AbstractObject::getCopy" ref="json::AbstractObject#json::AbstractObject::getCopy" />
+  </method>
+  <method id="json::ObjectFinalNumber::getName" name="getName" override="yes" virtual="yes">
+    <brief> Get method for <ref ref="json::ObjectFinalNumber#json::ObjectFinalNumber::name">json::ObjectFinalNumber::name</ref>
+    </brief>
+    <return>
+      <doc><ref ref="json::ObjectFinalNumber#json::ObjectFinalNumber::name">json::ObjectFinalNumber::name</ref></doc>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+    <override name="AbstractObject::getName" ref="json::AbstractObject#json::AbstractObject::getName" />
+  </method>
+  <method abstract="yes" id="json::ObjectFinalNumber::replaceValue" name="replaceValue" override="yes" virtual="yes">
+    <brief> Replaces data</brief>
+    <doc>Updates the content with the data of 'value'
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::ObjectFinalNumber::replaceValue::value" name="value">
+      <doc>new data</doc>
+      <type name="std::string" />
+    </argument>
+    <override name="ObjectFinal::replaceValue" ref="json::ObjectFinal#json::ObjectFinal::replaceValue" />
+  </method>
+  <method abstract="yes" id="json::ObjectFinalNumber::toTxt" name="toTxt" override="yes" virtual="yes">
+    <brief> Generates and appends json text</brief>
+    <doc>Appends json content to 'txt' respecting the indentation
+</doc>
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="json::ObjectFinalNumber::toTxt::txt" name="txt">
+      <doc>string to append this node's info</doc>
+      <type name="std::string" qualifier=" &amp;" />
+    </argument>
+    <argument id="json::ObjectFinalNumber::toTxt::indentLvl" name="indentLvl">
+      <doc>number of indentations to generate a consistent string</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <override name="AbstractObject::toTxt" ref="json::AbstractObject#json::AbstractObject::toTxt" />
+  </method>
+  <method abstract="yes" id="json::ObjectFinalNumber::toTxtUgly" name="toTxtUgly" override="yes" virtual="yes">
+    <brief> Generates and appends json text</brief>
+    <doc>Appends uglified json content to 'txt'
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="json::ObjectFinalNumber::toTxtUgly::txt" name="txt">
+      <doc>string to append this node's info</doc>
+      <type name="std::string" qualifier=" &amp;" />
+    </argument>
+    <override name="AbstractObject::toTxtUgly" ref="json::AbstractObject#json::AbstractObject::toTxtUgly" />
+  </method>
+</class>

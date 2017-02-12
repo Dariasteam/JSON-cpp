@@ -7,6 +7,6 @@
   </field>
   <field id="json::Serializable::InheritanceIndex::path" name="path">
     <brief>path in the hierarchy</brief>
-    <type name="std::__cxx11::string" />
+    <type name="std::string" />
   </field>
 </struct>

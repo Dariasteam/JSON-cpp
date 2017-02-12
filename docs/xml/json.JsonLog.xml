@@ -10,7 +10,7 @@ They can be retrieved after with
 </doc>
   <field id="json::JsonLog::path" name="path">
     <brief>route of the problematic element</brief>
-    <type name="std::__cxx11::string" />
+    <type name="std::string" />
   </field>
   <field id="json::JsonLog::flag" name="flag">
     <brief>contains a <ref ref="json#json::JSON_PARSER_FLAG">json::JSON_PARSER_FLAG</ref> indicating the problem</brief>
