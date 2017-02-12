@@ -430,14 +430,125 @@ TEST_CASE ("Can write files") {
   file.close();
 }
 
+TEST_CASE ("Can write uglified files") {
+  CHECK (Parser::saveFile ("tests/output.json", tree, true));
+  CHECK (parser.saveFile ("tests/output.json", tree, true));
+  ifstream file;
+  file.open ("tests/output.json");
+  CHECK (file.is_open());
+  file.close();
+}
+
 TEST_CASE ("The written file is consistent") {
   REQUIRE ((parser.parseFile("tests/output.json", tree) & JSON_PARSE_OUTPUT::OK));
 }
 
 // Serialization
-
-TEST_CASE ("Can serialize vector like") {
+TEST_CASE ("Can serialize in passing json tree as argument, vector like") {
   class A : public Serializable  {
-
+  public:
+    int a;
+    SERIAL_START
+      a
+    SERIAL_END
   };
+  A obj;
+  REQUIRE ((parser.parseFile("tests/serializable.json", tree) & JSON_PARSE_OUTPUT::OK));
+  obj.serializeIn(tree, "first");
+  CHECK (obj.a == 1);
+}
+
+TEST_CASE ("Can serialize in passing file name as argument, vector like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    SERIAL_START
+      a
+    SERIAL_END
+  };
+  A obj;
+  obj.serializeIn("tests/serializable.json", "first");
+  CHECK (obj.a == 1);
+}
+
+TEST_CASE ("Can serialize in passing json tree as argument, hash like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    SERIAL_START
+      "element", a
+    SERIAL_END
+  };
+  A obj;
+  REQUIRE ((parser.parseFile("tests/serializable.json", tree) & JSON_PARSE_OUTPUT::OK));
+  obj.serializeIn(tree, "second");
+  CHECK (obj.a == 12);
+}
+
+TEST_CASE ("Can serialize in passing file name as argument, hash like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    SERIAL_START
+      "element", a
+    SERIAL_END
+  };
+  A obj;
+  obj.serializeIn("tests/serializable.json", "second");
+  CHECK (obj.a == 12);
+}
+
+TEST_CASE ("Can serialize all simple types, vector like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    long b;
+    long long c;
+    float d;
+    double e;
+    char f;
+    //string g;
+    SERIAL_START
+      a, b, c, d, e, f
+    SERIAL_END
+  };
+  A obj;
+  obj.serializeIn("tests/serializable.json", "third");
+  CHECK (obj.a == 1);
+  CHECK (obj.b == 2);
+  CHECK (obj.c == 3);
+  CHECK (obj.d == 4.5);
+  CHECK (obj.e == 5.3);
+  CHECK (obj.f == 'e');
+  //CHECK (obj.g == "this is a complex string");
+}
+
+TEST_CASE ("Can serialize all simple types, hash like") {
+  class A : public Serializable  {
+  public:
+    int a;
+    long b;
+    long long c;
+    float d;
+    double e;
+    char f;
+    //string g;
+    SERIAL_START
+      "int", a,
+      "long", b,
+      "long long", c,
+      "float", d,
+      "double", e,
+      "char", f
+    SERIAL_END
+  };
+  A obj;
+  obj.serializeIn("tests/serializable.json", "fourth");
+  CHECK (obj.a == 1);
+  CHECK (obj.b == 2);
+  CHECK (obj.c == 3);
+  CHECK (obj.d == 4.5);
+  CHECK (obj.e == 5.3);
+  CHECK (obj.f == 'e');
+  //CHECK (obj.g == "this is a complex string");
 }
