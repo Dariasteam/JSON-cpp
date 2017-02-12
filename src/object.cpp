@@ -288,16 +288,23 @@ bool ObjectFinal::add (std::string path, AbstractObject* obj) {
   return false;
 }
 
-void ObjectVector::toTxt (std::string& txt, int indentLvl) {
+bool ObjectVector::toTxt (std::string& txt, int indentLvl) {
   txt.append("[");
   indentLvl++;
   AbstractObject* obj = this;
-  for (int i = 0; i < size(); i++) {    
-    txt.append(END_LINE);
-    txtIndent (txt, indentLvl);
+  bool newLine = false;
+  txt.append(END_LINE);
+  txtIndent (txt, indentLvl);
+  for (int i = 0; i < size(); i++) {            
     obj = operator[](i);
-    obj->toTxt(txt, indentLvl);
+    newLine = obj->toTxt(txt, indentLvl);
     txt.append(COMMA);
+    if (newLine) {
+      txt.append(END_LINE);
+      txtIndent (txt, indentLvl);
+    } else {
+      txt.append(SPACE);
+    }
   }
   if (size() > 0)
     txt.pop_back();
@@ -305,17 +312,18 @@ void ObjectVector::toTxt (std::string& txt, int indentLvl) {
   txt.append(END_LINE);
   txtIndent (txt, indentLvl);
   txt.append("]");
+  return true;
 }
 
-void ObjectMap::toTxt (std::string& txt, int indentLvl) {
+bool ObjectMap::toTxt (std::string& txt, int indentLvl) {
   txt.append("{");
-  indentLvl++;
+  indentLvl++;  
   for (std::string key : getKeys()) {
     txt.append(END_LINE);
     txtIndent (txt, indentLvl);
     txt.append(QUOTE).append(key).append(QUOTE).append(SPACE).append(POINTS).append(SPACE);
     operator[](key)->toTxt(txt, indentLvl);
-    txt.append(COMMA);
+    txt.append(COMMA);    
   }
   if (getKeys().size() > 0)
     txt.pop_back();
@@ -323,24 +331,35 @@ void ObjectMap::toTxt (std::string& txt, int indentLvl) {
   txt.append(END_LINE);
   txtIndent (txt, indentLvl);
   txt.append("}");
+  return true;
 }
 
-void ObjectFinalBool::toTxt (std::string& txt, int indentLvl) {
+bool ObjectFinalBool::toTxt (std::string& txt, int indentLvl) {
   if (getContent())
     txt.append("true");
   else
     txt.append("false");
+  return false;
 }
 
 typedef std::numeric_limits< double > dbl;
-void ObjectFinalNumber::toTxt (std::string& txt, int indentLvl) {
+bool ObjectFinalNumber::toTxt (std::string& txt, int indentLvl) {
+  double intpart;
   std::ostringstream strs;
   strs << std::setprecision(dbl::max_digits10) << getContent() << std::flush;
   txt.append(strs.str());
+  if(std::modf(getContent(), &intpart) == 0.0)
+    return false;
+  else
+    return true;
 }
 
-void ObjectFinalString::toTxt (std::string& txt, int indentLvl) {
+bool ObjectFinalString::toTxt (std::string& txt, int indentLvl) {
   txt.append(QUOTE).append(getContent()).append(QUOTE);
+  if (getContent().size() > 25)
+    return true;
+  else
+    return false;
 }
 
 //* Ugly
@@ -393,17 +412,11 @@ ObjectMap::~ObjectMap () {
   hash.clear();
 }
 
-ObjectFinalBool::~ObjectFinalBool () {
+ObjectFinalBool::~ObjectFinalBool () {}
 
-}
+ObjectFinalNumber::~ObjectFinalNumber () {}
 
-ObjectFinalNumber::~ObjectFinalNumber () {
-
-}
-
-ObjectFinalString::~ObjectFinalString () {
-
-}
+ObjectFinalString::~ObjectFinalString () {}
 
 AbstractObject::~AbstractObject() {}
 

@@ -2,6 +2,7 @@
 #define ABSTRACTOBJECT_H
 
 #include <vector>
+#include <math.h>
 #include <regex>
 #include <string>
 #include <map>
@@ -122,8 +123,10 @@ public:
    * Overrides of this method recursively generate the text version in
    * json format of the content both node and sons, appending it to 'txt' parameter.
    * The string respects the indentation and is human readable (See <JsonTree::toText>)
+   *
+   * @return true if \n must be appended after
    * */
-  virtual void toTxt (std::string &txt, int indentLvl) = 0;
+  virtual bool toTxt (std::string &txt, int indentLvl) = 0;
 
   /* Generates ugly json text
    * @txt string to append this node's info
@@ -258,7 +261,7 @@ public:
   /* Generates json text
    * @txt string to append this node's info
    * */
-  void toTxt (std::string &txt, int indentLvl);
+  bool toTxt (std::string &txt, int indentLvl);
 
   /* Generates ugly json text
    * @txt string to append this node's info
@@ -370,7 +373,7 @@ public:
   /* Generates json text
    * @txt string to append this node's info
    * */
-  void toTxt (std::string &txt, int indentLvl);
+  bool toTxt (std::string &txt, int indentLvl);
 
   /* Generates ugly json text
    * @txt string to append this node's info
@@ -520,7 +523,7 @@ public:
    *
    * Appends json content to 'txt' respecting the indentation
    * */
-  void toTxt (std::string &txt, int indentLvl);
+  bool toTxt (std::string &txt, int indentLvl);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -586,7 +589,7 @@ public:
    *
    * Appends json content to 'txt' respecting the indentation
    * */
-  void toTxt (std::string &txt, int indentLvl);
+  bool toTxt (std::string &txt, int indentLvl);
 
   /* Generates and appends json text
    * @txt string to append this node's info
@@ -652,7 +655,7 @@ public:
    *
    * Appends json content to 'txt' respecting the indentation
    * */
-  void toTxt (std::string &txt, int indentLvl);
+  bool toTxt (std::string &txt, int indentLvl);
 
   /* Generates and appends json text
    * @txt string to append this node's info
