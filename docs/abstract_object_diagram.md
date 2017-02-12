@@ -4,8 +4,7 @@ ObjectVector --> ObjectContainer;
 
 ObjectFinalBool --> ObjectFinal;
 ObjectFinalNumber --> ObjectFinal;
-ObjectFinalNumber --> ObjectFinal;
-ObjectFinalNumberString --> ObjectFinal;
+ObjectFinalString --> ObjectFinal;
 
 ObjectContainer --> AbstractObject;
 ObjectFinal --> AbstractObject;
