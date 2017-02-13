@@ -408,7 +408,9 @@ ObjectVector::~ObjectVector () {
   array.clear();
 }
 
-ObjectMap::~ObjectMap () {  
+ObjectMap::~ObjectMap () {
+  for (auto element : hash)
+    delete element.second;
   hash.clear();
 }
 

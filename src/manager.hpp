@@ -209,6 +209,7 @@ public:
   bool get (double& to,       const std::string path);
   bool get (float& to,        const std::string path);
   bool get (int& to,          const std::string path);
+  bool get (unsigned& to,     const std::string path);
   bool get (long& to,         const std::string path);
   bool get (long long& to,    const std::string path);
   bool get (bool& to,         const std::string path);
@@ -312,8 +313,9 @@ public:
   bool add (const int value,         const std::string path);
   bool add (const long value,        const std::string path);
   bool add (const long long value,   const std::string path);
+  bool add (const unsigned value,    const std::string path);
   bool add (const bool value,        const std::string path);
-  bool add (const std::string value,      const std::string path);
+  bool add (const std::string value, const std::string path);
   bool add (const char& value,       const std::string path);
   bool add (const char* value,       const std::string path);
 
@@ -411,8 +413,9 @@ public:
   bool replace (const int from,         const std::string path);
   bool replace (const long from,        const std::string path);
   bool replace (const long long from,   const std::string path);
+  bool replace (const unsigned from,    const std::string path);
   bool replace (const bool from,        const std::string path);
-  bool replace (const std::string from,      const std::string path);
+  bool replace (const std::string from, const std::string path);
   bool replace (const char* from,       const std::string path);
   bool replace (const char  from,       const std::string path);
 
@@ -468,8 +471,9 @@ public:
   bool set (const int value,         const std::string path);
   bool set (const long value,        const std::string path);
   bool set (const long long value,   const std::string path);
+  bool set (const unsigned value,    const std::string path);
   bool set (const bool value,        const std::string path);
-  bool set (const std::string value,      const std::string path);
+  bool set (const std::string value, const std::string path);
   bool set (const char* value,       const std::string path);
   bool set (const char  value,       const std::string path);
 

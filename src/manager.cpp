@@ -220,6 +220,16 @@ bool JsonTree::get (int &to, const std::string path) {
   }
 }
 
+bool JsonTree::get (unsigned &to, const std::string path) {
+  long long aux;
+  if (get (aux, path)) {
+    to = aux;
+    return true;
+  } else {
+    return false;
+  }
+}
+
 bool JsonTree::get (float &to, const std::string path) {
   double aux;
   if (get (aux, path)) {
@@ -348,6 +358,11 @@ bool JsonTree::add (int value, const std::string path) {
   return add (aux, path);
 };
 
+bool JsonTree::add (unsigned value, const std::string path) {
+  long long aux = value;
+  return add (aux, path);
+};
+
 bool JsonTree::add (bool value, const std::string path) {
   AbstractObject* object = new ObjectFinalBool (value);
   return top->add (path, object);
@@ -445,6 +460,11 @@ bool JsonTree::replace (int from, const std::string path) {
   return replace (aux, path);
 }
 
+bool JsonTree::replace (unsigned from, const std::string path) {
+  long long aux = from;
+  return replace (aux, path);
+}
+
 bool JsonTree::replace (bool from, const std::string path) {
   AbstractObject* object = new ObjectFinalBool (from);
   return replace (object, path);
@@ -493,6 +513,11 @@ bool JsonTree::set (long from, const std::string path) {
 }
 
 bool JsonTree::set (int from, const std::string path) {
+  long long aux = from;
+  return set (aux, path);
+}
+
+bool JsonTree::set (unsigned from, const std::string path) {
   long long aux = from;
   return set (aux, path);
 }
