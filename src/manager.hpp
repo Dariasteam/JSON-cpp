@@ -232,26 +232,29 @@ public:
   bool get (std::vector<t>& array, const std::string path) {
     AbstractObject* obj = top->get (path);
     if (isVector(obj)) {
-      ObjectVector* vect = (ObjectVector*)obj;
-      int size = vect->size();
-      std::vector <t> aux;
-      aux.resize (size);
-      unsigned i = 0;
-      for (auto element : vect->getContent()) {
-        t value;
-        if (get(value, element)) {
-          aux[i] = value;
-        } else {
-          getterError(path, obj, ObjectVector::name);
-          return false;
-        }
-        ++i;
-      }
-      array = aux;
-      return true;
+      return get (array, (ObjectVector*)obj);
+    } else {
+      getterError(path, obj, ObjectVector::name);
+      return false;
     }
-    getterError(path, obj, ObjectVector::name);
-    return false;
+  }
+
+  template <class t>
+  bool get (std::vector<t>& array, AbstractObject* const obj) {
+    int size = ((ObjectVector*)obj)->size();
+    std::vector <t> aux;
+    aux.resize (size);
+    unsigned i = 0;
+    for (auto element : ((ObjectVector*)obj)->getContent()) {
+      t value;
+      if (get(value, element))
+        aux[i] = value;
+      else
+        return false;
+      ++i;
+    }
+    array = aux;
+    return true;
   }
 
   /* Checks type Numeric
