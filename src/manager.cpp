@@ -250,86 +250,85 @@ bool JsonTree::get (char &to, const std::string path) {
   return false;
 }
 
-// VECTORS
-
-bool JsonTree::get (std::vector<double>& array, const std::string path) {
-  AbstractObject* obj = top->get(path);
-  if (isVector (obj)) {
-    ObjectVector* vect = (ObjectVector*)obj;
-    int size = vect->size();
-    array.resize (size);
-    for (int i = 0; i < size; i++) {
-      if (isNumber((ObjectFinalNumber*)vect->operator[](i)))
-        array[i] = int(((ObjectFinalNumber*)vect->operator[](i))->getContent());
-      else {
-        getterError(path, obj, ObjectVector::name);
-        return false;
-      }
-    }
+bool JsonTree::get (double& to, AbstractObject* const obj) {
+  if(isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
     return true;
+  } else {
+    return false;
   }
-  getterError(path, obj, ObjectVector::name);
-  return false;
 }
 
-bool JsonTree::get (std::vector<int>& array, const std::string path) {
-  AbstractObject* obj = top->get(path);
-  if (isVector (obj)) {
-    ObjectVector* vect = (ObjectVector*)obj;
-    int size = vect->size();
-    array.resize (size);
-    for (int i = 0; i < size; i++) {
-      if (isNumber((ObjectFinalNumber*)vect->operator[](i)))
-        array[i] = int(((ObjectFinalNumber*)vect->operator[](i))->getContent());
-      else {
-        getterError(path, obj, ObjectVector::name);
-        return false;
-      }
-    }
+bool JsonTree::get (float& to, AbstractObject* const obj) {
+  if(isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
     return true;
+  } else {
+    return false;
   }
-  getterError(path, obj, ObjectVector::name);
-  return false;
 }
 
-bool JsonTree::get (std::vector<std::string>& array, const std::string path) {
-  AbstractObject* obj = top->get(path);
-  if (isVector (obj)) {
-    ObjectVector* vect = (ObjectVector*)obj;
-    int size = vect->size();
-    array.resize (size);
-    for (int i = 0; i < size; i++) {
-      if (isString((ObjectFinalString*)vect->operator[](i)))
-        array[i] = ((ObjectFinalString*)vect->operator[](i))->getContent();
-      else {
-        getterError(path, obj, ObjectVector::name);
-        return false;
-      }
-    }
+bool JsonTree::get (int& to, AbstractObject* const obj) {
+  if(isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
     return true;
+  } else {
+    return false;
   }
-  getterError(path, obj, ObjectVector::name);
-  return false;
 }
 
-bool JsonTree::get (std::vector<bool>& array, const std::string path) {
-  AbstractObject* obj = top->get(path);
-  if (isVector (obj)) {
-    ObjectVector* vect = (ObjectVector*)obj;
-    int size = vect->size();
-    array.resize (size);
-    for (int i = 0; i < size; i++) {
-      if (isBool((ObjectFinalBool*)vect->operator[](i)))
-        array[i] = ((ObjectFinalBool*)vect->operator[](i))->getContent();
-      else {
-        getterError(path, obj, ObjectVector::name);
-        return false;
-      }
-    }
+bool JsonTree::get (unsigned& to, AbstractObject* const obj) {
+  if(isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
     return true;
+  } else {
+    return false;
   }
-  getterError(path, obj, ObjectVector::name);
-  return false;
+}
+
+bool JsonTree::get (long& to, AbstractObject* const obj) {
+  if(isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool JsonTree::get (long long& to, AbstractObject* const obj) {
+  if(isNumber(obj)) {
+    to = ((ObjectFinalNumber*)obj)->getContent();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool JsonTree::JsonTree::get (bool& to, AbstractObject* const obj) {
+  if(isBool(obj)) {
+    to = ((ObjectFinalBool*)obj)->getContent();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool JsonTree::get (std::string& to, AbstractObject* const obj) {
+  if(isString(obj)) {
+    to = ((ObjectFinalString*)obj)->getContent();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool JsonTree::get (char& to, AbstractObject* const obj) {
+  if(isString(obj)) {
+    to = ((ObjectFinalString*)obj)->getContent()[0];
+    return true;
+  } else {
+    return false;
+  }
 }
 
 AbstractObject* JsonTree::insertObject(const std::string path, AbstractObject *obj) {

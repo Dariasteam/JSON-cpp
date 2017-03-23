@@ -64,7 +64,7 @@ private:
   static bool isBool (AbstractObject* const obj);
   static bool isString (AbstractObject* const obj);
   static bool isMap (AbstractObject* const obj);
-  static bool isVector (AbstractObject* const obj);  
+  static bool isVector (AbstractObject* const obj);
 
   static AbstractObject* fabricate (const long long value);
   static AbstractObject* fabricate (const int value);
@@ -73,6 +73,16 @@ private:
   static AbstractObject* fabricate (const char* value);
   static AbstractObject* fabricate (const char value);
   static AbstractObject* fabricate (const bool value);
+
+  bool get (double& to,       AbstractObject* const obj);
+  bool get (float& to,        AbstractObject* const obj);
+  bool get (int& to,          AbstractObject* const obj);
+  bool get (unsigned& to,     AbstractObject* const obj);
+  bool get (long& to,         AbstractObject* const obj);
+  bool get (long long& to,    AbstractObject* const obj);
+  bool get (std::string& to,  AbstractObject* const obj);
+  bool get (bool& to,         AbstractObject* const obj);
+  bool get (char& to,         AbstractObject* const obj);
 
   template <class t>
   static ObjectVector* createVec (const std::vector<t>& array) {
@@ -216,10 +226,33 @@ public:
   bool get (std::string& to,  const std::string path);
   bool get (char& to,         const std::string path);
 
-  bool get (std::vector<double>& array,      const std::string path);
-  bool get (std::vector<int>& array,         const std::string path);
-  bool get (std::vector<bool>& array,        const std::string path);
-  bool get (std::vector<std::string>& array, const std::string path);
+
+  // Supports any vector. Do not destroys anything if there is any error
+  template <class t>
+  bool get (std::vector<t>& array, const std::string path) {
+    AbstractObject* obj = top->get (path);
+    if (isVector(obj)) {
+      ObjectVector* vect = (ObjectVector*)obj;
+      int size = vect->size();
+      std::vector <t> aux;
+      aux.resize (size);
+      unsigned i = 0;
+      for (auto element : vect->getContent()) {
+        t value;
+        if (get(value, element)) {
+          aux[i] = value;
+        } else {
+          getterError(path, obj, ObjectVector::name);
+          return false;
+        }
+        ++i;
+      }
+      array = aux;
+      return true;
+    }
+    getterError(path, obj, ObjectVector::name);
+    return false;
+  }
 
   /* Checks type Numeric
    * @path Path of the element to be checked
