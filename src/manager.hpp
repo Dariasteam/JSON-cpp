@@ -634,6 +634,13 @@ public:
     return to.stuff(obj, *this);
   }
 
+  // serializable element
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (t& element, AbstractObject* obj) {
+    return (obj != nullptr && element.stuff(obj, *this));
+  }
+
 };
 
 }
