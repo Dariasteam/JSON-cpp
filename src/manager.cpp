@@ -331,10 +331,6 @@ bool JsonTree::get (char& to, AbstractObject* const obj) {
   }
 }
 
-AbstractObject* JsonTree::insertObject(const std::string path, AbstractObject *obj) {
-  return nullptr;
-}
-
 // ADD
 
 bool JsonTree::add (double value, const std::string path) {
@@ -572,3 +568,9 @@ bool JsonTree::remove (const std::string path) {
     return ((ObjectMap*)top)->erase (path);
   return false;
 }
+
+AbstractObject* JsonTree::insertObject(const std::string path, AbstractObject *obj) {
+  return nullptr;
+}
+
+

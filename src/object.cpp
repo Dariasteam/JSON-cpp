@@ -148,7 +148,7 @@ AbstractObject* ObjectVector::get (std::string path) {
 }
 
 AbstractObject* ObjectMap::get (std::string path) {  
-  if (path.empty() || (path.size() == 1 &&  path[0] == '.'))
+  if (path.empty() || (path.size() == 1 && path[0] == '.'))
     return this;
   std::string key = pathSplitter(path);
   if (!key.empty()) {

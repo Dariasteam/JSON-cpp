@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "object.hpp"
+#include "auxserialization.h"
 
 namespace json {
 
@@ -93,7 +94,7 @@ private:
     return aux;
   }
 
-  static AbstractObject* insertObject (const std::string path, AbstractObject* obj);
+  static AbstractObject* insertObject (const std::string path, AbstractObject* obj);  
 
 public:
   /* Default constructor
@@ -255,7 +256,7 @@ public:
     }
     array = aux;
     return true;
-  }
+  }  
 
   /* Checks type Numeric
    * @path Path of the element to be checked
@@ -568,6 +569,70 @@ public:
    * @return json formatted content
    * */
   std::string toText (const bool uglify = false, const std::string from = "");
+
+  // SERIALIZATION
+
+  // End
+  bool get (std::function<AbstractObject*()> func, ender& e) {
+    return true;
+  }
+
+  // regular element
+  template <class t, class ...Args>
+  typename std::enable_if<!std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (std::function<AbstractObject*()> func, t& element, Args&... args) {
+    AbstractObject* obj = func();
+    if (obj != nullptr && get (element, obj))
+      return get (func, args...);
+    else
+      return false;
+  }
+
+  // serializable element
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (std::function<AbstractObject*()> func, t& element, Args&... args) {
+    AbstractObject* obj = func();
+    if (obj != nullptr && get (element, obj))
+      return get (func, args...);
+    else
+      return false;
+  }
+
+  // Vector
+  template <class t, class ...Args>
+  bool get (std::function<AbstractObject*()> func, std::vector<t>& vec, Args&... args) {
+    AbstractObject* obj = func();
+    if (obj != nullptr && get (vec, obj)) {
+      return get (func, args...);
+    } else {
+      return false;
+    }
+  }
+
+  template <class ...Args>
+  bool get (const std::string path, Args&... args) {
+    AbstractObject* obj = top->get(path);
+    if (isVector(obj)) {
+      std::vector <AbstractObject*> vec = ((ObjectVector*)obj)->getContent();
+      unsigned index = 0;
+      unsigned size =vec.size();
+      return get ([&]() -> AbstractObject* {
+            if (index < size)
+              return vec[index++];
+            else
+              return nullptr;
+           }, args...);
+    } else {
+      return false;
+    }
+  }
+
+  template <class T>
+  typename std::enable_if<std::is_base_of<AuxSerialization, T>::value, bool>::type
+  get (T& to, const std::string path) {
+     return to.stuff(path, *this);
+  }
 
 };
 
