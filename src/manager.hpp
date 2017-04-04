@@ -593,7 +593,7 @@ public:
   typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t& element, Args&... args) {
     AbstractObject* obj = func();
-    if (obj != nullptr && get (element, obj))
+    if (obj != nullptr && element.stuff(obj, *this))
       return get (func, args...);
     else
       return false;
@@ -611,12 +611,11 @@ public:
   }
 
   template <class ...Args>
-  bool get (const std::string path, Args&... args) {
-    AbstractObject* obj = top->get(path);
-    if (isVector(obj)) {
+  bool get (AbstractObject* obj, Args&... args) {
+    if (obj != nullptr && isVector(obj)) {
       std::vector <AbstractObject*> vec = ((ObjectVector*)obj)->getContent();
       unsigned index = 0;
-      unsigned size =vec.size();
+      unsigned size = vec.size();
       return get ([&]() -> AbstractObject* {
             if (index < size)
               return vec[index++];
@@ -631,7 +630,8 @@ public:
   template <class T>
   typename std::enable_if<std::is_base_of<AuxSerialization, T>::value, bool>::type
   get (T& to, const std::string path) {
-     return to.stuff(path, *this);
+    AbstractObject* obj = top->get(path);
+    return to.stuff(obj, *this);
   }
 
 };

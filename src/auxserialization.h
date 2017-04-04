@@ -4,10 +4,12 @@
 #include <string>
 #include <vector>
 
+#include "object.hpp"
+
 namespace json {
 
 #define AUX_SERIAL_START public: template <class T> \
-                           bool stuff (std::string path, T& tree) { return tree.get (path,
+                           bool stuff (json::AbstractObject* obj, T& tree) { return tree.get (obj,
 #define AUX_SERIAL_END ,__e__); }
 
 struct ender {};
