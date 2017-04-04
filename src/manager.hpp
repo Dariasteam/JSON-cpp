@@ -572,12 +572,17 @@ public:
 
   // SERIALIZATION
 
-  // End
+  // End, vector like
   bool get (std::function<AbstractObject*()> func, ender& e) {
     return true;
   }
 
-  // regular element
+  // End, hash like
+  bool get (std::function<AbstractObject*(std::string)> func, ender& e) {
+    return true;
+  }
+
+  // regular element, vector like
   template <class t, class ...Args>
   typename std::enable_if<!std::is_base_of<AuxSerialization, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t& element, Args&... args) {
@@ -588,18 +593,40 @@ public:
       return false;
   }
 
-  // serializable element
+  // regular element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
-  get (std::function<AbstractObject*()> func, t& element, Args&... args) {
-    AbstractObject* obj = func();
-    if (obj != nullptr && element.stuff(obj, *this))
+  typename std::enable_if<!std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (std::function<AbstractObject*(std::string)> func, const char* key, t& element, Args&... args) {
+    AbstractObject* obj = func(key);
+    if (obj != nullptr && get (element, obj))
       return get (func, args...);
     else
       return false;
   }
 
-  // Vector
+  // serializable element, vector like
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (std::function<AbstractObject*()> func, t& element, Args&... args) {
+    AbstractObject* obj = func();
+    if (obj != nullptr && element.__trigger__(obj, *this))
+      return get (func, args...);
+    else
+      return false;
+  }
+
+  // serializable element, hash like
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (std::function<AbstractObject*(std::string)> func, const char* key, t& element, Args&... args) {
+    AbstractObject* obj = func(key);
+    if (obj != nullptr && element.__trigger__(obj, *this))
+      return get (func, args...);
+    else
+      return false;
+  }
+
+  // Vector, vector like
   template <class t, class ...Args>
   bool get (std::function<AbstractObject*()> func, std::vector<t>& vec, Args&... args) {
     AbstractObject* obj = func();
@@ -610,6 +637,18 @@ public:
     }
   }
 
+  // Vector, hash like
+  template <class t, class ...Args>
+  bool get (std::function<AbstractObject*(std::string)> func, const char* key, std::vector<t>& vec, Args&... args) {
+    AbstractObject* obj = func(key);
+    if (obj != nullptr && get (vec, obj)) {
+      return get (func, args...);
+    } else {
+      return false;
+    }
+  }
+
+  // start point, vector like
   template <class ...Args>
   bool get (AbstractObject* obj, Args&... args) {
     if (obj != nullptr && isVector(obj)) {
@@ -627,18 +666,32 @@ public:
     }
   }
 
+  // start point, hash like
+  template <class ...Args>
+  bool get (AbstractObject* obj, const char* key, Args&... args) {
+    if (obj != nullptr && isMap(obj)) {
+      ObjectMap* map = ((ObjectMap*)obj);
+      return get ([&](std::string k) -> AbstractObject* {
+            return map->operator [](k);
+           }, key, args...);
+    } else {
+      return false;
+    }
+  }
+
+  // trigger
   template <class T>
   typename std::enable_if<std::is_base_of<AuxSerialization, T>::value, bool>::type
   get (T& to, const std::string path) {
     AbstractObject* obj = top->get(path);
-    return to.stuff(obj, *this);
+    return to.__trigger__(obj, *this);
   }
 
-  // serializable element
+  // serializable element for vectors
   template <class t, class ...Args>
   typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
   get (t& element, AbstractObject* obj) {
-    return (obj != nullptr && element.stuff(obj, *this));
+    return (obj != nullptr && element.__trigger__(obj, *this));
   }
 
 };
