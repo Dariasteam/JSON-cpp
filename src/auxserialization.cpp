@@ -1,6 +1,6 @@
 #include "auxserialization.h"
-namespace json {
 
-AuxSerialization::AuxSerialization() {}
 
-}
+std::map<std::string, std::function<json::AuxSerialization*()> > json::AuxSerialization::dictionary;
+
+json::AuxSerialization::AuxSerialization() {}
