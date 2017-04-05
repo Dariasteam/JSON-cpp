@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <cxxabi.h>
 
 #include "object.hpp"
 
@@ -34,19 +35,31 @@ namespace json {
                                                                                                \
                                 static bool trigger;                                           \
 
+#define AUX_INHERITS(x) bool x::trigger = x::__init__ ();
+
 #define CLASS_TYPE    "$classType"
 #define CLASS_CONTENT "$classContent"
 
 struct ender {};
 
 class AuxSerialization {
+public:
+  static std::map<std::string, std::function<AuxSerialization*()> > dictionary;
 protected:
   ender __e__;
-  static std::map<std::string, std::function<AuxSerialization*()> > dictionary;
   static void addSon (std::string name, std::function<AuxSerialization*()> lambda) { dictionary[name] = lambda; }
 
   // checks if is the top class
   inline virtual bool isTopClass () { return true; }
+
+  //- As seen in http://stackoverflow.com/questions/12877521/human-readable-type-info-name
+  // Used to get the class name
+  static std::string demangle(const char* mangled) {
+    int status;
+    std::unique_ptr<char[], void (*)(void*)> result(
+      abi::__cxa_demangle(mangled, 0, 0, &status), free);
+    return result.get() ? std::string(result.get()) : "error occurred";
+  }
 public:  
   AuxSerialization();
 };

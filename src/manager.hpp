@@ -5,6 +5,7 @@
 #include <regex>
 #include <string>
 #include <iostream>
+#include <type_traits>
 
 #include "object.hpp"
 #include "auxserialization.h"
@@ -240,6 +241,7 @@ public:
     }
   }
 
+  // Arrays of natural elements
   template <class t>
   bool get (std::vector<t>& array, AbstractObject* const obj) {
     int size = ((ObjectVector*)obj)->size();
@@ -257,6 +259,23 @@ public:
     array = aux;
     return true;
   }  
+
+  // Arrays of pointers
+  template <class t>
+  bool get (std::vector<t*>& array, AbstractObject* const obj) {
+    int size = ((ObjectVector*)obj)->size();
+    std::vector <t*> aux;
+    unsigned i = 0;
+    for (auto element : ((ObjectVector*)obj)->getContent()) {
+      t* value;
+      if (get(value, element))
+        array.push_back(value);
+      else
+        return false;
+      ++i;
+    }
+    return true;
+  }
 
   /* Checks type Numeric
    * @path Path of the element to be checked
@@ -633,7 +652,8 @@ public:
   typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t& element, Args&... args) {
     AbstractObject* obj = func();
-    if (obj != nullptr && element.serializer(obj, *this))
+    int index = 0;
+    if (obj != nullptr && element.serialize(obj, *this, index))
       return get (func, args...);
     else
       return false;
@@ -644,10 +664,46 @@ public:
   typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t& element, Args&... args) {
     AbstractObject* obj = func(key);
-    if (obj != nullptr && element.serializer(obj, *this))
+    int index = 0;
+    if (obj != nullptr && element.serialize(obj, *this, index))
       return get (func, args...);
     else
       return false;
+  }
+
+  // pointers of serializable element, vector like
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (std::function<AbstractObject*()> func, t*& element, Args&... args) {
+    AbstractObject* obj = func();
+    element = new t;
+    int index = 0;
+    if (obj != nullptr && element->serialize(obj, *this, index))
+      return get (func, args...);
+    else
+      return false;
+  }
+
+  // pointers of serializable element, hash like
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  get (std::function<AbstractObject*(std::string)> func, const char* key, t*& element, Args&... args) {
+    AbstractObject* obj = func(key);
+    int index = 0;
+
+    if (obj != nullptr) {
+      auto dic = AuxSerialization::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
+      if (dic != nullptr) {
+        element = static_cast<t*>(dic());
+        if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
+          return get (func, args...);
+      } else {
+        element = new t;
+        if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
+          return get (func, args...);
+      }
+    }
+    return false;
   }
 
   // Vector, vector like
@@ -715,9 +771,9 @@ public:
   template <class t, class ...Args>
   typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
   get (t& element, AbstractObject* obj) {
-    return (obj != nullptr && element.serializer(obj, *this));
+    int index = 0;
+    return (obj != nullptr && element.serialize (obj, *this, index));
   }
-
 };
 
 }
