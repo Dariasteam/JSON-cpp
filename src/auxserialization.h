@@ -13,17 +13,17 @@
 namespace json {
 
 #define AUX_SERIAL_START_INHERITED(y, x) AUX_INHERITS_FROM (y, x)                          \
-                         bool serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index) { \
+                         bool serialize (std::string path, json::JsonTree& tree, int& index, bool op) { \
                            if (!y::isTopClass())                                           \
-                             if (x::serialize (obj, tree, index));                         \
-                               return y::serializeInherits (obj, tree, index);             \
+                             if (x::serialize (path, tree, index, op));                     \
+                               return y::serializeInherits (path, tree, index, op);         \
                            return false;                                                   \
                          }                                                                 \
                          inline virtual bool isTopClass () { return false; }               \
-                         bool serializeInherits (json::AbstractObject* obj, json::JsonTree& tree, int& index) { return tree.get (obj, index,
+                         bool serializeInherits (std::string path, json::JsonTree& tree, int& index, bool op) { return tree.start (path, index, op,
 
 
-#define AUX_SERIAL_START bool serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index) { return tree.get (obj, index,
+#define AUX_SERIAL_START bool serialize (std::string path, json::JsonTree& tree, int& index, bool op) { return tree.start (path, index, op,
 
 
 #define AUX_SERIAL_END ,__e__); }
@@ -41,6 +41,7 @@ namespace json {
 class AuxSerialization : public BLOP {
 public:
 
+  virtual bool serialize (std::string path, json::JsonTree& tree, int& index, bool op) = 0;
 protected:
   ender __e__;
   static void addSon (std::string name, std::function<AuxSerialization*()> lambda) { dictionary[name] = lambda; }
@@ -48,7 +49,7 @@ protected:
   // checks if is the top class
   inline virtual bool isTopClass () { return true; }
 
-  virtual bool serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index) = 0;
+
 
   //- As seen in http://stackoverflow.com/questions/12877521/human-readable-type-info-name
   // Used to get the class name

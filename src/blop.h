@@ -13,11 +13,11 @@ namespace json {
 
   struct ender {};
 
-class BLOP
-{
+class BLOP {
 public:
   static std::map<std::string, std::function<BLOP*()> > dictionary;
   BLOP();
+  virtual ~BLOP() {}
 };
 
 }

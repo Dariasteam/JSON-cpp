@@ -10,6 +10,12 @@
 #include "object.hpp"
 #include "blop.h"
 
+enum OPERATIONS {
+  READ,
+  WRITE
+};
+
+
 namespace json {  
 
 /* Contains a json hirarchy and allows its manipulation
@@ -76,15 +82,15 @@ private:
   static AbstractObject* fabricate (const char value);
   static AbstractObject* fabricate (const bool value);
 
-  bool get (double& to,       AbstractObject* const obj);
-  bool get (float& to,        AbstractObject* const obj);
-  bool get (int& to,          AbstractObject* const obj);
-  bool get (unsigned& to,     AbstractObject* const obj);
-  bool get (long& to,         AbstractObject* const obj);
-  bool get (long long& to,    AbstractObject* const obj);
-  bool get (std::string& to,  AbstractObject* const obj);
-  bool get (bool& to,         AbstractObject* const obj);
-  bool get (char& to,         AbstractObject* const obj);
+  bool get (double& to,      AbstractObject* const obj);
+  bool get (float& to,       AbstractObject* const obj);
+  bool get (int& to,         AbstractObject* const obj);
+  bool get (unsigned& to,    AbstractObject* const obj);
+  bool get (long& to,        AbstractObject* const obj);
+  bool get (long long& to,   AbstractObject* const obj);
+  bool get (std::string& to, AbstractObject* const obj);
+  bool get (bool& to,        AbstractObject* const obj);
+  bool get (char& to,        AbstractObject* const obj);
 
   template <class t>
   static ObjectVector* createVec (const std::vector<t>& array) {
@@ -589,17 +595,75 @@ public:
    * */
   std::string toText (const bool uglify = false, const std::string from = "");
 
-  // SERIALIZATION ------------------------------------------------------------------------------------------------------------------------------
+  // SERIALIZATION ------------------------------------------------------------------------------------------------------------------------------  
 
-  // End, vector like
-  bool get (std::function<AbstractObject*()> func, ender& e) {
-    return true;
+  // start point, hash like
+  template <class ...Args>
+  bool start (std::string path, int& index, bool operation, const char* key, Args&... args) {
+    if (operation == READ) {
+      AbstractObject* obj = top->get(path);
+      if (isMap(obj)) {
+        ObjectMap* map = ((ObjectMap*)obj);
+        return get ([&](std::string k) -> AbstractObject* {
+              return map->operator [](k);
+             }, key, args...);
+       }
+    } else {
+      AbstractObject* obj = new ObjectMap();
+      top->set(path, obj);
+      return set (((ObjectMap*)obj), key, args...);
+    }
+    return false;
   }
 
-  // End, hash like
-  bool get (std::function<AbstractObject*(std::string)> func, ender& e) {
-    return true;
+  // start point, vector like
+  template <class ...Args>
+  bool start (std::string path, int& index, bool operation, Args&... args) {
+    if (operation == READ) {
+      AbstractObject* obj = top->get(path);
+      if (isVector(obj)) {
+        std::vector <AbstractObject*> vec = ((ObjectVector*)obj)->getContent();
+        unsigned size = vec.size();
+        return get ([&]() -> AbstractObject* {
+              if (index < size)
+                return vec[index++];
+              else
+                return nullptr;
+             }, args...);
+        }
+    } else {
+        AbstractObject* obj = new ObjectVector();
+        top->set(path, obj);
+        return set (((ObjectVector*)obj), args...);
+    }
+    return false;
   }
+
+  // trigger, GET
+  template <class T>
+  typename std::enable_if<std::is_base_of<BLOP, T>::value, bool>::type
+  get (T& to, const std::string path) {
+    int index = 0;
+    return to.serialize(path, *this, index, READ);
+  }
+
+  // trigger, SET
+  template <class T>
+  typename std::enable_if<std::is_base_of<BLOP, T>::value, bool>::type
+  set (T& to, const std::string path) {
+    int index = 0;
+    return to.serialize(path, *this, index, WRITE);
+  }
+
+  // GET End, vector like
+  bool get (std::function<AbstractObject*()> func, ender& e) { return true; }
+  // GET End, hash like
+  bool get (std::function<AbstractObject*(std::string)> func, ender& e) { return true; }
+  // SET End
+  bool set (ObjectMap* obj, ender& e) { return true; }
+  bool set (ObjectVector* obj, ender& e) { return true; }
+
+  // READ
 
   // regular element, vector like
   template <class t, class ...Args>
@@ -685,7 +749,7 @@ public:
       } else {
         element = new t;
       }
-      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
+      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ))
         return get (func, args...);
     }
 
@@ -706,7 +770,7 @@ public:
       } else {
         element = new t;
       }
-      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
+      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ))
         return get (func, args...);
     }
 
@@ -735,45 +799,6 @@ public:
     }
   }
 
-  // start point, vector like
-  template <class ...Args>
-  bool get (AbstractObject* obj, int& index, Args&... args) {
-    if (obj != nullptr && isVector(obj)) {
-      std::vector <AbstractObject*> vec = ((ObjectVector*)obj)->getContent();      
-      unsigned size = vec.size();            
-      return get ([&]() -> AbstractObject* {
-            if (index < size)
-              return vec[index++];
-            else
-              return nullptr;
-           }, args...);
-    } else {
-      return false;
-    }
-  }
-
-  // start point, hash like
-  template <class ...Args>
-  bool get (AbstractObject* obj, int& index, const char* key, Args&... args) {
-    if (obj != nullptr && isMap(obj)) {
-      ObjectMap* map = ((ObjectMap*)obj);
-      return get ([&](std::string k) -> AbstractObject* {
-            return map->operator [](k);
-           }, key, args...);
-    } else {
-      return false;
-    }
-  }
-
-  // trigger
-  template <class T>
-  typename std::enable_if<std::is_base_of<BLOP, T>::value, bool>::type
-  get (T& to, const std::string path) {
-    AbstractObject* obj = top->get(path);    
-    int index = 0;
-    return to.serialize(obj, *this, index);
-  }
-
   // serializable element for vectors
   template <class t, class ...Args>
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
@@ -795,12 +820,35 @@ public:
       } else {
         element = new t;
       }
-      return (obj != nullptr && element->serialize (((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index));
+      return (obj != nullptr && element->serialize (((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ));
     }
     return false;
   }
-};
 
+  //WRITE
+
+  // regular element, vector like
+  template <class t, class ...Args>
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectVector* obj, t& element, Args&... args) {
+    if (obj->insert("", fabricate (element)))
+      return set (obj, args...);
+    else
+      return false;
+  }
+
+  // regular element, hash like
+  template <class t, class ...Args>
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectMap* obj, const char* key, t& element, Args&... args) {
+  if (obj->insert(key, fabricate (element)))
+    return set (obj, args...);
+  else
+    return false;
+  }
+
+
+};
 }
 
 #endif
