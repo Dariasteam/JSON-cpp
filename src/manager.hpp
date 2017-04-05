@@ -676,12 +676,20 @@ public:
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t*& element, Args&... args) {
     AbstractObject* obj = func();
-    element = new t;
     int index = 0;
-    if (obj != nullptr && element->serialize(obj, *this, index))
-      return get (func, args...);
-    else
-      return false;
+
+    if (obj != nullptr) {
+      auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
+      if (dic != nullptr) {
+        element = static_cast<t*>(dic());
+      } else {
+        element = new t;
+      }
+      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
+        return get (func, args...);
+    }
+
+    return false;
   }
 
   // pointers of serializable element, hash like
@@ -772,6 +780,24 @@ public:
   get (t& element, AbstractObject* obj) {
     int index = 0;
     return (obj != nullptr && element.serialize (obj, *this, index));
+  }
+
+  // serializable element for vectors (pointer)
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  get (t*& element, AbstractObject* obj) {
+    int index = 0;
+
+    if (obj != nullptr) {
+      auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
+      if (dic != nullptr) {
+        element = static_cast<t*>(dic());
+      } else {
+        element = new t;
+      }
+      return (obj != nullptr && element->serialize (((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index));
+    }
+    return false;
   }
 };
 
