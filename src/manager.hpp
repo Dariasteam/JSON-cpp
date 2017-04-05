@@ -8,9 +8,9 @@
 #include <type_traits>
 
 #include "object.hpp"
-#include "auxserialization.h"
+#include "blop.h"
 
-namespace json {
+namespace json {  
 
 /* Contains a json hirarchy and allows its manipulation
  * ## Description
@@ -97,7 +97,7 @@ private:
 
   static AbstractObject* insertObject (const std::string path, AbstractObject* obj);  
 
-public:
+public:  
   /* Default constructor
    * Internally generates a new empty ObjectMap for the root of this tree
    * */
@@ -603,7 +603,7 @@ public:
 
   // regular element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t& element, Args&... args) {
     AbstractObject* obj = func();
     if (obj != nullptr && get (element, obj))
@@ -614,7 +614,7 @@ public:
 
   // regular element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t& element, Args&... args) {
     AbstractObject* obj = func(key);
     if (obj != nullptr && get (element, obj))
@@ -625,7 +625,7 @@ public:
 
   // pointer of regular element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t*& element, Args&... args) {
     element = new t;
     AbstractObject* obj = func();
@@ -637,7 +637,7 @@ public:
 
   // pointer of regular element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t*& element, Args&... args) {
     AbstractObject* obj = func(key);
     element = new t;
@@ -649,7 +649,7 @@ public:
 
   // serializable element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t& element, Args&... args) {
     AbstractObject* obj = func();
     int index = 0;
@@ -661,7 +661,7 @@ public:
 
   // serializable element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t& element, Args&... args) {
     AbstractObject* obj = func(key);
     int index = 0;
@@ -673,7 +673,7 @@ public:
 
   // pointers of serializable element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t*& element, Args&... args) {
     AbstractObject* obj = func();
     element = new t;
@@ -686,23 +686,22 @@ public:
 
   // pointers of serializable element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t*& element, Args&... args) {
     AbstractObject* obj = func(key);
     int index = 0;
 
     if (obj != nullptr) {
-      auto dic = AuxSerialization::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
+      auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
       if (dic != nullptr) {
         element = static_cast<t*>(dic());
-        if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
-          return get (func, args...);
       } else {
         element = new t;
-        if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
-          return get (func, args...);
       }
+      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index))
+        return get (func, args...);
     }
+
     return false;
   }
 
@@ -760,7 +759,7 @@ public:
 
   // trigger
   template <class T>
-  typename std::enable_if<std::is_base_of<AuxSerialization, T>::value, bool>::type
+  typename std::enable_if<std::is_base_of<BLOP, T>::value, bool>::type
   get (T& to, const std::string path) {
     AbstractObject* obj = top->get(path);    
     int index = 0;
@@ -769,7 +768,7 @@ public:
 
   // serializable element for vectors
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<AuxSerialization, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (t& element, AbstractObject* obj) {
     int index = 0;
     return (obj != nullptr && element.serialize (obj, *this, index));
