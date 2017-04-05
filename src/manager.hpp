@@ -847,6 +847,25 @@ public:
     return false;
   }
 
+  // pointer of regular element, vector like
+  template <class t, class ...Args>
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectVector* obj, t*& element, Args&... args) {
+    if (obj->insert("", fabricate (*element)))
+      return set (obj, args...);
+    else
+      return false;
+  }
+
+  // pointer of regular element, hash like
+  template <class t, class ...Args>
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectMap* obj, const char* key, t*& element, Args&... args) {
+    if (obj->insert(key, fabricate (*element)))
+      return set (obj, args...);
+    else
+      return false;
+  }
 
 };
 }
