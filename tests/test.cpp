@@ -323,10 +323,11 @@ TEST_CASE ("Can set finals in the tree (hash)") {
   string _string_;
   bool _bool_;
   // CREATE NON EXISTING ELEMENTS
+  bool fixgcc = false;
   CHECK (tree.set (double(12.3),   "sixth.element_1"));
   CHECK (tree.set (float(12.3),    "sixth.element_2"));
   CHECK (tree.set (int(12),        "sixth.element_3"));
-  CHECK (tree.set (false,          "sixth.element_4"));
+  CHECK (tree.set (fixgcc,         "sixth.element_4"));
   CHECK (tree.set ("Word",         "sixth.element_5"));
   CHECK (tree.set (string("Word"), "sixth.element_6"));
   // CHECK IF EXIST

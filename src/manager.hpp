@@ -77,6 +77,7 @@ private:
   static AbstractObject* fabricate (const long long value);
   static AbstractObject* fabricate (const int value);
   static AbstractObject* fabricate (const double value);
+  static AbstractObject* fabricate (const unsigned value);
   static AbstractObject* fabricate (const std::string value);
   static AbstractObject* fabricate (const char* value);
   static AbstractObject* fabricate (const char value);
