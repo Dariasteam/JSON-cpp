@@ -1018,6 +1018,24 @@ public:
     }
     return obj->insert("", vector);
   }
+
+  // serializable element for vectors
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectMap* obj, const char* key, std::vector<t>& vec, Args&... args) {
+    ObjectVector* vector = new ObjectVector();
+    for (auto element : vec) {
+      int index = 0;
+      AbstractObject* aux = element.serialize(nullptr, *this, index, WRITE);
+      if (aux != nullptr) {
+        vector->insert("", aux);
+      } else {
+        return false;
+      }
+    }
+    return obj->insert(key, vector);
+  }
+
 };
 }
 
