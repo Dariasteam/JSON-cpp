@@ -25,7 +25,17 @@ namespace json {
 #define AUX_SERIAL_START json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) { return tree.start (obj, index, op,
 
 
-#define AUX_SERIAL_END ,__e__); }
+#define AUX_SERIAL_END ,__e__); }                                                                                     \
+  json::AbstractObject* polymorphicSerialize (json::JsonTree& tree, bool op) {                                        \
+    json::ObjectMap* aux = new json::ObjectMap();                                                                     \
+    aux->insert(CLASS_TYPE, new json::ObjectFinalString(demangle(typeid(*this).name())));                             \
+    int index = 0;                                                                                                    \
+    json::AbstractObject* content = serialize(nullptr, tree, index, op);                                              \
+    if (content != nullptr && aux->insert(CLASS_CONTENT, content))                                                    \
+       return aux;                                                                                                    \
+    else                                                                                                              \
+      return nullptr;                                                                                                 \
+  }
 
 #define AUX_INHERITS_FROM(y, x) static bool __init__ () {                                      \
                                   json::AuxSerialization::addSon( #y , [] { return new y; });  \
@@ -41,6 +51,8 @@ class AuxSerialization : public BLOP {
 public:
 
   virtual json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) = 0;
+  virtual json::AbstractObject* polymorphicSerialize (json::JsonTree& tree, bool op) = 0;
+
 protected:
   ender __e__;
   static void addSon (std::string name, std::function<AuxSerialization*()> lambda) { dictionary[name] = lambda; }

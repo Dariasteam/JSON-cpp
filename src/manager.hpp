@@ -844,11 +844,9 @@ public:
   template <class t>
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (t& element, AbstractObject* obj) {
-
     int index = 0;
     if (obj != nullptr) {
       return element.serialize (obj, *this, index, READ) != nullptr;
-
     }
   }
 
@@ -856,17 +854,18 @@ public:
   template <class t>
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (t*& element, AbstractObject* obj) {
-
     int index = 0;
-
-    if (obj != nullptr) {
-      auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
-      if (dic != nullptr) {
-        element = static_cast<t*>(dic());
-      } else {
-        element = new t;
+    if (obj != nullptr && isMap(obj)) {
+      ObjectFinalString* content = (ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE);
+      if (content != nullptr) {
+        auto dic = BLOP::dictionary[content->getContent()];
+        if (dic != nullptr) {
+          element = static_cast<t*>(dic());
+        } else {
+          element = new t;
+        }
+        return (obj != nullptr && element->serialize (((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ));
       }
-      return (obj != nullptr && element->serialize (((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ));
     }
     return false;
 
@@ -946,38 +945,22 @@ public:
   template <class t, class ...Args>
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   set (ObjectVector* obj, t*& element, Args&... args) {
-    int index = 0;
-    ObjectMap* aux = new ObjectMap();
-
-    aux->insert(CLASS_TYPE, fabricate(BLOP::demangle(typeid(*element).name())));
-
-    AbstractObject* content = element->serialize(nullptr, *this, index, WRITE);
-    if (content != nullptr) {
-      aux->insert(CLASS_CONTENT, content);
-      obj->insert("", aux);
+    AbstractObject* aux = element->polymorphicSerialize (*this, WRITE);
+    if (aux != nullptr && obj->insert("", aux))
       return set (obj, args...);
-    } else {
+    else
       return false;
-    }
   }
 
   // pointers of serializable element, hash like
   template <class t, class ...Args>
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, t*& element, Args&... args) {
-    int index = 0;
-    ObjectMap* aux = new ObjectMap();
-
-    aux->insert(CLASS_TYPE, fabricate(element->demangle(typeid(*element).name())));
-
-    AbstractObject* content = element->serialize(nullptr, *this, index, WRITE);
-    if (content != nullptr) {
-      aux->insert(CLASS_CONTENT, content);
-      obj->insert(key, aux);
+    AbstractObject* aux = element->polymorphicSerialize (*this, WRITE);
+    if (aux != nullptr && obj->insert(key, aux))
       return set (obj, args...);
-    } else {
+    else
       return false;
-    }
   }
 
   // Vector, vector like
@@ -1016,7 +999,8 @@ public:
         return false;
       }
     }
-    return obj->insert("", vector);
+    obj->insert("", vector);
+    return set (obj, args...);
   }
 
   // serializable element for vectors
@@ -1033,7 +1017,44 @@ public:
         return false;
       }
     }
-    return obj->insert(key, vector);
+    obj->insert(key, vector);
+    return set (obj, args...);
+  }
+
+  // pointers of serializable element for vectors
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectVector* obj, std::vector<t*>& vec, Args&... args) {
+    ObjectVector* vector = new ObjectVector();
+    for (auto element : vec) {
+      int index = 0;
+      AbstractObject* aux = element->polymorphicSerialize (*this, WRITE);
+      if (aux != nullptr) {
+        vector->insert("", aux);
+      } else {
+        return false;
+      }
+    }
+    obj->insert("", vector);
+    return set (obj, args...);
+  }
+
+  // pointers of serializable element for vectors
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectMap* obj, const char* key, std::vector<t*>& vec, Args&... args) {
+    ObjectVector* vector = new ObjectVector();
+    for (auto element : vec) {
+      int index = 0;
+      AbstractObject* aux = element->polymorphicSerialize (*this, WRITE);
+      if (aux != nullptr) {
+        vector->insert("", aux);
+      } else {
+        return false;
+      }
+    }
+    obj->insert(key, vector);
+    return set (obj, args...);
   }
 
 };
