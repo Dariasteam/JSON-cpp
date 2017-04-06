@@ -541,19 +541,15 @@ public:
 
   template <class t>
   bool set (const std::vector<t>& array, const std::string path) {
-    return set (createVec (array), path);
-  }
+    if (top->get(path) == nullptr)
+      return top->add (path, createVec (array));
+    else
+      return replace(createVec (array), path);
+  }  
 
-  // Arrays of natural elements
   template <class t>
-  bool set (std::vector<t>& array, ObjectVector* const obj) {
+  bool set (const std::vector<t>& array, ObjectVector* const obj) {
     return obj->insert("", createVec(array));
-  }
-
-  // Arrays of pointers
-  template <class t>
-  bool set (std::vector<t*>& array, ObjectVector* const obj) {
-    //return set (createVec (array), obj);
   }
 
   /* Delete existing elements
