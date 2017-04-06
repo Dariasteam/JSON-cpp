@@ -544,6 +544,18 @@ public:
     return set (createVec (array), path);
   }
 
+  // Arrays of natural elements
+  template <class t>
+  bool set (std::vector<t>& array, ObjectVector* const obj) {
+    return obj->insert("", createVec(array));
+  }
+
+  // Arrays of pointers
+  template <class t>
+  bool set (std::vector<t*>& array, ObjectVector* const obj) {
+    //return set (createVec (array), obj);
+  }
+
   /* Delete existing elements
    * @path Path to the elements to be deleted
    *
@@ -808,13 +820,13 @@ public:
 
   // Vector, vector like
   template <class t, class ...Args>
-  bool get (std::function<AbstractObject*()> func, std::vector<t>& vec, Args&... args) {
+  bool get (std::function<AbstractObject*()> func, std::vector<t>& vec, Args&... args) {    
     AbstractObject* obj = func();
     if (obj != nullptr && get (vec, obj)) {
       return get (func, args...);
     } else {
       return false;
-    }
+    }    
   }
 
   // Vector, hash like
@@ -829,17 +841,22 @@ public:
   }
 
   // serializable element for vectors
-  template <class t, class ...Args>
+  template <class t>
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (t& element, AbstractObject* obj) {
+
     int index = 0;
-    return (obj != nullptr && element.serialize (obj, *this, index));
+    if (obj != nullptr) {
+      return element.serialize (obj, *this, index, READ) != nullptr;
+
+    }
   }
 
   // serializable element for vectors (pointer)
-  template <class t, class ...Args>
+  template <class t>
   typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
   get (t*& element, AbstractObject* obj) {
+
     int index = 0;
 
     if (obj != nullptr) {
@@ -852,6 +869,7 @@ public:
       return (obj != nullptr && element->serialize (((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ));
     }
     return false;
+
   }
 
   //WRITE
@@ -962,6 +980,44 @@ public:
     }
   }
 
+  // Vector, vector like
+  template <class t, class ...Args>
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectVector* obj, std::vector<t>& vec, Args&... args) {
+    if (obj->insert("", createVec(vec))) {
+      return set (obj, args...);
+    } else {
+      return false;
+    }
+  }
+
+  // Vector, hash like
+  template <class t, class ...Args>
+  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectMap* obj, const char* key, std::vector<t>& vec, Args&... args) {
+    if (obj->insert(key, createVec(vec))) {
+      return set (obj, args...);
+    } else {
+      return false;
+    }
+  }
+
+  // serializable element for vectors
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectVector* obj, std::vector<t>& vec, Args&... args) {
+    ObjectVector* vector = new ObjectVector();
+    for (auto element : vec) {
+      int index = 0;
+      AbstractObject* aux = element.serialize(nullptr, *this, index, WRITE);
+      if (aux != nullptr) {
+        vector->insert("", aux);
+      } else {
+        return false;
+      }
+    }
+    return obj->insert("", vector);
+  }
 };
 }
 
