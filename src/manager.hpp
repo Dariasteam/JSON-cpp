@@ -762,14 +762,19 @@ public:
     int index = 0;
 
     if (obj != nullptr) {
-      auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
-      if (dic != nullptr) {
-        element = static_cast<t*>(dic());
+      auto type = ((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE));
+      if (type != nullptr) {
+        auto dic = BLOP::dictionary[type->getContent()];
+        if (dic != nullptr) {
+          element = static_cast<t*>(dic());
+        } else {
+          element = new t;
+        }
+        if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ))
+          return get (func, args...);
       } else {
-        element = new t;
+        return false;
       }
-      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ))
-        return get (func, args...);
     }
 
     return false;
@@ -783,14 +788,19 @@ public:
     int index = 0;
 
     if (obj != nullptr) {
-      auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
-      if (dic != nullptr) {
-        element = static_cast<t*>(dic());
+      auto type = ((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE));
+      if (type != nullptr) {
+        auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
+        if (dic != nullptr) {
+          element = static_cast<t*>(dic());
+        } else {
+          element = new t;
+        }
+        if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ))
+          return get (func, args...);
       } else {
-        element = new t;
+        return false;
       }
-      if (element->serialize(((ObjectMap*)obj)->operator [](CLASS_CONTENT), *this, index, READ))
-        return get (func, args...);
     }
 
     return false;
@@ -907,6 +917,44 @@ public:
     int index = 0;
     AbstractObject* aux = element.serialize(nullptr, *this, index, WRITE);
     if (aux != nullptr) {
+      obj->insert(key, aux);
+      return set (obj, args...);
+    } else {
+      return false;
+    }
+  }
+
+  // pointers of serializable element, vector like
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectVector* obj, t*& element, Args&... args) {
+    int index = 0;
+    ObjectMap* aux = new ObjectMap();
+
+    aux->insert(CLASS_TYPE, fabricate(BLOP::demangle(typeid(*element).name())));
+
+    AbstractObject* content = element->serialize(nullptr, *this, index, WRITE);
+    if (content != nullptr) {
+      aux->insert(CLASS_CONTENT, content);
+      obj->insert("", aux);
+      return set (obj, args...);
+    } else {
+      return false;
+    }
+  }
+
+  // pointers of serializable element, hash like
+  template <class t, class ...Args>
+  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  set (ObjectMap* obj, const char* key, t*& element, Args&... args) {
+    int index = 0;
+    ObjectMap* aux = new ObjectMap();
+
+    aux->insert(CLASS_TYPE, fabricate(element->demangle(typeid(*element).name())));
+
+    AbstractObject* content = element->serialize(nullptr, *this, index, WRITE);
+    if (content != nullptr) {
+      aux->insert(CLASS_CONTENT, content);
       obj->insert(key, aux);
       return set (obj, args...);
     } else {
