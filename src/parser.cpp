@@ -9,9 +9,13 @@ int Parser::parseFile (const std::string fileName, JsonTree& tree, bool verbs) {
   std::ifstream file;
   file.open(fileName, std::ifstream::in);
   if (file.is_open()) {
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    content = buffer.str();
+
+    file.seekg(0, std::ios::end);
+    size_t size = file.tellg();
+    content = std::string(size, ' ');
+    file.seekg(0);
+    file.read(&content[0], size);
+
     file.close();
     return parse (tree);
   } else {

@@ -54,6 +54,8 @@ public:
 
   bool serializeOut (std::string file, std::string path);
   bool serializeOut (JsonTree& tree, std::string path);
+
+  std::string toTxt (bool uglify = true);
 protected:
   __serialization_ender__ __e__;
   static void addSon (std::string name, std::function<Serializable*()> lambda) { dictionary[name] = lambda; }

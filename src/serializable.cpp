@@ -28,3 +28,9 @@ bool json::Serializable::serializeOut (std::string file, std::string path) {
 bool json::Serializable::serializeOut (json::JsonTree& tree, std::string path) {
   return tree.set(*this, path);
 }
+
+std::string json::Serializable::toTxt(bool uglify) {
+  json::JsonTree tree;
+  tree.set(*this, "a");
+  return tree.toText(uglify, "a");
+}
