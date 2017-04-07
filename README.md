@@ -9,18 +9,18 @@ This library allows you to do some fancy stuff like these:
 ```c++
 #include "..../serializable.hpp"
 
-class A : public json::deprecated_serializable {
+class A : public json::Serializable {
   int a;
   string b;
   bool c;
   std::vector <int> d;
 
-  DEPRECATED_SERIAL_START    // magic macro
+  SERIAL_SERIAL_START    // magic macro
     "a", a,       // key / value
     "b", b,
     "c", c,
     "d", d
-  DEPRECATED_SERIAL_END
+  SERIAL_SERIAL_END
 };
 
 int main (void) {
