@@ -15,12 +15,12 @@ class A : public json::Serializable {
   bool c;
   std::vector <int> d;
 
-  SERIAL_SERIAL_START    // magic macro
+  SERIAL_START    // magic macro for reflection
     "a", a,       // key / value
     "b", b,
     "c", c,
     "d", d
-  SERIAL_SERIAL_END
+  SERIAL_END
 };
 
 int main (void) {
