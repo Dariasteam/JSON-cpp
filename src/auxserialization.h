@@ -12,11 +12,15 @@
 
 namespace json {
 
-#define AUX_SERIAL_START_INHERITED(y, x) AUX_INHERITS_FROM (y, x)                           \
+#define AUX_SERIAL_START_INHERITED(y, x)                                                \
+                         static bool __init__ () {                                      \
+                           json::AuxSerialization::addSon( #y , [] { return new y; });  \
+                         }                                                              \
+                         static bool trigger;                                           \
                          json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) { \
                            if (!y::isTopClass())                                            \
-                             if (x::serialize (path, tree, index, op) != nullptr);          \
-                               return y::serializeInherits (path, tree, index, op);         \
+                             if (x::serialize (obj, tree, index, op) != nullptr);          \
+                               return y::serializeInherits (obj, tree, index, op);         \
                            return nullptr;                                                  \
                          }                                                                  \
                          inline virtual bool isTopClass () { return false; }                \
@@ -37,12 +41,6 @@ namespace json {
     else                                                                                                              \
       return nullptr;                                                                                                 \
   }
-
-#define AUX_INHERITS_FROM(y, x) static bool __init__ () {                                      \
-                                  json::AuxSerialization::addSon( #y , [] { return new y; });  \
-                                }                                                              \
-                                __abstract_serializable__                                      \
-                                static bool trigger;                                           \
 
 #define AUX_INHERITS(x) bool x::trigger = x::__init__ ();
 

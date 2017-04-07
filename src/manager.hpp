@@ -75,6 +75,7 @@ private:
   static bool isVector (AbstractObject* const obj);
 
   static AbstractObject* fabricate (const long long value);
+  static AbstractObject* fabricate (const long value);
   static AbstractObject* fabricate (const int value);
   static AbstractObject* fabricate (const double value);
   static AbstractObject* fabricate (const unsigned value);
@@ -94,7 +95,7 @@ private:
   bool get (char& to,        AbstractObject* const obj);
 
   template <class t>
-  static ObjectVector* createVec (const std::vector<t>& array) {
+  static ObjectVector* fabricate (const std::vector<t>& array) {
     ObjectVector* aux = new ObjectVector ();
     for (t element : array) {
       aux->insert("", fabricate(element));
@@ -385,7 +386,7 @@ public:
   // Supports any vector
   template <class t>
   bool add (const std::vector<t>& array, const std::string path) {
-    return top->add (path, createVec (array));
+    return top->add (path, fabricate (array));
   }
 
   /* Adds a vector
@@ -484,7 +485,7 @@ public:
 
   template <class t>
   bool replace (const std::vector<t>& array, const std::string path) {
-    return replace (createVec (array), path);
+    return replace (fabricate (array), path);
   }
 
   //- returns
@@ -543,14 +544,14 @@ public:
   template <class t>
   bool set (const std::vector<t>& array, const std::string path) {
     if (top->get(path) == nullptr)
-      return top->add (path, createVec (array));
+      return top->add (path, fabricate (array));
     else
-      return replace(createVec (array), path);
+      return replace(fabricate (array), path);
   }  
 
   template <class t>
   bool set (const std::vector<t>& array, ObjectVector* const obj) {
-    return obj->insert("", createVec(array));
+    return obj->insert("", fabricate(array));
   }
 
   /* Delete existing elements
@@ -956,7 +957,7 @@ public:
   template <class t, class ...Args>
   typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, std::vector<t>& vec, Args&... args) {
-    if (obj->insert("", createVec(vec))) {
+    if (obj->insert("", fabricate(vec))) {
       return set (obj, args...);
     } else {
       return false;
@@ -967,7 +968,7 @@ public:
   template <class t, class ...Args>
   typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, std::vector<t>& vec, Args&... args) {
-    if (obj->insert(key, createVec(vec))) {
+    if (obj->insert(key, fabricate(vec))) {
       return set (obj, args...);
     } else {
       return false;

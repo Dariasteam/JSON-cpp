@@ -82,6 +82,10 @@ AbstractObject* JsonTree::fabricate (const long long value) {
   return new ObjectFinalNumber(value);
 }
 
+AbstractObject* JsonTree::fabricate (const long value) {
+  return new ObjectFinalNumber(value);
+}
+
 AbstractObject* JsonTree::fabricate (const int value) {
   return new ObjectFinalNumber(value);
 }
