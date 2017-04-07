@@ -9,7 +9,7 @@ This library allows you to do some fancy stuff like these:
 ```c++
 #include "..../serializable.hpp"
 
-class A : public json::Serializable {
+class A : public json::deprecated_serializable {
   int a;
   string b;
   bool c;

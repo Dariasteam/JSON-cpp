@@ -5,7 +5,7 @@
 #<cldoc:Tutorials::Serialization::Quick Reference>
 First read the entire tutorial
 
-#### Serializable types
+#### deprecated_serializable types
 
 - Both value & pointer
   - int
@@ -114,9 +114,9 @@ As we previously said, the root can't be a vector.
 #### code
 ```c++
 #include <iostream>
-#include "./serializable.hpp"                 // include this file
+#include "./deprecated_serializable.hpp"                 // include this file
 
-class A : public json::Serializable {         // derivate from 'Serializable'
+class A : public json::deprecated_serializable {         // derivate from 'deprecated_serializable'
 private:
   int parameter;                              // this parameter will be serialized
   int nonSerializableParameter;               // this will not
@@ -185,9 +185,9 @@ As we are using the _vector-like_ aproximation, we must know exactly the order o
 ```c++
 #include <iostream>
 #include <string>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class A : public json::Serializable {         // derivate from 'Serializable'
+class A : public json::deprecated_serializable {         // derivate from 'deprecated_serializable'
 private:
   int         number;
   bool        boolean;
@@ -256,9 +256,9 @@ Note that in this case we can put the elements directly on the root
 ```c++
 #include <iostream>
 #include <string>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class A : public json::Serializable {               // derivate from 'Serializable'
+class A : public json::deprecated_serializable {               // derivate from 'deprecated_serializable'
 private:
   int         number;
   bool        boolean;
@@ -314,7 +314,7 @@ if we wanted to run the program again as it would be if we used _vector-like_ mo
 #<cldoc:Tutorials::Serialization::File management>
 Reusing files for multiple purposes
 
-In the previous example we used <json::Serializable::serializeIn> and <json::Serializable::serializeOut> for file handling.
+In the previous example we used <json::deprecated_serializable::serializeIn> and <json::deprecated_serializable::serializeOut> for file handling.
 Those functions are overload (click on them to have more info) and are thinked to use them in two ways
 
 - Fast single object serialization, the one used in previous code:
@@ -362,9 +362,9 @@ Here is an example of how to serialize two non related classes in the same file
 ```c++
 #include <iostream>
 #include <string>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class A : public json::Serializable {
+class A : public json::deprecated_serializable {
 private:
   int numberA;
   int numberB;
@@ -381,7 +381,7 @@ public:
 };
 
 
-class B : public json::Serializable {
+class B : public json::deprecated_serializable {
 private:
   std::string key;
   std::string verse;
@@ -473,9 +473,9 @@ Note this is a 2 dimensional vector **inside a vector of serializable parameters
 ```c++
 #include <iostream>
 #include <vector>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class A : public json::Serializable {               // derivate from 'Serializable'
+class A : public json::deprecated_serializable {               // derivate from 'deprecated_serializable'
 private:
   std::vector <std::vector <int> > matrix;          // you can use the depth you want
 
@@ -555,9 +555,9 @@ You can use n dimensional vectors of vectors, the library can handle it for you!
 ```c++
 #include <iostream>
 #include <vector>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class A : public json::Serializable {               // derivate from 'Serializable'
+class A : public json::deprecated_serializable {               // derivate from 'deprecated_serializable'
 private:
   std::vector <std::vector <int> > matrix;          // you can use the depth you want
 
@@ -650,9 +650,9 @@ The 'rockets' vector has many vectors in it because the 'Rocket' class is serial
 #include <iostream>
 #include <vector>
 #include <string>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class Rocket : public json::Serializable {               // vector serialization
+class Rocket : public json::deprecated_serializable {               // vector serialization
 private:
   string name;
 
@@ -663,7 +663,7 @@ public:
   void changeContent () { name = "myNewName"; }
 };
 
-class Personal : public json::Serializable {              // hash serialization
+class Personal : public json::deprecated_serializable {              // hash serialization
 private:
   int engi;
   int sec;
@@ -682,7 +682,7 @@ public:
   }
 };
 
-class Hangar : public json::Serializable {                // hash serialization
+class Hangar : public json::deprecated_serializable {                // hash serialization
 private:
   vector <Rocket> elements;
   Personal people;
@@ -806,9 +806,9 @@ where 12 is the integer parameter of 'A' and "Run" the string parameter of 'B'
 #include <iostream>
 #include <vector>
 #include <string>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class A : public json::Serializable {
+class A : public json::deprecated_serializable {
 protected:                              // because we want parameters and macro functions to be accessible by B class
   int number;
 
@@ -888,9 +888,9 @@ so only the first element is serialized.
 #include <iostream>
 #include <vector>
 #include <string>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class B : public json::Serializable {
+class B : public json::deprecated_serializable {
 private:
   int* number;
   std::string* word;
@@ -930,11 +930,11 @@ The polymorphic problem
 
 Imagine we have this program:
 ```
-class A : public json::Serializable;
+class A : public json::deprecated_serializable;
 class B : public A;
 class C : public A;
 
-class M : public json::Serializable {
+class M : public json::deprecated_serializable {
   A* a;
   SERIAL_START;
     a                     // this could be an A, a B or a C
@@ -958,7 +958,7 @@ INHERITS (this_class)
 And must be declared as first element in .cpp file of every class or inmediately after the class declaration.
 For example, the previous program now would be
 ```
-class A : public json::Serializable;
+class A : public json::deprecated_serializable;
 
 class B : public A;
 INHERITS (A)              // tells serializable static method there is a B class
@@ -966,7 +966,7 @@ INHERITS (A)              // tells serializable static method there is a B class
 class C : public A;       // tells serializable static method there is a C class
 INHERITS (C)
 
-class M : public json::Serializable {
+class M : public json::deprecated_serializable {
   A* a;
   SERIAL_START;
     a                     // this could be an A, a B or a C
@@ -975,7 +975,7 @@ class M : public json::Serializable {
 ```
 The purpose of this is to create a 'dictionary' of derived pointer-used classes so when the serialization reach
 the situation of having to manage an A*, but knows it really contains a B*, can truly create a B. And how
-will know that? Well, json will say. Serializable pointers are stored as:
+will know that? Well, json will say. deprecated_serializable pointers are stored as:
 ```
 {
   "$classType" : "B",
@@ -1023,9 +1023,9 @@ the difference is it will not be aplied at the root of the serialized element bu
 #include <iostream>
 #include <vector>
 #include <string>
-#include "serializable.hpp"
+#include "deprecated_serializable.hpp"
 
-class AwesomeVehicle : public json::Serializable {
+class AwesomeVehicle : public json::deprecated_serializable {
 protected:
   string name;
 
@@ -1069,7 +1069,7 @@ private:
 
 INHERITS (Rover)                                     // Do not forget
 
-class ProudOfScience : public json::Serializable{
+class ProudOfScience : public json::deprecated_serializable{
 private:
   std::vector <AwesomeVehicle*> spaceStuff;
 

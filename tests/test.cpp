@@ -3,8 +3,8 @@
 
 #include "../src/parser.hpp"
 #include "../src/manager.hpp"
-#include "../src/serializable.hpp"
-#include "../src/auxserialization.h"
+#include "../src/deprecated_serializable.hpp"
+#include "../src/serializable.h"
 
 #include <string>
 #include <vector>
@@ -447,7 +447,7 @@ TEST_CASE ("The written file is consistent") {
 
 // Serialization
 TEST_CASE ("Can serialize in passing json tree as argument, vector like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -461,7 +461,7 @@ TEST_CASE ("Can serialize in passing json tree as argument, vector like") {
 }
 
 TEST_CASE ("Can serialize in passing file name as argument, vector like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -474,7 +474,7 @@ TEST_CASE ("Can serialize in passing file name as argument, vector like") {
 }
 
 TEST_CASE ("Can serialize in passing json tree as argument, hash like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -488,7 +488,7 @@ TEST_CASE ("Can serialize in passing json tree as argument, hash like") {
 }
 
 TEST_CASE ("Can serialize in passing file name as argument, hash like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -501,7 +501,7 @@ TEST_CASE ("Can serialize in passing file name as argument, hash like") {
 }
 
 TEST_CASE ("Can serialize all simple types, vector like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     long b;
@@ -528,7 +528,7 @@ TEST_CASE ("Can serialize all simple types, vector like") {
 }
 
 TEST_CASE ("Can serialize all simple types, hash like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     long b;
@@ -569,7 +569,7 @@ int wordCalc (int i, int j) {
 }
 
 TEST_CASE ("Can serialize matrixes, vector like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     vector <vector <int> > a;
     vector <vector <double> > b;
@@ -599,7 +599,7 @@ TEST_CASE ("Can serialize matrixes, vector like") {
 }
 
 TEST_CASE ("Can serialize matrixes, hash like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     vector <vector <int> > a;
     vector <vector <double> > b;
@@ -631,7 +631,7 @@ TEST_CASE ("Can serialize matrixes, hash like") {
 }
 
 TEST_CASE ("Can serialize another serializable class, vector like in vector like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -639,7 +639,7 @@ TEST_CASE ("Can serialize another serializable class, vector like in vector like
     AUX_SERIAL_END
   };
 
-  class B : public AuxSerialization  {
+  class B : public Serializable  {
   public:
     A a;
     int b;
@@ -654,7 +654,7 @@ TEST_CASE ("Can serialize another serializable class, vector like in vector like
 }
 
 TEST_CASE ("Can serialize another serializable class, hash like in vector like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -662,7 +662,7 @@ TEST_CASE ("Can serialize another serializable class, hash like in vector like")
     AUX_SERIAL_END
   };
 
-  class B : public AuxSerialization  {
+  class B : public Serializable  {
   public:
     A a;
     int b;
@@ -677,7 +677,7 @@ TEST_CASE ("Can serialize another serializable class, hash like in vector like")
 }
 
 TEST_CASE ("Can serialize another serializable class, vector like in hash like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -685,7 +685,7 @@ TEST_CASE ("Can serialize another serializable class, vector like in hash like")
     AUX_SERIAL_END
   };
 
-  class B : public AuxSerialization  {
+  class B : public Serializable  {
   public:
     A a;
     int b;
@@ -701,7 +701,7 @@ TEST_CASE ("Can serialize another serializable class, vector like in hash like")
 }
 
 TEST_CASE ("Can serialize another serializable class, hash like in hash like") {
-  class A : public AuxSerialization  {
+  class A : public Serializable  {
   public:
     int a;
     AUX_SERIAL_START
@@ -709,7 +709,7 @@ TEST_CASE ("Can serialize another serializable class, hash like in hash like") {
     AUX_SERIAL_END
   };
 
-  class B : public AuxSerialization  {
+  class B : public Serializable  {
   public:
     A a;
     int b;
@@ -725,7 +725,7 @@ TEST_CASE ("Can serialize another serializable class, hash like in hash like") {
 }
 
 // These elements are not inside a TEST_CASE due to Catch limitations handling static methods
-class A : public AuxSerialization  {
+class A : public Serializable  {
 public:
   int number;
   AUX_SERIAL_START
@@ -751,7 +751,7 @@ TEST_CASE ("Can serialize inheritance, vector like") {
 }
 
 // These elements are not inside a TEST_CASE due to Catch limitations handling static methods
-class C : public AuxSerialization  {
+class C : public Serializable  {
 public:
   int number;
   AUX_SERIAL_START
@@ -787,7 +787,7 @@ public:
 INHERITS (BB)
 
 TEST_CASE ("Can serialize polymorphism, vector like") {
-  class Container : public AuxSerialization {
+  class Container : public Serializable {
   public:
     A* obj1;
     A* obj2;
@@ -815,7 +815,7 @@ public:
 INHERITS (DD)
 
 TEST_CASE ("Can serialize polymorphism, hash like") {
-  class Container : public AuxSerialization {
+  class Container : public Serializable {
   public:
     C* obj1;
     C* obj2;

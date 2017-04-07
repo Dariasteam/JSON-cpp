@@ -1,7 +1,7 @@
 #<cldoc:Examples::Turing Machine>
 ## Code
 ```c++
-#include "./serializable.hpp"
+#include "./deprecated_serializable.hpp"
 
 #include <vector>
 #include <string>
@@ -12,7 +12,7 @@ enum movements {
   stop
 };
 
-class Alphabet : public json::Serializable {
+class Alphabet : public json::deprecated_serializable {
 private:
   char empty;
   std::vector <char> alphabet;
@@ -33,7 +33,7 @@ public:
   const char getEmpty () { return empty; }
 };
 
-class Tape : public json::Serializable {
+class Tape : public json::deprecated_serializable {
 private:
   std::vector <char> tapeRight;
   std::vector <char> tapeLeft;
@@ -108,7 +108,7 @@ public:
   }
 };
 
-class Transition : public json::Serializable {
+class Transition : public json::deprecated_serializable {
 private:
   char innerSymbol;
   int movement;
@@ -134,7 +134,7 @@ public:
   }
 };
 
-class State : public json::Serializable {
+class State : public json::deprecated_serializable {
 private:
   std::vector <Transition> transitions;
   bool acceptanceState;
@@ -158,7 +158,7 @@ public:
   }
 };
 
-class TM : public json::Serializable {
+class TM : public json::deprecated_serializable {
 private:
   std::vector <State> states;
   Alphabet alphabet;

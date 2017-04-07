@@ -14,7 +14,7 @@ namespace json {
 
 #define AUX_SERIAL_START_INHERITED(y, x)                                                \
                          static bool __init__ () {                                      \
-                           json::AuxSerialization::addSon( #y , [] { return new y; });  \
+                           json::Serializable::addSon( #y , [] { return new y; });  \
                          }                                                              \
                          static bool trigger;                                           \
                          json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) { \
@@ -44,7 +44,7 @@ namespace json {
 
 #define AUX_INHERITS(x) bool x::trigger = x::__init__ ();
 
-class AuxSerialization : public __abstract_serializable__ {
+class Serializable : public __abstract_serializable__ {
 public:
   virtual json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) = 0;
   virtual json::AbstractObject* polymorphicSerialize (json::JsonTree& tree, bool op) = 0;
@@ -56,11 +56,11 @@ public:
   bool serializeOut (JsonTree& tree, std::string path);
 protected:
   __serialization_ender__ __e__;
-  static void addSon (std::string name, std::function<AuxSerialization*()> lambda) { dictionary[name] = lambda; } 
+  static void addSon (std::string name, std::function<Serializable*()> lambda) { dictionary[name] = lambda; }
   inline virtual bool isTopClass () { return true; } 
 
 public:  
-  AuxSerialization();
+  Serializable();
 };
 
 }
