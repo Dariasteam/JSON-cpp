@@ -1,7 +1,7 @@
 CC=clang++
 CXXFLAGS=-g -std=c++11
 
-OBJS = src/blop.o src/auxserialization.o src/serializable.o src/object.o src/manager.o src/parser.o src/main.o
+OBJS = src/abstract_serializable.o src/auxserialization.o src/serializable.o src/object.o src/manager.o src/parser.o src/main.o
 TESTS = src/serializable.o src/object.o src/manager.o src/parser.o tests/test.o
 
 all: ${OBJS}

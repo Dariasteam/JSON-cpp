@@ -6,8 +6,9 @@
 #include <map>
 
 #include "object.hpp"
-#include "blop.h"
+#include "abstract_serializable.h"
 #include "manager.hpp"
+#include "parser.hpp"
 
 namespace json {
 
@@ -40,25 +41,26 @@ namespace json {
 #define AUX_INHERITS_FROM(y, x) static bool __init__ () {                                      \
                                   json::AuxSerialization::addSon( #y , [] { return new y; });  \
                                 }                                                              \
-                                                                                               \
+                                __abstract_serializable__                                      \
                                 static bool trigger;                                           \
 
 #define AUX_INHERITS(x) bool x::trigger = x::__init__ ();
 
-//struct ender {};
-
-class AuxSerialization : public BLOP {
+class AuxSerialization : public __abstract_serializable__ {
 public:
-
   virtual json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) = 0;
   virtual json::AbstractObject* polymorphicSerialize (json::JsonTree& tree, bool op) = 0;
 
-protected:
-  ender __e__;
-  static void addSon (std::string name, std::function<AuxSerialization*()> lambda) { dictionary[name] = lambda; }
+  bool serializeIn (std::string file, std::string path);
+  bool serializeIn (JsonTree& tree, std::string path);
 
-  // checks if is the top class
-  inline virtual bool isTopClass () { return true; }
+  bool serializeOut (std::string file, std::string path);
+  bool serializeOut (JsonTree& tree, std::string path);
+protected:
+  __serialization_ender__ __e__;
+  static void addSon (std::string name, std::function<AuxSerialization*()> lambda) { dictionary[name] = lambda; } 
+  inline virtual bool isTopClass () { return true; } 
+
 public:  
   AuxSerialization();
 };

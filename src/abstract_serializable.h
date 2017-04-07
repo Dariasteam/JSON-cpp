@@ -13,13 +13,13 @@
 
 namespace json {
 
-  struct ender {};
+  struct __serialization_ender__ {};
 
-class BLOP {
+class __abstract_serializable__ {
 public:
-  static std::map<std::string, std::function<BLOP*()> > dictionary;
-  BLOP();
-  virtual ~BLOP() {}
+  static std::map<std::string, std::function<__abstract_serializable__*()> > dictionary;
+  __abstract_serializable__();
+  virtual ~__abstract_serializable__() {}
 
   //- As seen in http://stackoverflow.com/questions/12877521/human-readable-type-info-name
   // Used to get the class name

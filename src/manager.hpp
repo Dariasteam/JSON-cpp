@@ -8,7 +8,7 @@
 #include <type_traits>
 
 #include "object.hpp"
-#include "blop.h"
+#include "abstract_serializable.h"
 
 enum OPERATIONS {
   READ,
@@ -616,16 +616,12 @@ public:
               return map->operator [](k);
              }, key, args...)) {
           return obj;
-        } else {
-          return nullptr;
         }
       }
     } else {
       AbstractObject* obj = new ObjectMap();      
       if (set (((ObjectMap*)obj), key, args...))
-        return obj;
-      else
-        return nullptr;
+        return obj;      
     }
     return nullptr;
   }
@@ -644,23 +640,19 @@ public:
                 return nullptr;
              }, args...)) {
             return obj;
-          } else {
-            return nullptr;
           }
        }
     } else {
         AbstractObject* obj = new ObjectVector();
         if (set (((ObjectVector*)obj), args...))
-          return obj;
-        else
-          return nullptr;
+          return obj;        
     }
     return nullptr;
   }
 
   // trigger, GET
   template <class T>
-  typename std::enable_if<std::is_base_of<BLOP, T>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, T>::value, bool>::type
   get (T& to, const std::string path) {
     int index = 0;
     AbstractObject* obj = top->get(path);
@@ -672,7 +664,7 @@ public:
 
   // trigger, SET
   template <class T>
-  typename std::enable_if<std::is_base_of<BLOP, T>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, T>::value, bool>::type
   set (T& to, const std::string path) {
     int index = 0;
     AbstractObject* obj = to.serialize(nullptr, *this, index, WRITE);
@@ -684,18 +676,18 @@ public:
   }
 
   // GET End, vector like
-  bool get (std::function<AbstractObject*()> func, ender& e) { return true; }
+  bool get (std::function<AbstractObject*()> func, __serialization_ender__& e) { return true; }
   // GET End, hash like
-  bool get (std::function<AbstractObject*(std::string)> func, ender& e) { return true; }
+  bool get (std::function<AbstractObject*(std::string)> func, __serialization_ender__& e) { return true; }
   // SET End
-  bool set (ObjectMap* obj, ender& e) { return true; }
-  bool set (ObjectVector* obj, ender& e) { return true; }
+  bool set (ObjectMap* obj, __serialization_ender__& e) { return true; }
+  bool set (ObjectVector* obj, __serialization_ender__& e) { return true; }
 
   // READ
 
   // regular element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t& element, Args&... args) {
     AbstractObject* obj = func();
     if (obj != nullptr && get (element, obj))
@@ -706,7 +698,7 @@ public:
 
   // regular element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t& element, Args&... args) {
     AbstractObject* obj = func(key);
     if (obj != nullptr && get (element, obj))
@@ -717,7 +709,7 @@ public:
 
   // pointer of regular element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t*& element, Args&... args) {
     element = new t;
     AbstractObject* obj = func();
@@ -729,7 +721,7 @@ public:
 
   // pointer of regular element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t*& element, Args&... args) {
     AbstractObject* obj = func(key);
     element = new t;
@@ -741,7 +733,7 @@ public:
 
   // serializable element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t& element, Args&... args) {
     AbstractObject* obj = func();
     int index = 0;
@@ -753,7 +745,7 @@ public:
 
   // serializable element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t& element, Args&... args) {
     AbstractObject* obj = func(key);
     int index = 0;
@@ -765,7 +757,7 @@ public:
 
   // pointers of serializable element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*()> func, t*& element, Args&... args) {
     AbstractObject* obj = func();
     int index = 0;
@@ -773,7 +765,7 @@ public:
     if (obj != nullptr) {
       auto type = ((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE));
       if (type != nullptr) {
-        auto dic = BLOP::dictionary[type->getContent()];
+        auto dic = __abstract_serializable__::dictionary[type->getContent()];
         if (dic != nullptr) {
           element = static_cast<t*>(dic());
         } else {
@@ -791,7 +783,7 @@ public:
 
   // pointers of serializable element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (std::function<AbstractObject*(std::string)> func, const char* key, t*& element, Args&... args) {
     AbstractObject* obj = func(key);
     int index = 0;
@@ -799,7 +791,7 @@ public:
     if (obj != nullptr) {
       auto type = ((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE));
       if (type != nullptr) {
-        auto dic = BLOP::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
+        auto dic = __abstract_serializable__::dictionary[((ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE))->getContent()];
         if (dic != nullptr) {
           element = static_cast<t*>(dic());
         } else {
@@ -839,7 +831,7 @@ public:
 
   // serializable element for vectors
   template <class t>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (t& element, AbstractObject* obj) {
     int index = 0;
     if (obj != nullptr) {
@@ -849,13 +841,13 @@ public:
 
   // serializable element for vectors (pointer)
   template <class t>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   get (t*& element, AbstractObject* obj) {
     int index = 0;
     if (obj != nullptr && isMap(obj)) {
       ObjectFinalString* content = (ObjectFinalString*)((ObjectMap*)obj)->operator [](CLASS_TYPE);
       if (content != nullptr) {
-        auto dic = BLOP::dictionary[content->getContent()];
+        auto dic = __abstract_serializable__::dictionary[content->getContent()];
         if (dic != nullptr) {
           element = static_cast<t*>(dic());
         } else {
@@ -872,7 +864,7 @@ public:
 
   // regular element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, t& element, Args&... args) {
     if (obj->insert("", fabricate (element)))
       return set (obj, args...);
@@ -882,7 +874,7 @@ public:
 
   // regular element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, t& element, Args&... args) {
   if (obj->insert(key, fabricate (element)))
     return set (obj, args...);
@@ -892,7 +884,7 @@ public:
 
   // pointer of regular element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, t*& element, Args&... args) {
     if (obj->insert("", fabricate (*element)))
       return set (obj, args...);
@@ -902,7 +894,7 @@ public:
 
   // pointer of regular element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, t*& element, Args&... args) {
     if (obj->insert(key, fabricate (*element)))
       return set (obj, args...);
@@ -912,7 +904,7 @@ public:
 
   // serializable element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, t& element, Args&... args) {
     int index = 0;
     AbstractObject* aux = element.serialize(nullptr, *this, index, WRITE);
@@ -926,7 +918,7 @@ public:
 
   // serializable element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, t& element, Args&... args) {
     int index = 0;
     AbstractObject* aux = element.serialize(nullptr, *this, index, WRITE);
@@ -940,7 +932,7 @@ public:
 
   // pointers of serializable element, vector like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, t*& element, Args&... args) {
     AbstractObject* aux = element->polymorphicSerialize (*this, WRITE);
     if (aux != nullptr && obj->insert("", aux))
@@ -951,7 +943,7 @@ public:
 
   // pointers of serializable element, hash like
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, t*& element, Args&... args) {
     AbstractObject* aux = element->polymorphicSerialize (*this, WRITE);
     if (aux != nullptr && obj->insert(key, aux))
@@ -962,7 +954,7 @@ public:
 
   // Vector, vector like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, std::vector<t>& vec, Args&... args) {
     if (obj->insert("", createVec(vec))) {
       return set (obj, args...);
@@ -973,7 +965,7 @@ public:
 
   // Vector, hash like
   template <class t, class ...Args>
-  typename std::enable_if<!std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<!std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, std::vector<t>& vec, Args&... args) {
     if (obj->insert(key, createVec(vec))) {
       return set (obj, args...);
@@ -984,7 +976,7 @@ public:
 
   // serializable element for vectors
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, std::vector<t>& vec, Args&... args) {
     ObjectVector* vector = new ObjectVector();
     for (auto element : vec) {
@@ -1002,7 +994,7 @@ public:
 
   // serializable element for vectors
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, std::vector<t>& vec, Args&... args) {
     ObjectVector* vector = new ObjectVector();
     for (auto element : vec) {
@@ -1020,7 +1012,7 @@ public:
 
   // pointers of serializable element for vectors
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectVector* obj, std::vector<t*>& vec, Args&... args) {
     ObjectVector* vector = new ObjectVector();
     for (auto element : vec) {
@@ -1038,7 +1030,7 @@ public:
 
   // pointers of serializable element for vectors
   template <class t, class ...Args>
-  typename std::enable_if<std::is_base_of<BLOP, t>::value, bool>::type
+  typename std::enable_if<std::is_base_of<__abstract_serializable__, t>::value, bool>::type
   set (ObjectMap* obj, const char* key, std::vector<t*>& vec, Args&... args) {
     ObjectVector* vector = new ObjectVector();
     for (auto element : vec) {
