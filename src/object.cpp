@@ -291,7 +291,7 @@ bool ObjectFinal::add (std::string path, AbstractObject* obj) {
 bool ObjectVector::toTxt (std::string& txt, int indentLvl) {
   txt.append("[");
   indentLvl++;
-  AbstractObject* obj = this;
+  AbstractObject* obj;
   bool newLine = false;
   txt.append(END_LINE);
   txtIndent (txt, indentLvl);
