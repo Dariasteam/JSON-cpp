@@ -15,12 +15,12 @@ class A : public json::deprecated_serializable {
   bool c;
   std::vector <int> d;
 
-  SERIAL_START    // magic macro
+  DEPRECATED_SERIAL_START    // magic macro
     "a", a,       // key / value
     "b", b,
     "c", c,
     "d", d
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 int main (void) {

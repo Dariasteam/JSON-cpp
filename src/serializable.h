@@ -12,7 +12,7 @@
 
 namespace json {
 
-#define AUX_SERIAL_START_INHERITED(y, x)                                                \
+#define SERIAL_START_INHERITED(y, x)                                                \
                          static bool __init__ () {                                      \
                            json::Serializable::addSon( #y , [] { return new y; });  \
                          }                                                              \
@@ -27,10 +27,10 @@ namespace json {
                          json::AbstractObject* serializeInherits (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) { return tree.start (obj, index, op,
 
 
-#define AUX_SERIAL_START json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) { return tree.start (obj, index, op,
+#define SERIAL_START json::AbstractObject* serialize (json::AbstractObject* obj, json::JsonTree& tree, int& index, bool op) { return tree.start (obj, index, op,
 
 
-#define AUX_SERIAL_END ,__e__); }                                                                                     \
+#define SERIAL_END ,__e__); }                                                                                     \
   json::AbstractObject* polymorphicSerialize (json::JsonTree& tree, bool op) {                                        \
     json::ObjectMap* aux = new json::ObjectMap();                                                                     \
     aux->insert(CLASS_TYPE, new json::ObjectFinalString(demangle(typeid(*this).name())));                             \

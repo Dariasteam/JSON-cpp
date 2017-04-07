@@ -121,9 +121,9 @@ private:
   int parameter;                              // this parameter will be serialized
   int nonSerializableParameter;               // this will not
 
-  SERIAL_START                                // declare the parameters to be serialized in between the macros
+  DEPRECATED_SERIAL_START                                // declare the parameters to be serialized in between the macros
     parameter
-  SERIAL_END                                  // we close without declaring 'noSerializableParameter', so its not serialized
+  DEPRECATED_SERIAL_END                                  // we close without declaring 'noSerializableParameter', so its not serialized
 public:
   void changeContent () { parameter = 14; }
 };
@@ -194,12 +194,12 @@ private:
   double      precision;
   std::string blckprde;
 
-  SERIAL_START                                // the parameters must be in the same order than in file
+  DEPRECATED_SERIAL_START                                // the parameters must be in the same order than in file
     number,                                   // note the comma after every element except last. Just like json
     boolean,
     precision,
     blckprde
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void printContent () {
     std::cout << number    << std::endl
@@ -265,12 +265,12 @@ private:
   double      precision;
   std::string blckprde;
 
-  SERIAL_START                                      // asociate each parameter with its name (which must be the same as in 'file.json')
+  DEPRECATED_SERIAL_START                                      // asociate each parameter with its name (which must be the same as in 'file.json')
     "likeThis",   boolean,                          // note the comma in between the name and its parameter.
     "accurancy",  precision,                        // parameters are order independent
     "songLyrics", blckprde,                         // the macro is the same
     "integer",    number                            // last element has no comma
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () {
     number    = 78;
@@ -290,7 +290,7 @@ int main (void) {
 ```
 
 #### output
-Note the order of the elements has changed and now is the same than used in **SERIAL_START** macro. Obviously that is not a problem
+Note the order of the elements has changed and now is the same than used in **DEPRECATED_SERIAL_START** macro. Obviously that is not a problem
 if we wanted to run the program again as it would be if we used _vector-like_ mode.
 ```
 {
@@ -369,10 +369,10 @@ private:
   int numberA;
   int numberB;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     numberA,
     numberB
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () {
     numberA = 1;
@@ -386,10 +386,10 @@ private:
   std::string key;
   std::string verse;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     "key", key,
     "verse", verse
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () {
     key = "D minor";
@@ -479,9 +479,9 @@ class A : public json::deprecated_serializable {               // derivate from 
 private:
   std::vector <std::vector <int> > matrix;          // you can use the depth you want
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     matrix
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () {
     for (int i = 0; i < matrix.size(); i++) {
@@ -561,9 +561,9 @@ class A : public json::deprecated_serializable {               // derivate from 
 private:
   std::vector <std::vector <int> > matrix;          // you can use the depth you want
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     "two-dimensional-matrix", matrix
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () {
     for (int i = 0; i < matrix.size(); i++) {
@@ -656,9 +656,9 @@ class Rocket : public json::deprecated_serializable {               // vector se
 private:
   string name;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     name
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () { name = "myNewName"; }
 };
@@ -669,11 +669,11 @@ private:
   int sec;
   bool enough;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     "engineers", engi,
     "security", sec,
     "enough-people", enough
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () {
     engi   = 100;
@@ -688,11 +688,11 @@ private:
   Personal people;
   float temp;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     "personal", people,
     "rockets", elements,
     "temperature", temp
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 
 public:
   void changeContent () {
@@ -773,14 +773,14 @@ No multiple inheritance supported yet
 
 There is a new macro for this case (see <Tutorials::Serialization::Serializing pointers of serializable classes>> to know why):
 
-  `SERIAL_START_INHERITED (this_derived_class, base_class)`
+  `DEPRECATED_SERIAL_START_INHERITED (this_derived_class, base_class)`
 
 To reminding it, think the order is the same than the c++ inheritance declaration
 ```c++
 class derived_class : public base_class {
-  SERIAL_START_INHERITED (derived_class, base_class)
+  DEPRECATED_SERIAL_START_INHERITED (derived_class, base_class)
   ...
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 ```
@@ -812,9 +812,9 @@ class A : public json::deprecated_serializable {
 protected:                              // because we want parameters and macro functions to be accessible by B class
   int number;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     number
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   virtual void changeContent () { number = 90; }
 };
@@ -823,9 +823,9 @@ class B : public A {
 private:
   std::string word;
 
-  SERIAL_START_INHERITED (B, A)          // new macro for inheritance cases
+  DEPRECATED_SERIAL_START_INHERITED (B, A)          // new macro for inheritance cases
     word
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   void changeContent () {
     number = 90;
@@ -898,12 +898,12 @@ private:
   A* element;
   vector<int*> vec1;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     number,
     word,
     boolean,
     vec1,
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 int main (void) {
@@ -936,16 +936,16 @@ class C : public A;
 
 class M : public json::deprecated_serializable {
   A* a;
-  SERIAL_START;
+  DEPRECATED_SERIAL_START;
     a                     // this could be an A, a B or a C
-  SERIAL_END;
+  DEPRECATED_SERIAL_END;
 ```
 
 How do we know if we are serializing an A, B or C?
 At execution time we can't ask for a list of derived classes for correctly trait this situation.
 
 The solution adopted consist in explicitily specificate when inheritance occurs (and that is why the
-SERIAL_START_INHERITED macro exist). This allow the serialization methods to manage the serializable inheritance
+DEPRECATED_SERIAL_START_INHERITED macro exist). This allow the serialization methods to manage the serializable inheritance
 as seen in <Tutorials::Serialization::Inheriting serializable ability>, however, this isn't enough, and we
 must use one last macro (promise, this is last) in order to tell the 'Seralizable' methods how
 to create a new 'B' or 'C' once they know if is a B or a C what is required. (Thats because serialization methods
@@ -968,9 +968,9 @@ INHERITS (C)
 
 class M : public json::deprecated_serializable {
   A* a;
-  SERIAL_START;
+  DEPRECATED_SERIAL_START;
     a                     // this could be an A, a B or a C
-  SERIAL_END;
+  DEPRECATED_SERIAL_END;
 
 ```
 The purpose of this is to create a 'dictionary' of derived pointer-used classes so when the serialization reach
@@ -1029,9 +1029,9 @@ class AwesomeVehicle : public json::deprecated_serializable {
 protected:
   string name;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     name
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 class Rocket : public AwesomeVehicle {
@@ -1039,10 +1039,10 @@ private:
   int boosters;
   int stages;
 
-  SERIAL_START_INHERITED (Rocket, AwesomeVehicle)
+  DEPRECATED_SERIAL_START_INHERITED (Rocket, AwesomeVehicle)
     boosters,
     stages
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 INHERITS (Rocket)                                    // Do not forget
@@ -1051,9 +1051,9 @@ class SpaceShip : public AwesomeVehicle {
 private:
   int crew;
 
-  SERIAL_START_INHERITED (SpaceShip, AwesomeVehicle)
+  DEPRECATED_SERIAL_START_INHERITED (SpaceShip, AwesomeVehicle)
     crew
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 INHERITS (SpaceShip)                                 // Do not forget
@@ -1062,9 +1062,9 @@ class Rover : public AwesomeVehicle {
 private:
   std::string celestial_body;
 
-  SERIAL_START_INHERITED (Rover, AwesomeVehicle)
+  DEPRECATED_SERIAL_START_INHERITED (Rover, AwesomeVehicle)
     celestial_body
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 INHERITS (Rover)                                     // Do not forget
@@ -1073,9 +1073,9 @@ class ProudOfScience : public json::deprecated_serializable{
 private:
   std::vector <AwesomeVehicle*> spaceStuff;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     "content", spaceStuff
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 };
 
 int main (void) {

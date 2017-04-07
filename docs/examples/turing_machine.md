@@ -16,10 +16,10 @@ class Alphabet : public json::deprecated_serializable {
 private:
   char empty;
   std::vector <char> alphabet;
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     empty,
     alphabet
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   bool checkSymbolExists (char symbol) {
     for (char c : alphabet)
@@ -39,9 +39,9 @@ private:
   std::vector <char> tapeLeft;
   Alphabet* alphabet;
   int head;
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     tapeRight
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   inline char read () { return getSymbolAt(head); }
   inline void write (char symbol) {  getSymbolAt(head) = symbol; }
@@ -115,12 +115,12 @@ private:
   char outterSymbol;
   int nextState;
 
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     innerSymbol,
     movement,
     outterSymbol,
     nextState
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   char& getInner () { return innerSymbol; }
   char& getOutter () { return outterSymbol; }
@@ -138,10 +138,10 @@ class State : public json::deprecated_serializable {
 private:
   std::vector <Transition> transitions;
   bool acceptanceState;
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     "transitions", transitions,
     "acceptance", acceptanceState
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
   Transition* getTransitionForChar (char symbol) {
     for (int i = 0; i < transitions.size(); i++)
@@ -166,13 +166,13 @@ private:
   int actualState;
   std::string explanation;
   int head;
-  SERIAL_START
+  DEPRECATED_SERIAL_START
     "states",       states,
     "actual_state", actualState,
     "alphabet",     alphabet,
     "explanation",  explanation,
     "head",         head
-  SERIAL_END
+  DEPRECATED_SERIAL_END
 public:
 
   bool checkConsistency () {

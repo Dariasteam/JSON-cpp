@@ -11,15 +11,15 @@
 #define CLASS_TYPE "$classType"
 #define CLASS_CONTENT "$classContent"
 
-#define SERIAL_START_INHERITED(y, x) INHERITS_FROM (y, x)                                                                                                 \
+#define DEPRECATED_SERIAL_START_INHERITED(y, x) INHERITS_FROM (y, x)                                                                                                 \
                                       virtual bool serializer (json::JsonTree& _json_tree_, bool _json_op_, std::string _json_path_, InheritanceIndex& _json_from_) { \
                                         return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
 
-#define SERIAL_START virtual bool serializer (json::JsonTree& _json_tree_, bool _json_op_, std::string _json_path_, InheritanceIndex& _json_from_) { \
+#define DEPRECATED_SERIAL_START virtual bool serializer (json::JsonTree& _json_tree_, bool _json_op_, std::string _json_path_, InheritanceIndex& _json_from_) { \
                        return serialize (_json_op_, _json_path_, _json_tree_, _json_from_,
 
 
-#define SERIAL_END ,__dummy__); }
+#define DEPRECATED_SERIAL_END ,__dummy__); }
 #define INHERITS(x) bool x::trigger = x::__init__ ();
 
 #define INHERITS_FROM(y, x) static bool __init__ () {                                  \
@@ -48,11 +48,11 @@ namespace json {
  *
  * ## Macros
  *
- * - SERIAL_START
+ * - DEPRECATED_SERIAL_START
  *
- * - SERIAL_END
+ * - DEPRECATED_SERIAL_END
  *
- * - SERIAL_INHERITED_START (x, y)
+ * - DEPRECATED_SERIAL_INHERITED_START (x, y)
  *
  * - INHERITED (x)
  *

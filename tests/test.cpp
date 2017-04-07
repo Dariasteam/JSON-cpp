@@ -450,9 +450,9 @@ TEST_CASE ("Can serialize in passing json tree as argument, vector like") {
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   REQUIRE ((parser.parseFile("tests/serializable.json", tree) & JSON_PARSE_OUTPUT::OK));
@@ -464,9 +464,9 @@ TEST_CASE ("Can serialize in passing file name as argument, vector like") {
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   obj.serializeIn("tests/serializable.json", "first");
@@ -477,9 +477,9 @@ TEST_CASE ("Can serialize in passing json tree as argument, hash like") {
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       "element", a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   REQUIRE ((parser.parseFile("tests/serializable.json", tree) & JSON_PARSE_OUTPUT::OK));
@@ -491,9 +491,9 @@ TEST_CASE ("Can serialize in passing file name as argument, hash like") {
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       "element", a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   obj.serializeIn("tests/serializable.json", "second");
@@ -511,9 +511,9 @@ TEST_CASE ("Can serialize all simple types, vector like") {
     char f;
     string g;
     bool h;
-    AUX_SERIAL_START
+    SERIAL_START
       a, b, c, d, e, f, g, h
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   obj.serializeIn("tests/serializable.json", "third");
@@ -538,7 +538,7 @@ TEST_CASE ("Can serialize all simple types, hash like") {
     char f;
     string g;
     bool h;
-    AUX_SERIAL_START
+    SERIAL_START
       "int", a,
       "long", b,
       "long long", c,
@@ -547,7 +547,7 @@ TEST_CASE ("Can serialize all simple types, hash like") {
       "char", f,
       "string", g,
       "bool", h
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   obj.serializeIn("tests/serializable.json", "fourth");
@@ -574,9 +574,9 @@ TEST_CASE ("Can serialize matrixes, vector like") {
     vector <vector <int> > a;
     vector <vector <double> > b;
     vector <vector <string> > c;
-    AUX_SERIAL_START
+    SERIAL_START
       a, b, c
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   obj.serializeIn("tests/serializable.json", "fifth");
@@ -604,11 +604,11 @@ TEST_CASE ("Can serialize matrixes, hash like") {
     vector <vector <int> > a;
     vector <vector <double> > b;
     vector <vector <string> > c;
-    AUX_SERIAL_START
+    SERIAL_START
       "int",    a,
       "double", b,
       "string", c
-    AUX_SERIAL_END
+    SERIAL_END
   };
   A obj;
   obj.serializeIn("tests/serializable.json", "sixth");
@@ -634,18 +634,18 @@ TEST_CASE ("Can serialize another serializable class, vector like in vector like
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       a
-    AUX_SERIAL_END
+    SERIAL_END
   };
 
   class B : public Serializable  {
   public:
     A a;
     int b;
-    AUX_SERIAL_START
+    SERIAL_START
       b, a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   B obj;
   obj.serializeIn("tests/serializable.json", "seventh");
@@ -657,18 +657,18 @@ TEST_CASE ("Can serialize another serializable class, hash like in vector like")
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       "element", a
-    AUX_SERIAL_END
+    SERIAL_END
   };
 
   class B : public Serializable  {
   public:
     A a;
     int b;
-    AUX_SERIAL_START
+    SERIAL_START
       b, a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   B obj;
   obj.serializeIn("tests/serializable.json", "eigth");
@@ -680,19 +680,19 @@ TEST_CASE ("Can serialize another serializable class, vector like in hash like")
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       a
-    AUX_SERIAL_END
+    SERIAL_END
   };
 
   class B : public Serializable  {
   public:
     A a;
     int b;
-    AUX_SERIAL_START
+    SERIAL_START
       "number", b,
       "class", a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   B obj;
   obj.serializeIn("tests/serializable.json", "ninth");
@@ -704,19 +704,19 @@ TEST_CASE ("Can serialize another serializable class, hash like in hash like") {
   class A : public Serializable  {
   public:
     int a;
-    AUX_SERIAL_START
+    SERIAL_START
       "element", a
-    AUX_SERIAL_END
+    SERIAL_END
   };
 
   class B : public Serializable  {
   public:
     A a;
     int b;
-    AUX_SERIAL_START
+    SERIAL_START
       "number", b,
       "class", a
-    AUX_SERIAL_END
+    SERIAL_END
   };
   B obj;
   obj.serializeIn("tests/serializable.json", "tenth");
@@ -728,17 +728,17 @@ TEST_CASE ("Can serialize another serializable class, hash like in hash like") {
 class A : public Serializable  {
 public:
   int number;
-  AUX_SERIAL_START
+  SERIAL_START
    number
-  AUX_SERIAL_END
+  SERIAL_END
 };
 
 class B : public A  {
 public:
   string word;
-  AUX_SERIAL_START_INHERITED (B, A)
+  SERIAL_START_INHERITED (B, A)
     word
-  AUX_SERIAL_END
+  SERIAL_END
 };
 
 INHERITS (B)
@@ -754,17 +754,17 @@ TEST_CASE ("Can serialize inheritance, vector like") {
 class C : public Serializable  {
 public:
   int number;
-  AUX_SERIAL_START
+  SERIAL_START
    "number", number
-  AUX_SERIAL_END
+  SERIAL_END
 };
 
 class D : public C  {
 public:
   string word;
-  AUX_SERIAL_START_INHERITED (D, C)
+  SERIAL_START_INHERITED (D, C)
     "word", word
-  AUX_SERIAL_END
+  SERIAL_END
 };
 
 INHERITS (D)
@@ -779,9 +779,9 @@ TEST_CASE ("Can serialize inheritance, hash like") {
 class BB : public A  {
 public:
   bool value;
-  AUX_SERIAL_START_INHERITED (BB, A)
+  SERIAL_START_INHERITED (BB, A)
     value
-  AUX_SERIAL_END
+  SERIAL_END
 };
 
 INHERITS (BB)
@@ -791,9 +791,9 @@ TEST_CASE ("Can serialize polymorphism, vector like") {
   public:
     A* obj1;
     A* obj2;
-  AUX_SERIAL_START
+  SERIAL_START
     obj1, obj2
-  AUX_SERIAL_END
+  SERIAL_END
   };
 
   Container container;
@@ -807,9 +807,9 @@ TEST_CASE ("Can serialize polymorphism, vector like") {
 class DD : public C  {
 public:
   double value;
-  AUX_SERIAL_START_INHERITED (DD, C)
+  SERIAL_START_INHERITED (DD, C)
     "value", value
-  AUX_SERIAL_END
+  SERIAL_END
 };
 
 INHERITS (DD)
@@ -819,10 +819,10 @@ TEST_CASE ("Can serialize polymorphism, hash like") {
   public:
     C* obj1;
     C* obj2;
-  AUX_SERIAL_START
+  SERIAL_START
     obj1,
     obj2
-  AUX_SERIAL_END
+  SERIAL_END
   };
 
   Container container;
