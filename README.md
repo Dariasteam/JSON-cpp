@@ -2,6 +2,8 @@
 
 ### [Documentation](http://dariasteam.github.io/JSON-cpp/)
 
+##### This project was awarded with the first prize on the [VII ULL Free Software Contest]( https://osl.ull.es/cusl/resultados-del-vii-premio-local-ull-del-concurso-universitario-de-software-libre/)
+
 Simple _serialization_ and json file manipulation for C++11 on the fly!
 
 This library allows you to do some fancy stuff like these:
